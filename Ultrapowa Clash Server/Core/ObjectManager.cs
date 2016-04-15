@@ -40,9 +40,9 @@ namespace UCS.Core
 
             m_vAvatarSeed = m_vDatabase.GetMaxPlayerId() + 1;
             m_vAllianceSeed = m_vDatabase.GetMaxAllianceId() + 1;
+            GetAllAlliancesFromDB();
             LoadGameFiles();
             LoadNpcLevels();
-            GetAllAlliancesFromDB();
 
             var TimerItem = new Timer(Save, null, 30000, 15000);
             TimerReference = TimerItem;

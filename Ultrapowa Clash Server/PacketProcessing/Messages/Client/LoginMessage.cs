@@ -143,12 +143,15 @@ namespace UCS.PacketProcessing
                 {
                     UserToken = BitConverter.ToString(sha.ComputeHash(tokenSeed)).Replace("-", string.Empty);
                     level.GetPlayerAvatar().SetToken(UserToken);
+                    DatabaseManager.Singelton.Save(level);
                 }
             }
 
             Client.ClientSeed = Seed;
             ResourcesManager.LogPlayerIn(level, Client);
             level.Tick();
+            Console.WriteLine("Usetoken       : " + UserToken);
+            Console.WriteLine("Saved Usetoken : " + level.GetPlayerAvatar().GetUserToken());
             if (level.GetPlayerAvatar().GetUserToken() == UserToken)
             {
                 var loginOk = new LoginOkMessage(Client);
@@ -184,6 +187,7 @@ namespace UCS.PacketProcessing
                 var p = new LoginFailedMessage(Client);
                 p.SetErrorCode(0);
                 PacketManager.ProcessOutgoingPacket(p);
+                ResourcesManager.LogPlayerOut(level);
             }
         }
     }

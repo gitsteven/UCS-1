@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using UCS.Core;
 using UCS.Logic;
 using UCS.Network;
 
@@ -27,6 +28,11 @@ namespace UCS.PacketProcessing
         {
             var p = new SetDeviceTokenMessage(Client);
             p.UserToken = UserToken;
+            if (UserToken != null || UserToken != string.Empty)
+            {
+                level.GetPlayerAvatar().SetToken(UserToken);
+                DatabaseManager.Singelton.Save(level);
+            }
             PacketManager.ProcessOutgoingPacket(p);
         }
     }
