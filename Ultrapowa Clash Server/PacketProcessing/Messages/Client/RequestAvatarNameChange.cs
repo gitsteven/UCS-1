@@ -10,7 +10,6 @@ namespace UCS.PacketProcessing
     {
         public RequestAvatarNameChange(Client client, BinaryReader br) : base(client, br)
         {
-            Decrypt();
         }
 
         public string PlayerName { get; set; }

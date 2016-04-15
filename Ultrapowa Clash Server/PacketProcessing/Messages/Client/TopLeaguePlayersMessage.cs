@@ -8,7 +8,6 @@ namespace UCS.PacketProcessing
     {
         public TopLeaguePlayersMessage(Client client, BinaryReader br) : base(client, br)
         {
-            Decrypt();
         }
 
         public override void Decode()

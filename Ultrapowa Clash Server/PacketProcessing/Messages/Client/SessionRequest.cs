@@ -20,7 +20,6 @@ namespace UCS.PacketProcessing
 
         public SessionRequest(Client client, BinaryReader br) : base(client, br)
         {
-            // This packet is unencrypted
         }
 
         public override void Decode()

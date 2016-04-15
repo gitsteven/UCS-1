@@ -9,13 +9,12 @@ namespace UCS.PacketProcessing
     {
         public RemoveFromBookmarkMessage(Client client, BinaryReader br) : base(client, br)
         {
-            Decrypt();
         }
 
         public override void Decode()
         {
             using (var br = new BinaryReader(new MemoryStream(GetData())))
-                Console.WriteLine("ID DU CLAN -> " + br.ReadInt32());
+                Console.WriteLine("ID OF CLAN -> " + br.ReadInt32());
         }
 
         public override void Process(Level level)

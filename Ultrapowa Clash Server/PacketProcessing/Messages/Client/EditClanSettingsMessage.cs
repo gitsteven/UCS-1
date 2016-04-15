@@ -20,7 +20,6 @@ namespace UCS.PacketProcessing
 
         public EditClanSettingsMessage(Client client, BinaryReader br) : base(client, br)
         {
-            Decrypt();
         }
 
         public override void Decode()

@@ -232,7 +232,7 @@ namespace UCS.Logic
             foreach (JObject jsonMember in jsonMembers)
             {
                 var id = jsonMember["avatar_id"].ToObject<long>();
-                var token = jsonMember["token"].ToObject<string>();
+                var token = UCS.Core.ResourcesManager.GetPlayer(id).GetPlayerAvatar().GetUserToken();
                 var member = new AllianceMemberEntry(id);
                 var scorem = new Level(id, token);
                 m_vScore = m_vScore + scorem.GetPlayerAvatar().GetScore();

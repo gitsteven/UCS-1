@@ -40,15 +40,14 @@ namespace UCS.Core
 
             m_vAvatarSeed = m_vDatabase.GetMaxPlayerId() + 1;
             m_vAllianceSeed = m_vDatabase.GetMaxAllianceId() + 1;
-            GetAllAlliancesFromDB();
             LoadGameFiles();
             LoadNpcLevels();
 
             var TimerItem = new Timer(Save, null, 30000, 15000);
             TimerReference = TimerItem;
-
             Console.WriteLine("[UCS]    Database Sync started successfully");
             m_vRandomSeed = new Random();
+            GetAllAlliancesFromDB();
         }
 
         public static DataTables DataTables { get; set; }

@@ -8,7 +8,6 @@ namespace UCS.PacketProcessing
     {
         public AskForAllianceWarHistoryMessage(Client client, BinaryReader br) : base(client, br)
         {
-            Decrypt();
         }
 
         private static long AllianceID { get; set; }

@@ -9,7 +9,6 @@ namespace UCS.PacketProcessing
     {
         public AddToBookmarkMessage(Client client, BinaryReader br) : base(client, br)
         {
-            Decrypt();
         }
 
         public override void Decode()

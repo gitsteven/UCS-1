@@ -9,7 +9,6 @@ namespace UCS.PacketProcessing
     {
         public FetchWarBaseMessage(Client client, BinaryReader br) : base(client, br)
         {
-            Decrypt();
         }
 
         public override void Decode()

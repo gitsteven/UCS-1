@@ -77,6 +77,7 @@ namespace UCS.Network
                 while (m_vIncomingPackets.TryDequeue(out p))
                 {
                     p.GetData();
+                    p.Decrypt();
                     Logger.WriteLine(p, "R");
                     MessageManager.ProcessPacket(p);
                 }
@@ -92,7 +93,6 @@ namespace UCS.Network
                 while (m_vOutgoingPackets.TryDequeue(out p))
                 {
                     Logger.WriteLine(p, "S");
-
                     try
                     {
                         if (p.Client.Socket != null)

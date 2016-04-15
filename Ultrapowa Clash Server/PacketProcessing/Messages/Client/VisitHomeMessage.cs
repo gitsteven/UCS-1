@@ -12,7 +12,6 @@ namespace UCS.PacketProcessing
         public VisitHomeMessage(Client client, BinaryReader br)
             : base(client, br)
         {
-            Decrypt();
         }
 
         public long AvatarId { get; set; }

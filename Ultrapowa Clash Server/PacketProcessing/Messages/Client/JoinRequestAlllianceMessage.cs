@@ -9,7 +9,6 @@ namespace UCS.PacketProcessing
         // 14317
         public JoinRequestAllianceMessage(Client client, BinaryReader br) : base(client, br)
         {
-            Decrypt();
         }
 
         public static bool Unknown1 { get; set; }

@@ -9,7 +9,6 @@ namespace UCS.PacketProcessing
     {
         public KeepAliveMessage(Client client, BinaryReader br) : base(client, br)
         {
-            Decrypt();
         }
 
         public override void Process(Level level)

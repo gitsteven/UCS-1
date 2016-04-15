@@ -43,7 +43,6 @@ namespace UCS.PacketProcessing
 
         public LoginMessage(Client client, BinaryReader br) : base(client, br)
         {
-            Decrypt();
         }
 
         public override void Decode()
@@ -150,8 +149,9 @@ namespace UCS.PacketProcessing
             Client.ClientSeed = Seed;
             ResourcesManager.LogPlayerIn(level, Client);
             level.Tick();
-            Console.WriteLine("Usetoken       : " + UserToken);
-            Console.WriteLine("Saved Usetoken : " + level.GetPlayerAvatar().GetUserToken());
+            var savedtoken = level.GetPlayerAvatar().GetUserToken();
+            if (savedtoken != null || savedtoken != string.Empty)
+                level.GetPlayerAvatar().SetToken(UserToken);
             if (level.GetPlayerAvatar().GetUserToken() == UserToken)
             {
                 var loginOk = new LoginOkMessage(Client);

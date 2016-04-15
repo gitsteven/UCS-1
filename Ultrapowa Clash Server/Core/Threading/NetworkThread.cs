@@ -20,10 +20,10 @@ namespace UCS.Core.Threading
         {
             T = new Thread(() =>
             {
-                new ResourcesManager();
-                new ObjectManager();
                 new PacketManager().Start();
                 new MessageManager().Start();
+                new ResourcesManager();
+                new ObjectManager();
                 new Gateway().Start();
 
                 //HTTP API = new HTTP(Convert.ToInt32(ConfigurationManager.AppSettings["proDebugPort"]));

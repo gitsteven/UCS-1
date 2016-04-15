@@ -14,7 +14,6 @@ namespace UCS.PacketProcessing
     {
         public SendGlobalChatLineMessage(Client client, BinaryReader br) : base(client, br)
         {
-            Decrypt();
         }
 
         public string Message { get; set; }

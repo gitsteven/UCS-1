@@ -93,7 +93,7 @@ namespace UCS.PacketProcessing
                     Client.CSNonce = PlainText.Skip(24).Take(24).ToArray();
                     SetData(PlainText.Skip(24).Skip(24).ToArray());
                 }
-                else
+                else if (m_vType != 10100)
                 {
                     Client.CSNonce = Utilities.Increment(Utilities.Increment(Client.CSNonce));
                     SetData(SecretBox.Open(new byte[16].Concat(m_vData).ToArray(), Client.CSNonce, Client.CSharedKey));
