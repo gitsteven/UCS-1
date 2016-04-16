@@ -35,7 +35,7 @@ namespace UCS.Core.Threading
                   ");
                 Console.WriteLine("[UCS]    -> This Program is made by the Ultrapowa Network Developer Team!");
                 Console.WriteLine(
-                    "[UCs]    -> You can find the source at www.ultrapowa.com and www.github.com/ultrapowa/ucs");
+                    "[UCs]    -> You can find the source at www.ultrapowa.com and https://github.com/UltraPowaDev/UCS/");
                 Console.WriteLine("[UCS]    -> Don't forget to visit www.ultrapowa.com daily for news update !");
                 Console.WriteLine("[UCS]    -> UCS is now starting...");
                 Console.WriteLine("");
