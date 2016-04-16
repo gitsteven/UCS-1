@@ -165,6 +165,37 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\API\HTTP.cs" />
+    <Compile Include="Core\Crypto\CryptoHash.cs" />
+    <Compile Include="Core\Crypto\DetachedBox.cs" />
+    <Compile Include="Core\Crypto\DynamicInvoke.cs" />
+    <Compile Include="Core\Crypto\Exceptions\AdditionalDataOutOfRangeException.cs" />
+    <Compile Include="Core\Crypto\Exceptions\BytesOutOfRangeException.cs" />
+    <Compile Include="Core\Crypto\Exceptions\KeyOutOfRangeException.cs" />
+    <Compile Include="Core\Crypto\Exceptions\MacOutOfRangeException.cs" />
+    <Compile Include="Core\Crypto\Exceptions\NonceOutOfRangeException.cs" />
+    <Compile Include="Core\Crypto\Exceptions\PersonalOutOfRangeException.cs" />
+    <Compile Include="Core\Crypto\Exceptions\SaltOutOfRangeException.cs" />
+    <Compile Include="Core\Crypto\Exceptions\SeedOutOfRangeException.cs" />
+    <Compile Include="Core\Crypto\Exceptions\SignatureOutOfRangeException .cs" />
+    <Compile Include="Core\Crypto\GenericHash.cs" />
+    <Compile Include="Core\Crypto\GenericHashAlgorithm.cs" />
+    <Compile Include="Core\Crypto\KeyPair.cs" />
+    <Compile Include="Core\Crypto\LazyInvoke.cs" />
+    <Compile Include="Core\Crypto\OneTimeAuth.cs" />
+    <Compile Include="Core\Crypto\PasswordHash.cs" />
+    <Compile Include="Core\Crypto\PublicKeyAuth.cs" />
+    <Compile Include="Core\Crypto\PublicKeyBox.cs" />
+    <Compile Include="Core\Crypto\ScalarMult.cs" />
+    <Compile Include="Core\Crypto\SealedPublicKeyBox.cs" />
+    <Compile Include="Core\Crypto\SecretAead.cs" />
+    <Compile Include="Core\Crypto\SecretAeadAes.cs" />
+    <Compile Include="Core\Crypto\SecretBox.cs" />
+    <Compile Include="Core\Crypto\SecretKeyAuth.cs" />
+    <Compile Include="Core\Crypto\ShortHash.cs" />
+    <Compile Include="Core\Crypto\SodiumCore.cs" />
+    <Compile Include="Core\Crypto\SodiumLibrary.cs" />
+    <Compile Include="Core\Crypto\StreamEncryption.cs" />
+    <Compile Include="Core\Crypto\Utilities.cs" />
     <Compile Include="Core\Performances.cs" />
     <Compile Include="Logic\Manager\ObstacleManager.cs" />
     <Compile Include="Logic\StreamEntry\InvitationStreamEntry.cs" />
@@ -208,37 +239,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Utilities\Sodium\CryptoHash.cs" />
-    <Compile Include="Utilities\Sodium\DetachedBox.cs" />
-    <Compile Include="Utilities\Sodium\DynamicInvoke.cs" />
-    <Compile Include="Utilities\Sodium\Exceptions\AdditionalDataOutOfRangeException.cs" />
-    <Compile Include="Utilities\Sodium\Exceptions\BytesOutOfRangeException.cs" />
-    <Compile Include="Utilities\Sodium\Exceptions\KeyOutOfRangeException.cs" />
-    <Compile Include="Utilities\Sodium\Exceptions\MacOutOfRangeException.cs" />
-    <Compile Include="Utilities\Sodium\Exceptions\NonceOutOfRangeException.cs" />
-    <Compile Include="Utilities\Sodium\Exceptions\PersonalOutOfRangeException.cs" />
-    <Compile Include="Utilities\Sodium\Exceptions\SaltOutOfRangeException.cs" />
-    <Compile Include="Utilities\Sodium\Exceptions\SeedOutOfRangeException.cs" />
-    <Compile Include="Utilities\Sodium\Exceptions\SignatureOutOfRangeException .cs" />
-    <Compile Include="Utilities\Sodium\GenericHash.cs" />
-    <Compile Include="Utilities\Sodium\GenericHashAlgorithm.cs" />
-    <Compile Include="Utilities\Sodium\KeyPair.cs" />
-    <Compile Include="Utilities\Sodium\LazyInvoke.cs" />
-    <Compile Include="Utilities\Sodium\OneTimeAuth.cs" />
-    <Compile Include="Utilities\Sodium\PasswordHash.cs" />
-    <Compile Include="Utilities\Sodium\PublicKeyAuth.cs" />
-    <Compile Include="Utilities\Sodium\PublicKeyBox.cs" />
-    <Compile Include="Utilities\Sodium\ScalarMult.cs" />
-    <Compile Include="Utilities\Sodium\SealedPublicKeyBox.cs" />
-    <Compile Include="Utilities\Sodium\SecretAead.cs" />
-    <Compile Include="Utilities\Sodium\SecretAeadAes.cs" />
-    <Compile Include="Utilities\Sodium\SecretBox.cs" />
-    <Compile Include="Utilities\Sodium\SecretKeyAuth.cs" />
-    <Compile Include="Utilities\Sodium\ShortHash.cs" />
-    <Compile Include="Utilities\Sodium\SodiumCore.cs" />
-    <Compile Include="Utilities\Sodium\SodiumLibrary.cs" />
-    <Compile Include="Utilities\Sodium\StreamEncryption.cs" />
-    <Compile Include="Utilities\Sodium\Utilities.cs" />
     <Compile Include="Utilities\ZLib\CRC32.cs" />
     <Compile Include="Utilities\ZLib\Deflate.cs" />
     <Compile Include="Utilities\ZLib\DeflateStream.cs" />
@@ -276,6 +276,8 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Core\Crypto\Settings.StyleCop" />
+    <None Include="Core\Crypto\Sodium.dll.config" />
     <None Include="Gamefiles\csv\animations.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -617,6 +619,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Core\Crypto\Dependencies\libsodium-64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Core\Crypto\Dependencies\libsodium.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Core\Crypto\libsodium-net.csproj" />
     <Content Include="Tools\database.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

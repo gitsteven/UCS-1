@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sodium;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -56,7 +57,8 @@ namespace UCS.PacketProcessing
         {
             if (m_vMessages.ContainsKey(packetType))
                 return Activator.CreateInstance(m_vMessages[packetType], c, br);
-
+            c.CRNonce = Utilities.Increment(Utilities.Increment(c.CRNonce));
+            c.CSNonce = Utilities.Increment(Utilities.Increment(c.CSNonce));
             Console.WriteLine("[UCS]    The message '" + packetType + "' is unhandled");
             return null;
         }

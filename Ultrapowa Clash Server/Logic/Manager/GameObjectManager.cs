@@ -288,7 +288,7 @@ namespace UCS.Logic
             jsonData.Add("last_league_rank", 2);
             jsonData.Add("last_league_shuffle", 0);
             jsonData.Add("last_season_seen", 1);
-            jsonData.Add("last_news_seen", 0);
+            jsonData.Add("last_news_seen", 9999);
             jsonData.Add("edit_mode_shown", false);
             jsonData.Add("war_tutorials_seen", 0);
             jsonData.Add("war_base", false);

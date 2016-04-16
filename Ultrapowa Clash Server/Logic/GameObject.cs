@@ -24,7 +24,7 @@ namespace UCS.Logic
         {
             get { return -1; }
         }
-
+            
         public int GlobalId { get; set; }
         public int X { get; set; }
         public int Y { get; set; }

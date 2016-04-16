@@ -48,11 +48,9 @@ namespace UCS.Logic
 
         public override JObject Save(JObject jsonObject)
         {
-            Console.WriteLine("hi");
-            if (m_vAmmo != 0)
+            if (m_vAmmo != null)
             {
                 jsonObject.Add("ammo", m_vAmmo);
-                Console.WriteLine("hi " + m_vAmmo);
             }
             return jsonObject;
         }
