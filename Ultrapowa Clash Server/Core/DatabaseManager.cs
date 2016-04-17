@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using UCS.Database;
 using UCS.Logic;
+using UCS.PacketProcessing;
 
 namespace UCS.Core
 {
@@ -186,7 +187,7 @@ namespace UCS.Core
         {
             long max = 0;
             using (var db = new ucsdbEntities(m_vConnectionString))
-                max = (from alliance in db.clan select (long?) alliance.ClanId ?? 0).DefaultIfEmpty().Max();
+                max = (from alliance in db.clan select (long?)alliance.ClanId ?? 0).DefaultIfEmpty().Max();
             return max;
         }
 
@@ -215,7 +216,7 @@ namespace UCS.Core
         {
             long max = 0;
             using (var db = new ucsdbEntities(m_vConnectionString))
-                    max = (from ep in db.player select (long?) ep.PlayerId ?? 0).DefaultIfEmpty().Max();
+                max = (from ep in db.player select (long?)ep.PlayerId ?? 0).DefaultIfEmpty().Max();
             return max;
         }
 
@@ -228,10 +229,40 @@ namespace UCS.Core
             long id = alliance.GetAllianceId();
             using (var db = new ucsdbEntities(m_vConnectionString))
             {
-                db.clan.Remove(db.clan.Find((int) id));
+                db.clan.Remove(db.clan.Find((int)id));
                 db.SaveChanges();
             }
             ObjectManager.RemoveInMemoryAlliance(id);
+        }
+
+        public void Save(Alliance alliance)
+        {
+            Debugger.WriteLine("Starting saving clan " + alliance.GetAllianceName() + " from memory to database at " +  DateTime.Now);
+            using (var context = new ucsdbEntities(m_vConnectionString))
+            {
+                context.Configuration.AutoDetectChangesEnabled = false;
+                context.Configuration.ValidateOnSaveEnabled = false;
+                var c = context.clan.Find((int)alliance.GetAllianceId());
+                if (c != null)
+                {
+                    c.LastUpdateTime = DateTime.Now;
+                    c.Data = alliance.SaveToJSON();
+                    context.Entry(c).State = EntityState.Modified;
+                }
+                else
+                {
+                    context.clan.Add(
+                        new clan
+                        {
+                            ClanId = alliance.GetAllianceId(),
+                            LastUpdateTime = DateTime.Now,
+                            Data = alliance.SaveToJSON()
+                        }
+                        );
+                }
+                context.SaveChanges();
+                Debugger.WriteLine("Finished saving clan " + alliance.GetAllianceName() + " from memory to database at " + DateTime.Now);
+            }
         }
 
         /// <summary>
@@ -347,7 +378,7 @@ namespace UCS.Core
                     foreach (var alliance in alliances)
                         lock (alliance)
                         {
-                            var c = context.clan.Find((int) alliance.GetAllianceId());
+                            var c = context.clan.Find((int)alliance.GetAllianceId());
                             if (c != null)
                             {
                                 c.LastUpdateTime = DateTime.Now;

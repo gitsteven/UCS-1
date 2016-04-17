@@ -1,4 +1,4 @@
-<appSettings>
+﻿<appSettings>
   <add key="startingGems" value="10000000" /><!-- Beware, very high value will crash UCS -->
   <add key="startingGold" value="500000000" /><!-- Beware, very high value will crash UCS -->
   <add key="startingElixir" value="500000000" /><!-- Beware, very high value will crash UCS -->
@@ -13,7 +13,7 @@
   <add key="patchingServer" value="http://yourdomain.com/patch/" /><!-- Don't forget the trailing slash -->
   <add key="maintenanceMode" value="false" /><!-- People trying to connect will see a maintenance message if set to true -->
   <add key="maintenanceTimeleft" value="1200" /><!-- Please set the time in seconds like 1200 seconds for 20 minutes -->
-  <add key="databaseConnectionName" value="sqliteEntities" /><!-- Choose ucsdbEntities for MySQL and edit ucsdbEntities connection string in ucs.exe.config. If you want to use sqLite choose sqliteEntities -->
+  <add key="databaseConnectionName" value="ucsdbEntities" /><!-- Choose ucsdbEntities for MySQL and edit ucsdbEntities connection string in ucs.exe.config. If you want to use sqLite choose sqliteEntities -->
   <add key="loggingLevel" value="5" /><!-- Enable logging for debugging, set value to 1 for (almost) no log -->
   <add key="proDebugPort" value="1173" /><!-- Choose the port for Pro API Manager, by default set value to 1173 -->
   <add key="ApiKey" value="UCSGL" /><!-- Your API Key -->

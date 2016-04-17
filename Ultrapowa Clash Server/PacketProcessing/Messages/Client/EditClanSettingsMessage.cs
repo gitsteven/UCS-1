@@ -57,6 +57,7 @@ namespace UCS.PacketProcessing
                         PacketManager.ProcessOutgoingPacket(new OwnHomeDataMessage(Client, level));
                         PacketManager.ProcessOutgoingPacket(new AllianceDataMessage(Client, alliance));
                     }
+                DatabaseManager.Singelton.Save(alliance);
             }
         }
     }
