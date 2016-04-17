@@ -215,7 +215,7 @@ namespace UCS.Core
         {
             long max = 0;
             using (var db = new ucsdbEntities(m_vConnectionString))
-                max = (from ep in db.player select (long?) ep.PlayerId ?? 0).DefaultIfEmpty().Max();
+                    max = (from ep in db.player select (long?) ep.PlayerId ?? 0).DefaultIfEmpty().Max();
             return max;
         }
 

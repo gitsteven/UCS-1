@@ -34,15 +34,13 @@ namespace UCS.Core.Threading
      'Y88888P'  88888888   888     888   T88b d88P     888 888         'Y88888P'  888P     Y888 d88P     888
                   ");
                 Console.WriteLine("[UCS]    -> This program is by the Ultrapowa Network development team.");
-                Console.WriteLine(
-                    "[UCS]    -> You can find the source at www.ultrapowa.com and https://github.com/UltraPowaDev/UCS/");
+                Console.WriteLine("[UCS]    -> You can find the source at www.ultrapowa.com and https://github.com/UltraPowaDev/UCS/");
                 Console.WriteLine("[UCS]    -> Don't forget to visit www.ultrapowa.com daily for the latest news and updates!");
                 Console.WriteLine("[UCS]    -> UCS is now starting...");
                 Console.WriteLine("");
                 if (!Directory.Exists("logs"))
                     Directory.CreateDirectory("logs");
                 Debugger.SetLogLevel(int.Parse(ConfigurationManager.AppSettings["loggingLevel"]));
-                Logger.SetLogLevel(int.Parse(ConfigurationManager.AppSettings["loggingLevel"]));
                 MemoryThread.Start();
                 NetworkThread.Start();
                 while ((Command = Console.ReadLine()) != null)

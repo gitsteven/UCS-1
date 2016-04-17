@@ -26,6 +26,7 @@ namespace UCS.Core
         public static void SetLogLevel(int level)
         {
             m_vLogLevel = level;
+            Logger.SetLogLevel(level);
         }
 
         public static int GetLogLevel()

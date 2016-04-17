@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Configuration;
+using System.Diagnostics;
 using System.Net;
+using System.Windows.Forms;
 using UCS.Core;
 using UCS.Network;
 using UCS.PacketProcessing;
@@ -41,15 +43,6 @@ namespace UCS.Helpers
                     break;
 
                 case "/restart":
-                    //Process.Start(Application.ExecutablePath);
-                    Environment.Exit(0);
-                    break;
-
-                case "/shutdown":
-                    Environment.Exit(0);
-                    break;
-
-                case "/prepareshutdown":
                     foreach (var onlinePlayer in ResourcesManager.GetOnlinePlayers())
                     {
                         var p = new ShutdownStartedMessage(onlinePlayer.GetClient());
@@ -57,6 +50,23 @@ namespace UCS.Helpers
                         PacketManager.ProcessOutgoingPacket(p);
                     }
                     Console.WriteLine("Shutdown Message Initiated!");
+                    DatabaseManager.Singelton.Save(ResourcesManager.GetInMemoryLevels());
+                    DatabaseManager.Singelton.Save(ObjectManager.GetInMemoryAlliances());
+                    Process.Start(Application.ExecutablePath);
+                    Environment.Exit(0);
+                    break;
+
+                case "/shutdown":
+                    foreach (var onlinePlayer in ResourcesManager.GetOnlinePlayers())
+                    {
+                        var p = new ShutdownStartedMessage(onlinePlayer.GetClient());
+                        p.SetCode(5);
+                        PacketManager.ProcessOutgoingPacket(p);
+                    }
+                    Console.WriteLine("Shutdown Message Initiated!");
+                    DatabaseManager.Singelton.Save(ResourcesManager.GetInMemoryLevels());
+                    DatabaseManager.Singelton.Save(ObjectManager.GetInMemoryAlliances());
+                    Environment.Exit(0);
                     break;
 
                 default:

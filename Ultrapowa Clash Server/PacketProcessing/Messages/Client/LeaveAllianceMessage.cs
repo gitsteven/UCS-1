@@ -59,6 +59,7 @@ namespace UCS.PacketProcessing
             }
             level.GetPlayerAvatar().SetAllianceId(0);
             PacketManager.ProcessOutgoingPacket(new LeaveAllianceOkMessage(Client, alliance));
+            DatabaseManager.Singelton.Save(level);
         }
     }
 }
