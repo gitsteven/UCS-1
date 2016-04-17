@@ -22,11 +22,10 @@
 ##### Libsodium  requires the Visual C++ Redistributable for Visual Studio 2015.. If its not installed Sodium.SodiumCore will throw a DllNotFoundException. [***Download Here***](https://www.microsoft.com/en-us/download/details.aspx?id=48145).
 # Download
 
-**This file contains all projects going on with ULTRAPOWA. Which includes Proxy, Server, SC editor, Keygen etc. All these were compiled as of APR 8th 2016**
+**This file contains all projects going on with ULTRAPOWA. Which includes Proxy, Server, SC editor, Keygen etc. All these were compiled as of APR 17th 2016**
 
-* Ultrapowa Projects   => http://bit.ly/Ultrapowa-08-04-2016
+* Ultrapowa Projects   => http://bit.ly/Ultrapowa-Latest-Projects
 * APK                  => http://bit.ly/UCS-0650-APK
-* UCS (With Obstacles) => http://bit.ly/Server-with-obstacles    [***What is this?***](https://smartclashcoc.com/ucs-1.html).
 
 # License
 Ultrapowa Clash Server is free software: you can redistribute it and/or modify
