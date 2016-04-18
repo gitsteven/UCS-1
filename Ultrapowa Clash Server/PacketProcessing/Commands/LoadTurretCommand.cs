@@ -11,7 +11,7 @@ namespace UCS.PacketProcessing
     {
         public LoadTurretCommand(BinaryReader br)
         {
-            m_vUnknown1 = br.ReadUInt32WithEndian();
+
             m_vBuildingId = br.ReadInt32WithEndian(); //buildingId - 0x1DCD6500;
             m_vUnknown2 = br.ReadUInt32WithEndian();
             Debugger.WriteLine(string.Format("U1: {0}, BId {1}, U2: {2}", m_vUnknown1, m_vBuildingId, m_vUnknown2), null,

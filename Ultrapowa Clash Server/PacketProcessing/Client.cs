@@ -21,7 +21,6 @@ namespace UCS.PacketProcessing
             CState = 0;
         }
 
-        public int ClientSeed { get; set; }
         public byte[] CPublicKey { get; set; }
         public byte[] CSessionKey { get; set; }
         public byte[] CSNonce { get; set; }

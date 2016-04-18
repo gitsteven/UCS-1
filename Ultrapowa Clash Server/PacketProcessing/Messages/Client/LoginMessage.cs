@@ -146,7 +146,6 @@ namespace UCS.PacketProcessing
                 }
             }
 
-            Client.ClientSeed = Seed;
             ResourcesManager.LogPlayerIn(level, Client);
             level.Tick();
             var savedtoken = level.GetPlayerAvatar().GetUserToken();
@@ -163,8 +162,7 @@ namespace UCS.PacketProcessing
                 loginOk.SetContentVersion(ContentVersion);
                 loginOk.SetServerEnvironment("prod");
                 loginOk.SetDaysSinceStartedPlaying(10);
-                loginOk.SetServerTime(
-                    Math.Round(level.GetTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds * 1000).ToString());
+                loginOk.SetServerTime(Math.Round(level.GetTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds * 1000).ToString());
                 loginOk.SetAccountCreatedDate("1414003838000");
                 loginOk.SetStartupCooldownSeconds(0);
                 loginOk.SetCountryCode("EN");

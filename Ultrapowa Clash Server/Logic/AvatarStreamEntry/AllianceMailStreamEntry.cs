@@ -16,14 +16,12 @@ namespace UCS.Logic
             var data = new List<byte>();
 
             data.AddRange(base.Encode());
-            data.AddInt32(2);
             data.AddString(m_vMessage);
-            data.Add(1);
             data.AddInt64(m_vSenderId);
+            System.Console.WriteLine(m_vSenderId);
             data.AddInt64(m_vAllianceId);
             data.AddString(m_vAllianceName);
             data.AddInt32(m_vAllianceBadgeData);
-            data.AddInt32(-1);
 
             return data.ToArray();
         }

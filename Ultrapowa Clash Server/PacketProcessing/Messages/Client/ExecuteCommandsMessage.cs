@@ -27,7 +27,7 @@ namespace UCS.PacketProcessing
                 Checksum = br.ReadUInt32WithEndian();
                 NumberOfCommands = br.ReadUInt32WithEndian();
 
-                if (NumberOfCommands > 0)
+                if (NumberOfCommands > 0 && NumberOfCommands < 20)
                 {
                     NestedCommands = br.ReadBytes(GetLength());
                 }
@@ -40,7 +40,7 @@ namespace UCS.PacketProcessing
             {
                 level.Tick();
 
-                if (NumberOfCommands > 0)
+                if (NumberOfCommands > 0 && NumberOfCommands < 20)
                     using (var br = new BinaryReader(new MemoryStream(NestedCommands)))
                         for (var i = 0; i < NumberOfCommands; i++)
                         {

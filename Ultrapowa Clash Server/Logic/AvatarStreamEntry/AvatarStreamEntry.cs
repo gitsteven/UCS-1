@@ -23,16 +23,14 @@ namespace UCS.Logic
         public virtual byte[] Encode()
         {
             var data = new List<byte>();
-
-            data.AddInt32(GetStreamEntryType()); //alliancemailstreamentry
-
-            data.AddInt32(0);
-            data.AddInt32(m_vId);
+            data.AddInt32(GetStreamEntryType());//alliancemailstreamentry
+            data.Add(0);
             data.AddInt64(m_vSenderId);
             data.AddString(m_vSenderName);
+            data.AddInt32(m_vId);
             data.AddInt32(m_vSenderLevel);
             data.AddInt32(m_vSenderLeagueId);
-            //data.Add(m_vIsNew);
+            data.Add(m_vIsNew);
             return data.ToArray();
         }
 

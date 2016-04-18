@@ -23,13 +23,7 @@ namespace UCS.PacketProcessing
         public override void Process(Level level)
         {
             var alliance = ObjectManager.GetAlliance(level.GetPlayerAvatar().GetAllianceId());
-            alliance.RemoveMember(level.GetPlayerAvatar().GetId());
-
-            if (alliance.GetAllianceMembers().Count == 0)
-            {
-                DatabaseManager.Singelton.RemoveAlliance(alliance);
-            }
-            else if (level.GetPlayerAvatar().GetAllianceRole() == 2)
+            if (level.GetPlayerAvatar().GetAllianceRole() == 2 && alliance.GetAllianceMembers().Count != 0)
             {
                 var members = alliance.GetAllianceMembers();
                 foreach (var player in members.Where(player => player.GetRole() >= 3))
@@ -57,6 +51,10 @@ namespace UCS.PacketProcessing
                     }
                 }
             }
+            else if (alliance.GetAllianceMembers().Count == 0)
+            DatabaseManager.Singelton.RemoveAlliance(alliance);
+
+            alliance.RemoveMember(level.GetPlayerAvatar().GetId());
             level.GetPlayerAvatar().SetAllianceId(0);
             PacketManager.ProcessOutgoingPacket(new LeaveAllianceOkMessage(Client, alliance));
             DatabaseManager.Singelton.Save(level);
