@@ -26,14 +26,10 @@ namespace UCS.PacketProcessing
 
         public override void Execute(Level level)
         {
-            var ca = level.GetPlayerAvatar();
             var go = level.GameObjectManager.GetGameObjectByID(m_vBuildingId);
             if (go != null)
                 if (go.GetComponent(1, true) != null)
-                {
-                    ((CombatComponent) go.GetComponent(1, true)).FillAmmo();
-                    Console.WriteLine("La defense a était recharger");
-                }
+                    ((CombatComponent)go.GetComponent(1, true)).FillAmmo();
         }
     }
 }
