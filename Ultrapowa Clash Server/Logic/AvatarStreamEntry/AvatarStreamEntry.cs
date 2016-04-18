@@ -24,12 +24,13 @@ namespace UCS.Logic
         {
             var data = new List<byte>();
             data.AddInt32(GetStreamEntryType());//alliancemailstreamentry
-            data.Add(0);
+            data.AddInt64(m_vId);
+            data.Add(1);
             data.AddInt64(m_vSenderId);
             data.AddString(m_vSenderName);
-            data.AddInt32(m_vId);
             data.AddInt32(m_vSenderLevel);
             data.AddInt32(m_vSenderLeagueId);
+            data.AddInt32(0);
             data.Add(m_vIsNew);
             return data.ToArray();
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UCS.Helpers;
 
 namespace UCS.Logic
@@ -9,7 +10,7 @@ namespace UCS.Logic
         private long m_vAllianceId;
         private string m_vAllianceName;
         private string m_vMessage;
-        private long m_vSenderId;
+        private long m_vSenderId;   
 
         public override byte[] Encode()
         {
@@ -17,12 +18,9 @@ namespace UCS.Logic
 
             data.AddRange(base.Encode());
             data.AddString(m_vMessage);
-            data.AddInt64(m_vSenderId);
-            System.Console.WriteLine(m_vSenderId);
             data.AddInt64(m_vAllianceId);
             data.AddString(m_vAllianceName);
             data.AddInt32(m_vAllianceBadgeData);
-
             return data.ToArray();
         }
 
