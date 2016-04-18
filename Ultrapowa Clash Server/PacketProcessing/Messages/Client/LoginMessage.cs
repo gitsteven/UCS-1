@@ -172,11 +172,10 @@ namespace UCS.PacketProcessing
                     level.GetPlayerAvatar().SetLeagueId(22);
 
                 var alliance = ObjectManager.GetAlliance(level.GetPlayerAvatar().GetAllianceId());
+                PacketManager.ProcessOutgoingPacket(new OwnHomeDataMessage(Client, level));
                 if (alliance == null)
                     level.GetPlayerAvatar().SetAllianceId(0);
-
-                PacketManager.ProcessOutgoingPacket(new OwnHomeDataMessage(Client, level));
-                if (alliance != null)
+                else
                     PacketManager.ProcessOutgoingPacket(new AllianceStreamMessage(Client, alliance));
                 PacketManager.ProcessOutgoingPacket(new BookmarkMessage(Client));
             }
