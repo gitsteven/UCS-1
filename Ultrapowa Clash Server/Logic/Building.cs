@@ -25,7 +25,7 @@ namespace UCS.Logic
                 else
                     AddComponent(new UnitStorageComponent(this, 0));
             }
-            if (GetBuildingData().Damage[0] > 0 || GetBuildingData().Column == "Dark Tower" || GetBuildingData().Column == "Bow")
+            if (GetBuildingData().Damage[0] > 0 || GetBuildingData().BuildingClass == "Defense")
                 AddComponent(new CombatComponent(this, level));
             if (GetBuildingData().ProducesResource != null && GetBuildingData().ProducesResource != string.Empty)
             {
