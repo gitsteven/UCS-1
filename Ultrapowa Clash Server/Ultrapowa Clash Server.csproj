@@ -921,7 +921,6 @@
     <Compile Include="Logic\StreamEntry\ChatStreamEntry.cs" />
     <Compile Include="Logic\Village.cs" />
     <Compile Include="PacketProcessing\Messages\Client\PromoteAllianceMemberMessage.cs" />
-    <Compile Include="PacketProcessing\MessageWriter.cs" />
     <Compile Include="Logic\Alliance.cs" />
     <Compile Include="Core\ObjectManager.cs" />
   </ItemGroup>

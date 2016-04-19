@@ -15,7 +15,6 @@ namespace UCS.Logic
             var data = new List<byte>();
 
             data.AddRange(base.Encode());
-            data.AddInt32(2);
             data.AddString(m_vMessage);
             data.AddInt64(m_vAllianceId);
             data.AddString(m_vAllianceName);

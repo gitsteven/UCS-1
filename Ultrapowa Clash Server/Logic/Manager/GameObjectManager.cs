@@ -295,7 +295,7 @@ namespace UCS.Logic
             jsonData.Add("help_opened", false);
             jsonData.Add("bool_layout_edit_shown_erase", false);
 
-            m_vObstacleManager.Save(jsonData);
+            //m_vObstacleManager.Save(jsonData);
 
             return jsonData;
         }
