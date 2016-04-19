@@ -18,9 +18,11 @@ namespace UCS.Logic
 
             data.AddRange(base.Encode());
             data.AddString(m_vMessage);
+            data.Add(0);
             data.AddInt64(m_vAllianceId);
             data.AddString(m_vAllianceName);
             data.AddInt32(m_vAllianceBadgeData);
+            
             return data.ToArray();
         }
 
