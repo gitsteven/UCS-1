@@ -78,18 +78,15 @@ namespace UCS.PacketProcessing
                         eventStreamEntry.SetEventType(1);
                         eventStreamEntry.SetAvatarId(requesterAvatar.GetId());
                         eventStreamEntry.SetAvatarName(requesterAvatar.GetAvatarName());
-
                         alliance.AddChatMessage(eventStreamEntry);
 
                         foreach (var onlinePlayer in ResourcesManager.GetOnlinePlayers())
-                        {
                             if (onlinePlayer.GetPlayerAvatar().GetAllianceId() == requesterAllianceId)
                             {
                                 var p = new AllianceStreamEntryMessage(onlinePlayer.GetClient());
                                 p.SetStreamEntry(eventStreamEntry);
                                 PacketManager.ProcessOutgoingPacket(p);
                             }
-                        }
                     }
                 }
             }

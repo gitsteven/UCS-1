@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using UCS.Core;
 using UCS.Helpers;
 using UCS.Logic;
@@ -36,7 +37,23 @@ namespace UCS.PacketProcessing
                 {
                     target.GetPlayerAvatar().SetAllianceRole(m_vRole);
                     if (m_vRole == 2)
+                    {
                         player.SetAllianceRole(4);
+                        var eventStreamEntry = new AllianceEventStreamEntry();
+                        eventStreamEntry.SetId((int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+                        eventStreamEntry.SetAvatar(player);
+                        eventStreamEntry.SetEventType(6);
+                        eventStreamEntry.SetAvatarId(target.GetPlayerAvatar().GetId());
+                        eventStreamEntry.SetAvatarName(target.GetPlayerAvatar().GetAvatarName());
+                        alliance.AddChatMessage(eventStreamEntry);
+                        foreach (var onlinePlayer in ResourcesManager.GetOnlinePlayers())
+                            if (onlinePlayer.GetPlayerAvatar().GetAllianceId() == target.GetPlayerAvatar().GetAllianceId())
+                            {
+                                var p = new AllianceStreamEntryMessage(onlinePlayer.GetClient());
+                                p.SetStreamEntry(eventStreamEntry);
+                                PacketManager.ProcessOutgoingPacket(p);
+                            }
+                    }
                 }
             // PacketManager.ProcessOutgoingPacket(new AllianceDataMessage(Client, alliance));
             PacketManager.ProcessOutgoingPacket(new PromoteAllianceMemberOkMessage(Client, target, this));
