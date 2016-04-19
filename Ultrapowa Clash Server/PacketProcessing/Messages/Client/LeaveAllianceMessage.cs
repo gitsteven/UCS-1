@@ -52,8 +52,6 @@ namespace UCS.PacketProcessing
                     }
                 }
             }
-            else if (alliance.GetAllianceMembers().Count == 0)
-            DatabaseManager.Singelton.RemoveAlliance(alliance);
 
             alliance.RemoveMember(level.GetPlayerAvatar().GetId());
             level.GetPlayerAvatar().SetAllianceId(0);
@@ -73,6 +71,8 @@ namespace UCS.PacketProcessing
                     PacketManager.ProcessOutgoingPacket(p);
                 }
             PacketManager.ProcessOutgoingPacket(new LeaveAllianceOkMessage(Client, alliance));
+            if (alliance.GetAllianceMembers().Count == 0)
+                DatabaseManager.Singelton.RemoveAlliance(alliance);
             DatabaseManager.Singelton.Save(level);
         }
     }
