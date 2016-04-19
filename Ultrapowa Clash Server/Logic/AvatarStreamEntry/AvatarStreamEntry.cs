@@ -30,7 +30,7 @@ namespace UCS.Logic
             data.AddString(m_vSenderName);
             data.AddInt32(m_vSenderLevel);
             data.AddInt32(m_vSenderLeagueId);
-            data.AddInt32(0);
+            data.AddInt32(10);
             data.Add(m_vIsNew);
             return data.ToArray();
         }

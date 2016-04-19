@@ -79,7 +79,9 @@ namespace UCS.GameFiles
         public int BurstCount { get; set; }
 
         public int BurstDelay { get; set; }
+
         public string Column { get; set; }
+
         public bool CanNotSellLast { get; set; }
 
         public string CoolDownOverride { get; set; }
