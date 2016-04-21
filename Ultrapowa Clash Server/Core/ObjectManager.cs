@@ -114,10 +114,11 @@ namespace UCS.Core
         /// </summary>
         public static void GetAllAlliancesFromDB()
         {
-            for (var i = 0; i < m_vDatabase.GetAllAlliances().Count; i++)
+            var alliances = m_vDatabase.GetAllAlliances();
+            foreach (Alliance t in alliances)
             {
-                if (!m_vAlliances.ContainsKey(m_vDatabase.GetAllAlliances()[i].GetAllianceId()))
-                    m_vAlliances.Add(m_vDatabase.GetAllAlliances()[i].GetAllianceId(), m_vDatabase.GetAllAlliances()[i]);
+                if (!m_vAlliances.ContainsKey(t.GetAllianceId()))
+                    m_vAlliances.Add(t.GetAllianceId(), t);
             }
         }
 

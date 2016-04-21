@@ -38,7 +38,7 @@ namespace UCS.PacketProcessing
                     var count = alliance.GetAllianceMembers().Count;
                     var rnd = new Random();
                     var id = rnd.Next(1, count);
-                    while (id != level.GetPlayerAvatar().GetId())
+                    while (id == level.GetPlayerAvatar().GetId())
                         id = rnd.Next(1, count);
                     var loop = 0;
                     foreach (var player in members)
@@ -55,7 +55,8 @@ namespace UCS.PacketProcessing
 
             alliance.RemoveMember(avatar.GetId());
             avatar.SetAllianceId(0);
-            if (alliance.GetAllianceMembers().Count != 0)
+            
+            if (alliance.GetAllianceMembers().Count > 0)
             {
                 var eventStreamEntry = new AllianceEventStreamEntry();
                 eventStreamEntry.SetId((int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);

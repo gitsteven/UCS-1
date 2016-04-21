@@ -38,11 +38,11 @@ namespace UCS.PacketProcessing
             m_vMessages.Add(14322, typeof (AllianceInviteMessage));
             m_vMessages.Add(14324, typeof (SearchAlliancesMessage));
             m_vMessages.Add(14325, typeof (AskForAvatarProfileMessage));
-            m_vMessages.Add(14331, typeof (AskForAllianceWarDataMessage));
-            m_vMessages.Add(14336, typeof (AskForAllianceWarHistoryMessage));
-            m_vMessages.Add(14341, typeof (AskForBookmarkMessage));
-            m_vMessages.Add(14343, typeof (AddToBookmarkMessage));
-            m_vMessages.Add(14344, typeof (RemoveFromBookmarkMessage));
+            //m_vMessages.Add(14331, typeof (AskForAllianceWarDataMessage));
+            //m_vMessages.Add(14336, typeof (AskForAllianceWarHistoryMessage));
+            //m_vMessages.Add(14341, typeof (AskForBookmarkMessage));
+            //m_vMessages.Add(14343, typeof (AddToBookmarkMessage));
+            //m_vMessages.Add(14344, typeof (RemoveFromBookmarkMessage));
             m_vMessages.Add(14715, typeof (SendGlobalChatLineMessage));
             m_vMessages.Add(14401, typeof (TopGlobalAlliancesMessage));
             m_vMessages.Add(14402, typeof (TopLocalAlliancesMessage));
@@ -57,8 +57,10 @@ namespace UCS.PacketProcessing
         {
             if (m_vMessages.ContainsKey(packetType))
                 return Activator.CreateInstance(m_vMessages[packetType], c, br);
+
             c.CRNonce = Utilities.Increment(Utilities.Increment(c.CRNonce));
             c.CSNonce = Utilities.Increment(Utilities.Increment(c.CSNonce));
+
             Console.WriteLine("[UCS]    The message '" + packetType + "' is unhandled");
             return null;
         }

@@ -21,7 +21,6 @@ namespace UCS.PacketProcessing
             var pack = new List<byte>();
 
             var allianceMembers = m_vAlliance.GetAllianceMembers(); //avoid concurrent access issues
-
             pack.AddRange(m_vAlliance.EncodeFullEntry());
             pack.AddString(m_vAlliance.GetAllianceDescription());
             pack.AddInt32(0);

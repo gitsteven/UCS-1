@@ -37,8 +37,6 @@ namespace UCS.Core
         {
             try
             {
-                Debugger.WriteLine("[UCS][UCSDB] Saving new account to database (player id: " +
-                                   l.GetPlayerAvatar().GetId() + ")");
                 using (var db = new ucsdbEntities(m_vConnectionString))
                 {
                     db.player.Add(
@@ -58,7 +56,7 @@ namespace UCS.Core
             }
             catch (Exception ex)
             {
-                Debugger.WriteLine("[UCS][UCSDB] An exception occured during CreateAccount processing :", ex);
+                Debugger.WriteLine("[UCS]    An exception occured during CreateAccount processing :", ex);
             }
         }
 
@@ -85,7 +83,7 @@ namespace UCS.Core
             }
             catch (Exception ex)
             {
-                Debugger.WriteLine("[UCS][UCSDB] An exception occured during CreateAlliance processing :", ex);
+                Debugger.WriteLine("[UCS]    An exception occured during CreateAlliance processing :", ex);
             }
         }
 
@@ -117,7 +115,7 @@ namespace UCS.Core
             }
             catch (Exception ex)
             {
-                Debugger.WriteLine("[UCS][UCSDB] An exception occured during GetAccount processing :", ex);
+                Debugger.WriteLine("[UCS]    An exception occured during GetAccount processing :", ex);
             }
             return account;
         }
@@ -144,7 +142,7 @@ namespace UCS.Core
             }
             catch (Exception ex)
             {
-                Debugger.WriteLine("[UCS][UCSDB] An exception occured during GetAlliance processing :", ex);
+                Debugger.WriteLine("[UCS]    An exception occured during GetAlliance processing :", ex);
             }
             return alliance;
         }
@@ -163,18 +161,20 @@ namespace UCS.Core
                 using (var db = new ucsdbEntities(m_vConnectionString))
                 {
                     var a = db.clan;
-
+                    var count = 0;
                     foreach (var c in a)
                     {
                         var alliance = new Alliance();
                         alliance.LoadFromJSON(c.Data);
                         alliances.Add(alliance);
+                        if (count++ >= 200)
+                            break;
                     }
                 }
             }
             catch (Exception ex)
             {
-                Debugger.WriteLine("An exception occured during GetAlliance processing:", ex);
+                Debugger.WriteLine("[UCS]    An exception occured during GetAlliance processing:", ex);
             }
             return alliances;
         }
@@ -199,12 +199,7 @@ namespace UCS.Core
         {
             var ids = new List<long>();
             using (var db = new ucsdbEntities(m_vConnectionString))
-            {
-                foreach (var p in db.player)
-                {
-                    ids.Add(p.PlayerId);
-                }
-            }
+                ids.AddRange(db.player.Select(p => p.PlayerId));
             return ids;
         }
 
@@ -237,7 +232,6 @@ namespace UCS.Core
 
         public void Save(Alliance alliance)
         {
-            Debugger.WriteLine("Starting saving clan " + alliance.GetAllianceName() + " from memory to database at " +  DateTime.Now);
             using (var context = new ucsdbEntities(m_vConnectionString))
             {
                 context.Configuration.AutoDetectChangesEnabled = false;
@@ -261,7 +255,6 @@ namespace UCS.Core
                         );
                 }
                 context.SaveChanges();
-                Debugger.WriteLine("Finished saving clan " + alliance.GetAllianceName() + " from memory to database at " + DateTime.Now);
             }
         }
 
@@ -271,9 +264,6 @@ namespace UCS.Core
         /// <param name="avatar">The level of the player.</param>
         public void Save(Level avatar)
         {
-            Debugger.WriteLine(
-                "Starting saving player " + avatar.GetPlayerAvatar().GetAvatarName() + " from memory to database at " +
-                DateTime.Now, null, 4);
             var context = new ucsdbEntities(m_vConnectionString);
             context.Configuration.AutoDetectChangesEnabled = false;
             context.Configuration.ValidateOnSaveEnabled = false;
@@ -304,9 +294,6 @@ namespace UCS.Core
                     );
             }
             context.SaveChanges();
-            Debugger.WriteLine(
-                "Finished saving player " + avatar.GetPlayerAvatar().GetAvatarName() + " from memory to database at " +
-                DateTime.Now, null, 4);
         }
 
         public void Save(List<Level> avatars)
@@ -354,11 +341,10 @@ namespace UCS.Core
                     }
                     context.SaveChanges();
                 }
-                Debugger.WriteLine("[UCS][UCSDB] All players in memory has been saved to database at " + DateTime.Now);
             }
             catch (Exception ex)
             {
-                Debugger.WriteLine("[UCS][UCSDB] An exception occured during Save processing for avatars :", ex);
+                Debugger.WriteLine("[UCS]    An exception occured during Save processing for avatars :", ex);
             }
         }
 
@@ -405,11 +391,10 @@ namespace UCS.Core
                     }
                     context.SaveChanges();
                 }
-                Debugger.WriteLine("[UCS][UCSDB] All alliances in memory has been saved to database at " + DateTime.Now);
             }
             catch (Exception ex)
             {
-                Debugger.WriteLine("[UCS][UCSDB] An exception occured during Save processing for alliances :", ex);
+                Debugger.WriteLine("[UCS]    An exception occured during Save processing for alliances :", ex);
             }
         }
     }

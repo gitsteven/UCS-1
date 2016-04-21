@@ -19,7 +19,7 @@ namespace UCS.Core.Threading
             T = new Thread(() =>
             {
                 var t = new Timer();
-                t.Interval = 2500;
+                t.Interval = 10000; // 10 Seconds
                 t.Elapsed += (s, a) =>
                 {
                     GC.Collect(GC.MaxGeneration);

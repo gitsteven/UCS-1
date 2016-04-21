@@ -46,20 +46,17 @@ namespace UCS.Core
                     var pl = p.Client.GetLevel();
                     var player = "";
                     if (pl != null)
-                        player += " (" + pl.GetPlayerAvatar().GetId() + ", " + pl.GetPlayerAvatar().GetAvatarName() +
-                                  ")";
+                        player += " (" + pl.GetPlayerAvatar().GetAvatarName() + ")";
                     try
                     {
-                        Debugger.WriteLine("[UCS][" + p.GetMessageType() + "] Processing " + p.GetType().Name + player);
+                        Debugger.WriteLine("[UCS]    Processing " + p.GetType().Name + player);
                         p.Decode();
                         p.Process(pl);
                     }
                     catch (Exception ex)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Debugger.WriteLine(
-                            "[UCS][" + p.GetMessageType() + "] An exception occured during processing of message " +
-                            p.GetType().Name + player, ex);
+                        Debugger.WriteLine("[UCS]    An exception occured during processing of message " + p.GetType().Name + " : ", ex);
                         Console.ResetColor();
                     }
                 }
