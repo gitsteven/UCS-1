@@ -26,10 +26,8 @@
 **This file contains all projects going on with ULTRAPOWA which includes Proxy, Server, SC editor, Keygen etc. All these were compiled as of APR 17th 2016**
 
 * Ultrapowa Projects   => http://bit.ly/Ultrapowa-Latest-Projects
-* APK                  => http://bit.ly/1SmNBnL
+* APK                  => http://bit.ly/1SmNBnL ***Create your custom APK [Click Here](https://github.com/smartclash/UCS/wiki/Creating-an-custom-APK)***
  
-APK was compiled at APR 17th 2016 and now working with Android 5.0+ too. NOTE: It has patched libg.so to work with UCS and dual-apk feature added. You will have to add your own hostname / IP to make it connect. Android 5.0+ fix added by PatrikCoC.
-
 # License
 Ultrapowa Clash Server is a free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
