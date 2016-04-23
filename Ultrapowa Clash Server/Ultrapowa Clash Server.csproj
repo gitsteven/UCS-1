@@ -66,6 +66,7 @@
     <DocumentationFile>
     </DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <SkipPostSharp>True</SkipPostSharp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -128,7 +129,7 @@
     <TargetZone>Internet</TargetZone>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
