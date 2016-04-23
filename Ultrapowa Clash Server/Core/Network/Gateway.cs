@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -111,10 +122,10 @@ namespace UCS.Network
                 WebClient c = new WebClient();
                 c.DownloadStringCompleted += (sender, e) =>
                 {
-                    Console.WriteLine("[UCS]    Client connected (" + ((IPEndPoint)clientSocket.RemoteEndPoint).Address + ", " + e.Result.Trim() + ")");
+                    Console.WriteLine("[UCS]    Client connected (" + ((IPEndPoint) clientSocket.RemoteEndPoint).Address + ", " + e.Result.Trim() + ")");
                 };
-                c.DownloadStringAsync(new Uri("http://ipinfo.io/" + ((IPEndPoint)clientSocket.RemoteEndPoint).Address + "/country"));
-                ResourcesManager.AddClient(new Client(clientSocket), ((IPEndPoint)clientSocket.RemoteEndPoint).Address.ToString());
+                c.DownloadStringAsync(new Uri("http://ipinfo.io/" + ((IPEndPoint) clientSocket.RemoteEndPoint).Address + "/country"));
+                ResourcesManager.AddClient(new Client(clientSocket), ((IPEndPoint) clientSocket.RemoteEndPoint).Address.ToString());
                 SocketRead.Begin(clientSocket, OnReceive, OnReceiveError);
             }
             catch (Exception e)

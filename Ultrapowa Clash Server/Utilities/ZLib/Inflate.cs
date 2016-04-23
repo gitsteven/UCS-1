@@ -1,3 +1,13 @@
+/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
 // Inflate.cs ------------------------------------------------------------------
 //
 // Copyright (c) 2009 Dino Chiesa and Microsoft Corporation. All rights reserved.
@@ -238,7 +248,8 @@ namespace Ionic.Zlib
                     if (writeAt == end)
                         writeAt = 0;
                 }
-                else pass++;
+                else
+                    pass++;
             }
 
             // done
@@ -303,7 +314,7 @@ namespace Ionic.Zlib
                         t = b & 7;
                         last = t & 1;
 
-                        switch ((uint)t >> 1)
+                        switch ((uint) t >> 1)
                         {
                             case 0: // stored
                                 b >>= 3;
@@ -891,7 +902,7 @@ namespace Ionic.Zlib
         // waiting for "i:"=input, "o:"=output, "x:"=nothing
         private const int START = 0; // x: set up for LEN
 
-                                     // o: got literal, waiting for output space
+        // o: got literal, waiting for output space
         private const int WASH = 7;
 
         #endregion Private Fields
@@ -958,7 +969,7 @@ namespace Ionic.Zlib
                     b >>= tp[tp_index_t_3 + 1];
                     k -= tp[tp_index_t_3 + 1];
 
-                    s.window[q++] = (byte)tp[tp_index_t_3 + 2];
+                    s.window[q++] = (byte) tp[tp_index_t_3 + 2];
                     m--;
                     continue;
                 }
@@ -1119,7 +1130,7 @@ namespace Ionic.Zlib
                         {
                             b >>= tp[tp_index_t_3 + 1];
                             k -= tp[tp_index_t_3 + 1];
-                            s.window[q++] = (byte)tp[tp_index_t_3 + 2];
+                            s.window[q++] = (byte) tp[tp_index_t_3 + 2];
                             m--;
                             break;
                         }
@@ -1184,8 +1195,8 @@ namespace Ionic.Zlib
         internal void Init(int bl, int bd, int[] tl, int tl_index, int[] td, int td_index)
         {
             mode = START;
-            lbits = (byte)bl;
-            dbits = (byte)bd;
+            lbits = (byte) bl;
+            dbits = (byte) bd;
             ltree = tl;
             ltree_index = tl_index;
             dtree = td;
@@ -1526,7 +1537,7 @@ namespace Ionic.Zlib
                         }
                         r = ZlibConstants.Z_OK;
 
-                        blocks.window[q++] = (byte)lit;
+                        blocks.window[q++] = (byte) lit;
                         m--;
 
                         mode = START;
@@ -1718,7 +1729,8 @@ namespace Ionic.Zlib
                 switch (mode)
                 {
                     case InflateManagerMode.METHOD:
-                        if (_codec.AvailableBytesIn == 0) return r;
+                        if (_codec.AvailableBytesIn == 0)
+                            return r;
                         r = f;
                         _codec.AvailableBytesIn--;
                         _codec.TotalBytesIn++;
@@ -1740,7 +1752,8 @@ namespace Ionic.Zlib
                         break;
 
                     case InflateManagerMode.FLAG:
-                        if (_codec.AvailableBytesIn == 0) return r;
+                        if (_codec.AvailableBytesIn == 0)
+                            return r;
                         r = f;
                         _codec.AvailableBytesIn--;
                         _codec.TotalBytesIn++;
@@ -1760,39 +1773,43 @@ namespace Ionic.Zlib
                         break;
 
                     case InflateManagerMode.DICT4:
-                        if (_codec.AvailableBytesIn == 0) return r;
+                        if (_codec.AvailableBytesIn == 0)
+                            return r;
                         r = f;
                         _codec.AvailableBytesIn--;
                         _codec.TotalBytesIn++;
-                        expectedCheck = (uint)((_codec.InputBuffer[_codec.NextIn++] << 24) & 0xff000000);
+                        expectedCheck = (uint) ((_codec.InputBuffer[_codec.NextIn++] << 24) & 0xff000000);
                         mode = InflateManagerMode.DICT3;
                         break;
 
                     case InflateManagerMode.DICT3:
-                        if (_codec.AvailableBytesIn == 0) return r;
+                        if (_codec.AvailableBytesIn == 0)
+                            return r;
                         r = f;
                         _codec.AvailableBytesIn--;
                         _codec.TotalBytesIn++;
-                        expectedCheck += (uint)((_codec.InputBuffer[_codec.NextIn++] << 16) & 0x00ff0000);
+                        expectedCheck += (uint) ((_codec.InputBuffer[_codec.NextIn++] << 16) & 0x00ff0000);
                         mode = InflateManagerMode.DICT2;
                         break;
 
                     case InflateManagerMode.DICT2:
 
-                        if (_codec.AvailableBytesIn == 0) return r;
+                        if (_codec.AvailableBytesIn == 0)
+                            return r;
                         r = f;
                         _codec.AvailableBytesIn--;
                         _codec.TotalBytesIn++;
-                        expectedCheck += (uint)((_codec.InputBuffer[_codec.NextIn++] << 8) & 0x0000ff00);
+                        expectedCheck += (uint) ((_codec.InputBuffer[_codec.NextIn++] << 8) & 0x0000ff00);
                         mode = InflateManagerMode.DICT1;
                         break;
 
                     case InflateManagerMode.DICT1:
-                        if (_codec.AvailableBytesIn == 0) return r;
+                        if (_codec.AvailableBytesIn == 0)
+                            return r;
                         r = f;
                         _codec.AvailableBytesIn--;
                         _codec.TotalBytesIn++;
-                        expectedCheck += (uint)(_codec.InputBuffer[_codec.NextIn++] & 0x000000ff);
+                        expectedCheck += (uint) (_codec.InputBuffer[_codec.NextIn++] & 0x000000ff);
                         _codec._Adler32 = expectedCheck;
                         mode = InflateManagerMode.DICT0;
                         return ZlibConstants.Z_NEED_DICT;
@@ -1812,7 +1829,8 @@ namespace Ionic.Zlib
                             break;
                         }
 
-                        if (r == ZlibConstants.Z_OK) r = f;
+                        if (r == ZlibConstants.Z_OK)
+                            r = f;
 
                         if (r != ZlibConstants.Z_STREAM_END)
                             return r;
@@ -1828,38 +1846,42 @@ namespace Ionic.Zlib
                         break;
 
                     case InflateManagerMode.CHECK4:
-                        if (_codec.AvailableBytesIn == 0) return r;
+                        if (_codec.AvailableBytesIn == 0)
+                            return r;
                         r = f;
                         _codec.AvailableBytesIn--;
                         _codec.TotalBytesIn++;
-                        expectedCheck = (uint)((_codec.InputBuffer[_codec.NextIn++] << 24) & 0xff000000);
+                        expectedCheck = (uint) ((_codec.InputBuffer[_codec.NextIn++] << 24) & 0xff000000);
                         mode = InflateManagerMode.CHECK3;
                         break;
 
                     case InflateManagerMode.CHECK3:
-                        if (_codec.AvailableBytesIn == 0) return r;
+                        if (_codec.AvailableBytesIn == 0)
+                            return r;
                         r = f;
                         _codec.AvailableBytesIn--;
                         _codec.TotalBytesIn++;
-                        expectedCheck += (uint)((_codec.InputBuffer[_codec.NextIn++] << 16) & 0x00ff0000);
+                        expectedCheck += (uint) ((_codec.InputBuffer[_codec.NextIn++] << 16) & 0x00ff0000);
                         mode = InflateManagerMode.CHECK2;
                         break;
 
                     case InflateManagerMode.CHECK2:
-                        if (_codec.AvailableBytesIn == 0) return r;
+                        if (_codec.AvailableBytesIn == 0)
+                            return r;
                         r = f;
                         _codec.AvailableBytesIn--;
                         _codec.TotalBytesIn++;
-                        expectedCheck += (uint)((_codec.InputBuffer[_codec.NextIn++] << 8) & 0x0000ff00);
+                        expectedCheck += (uint) ((_codec.InputBuffer[_codec.NextIn++] << 8) & 0x0000ff00);
                         mode = InflateManagerMode.CHECK1;
                         break;
 
                     case InflateManagerMode.CHECK1:
-                        if (_codec.AvailableBytesIn == 0) return r;
+                        if (_codec.AvailableBytesIn == 0)
+                            return r;
                         r = f;
                         _codec.AvailableBytesIn--;
                         _codec.TotalBytesIn++;
-                        expectedCheck += (uint)(_codec.InputBuffer[_codec.NextIn++] & 0x000000ff);
+                        expectedCheck += (uint) (_codec.InputBuffer[_codec.NextIn++] & 0x000000ff);
                         if (computedCheck != expectedCheck)
                         {
                             mode = InflateManagerMode.BAD;

@@ -1,3 +1,13 @@
+/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
 // ZlibBaseStream.cs ------------------------------------------------------------------
 //
 // Copyright (c) 2009 Dino Chiesa and Microsoft Corporation. All rights reserved.
@@ -20,10 +30,10 @@
 //
 // ------------------------------------------------------------------
 
-using Ionic.Crc;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Ionic.Crc;
 
 namespace Ionic.Zlib
 {
@@ -63,7 +73,8 @@ namespace Ionic.Zlib
         {
             get
             {
-                if (crc == null) return 0;
+                if (crc == null)
+                    return 0;
                 return crc.Crc32Result;
             }
         }
@@ -168,7 +179,8 @@ namespace Ionic.Zlib
 
         private void finish()
         {
-            if (_z == null) return;
+            if (_z == null)
+                return;
 
             if (_streamMode == StreamMode.Writer)
             {
@@ -211,7 +223,7 @@ namespace Ionic.Zlib
                         // Emit the GZIP trailer: CRC32 and size mod 2^32
                         var c1 = crc.Crc32Result;
                         _stream.Write(BitConverter.GetBytes(c1), 0, 4);
-                        var c2 = (int)(crc.TotalBytesRead & 0x00000000FFFFFFFF);
+                        var c2 = (int) (crc.TotalBytesRead & 0x00000000FFFFFFFF);
                         _stream.Write(BitConverter.GetBytes(c2), 0, 4);
                     }
                     else
@@ -258,7 +270,7 @@ namespace Ionic.Zlib
                         var crc32_expected = BitConverter.ToInt32(trailer, 0);
                         var crc32_actual = crc.Crc32Result;
                         var isize_expected = BitConverter.ToInt32(trailer, 4);
-                        var isize_actual = (int)(_z.TotalBytesOut & 0x00000000FFFFFFFF);
+                        var isize_actual = (int) (_z.TotalBytesOut & 0x00000000FFFFFFFF);
 
                         if (crc32_actual != crc32_expected)
                             throw new ZlibException(
@@ -295,7 +307,8 @@ namespace Ionic.Zlib
 
         public override void Close()
         {
-            if (_stream == null) return;
+            if (_stream == null)
+                return;
             try
             {
                 finish();
@@ -303,7 +316,8 @@ namespace Ionic.Zlib
             finally
             {
                 end();
-                if (!_leaveOpen) _stream.Close();
+                if (!_leaveOpen)
+                    _stream.Close();
                 _stream = null;
             }
         }
@@ -383,7 +397,7 @@ namespace Ionic.Zlib
                 n = _stream.Read(header, 0, 2); // 2-byte length field
                 totalBytesRead += n;
 
-                var extraLength = (short)(header[0] + header[1] * 256);
+                var extraLength = (short) (header[0] + header[1] * 256);
                 var extra = new byte[extraLength];
                 n = _stream.Read(extra, 0, extra.Length);
                 if (n != extraLength)
@@ -409,7 +423,8 @@ namespace Ionic.Zlib
 
             if (_streamMode == StreamMode.Undefined)
             {
-                if (!_stream.CanRead) throw new ZlibException("The stream is not readable.");
+                if (!_stream.CanRead)
+                    throw new ZlibException("The stream is not readable.");
                 // for the first read, set up some controls.
                 _streamMode = StreamMode.Reader;
                 // (The first reference to _z goes through the private accessor which may initialize it.)
@@ -426,12 +441,18 @@ namespace Ionic.Zlib
             if (_streamMode != StreamMode.Reader)
                 throw new ZlibException("Cannot Read after Writing.");
 
-            if (count == 0) return 0;
-            if (nomoreinput && _wantCompress) return 0; // workitem 8557
-            if (buffer == null) throw new ArgumentNullException("buffer");
-            if (count < 0) throw new ArgumentOutOfRangeException("count");
-            if (offset < buffer.GetLowerBound(0)) throw new ArgumentOutOfRangeException("offset");
-            if (offset + count > buffer.GetLength(0)) throw new ArgumentOutOfRangeException("count");
+            if (count == 0)
+                return 0;
+            if (nomoreinput && _wantCompress)
+                return 0; // workitem 8557
+            if (buffer == null)
+                throw new ArgumentNullException("buffer");
+            if (count < 0)
+                throw new ArgumentOutOfRangeException("count");
+            if (offset < buffer.GetLowerBound(0))
+                throw new ArgumentOutOfRangeException("offset");
+            if (offset + count > buffer.GetLength(0))
+                throw new ArgumentOutOfRangeException("count");
 
             var rc = 0;
 

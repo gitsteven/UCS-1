@@ -1,4 +1,15 @@
-﻿using System.Collections.Generic;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System.Collections.Generic;
 using UCS.Core;
 
 namespace UCS.GameFiles
@@ -342,12 +353,12 @@ namespace UCS.GameFiles
             for (var i = 0; i < resourceDataTable.GetItemCount(); i++)
             {
                 var value = 0;
-                var resourceData = (ResourceData)resourceDataTable.GetItemAt(i);
+                var resourceData = (ResourceData) resourceDataTable.GetItemAt(i);
                 var propertyName = "MaxStored" + resourceData.GetName();
                 if (GetType().GetProperty(propertyName) != null)
                 {
                     var obj = GetType().GetProperty(propertyName).GetValue(this, null);
-                    value = ((List<int>)obj)[level];
+                    value = ((List<int>) obj)[level];
                 }
                 maxStoredResourceCounts.Add(value);
             }

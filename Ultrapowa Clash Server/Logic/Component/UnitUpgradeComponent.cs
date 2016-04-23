@@ -1,4 +1,15 @@
-﻿using Newtonsoft.Json.Linq;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using Newtonsoft.Json.Linq;
 using UCS.Core;
 using UCS.GameFiles;
 using UCS.Helpers;
@@ -44,7 +55,7 @@ namespace UCS.Logic
             var result = false;
             if (m_vCurrentlyUpgradedUnit == null)
             {
-                var b = (Building)GetParent();
+                var b = (Building) GetParent();
                 var ca = GetParent().GetLevel().GetHomeOwnerAvatar();
                 var cm = GetParent().GetLevel().GetComponentManager();
                 int maxProductionBuildingLevel;
@@ -105,7 +116,7 @@ namespace UCS.Logic
 
         public override void Load(JObject jsonObject)
         {
-            var unitUpgradeObject = (JObject)jsonObject["unit_upg"];
+            var unitUpgradeObject = (JObject) jsonObject["unit_upg"];
             if (unitUpgradeObject != null)
             {
                 m_vTimer = new Timer();
@@ -113,7 +124,7 @@ namespace UCS.Logic
                 m_vTimer.StartTimer(remainingTime, GetParent().GetLevel().GetTime());
 
                 var id = unitUpgradeObject["id"].ToObject<int>();
-                m_vCurrentlyUpgradedUnit = (CombatItemData)ObjectManager.DataTables.GetDataById(id);
+                m_vCurrentlyUpgradedUnit = (CombatItemData) ObjectManager.DataTables.GetDataById(id);
             }
         }
 

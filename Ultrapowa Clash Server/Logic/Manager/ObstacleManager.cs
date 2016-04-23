@@ -1,9 +1,20 @@
-﻿using Newtonsoft.Json.Linq;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Newtonsoft.Json.Linq;
 using UCS.Core;
 using UCS.GameFiles;
 
@@ -96,7 +107,7 @@ namespace UCS.Logic
                 var dt = ObjectManager.DataTables.GetTable(7);
                 for (var i = 0; i < dt.GetItemCount(); i++)
                 {
-                    var od = (ObstacleData)dt.GetItemAt(i);
+                    var od = (ObstacleData) dt.GetItemAt(i);
                     if (!od.IsTombstone)
                     {
                         if (!od.GetName().Contains("Gembox"))
@@ -252,27 +263,27 @@ namespace UCS.Logic
                             case 0:
                                 x--;
                                 y--;
-                                w = ((BuildingData)go.GetData()).Width + 2;
-                                h = ((BuildingData)go.GetData()).Height + 2;
+                                w = ((BuildingData) go.GetData()).Width + 2;
+                                h = ((BuildingData) go.GetData()).Height + 2;
                                 break;
 
                             case 7:
-                                w = ((ObstacleData)go.GetData()).Width;
-                                h = ((ObstacleData)go.GetData()).Height;
+                                w = ((ObstacleData) go.GetData()).Width;
+                                h = ((ObstacleData) go.GetData()).Height;
                                 break;
 
                             case 11:
                                 x--;
                                 y--;
-                                w = ((TrapData)go.GetData()).Width + 2;
-                                h = ((TrapData)go.GetData()).Height + 2;
+                                w = ((TrapData) go.GetData()).Width + 2;
+                                h = ((TrapData) go.GetData()).Height + 2;
                                 break;
 
                             case 17:
                                 x--;
                                 y--;
-                                w = ((DecoData)go.GetData()).Width + 2;
-                                h = ((DecoData)go.GetData()).Height + 2;
+                                w = ((DecoData) go.GetData()).Width + 2;
+                                h = ((DecoData) go.GetData()).Height + 2;
                                 break;
                         }
 

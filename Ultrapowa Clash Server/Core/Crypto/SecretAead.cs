@@ -1,7 +1,18 @@
-﻿using Sodium.Exceptions;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
 using System;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using Sodium.Exceptions;
 
 namespace Sodium
 {
@@ -64,7 +75,7 @@ namespace Sodium
             var ret = SodiumLibrary.crypto_aead_chacha20poly1305_decrypt(bin, out messageLength, null, cipher, cipher.Length,
               additionalData, additionalData.Length, nonce, key);
 
-            Marshal.Copy(bin, message, 0, (int)messageLength);
+            Marshal.Copy(bin, message, 0, (int) messageLength);
             Marshal.FreeHGlobal(bin);
 
             if (ret != 0)
@@ -127,7 +138,7 @@ namespace Sodium
             var ret = SodiumLibrary.crypto_aead_chacha20poly1305_encrypt(bin, out cipherLength, message, message.Length, additionalData, additionalData.Length, null,
               nonce, key);
 
-            Marshal.Copy(bin, cipher, 0, (int)cipherLength);
+            Marshal.Copy(bin, cipher, 0, (int) cipherLength);
             Marshal.FreeHGlobal(bin);
 
             if (ret != 0)

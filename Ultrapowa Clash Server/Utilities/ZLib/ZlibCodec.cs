@@ -1,3 +1,13 @@
+/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
 // ZlibCodec.cs ------------------------------------------------------------------
 //
 // Copyright (c) 2009 Dino Chiesa and Microsoft Corporation. All rights reserved.
@@ -185,14 +195,17 @@ namespace Ionic.Zlib
             if (mode == CompressionMode.Compress)
             {
                 var rc = InitializeDeflate();
-                if (rc != ZlibConstants.Z_OK) throw new ZlibException("Cannot initialize for deflate.");
+                if (rc != ZlibConstants.Z_OK)
+                    throw new ZlibException("Cannot initialize for deflate.");
             }
             else if (mode == CompressionMode.Decompress)
             {
                 var rc = InitializeInflate();
-                if (rc != ZlibConstants.Z_OK) throw new ZlibException("Cannot initialize for inflate.");
+                if (rc != ZlibConstants.Z_OK)
+                    throw new ZlibException("Cannot initialize for inflate.");
             }
-            else throw new ZlibException("Invalid ZlibStreamFlavor.");
+            else
+                throw new ZlibException("Invalid ZlibStreamFlavor.");
         }
 
         /// <summary>
@@ -201,7 +214,7 @@ namespace Ionic.Zlib
         /// </summary>
         public int Adler32
         {
-            get { return (int)_Adler32; }
+            get { return (int) _Adler32; }
         }
 
         /// <summary>

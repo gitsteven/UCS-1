@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System;
 using System.Configuration;
 using System.Threading;
 using UCS.Network;
@@ -7,6 +18,12 @@ namespace UCS.Core.Threading
 {
     internal class NetworkThread
     {
+        #region Private Properties
+
+        private static Thread T { get; set; }
+
+        #endregion Private Properties
+
         #region Public Fields
 
         public static string Author = "ExPl0itR";
@@ -19,12 +36,6 @@ namespace UCS.Core.Threading
 
         #endregion Public Fields
 
-        #region Private Properties
-
-        private static Thread T { get; set; }
-
-        #endregion Private Properties
-
         #region Public Methods
 
         public static void Start()
@@ -36,7 +47,7 @@ namespace UCS.Core.Threading
                 new ResourcesManager();
                 new ObjectManager();
                 new Gateway().Start();
-                //HTTP API = new HTTP(Convert.ToInt32(ConfigurationManager.AppSettings["DebugPort"]));
+                //new HTTP(Convert.ToInt32(ConfigurationManager.AppSettings["DebugPort"]));
                 //new UCSList();
                 Console.WriteLine("[UCS]    Server started, let's play Clash of Clans!");
             });

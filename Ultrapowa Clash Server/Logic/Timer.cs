@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System;
 
 namespace UCS.Logic
 {
@@ -33,18 +44,18 @@ namespace UCS.Logic
         {
             var result = int.MaxValue;
             if (!boost)
-                result = m_vSeconds - (int)time.Subtract(m_vStartTime).TotalSeconds;
+                result = m_vSeconds - (int) time.Subtract(m_vStartTime).TotalSeconds;
             else
             {
                 if (boostEndTime >= time)
-                    result = m_vSeconds - (int)(time.Subtract(m_vStartTime).TotalSeconds * multiplier);
+                    result = m_vSeconds - (int) (time.Subtract(m_vStartTime).TotalSeconds * multiplier);
                 else
                 {
-                    var boostedTime = (float)time.Subtract(m_vStartTime).TotalSeconds -
-                                      (float)(time - boostEndTime).TotalSeconds;
-                    var notBoostedTime = (float)time.Subtract(m_vStartTime).TotalSeconds - boostedTime;
+                    var boostedTime = (float) time.Subtract(m_vStartTime).TotalSeconds -
+                                      (float) (time - boostEndTime).TotalSeconds;
+                    var notBoostedTime = (float) time.Subtract(m_vStartTime).TotalSeconds - boostedTime;
 
-                    result = m_vSeconds - (int)(boostedTime * multiplier + notBoostedTime);
+                    result = m_vSeconds - (int) (boostedTime * multiplier + notBoostedTime);
                 }
             }
             if (result <= 0)
@@ -54,7 +65,7 @@ namespace UCS.Logic
 
         public int GetRemainingSeconds(DateTime time)
         {
-            var result = m_vSeconds - (int)time.Subtract(m_vStartTime).TotalSeconds;
+            var result = m_vSeconds - (int) time.Subtract(m_vStartTime).TotalSeconds;
             if (result <= 0)
                 result = 0;
             return result;

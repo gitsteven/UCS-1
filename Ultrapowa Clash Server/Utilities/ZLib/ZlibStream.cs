@@ -1,3 +1,13 @@
+/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
 // ZlibStream.cs ------------------------------------------------------------------
 //
 // Copyright (c) 2009 Dino Chiesa and Microsoft Corporation. All rights reserved.
@@ -310,7 +320,8 @@ namespace Ionic.Zlib
             }
             set
             {
-                if (_disposed) throw new ObjectDisposedException("ZlibStream");
+                if (_disposed)
+                    throw new ObjectDisposedException("ZlibStream");
                 if (_baseStream._workingBuffer != null)
                     throw new ZlibException("The working buffer is already set.");
                 if (value < ZlibConstants.WorkingBufferSizeMin)
@@ -329,7 +340,8 @@ namespace Ionic.Zlib
         {
             get
             {
-                if (_disposed) throw new ObjectDisposedException("ZlibStream");
+                if (_disposed)
+                    throw new ObjectDisposedException("ZlibStream");
                 return _baseStream._stream.CanRead;
             }
         }
@@ -351,7 +363,8 @@ namespace Ionic.Zlib
         {
             get
             {
-                if (_disposed) throw new ObjectDisposedException("ZlibStream");
+                if (_disposed)
+                    throw new ObjectDisposedException("ZlibStream");
                 return _baseStream._stream.CanWrite;
             }
         }
@@ -368,7 +381,8 @@ namespace Ionic.Zlib
             }
             set
             {
-                if (_disposed) throw new ObjectDisposedException("ZlibStream");
+                if (_disposed)
+                    throw new ObjectDisposedException("ZlibStream");
                 _baseStream._flushMode = value;
             }
         }
@@ -510,7 +524,8 @@ namespace Ionic.Zlib
         /// </summary>
         public override void Flush()
         {
-            if (_disposed) throw new ObjectDisposedException("ZlibStream");
+            if (_disposed)
+                throw new ObjectDisposedException("ZlibStream");
             _baseStream.Flush();
         }
 
@@ -537,7 +552,8 @@ namespace Ionic.Zlib
         /// <returns>the number of bytes read</returns>
         public override int Read(byte[] buffer, int offset, int count)
         {
-            if (_disposed) throw new ObjectDisposedException("ZlibStream");
+            if (_disposed)
+                throw new ObjectDisposedException("ZlibStream");
             return _baseStream.Read(buffer, offset, count);
         }
 
@@ -588,7 +604,8 @@ namespace Ionic.Zlib
         /// <param name="count">the number of bytes to write.</param>
         public override void Write(byte[] buffer, int offset, int count)
         {
-            if (_disposed) throw new ObjectDisposedException("ZlibStream");
+            if (_disposed)
+                throw new ObjectDisposedException("ZlibStream");
             _baseStream.Write(buffer, offset, count);
         }
 

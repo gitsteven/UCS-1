@@ -1,3 +1,13 @@
+/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
 //#define Trace
 
 // ParallelDeflateOutputStream.cs ------------------------------------------------------------------
@@ -20,12 +30,12 @@
 //
 // ------------------------------------------------------------------
 
-using Ionic.Crc;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using Ionic.Crc;
 
 namespace Ionic.Zlib
 {
@@ -468,7 +478,8 @@ namespace Ionic.Zlib
                 throw pe;
             }
 
-            if (count == 0) return;
+            if (count == 0)
+                return;
 
             if (!_firstWriteDone)
             {
@@ -603,7 +614,8 @@ namespace Ionic.Zlib
             if (_isClosed)
                 throw new InvalidOperationException();
 
-            if (emitting) return;
+            if (emitting)
+                return;
 
             // compress any partial buffer
             if (_currentlyFilling >= 0)
@@ -664,7 +676,8 @@ namespace Ionic.Zlib
             if (_handlingException)
                 return;
 
-            if (_isClosed) return;
+            if (_isClosed)
+                return;
 
             _Flush(true);
 
@@ -748,7 +761,8 @@ namespace Ionic.Zlib
             TraceOutput(TraceBits.Session, "-------------------------------------------------------");
             TraceOutput(TraceBits.Session, "Reset {0:X8} firstDone({1})", GetHashCode(), _firstWriteDone);
 
-            if (!_firstWriteDone) return;
+            if (!_firstWriteDone)
+                return;
 
             // reset all status
             _toWrite.Clear();
@@ -778,7 +792,8 @@ namespace Ionic.Zlib
             // this stream is unaware of the pending exception, so the Close() method invokes this
             // method AGAIN. This can lead to a deadlock. Therefore, failfast if re-entering.
 
-            if (emitting) return;
+            if (emitting)
+                return;
             emitting = true;
             if (doAll || mustWait)
                 _newlyCompressedBlob.WaitOne();
@@ -859,7 +874,8 @@ namespace Ionic.Zlib
                             _toFill.Enqueue(workitem.index);
 
                             // don't wait next time through
-                            if (millisecondsToWait == -1) millisecondsToWait = 0;
+                            if (millisecondsToWait == -1)
+                                millisecondsToWait = 0;
                         }
                     }
                     else
@@ -1037,7 +1053,7 @@ namespace Ionic.Zlib
         private void _DeflateOne(object wi)
         {
             // compress one buffer
-            var workitem = (WorkItem)wi;
+            var workitem = (WorkItem) wi;
             try
             {
                 var myItem = workitem.index;
@@ -1100,7 +1116,7 @@ namespace Ionic.Zlib
             // step 2: flush (sync)
             rc = compressor.Deflate(FlushType.Sync);
 
-            workitem.compressedBytesAvailable = (int)compressor.TotalBytesOut;
+            workitem.compressedBytesAvailable = (int) compressor.TotalBytesOut;
             return true;
         }
 
@@ -1113,7 +1129,7 @@ namespace Ionic.Zlib
                 {
                     var tid = Thread.CurrentThread.GetHashCode();
 #if !SILVERLIGHT
-                    Console.ForegroundColor = (ConsoleColor)(tid % 8 + 8);
+                    Console.ForegroundColor = (ConsoleColor) (tid % 8 + 8);
 #endif
                     Console.Write("{0:000} PDOS ", tid);
                     Console.WriteLine(format, varParams);

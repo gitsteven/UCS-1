@@ -1,6 +1,17 @@
-﻿using Sodium.Exceptions;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
 using System;
 using System.Text;
+using Sodium.Exceptions;
 
 namespace Sodium
 {
@@ -120,7 +131,7 @@ namespace Sodium
         /// <returns>Returns a byte array with 16 random bytes</returns>
         public static byte[] ArgonGenerateSalt()
         {
-            return SodiumCore.GetRandomBytes((int)ARGON_SALTBYTES);
+            return SodiumCore.GetRandomBytes((int) ARGON_SALTBYTES);
         }
 
         /// <summary>
@@ -380,7 +391,7 @@ namespace Sodium
         /// <returns>Returns a byte array with 32 random bytes</returns>
         public static byte[] ScryptGenerateSalt()
         {
-            return SodiumCore.GetRandomBytes((int)SCRYPT_SALSA208_SHA256_SALTBYTES);
+            return SodiumCore.GetRandomBytes((int) SCRYPT_SALSA208_SHA256_SALTBYTES);
         }
 
         /// <summary>

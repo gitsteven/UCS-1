@@ -1,16 +1,27 @@
-﻿using System.Reflection;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
 
 // Le informazioni generali relative a un assembly sono controllate dal seguente set di attributi.
 // Modificare i valori di questi attributi per modificare le informazioni associate a un assembly.
 
-[assembly: AssemblyTitle("UCS")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Ultrapowa Clash Server")]
+[assembly: AssemblyDescription("A .NET Clash Of Clans Server Emulator")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Ultrapowa")]
 [assembly: AssemblyProduct("Ultrapowa Clash Server")]
-[assembly: AssemblyCopyright("Ultrapowa Community")]
+[assembly: AssemblyCopyright("Ultrapowa")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

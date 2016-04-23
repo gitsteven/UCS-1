@@ -1,5 +1,16 @@
-﻿using Newtonsoft.Json.Linq;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using UCS.Core;
 using UCS.GameFiles;
 
@@ -179,7 +190,7 @@ namespace UCS.Logic
             else
                 IsSpellForge = false; */
 
-            var unitArray = (JArray)jsonObject["units"];
+            var unitArray = (JArray) jsonObject["units"];
             if (unitArray != null)
             {
                 if (unitArray.Count > 0)
@@ -188,13 +199,13 @@ namespace UCS.Logic
                     {
                         var id = unitSlotArray[0].ToObject<int>();
                         var cnt = unitSlotArray[1].ToObject<int>();
-                        m_vUnits.Add(new UnitSlot((CombatItemData)ObjectManager.DataTables.GetDataById(id), -1, cnt));
+                        m_vUnits.Add(new UnitSlot((CombatItemData) ObjectManager.DataTables.GetDataById(id), -1, cnt));
                     }
                 }
             }
 
             if (jsonObject["storage_type"] != null)
-                IsSpellForge = (int)jsonObject["storage_type"] == 1;
+                IsSpellForge = (int) jsonObject["storage_type"] == 1;
             else
                 IsSpellForge = false;
         }
@@ -263,7 +274,7 @@ namespace UCS.Logic
 
         public void SetStorageType(GameObject go)
         {
-            var b = (Building)GetParent();
+            var b = (Building) GetParent();
             var bd = b.GetBuildingData();
             IsSpellForge = bd.IsSpellForge();
         }

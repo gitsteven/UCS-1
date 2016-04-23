@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System;
 using System.Runtime.InteropServices;
 
 namespace UCS.Core
@@ -62,7 +73,7 @@ namespace UCS.Core
         {
             var phav = PerformanceInfo.GetPhysicalAvailableMemoryInMiB();
             var tot = PerformanceInfo.GetTotalMemoryInMiB();
-            var percentFree = phav / (decimal)tot * 100;
+            var percentFree = phav / (decimal) tot * 100;
             return percentFree.ToString("##.##");
         }
 
@@ -80,7 +91,7 @@ namespace UCS.Core
         {
             var phav = PerformanceInfo.GetPhysicalAvailableMemoryInMiB();
             var tot = PerformanceInfo.GetTotalMemoryInMiB();
-            var percentFree = phav / (decimal)tot * 100;
+            var percentFree = phav / (decimal) tot * 100;
             var percentOccupied = 100 - percentFree;
             return percentOccupied.ToString("##.##");
         }

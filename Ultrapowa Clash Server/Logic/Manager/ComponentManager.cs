@@ -1,4 +1,15 @@
-﻿using System.Collections.Generic;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System.Collections.Generic;
 using System.Windows;
 using UCS.Core;
 using UCS.GameFiles;
@@ -70,7 +81,7 @@ namespace UCS.Logic
                 foreach (UnitProductionComponent c in components)
                     if (!c.IsSpellForge())
                     {
-                        var level = ((Building)c.GetParent()).GetUpgradeLevel();
+                        var level = ((Building) c.GetParent()).GetUpgradeLevel();
                         if (level > result)
                             result = level;
                     }
@@ -85,7 +96,7 @@ namespace UCS.Logic
                 foreach (UnitProductionComponent c in components)
                     if (c.IsSpellForge())
                     {
-                        var b = (Building)c.GetParent();
+                        var b = (Building) c.GetParent();
                         if (!b.IsConstructing() || b.IsUpgrading())
                         {
                             var level = b.GetUpgradeLevel();
@@ -102,8 +113,8 @@ namespace UCS.Logic
             var components = m_vComponents[0];
             if (components.Count >= 1)
                 foreach (var c in components)
-                    if (((UnitStorageComponent)c).IsSpellForge == IsSpellForge)
-                        result += ((UnitStorageComponent)c).GetMaxCapacity();
+                    if (((UnitStorageComponent) c).IsSpellForge == IsSpellForge)
+                        result += ((UnitStorageComponent) c).GetMaxCapacity();
             return result;
         }
 
@@ -113,8 +124,8 @@ namespace UCS.Logic
             var components = m_vComponents[0];
             if (components.Count >= 1)
                 foreach (var c in components)
-                    if (((UnitStorageComponent)c).IsSpellForge == IsSpellForge)
-                        result += ((UnitStorageComponent)c).GetUsedCapacity();
+                    if (((UnitStorageComponent) c).IsSpellForge == IsSpellForge)
+                        result += ((UnitStorageComponent) c).GetUsedCapacity();
             return result;
         }
 
@@ -128,10 +139,10 @@ namespace UCS.Logic
                 var resourceCap = 0;
                 for (var j = 0; j < resourceStorageComponentCount; j++)
                 {
-                    var res = (ResourceStorageComponent)GetComponents(6)[j];
+                    var res = (ResourceStorageComponent) GetComponents(6)[j];
                     if (res.IsEnabled())
                         resourceCap += res.GetMax(i);
-                    var resource = (ResourceData)table.GetItemAt(i);
+                    var resource = (ResourceData) table.GetItemAt(i);
                     if (!resource.PremiumCurrency)
                         m_vLevel.GetPlayerAvatar().SetResourceCap(resource, resourceCap);
                 }

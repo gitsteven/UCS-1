@@ -1,9 +1,20 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UCS.Core;
 using UCS.GameFiles;
 using UCS.Helpers;
@@ -12,6 +23,30 @@ namespace UCS.Logic
 {
     internal class ClientAvatar : Avatar
     {
+        #region Private Methods
+
+        private void updateLeague()
+        {
+            var table = ObjectManager.DataTables.GetTable(12);
+            var i = 0;
+            var found = false;
+            while (!found)
+            {
+                var league = (LeagueData) table.GetItemAt(i);
+
+                if (m_vScore <= league.BucketPlacementRangeHigh[league.BucketPlacementRangeHigh.Count - 1] &&
+                    m_vScore >= league.BucketPlacementRangeLow[0])
+                {
+                    found = true;
+                    SetLeagueId(i);
+                }
+
+                i++;
+            }
+        }
+
+        #endregion Private Methods
+
         #region Private Fields
 
         private long m_vAllianceId;
@@ -45,8 +80,8 @@ namespace UCS.Logic
         {
             var rnd = new Random();
 
-            LastUpdate = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-            Login = id.ToString() + (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+            LastUpdate = (int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+            Login = id.ToString() + (int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
             m_vId = id;
             m_vToken = token;
             m_vCurrentHomeId = id;
@@ -55,14 +90,10 @@ namespace UCS.Logic
             m_vAvatarLevel = 1;
             m_vAllianceId = 0;
             m_vExperience = 0;
-            EndShieldTime =
-                (int)
-                    (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds +
-                     Convert.ToInt32(ConfigurationManager.AppSettings["startingShieldTime"]));
+            EndShieldTime = (int) (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
             m_vCurrentGems = Convert.ToInt32(ConfigurationManager.AppSettings["startingGems"]);
 
-            if (ConfigurationManager.AppSettings["startingTrophies"] == "random") m_vScore = rnd.Next(1500, 4800);
-            else m_vScore = Convert.ToInt32(ConfigurationManager.AppSettings["startingTrophies"]);
+            m_vScore = ConfigurationManager.AppSettings["startingTrophies"] == "random" ? rnd.Next(1500, 4800) : Convert.ToInt32(ConfigurationManager.AppSettings["startingTrophies"]);
 
             TutorialStepsCount = 0x0A;
             m_vAvatarName = "NoNameYet";
@@ -96,7 +127,7 @@ namespace UCS.Logic
         {
             get
             {
-                var rest = EndShieldTime - (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+                var rest = EndShieldTime - (int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
                 return rest > 0 ? rest : 0;
             }
         }
@@ -117,10 +148,9 @@ namespace UCS.Logic
         {
             m_vExperience += exp;
             var experienceCap =
-                ((ExperienceLevelData)ObjectManager.DataTables.GetTable(10).GetDataByName(m_vAvatarLevel.ToString()))
+                ((ExperienceLevelData) ObjectManager.DataTables.GetTable(10).GetDataByName(m_vAvatarLevel.ToString()))
                     .ExpPoints;
             if (m_vExperience >= experienceCap)
-            {
                 if (ObjectManager.DataTables.GetTable(10).GetItemCount() > m_vAvatarLevel + 1)
                 {
                     m_vAvatarLevel += 1;
@@ -128,7 +158,6 @@ namespace UCS.Logic
                 }
                 else
                     m_vExperience = 0;
-            }
         }
 
         public byte[] Encode()
@@ -226,9 +255,7 @@ namespace UCS.Logic
             //Unlocked Achievements
             data.AddRange(BitConverter.GetBytes(Achievements.Count).Reverse());
             foreach (var a in Achievements)
-            {
                 data.AddRange(BitConverter.GetBytes(a.Data.GetGlobalID()).Reverse());
-            }
 
             //Achievement Progress
             data.AddRange(BitConverter.GetBytes(Achievements.Count).Reverse());
@@ -259,9 +286,7 @@ namespace UCS.Logic
         {
             var alliance = ObjectManager.GetAlliance(m_vAllianceId);
             if (alliance != null)
-            {
                 return alliance.GetAllianceMember(m_vId);
-            }
             return null;
         }
 
@@ -269,9 +294,7 @@ namespace UCS.Logic
         {
             var ame = GetAllianceMemberEntry();
             if (ame != null)
-            {
                 return ame.GetRole();
-            }
             return -1;
         }
 
@@ -312,7 +335,7 @@ namespace UCS.Logic
 
         public int GetSecondsFromLastUpdate()
         {
-            return (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds - LastUpdate;
+            return (int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds - LastUpdate;
         }
 
         public string GetUserToken()
@@ -358,7 +381,7 @@ namespace UCS.Logic
                 m_vResourceCaps.Add(ds);
             }*/
 
-            var jsonResources = (JArray)jsonObject["resources"];
+            var jsonResources = (JArray) jsonObject["resources"];
             foreach (JObject resource in jsonResources)
             {
                 var ds = new DataSlot(null, 0);
@@ -366,7 +389,7 @@ namespace UCS.Logic
                 GetResources().Add(ds);
             }
 
-            var jsonUnits = (JArray)jsonObject["units"];
+            var jsonUnits = (JArray) jsonObject["units"];
             foreach (JObject unit in jsonUnits)
             {
                 var ds = new DataSlot(null, 0);
@@ -374,7 +397,7 @@ namespace UCS.Logic
                 m_vUnitCount.Add(ds);
             }
 
-            var jsonSpells = (JArray)jsonObject["spells"];
+            var jsonSpells = (JArray) jsonObject["spells"];
             foreach (JObject spell in jsonSpells)
             {
                 var ds = new DataSlot(null, 0);
@@ -382,7 +405,7 @@ namespace UCS.Logic
                 m_vSpellCount.Add(ds);
             }
 
-            var jsonUnitLevels = (JArray)jsonObject["unit_upgrade_levels"];
+            var jsonUnitLevels = (JArray) jsonObject["unit_upgrade_levels"];
             foreach (JObject unitLevel in jsonUnitLevels)
             {
                 var ds = new DataSlot(null, 0);
@@ -390,7 +413,7 @@ namespace UCS.Logic
                 m_vUnitUpgradeLevel.Add(ds);
             }
 
-            var jsonSpellLevels = (JArray)jsonObject["spell_upgrade_levels"];
+            var jsonSpellLevels = (JArray) jsonObject["spell_upgrade_levels"];
             foreach (JObject data in jsonSpellLevels)
             {
                 var ds = new DataSlot(null, 0);
@@ -398,7 +421,7 @@ namespace UCS.Logic
                 m_vSpellUpgradeLevel.Add(ds);
             }
 
-            var jsonHeroLevels = (JArray)jsonObject["hero_upgrade_levels"];
+            var jsonHeroLevels = (JArray) jsonObject["hero_upgrade_levels"];
             foreach (JObject data in jsonHeroLevels)
             {
                 var ds = new DataSlot(null, 0);
@@ -406,7 +429,7 @@ namespace UCS.Logic
                 m_vHeroUpgradeLevel.Add(ds);
             }
 
-            var jsonHeroHealth = (JArray)jsonObject["hero_health"];
+            var jsonHeroHealth = (JArray) jsonObject["hero_health"];
             foreach (JObject data in jsonHeroHealth)
             {
                 var ds = new DataSlot(null, 0);
@@ -414,7 +437,7 @@ namespace UCS.Logic
                 m_vHeroHealth.Add(ds);
             }
 
-            var jsonHeroState = (JArray)jsonObject["hero_state"];
+            var jsonHeroState = (JArray) jsonObject["hero_state"];
             foreach (JObject data in jsonHeroState)
             {
                 var ds = new DataSlot(null, 0);
@@ -422,7 +445,7 @@ namespace UCS.Logic
                 m_vHeroState.Add(ds);
             }
 
-            var jsonAllianceUnits = (JArray)jsonObject["alliance_units"];
+            var jsonAllianceUnits = (JArray) jsonObject["alliance_units"];
             foreach (JObject data in jsonAllianceUnits)
             {
                 var ds = new DataSlot(null, 0);
@@ -441,7 +464,7 @@ namespace UCS.Logic
             }
             */
 
-            var jsonAchievementsProgress = (JArray)jsonObject["achievements_progress"];
+            var jsonAchievementsProgress = (JArray) jsonObject["achievements_progress"];
             foreach (JObject data in jsonAchievementsProgress)
             {
                 var ds = new DataSlot(null, 0);
@@ -449,7 +472,7 @@ namespace UCS.Logic
                 Achievements.Add(ds);
             }
 
-            var jsonNpcStars = (JArray)jsonObject["npc_stars"];
+            var jsonNpcStars = (JArray) jsonObject["npc_stars"];
             foreach (JObject data in jsonNpcStars)
             {
                 var ds = new DataSlot(null, 0);
@@ -457,7 +480,7 @@ namespace UCS.Logic
                 NpcStars.Add(ds);
             }
 
-            var jsonNpcLootedGold = (JArray)jsonObject["npc_looted_gold"];
+            var jsonNpcLootedGold = (JArray) jsonObject["npc_looted_gold"];
             foreach (JObject data in jsonNpcLootedGold)
             {
                 var ds = new DataSlot(null, 0);
@@ -465,7 +488,7 @@ namespace UCS.Logic
                 NpcLootedGold.Add(ds);
             }
 
-            var jsonNpcLootedElixir = (JArray)jsonObject["npc_looted_elixir"];
+            var jsonNpcLootedElixir = (JArray) jsonObject["npc_looted_elixir"];
             foreach (JObject data in jsonNpcLootedElixir)
             {
                 var ds = new DataSlot(null, 0);
@@ -492,7 +515,7 @@ namespace UCS.Logic
             jsonData.Add("current_gems", m_vCurrentGems);
             jsonData.Add("score", m_vScore);
             jsonData.Add("nameChangesLeft", m_vNameChangingLeft);
-            jsonData.Add("nameChosenByUser", (ushort)m_vnameChosenByUser);
+            jsonData.Add("nameChosenByUser", (ushort) m_vnameChosenByUser);
 
             /*JArray jsonResourceCapsArray = new JArray();
             foreach (var resource in GetResourceCaps())
@@ -602,9 +625,7 @@ namespace UCS.Logic
         {
             var ame = GetAllianceMemberEntry();
             if (ame != null)
-            {
                 ame.SetRole(a);
-            }
         }
 
         public void SetDiamonds(int count)
@@ -642,29 +663,5 @@ namespace UCS.Logic
         }
 
         #endregion Public Methods
-
-        #region Private Methods
-
-        private void updateLeague()
-        {
-            var table = ObjectManager.DataTables.GetTable(12);
-            var i = 0;
-            var found = false;
-            while (!found)
-            {
-                var league = (LeagueData)table.GetItemAt(i);
-
-                if (m_vScore <= league.BucketPlacementRangeHigh[league.BucketPlacementRangeHigh.Count - 1] &&
-                    m_vScore >= league.BucketPlacementRangeLow[0])
-                {
-                    found = true;
-                    SetLeagueId(i);
-                }
-
-                i++;
-            }
-        }
-
-        #endregion Private Methods
     }
 }

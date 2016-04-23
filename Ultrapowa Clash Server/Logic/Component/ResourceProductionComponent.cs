@@ -1,6 +1,17 @@
-﻿using Newtonsoft.Json.Linq;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using UCS.Core;
 using UCS.GameFiles;
 
@@ -23,9 +34,9 @@ namespace UCS.Logic
         {
             m_vTimeSinceLastClick = level.GetTime();
             m_vProductionResourceData =
-                ObjectManager.DataTables.GetResourceByName(((BuildingData)ci.GetData()).ProducesResource);
-            m_vResourcesPerHour = ((BuildingData)ci.GetData()).ResourcePerHour;
-            m_vMaxResources = ((BuildingData)ci.GetData()).ResourceMax;
+                ObjectManager.DataTables.GetResourceByName(((BuildingData) ci.GetData()).ProducesResource);
+            m_vResourcesPerHour = ((BuildingData) ci.GetData()).ResourcePerHour;
+            m_vMaxResources = ((BuildingData) ci.GetData()).ResourceMax;
         }
 
         #endregion Public Constructors
@@ -43,25 +54,25 @@ namespace UCS.Logic
 
         public void CollectResources()
         {
-            var ci = (ConstructionItem)GetParent();
+            var ci = (ConstructionItem) GetParent();
             var span = ci.GetLevel().GetTime() - m_vTimeSinceLastClick;
             float currentResources = 0;
             if (!ci.IsBoosted)
             {
-                currentResources = m_vResourcesPerHour[ci.UpgradeLevel] / (60f * 60f) * (float)span.TotalSeconds;
+                currentResources = m_vResourcesPerHour[ci.UpgradeLevel] / (60f * 60f) * (float) span.TotalSeconds;
             }
             else
             {
                 if (ci.GetBoostEndTime() >= ci.GetLevel().GetTime())
                 {
-                    currentResources = m_vResourcesPerHour[ci.UpgradeLevel] / (60f * 60f) * (float)span.TotalSeconds;
+                    currentResources = m_vResourcesPerHour[ci.UpgradeLevel] / (60f * 60f) * (float) span.TotalSeconds;
                     currentResources *= ci.GetBoostMultipier();
                 }
                 else
                 {
-                    var boostedTime = (float)span.TotalSeconds -
-                                      (float)(ci.GetLevel().GetTime() - ci.GetBoostEndTime()).TotalSeconds;
-                    var notBoostedTime = (float)span.TotalSeconds - boostedTime;
+                    var boostedTime = (float) span.TotalSeconds -
+                                      (float) (ci.GetLevel().GetTime() - ci.GetBoostEndTime()).TotalSeconds;
+                    var notBoostedTime = (float) span.TotalSeconds - boostedTime;
 
                     currentResources = m_vResourcesPerHour[ci.UpgradeLevel] / (60f * 60f) * notBoostedTime;
                     currentResources += m_vResourcesPerHour[ci.UpgradeLevel] / (60f * 60f) * boostedTime *
@@ -95,14 +106,14 @@ namespace UCS.Logic
                         m_vTimeSinceLastClick = ci.GetLevel().GetTime();
                     }
 
-                    ca.CommodityCountChangeHelper(0, m_vProductionResourceData, (int)currentResources);
+                    ca.CommodityCountChangeHelper(0, m_vProductionResourceData, (int) currentResources);
                 }
             }
         }
 
         public override void Load(JObject jsonObject)
         {
-            var productionObject = (JObject)jsonObject["production"];
+            var productionObject = (JObject) jsonObject["production"];
             if (productionObject != null)
             {
                 m_vTimeSinceLastClick = productionObject["t_lastClick"].ToObject<DateTime>();
@@ -116,13 +127,13 @@ namespace UCS.Logic
 
         public override JObject Save(JObject jsonObject)
         {
-            if (((ConstructionItem)GetParent()).GetUpgradeLevel() != -1)
+            if (((ConstructionItem) GetParent()).GetUpgradeLevel() != -1)
             {
                 var productionObject = new JObject();
                 productionObject.Add("t_lastClick", m_vTimeSinceLastClick);
                 jsonObject.Add("production", productionObject);
-                var ci = (ConstructionItem)GetParent();
-                var seconds = (float)(GetParent().GetLevel().GetTime() - m_vTimeSinceLastClick).TotalSeconds;
+                var ci = (ConstructionItem) GetParent();
+                var seconds = (float) (GetParent().GetLevel().GetTime() - m_vTimeSinceLastClick).TotalSeconds;
                 if (ci.IsBoosted)
                 {
                     if (ci.GetBoostEndTime() >= ci.GetLevel().GetTime())
@@ -132,14 +143,14 @@ namespace UCS.Logic
                     else
                     {
                         var boostedTime = seconds -
-                                          (float)(ci.GetLevel().GetTime() - ci.GetBoostEndTime()).TotalSeconds;
+                                          (float) (ci.GetLevel().GetTime() - ci.GetBoostEndTime()).TotalSeconds;
                         var notBoostedTime = seconds - boostedTime;
                         seconds = boostedTime * ci.GetBoostMultipier() + notBoostedTime;
                     }
                 }
                 jsonObject.Add("res_time",
                     (int)
-                        (m_vMaxResources[ci.GetUpgradeLevel()] / (float)m_vResourcesPerHour[ci.GetUpgradeLevel()] * 3600f -
+                        (m_vMaxResources[ci.GetUpgradeLevel()] / (float) m_vResourcesPerHour[ci.GetUpgradeLevel()] * 3600f -
                          seconds));
             }
 

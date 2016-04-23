@@ -1,3 +1,13 @@
+/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
 // Zlib.cs ------------------------------------------------------------------
 //
 // Copyright (c) 2009-2011 Dino Chiesa and Microsoft Corporation. All rights reserved.
@@ -282,7 +292,7 @@ namespace Ionic.Zlib
         /// <returns>The resulting number from the shift operation</returns>
         public static int URShift(int number, int bits)
         {
-            return (int)((uint)number >> bits);
+            return (int) ((uint) number >> bits);
         }
 
 #if NOT
@@ -313,16 +323,18 @@ namespace Ionic.Zlib
         public static int ReadInput(TextReader sourceTextReader, byte[] target, int start, int count)
         {
             // Returns 0 bytes if not enough space in target
-            if (target.Length == 0) return 0;
+            if (target.Length == 0)
+                return 0;
 
             var charArray = new char[target.Length];
             var bytesRead = sourceTextReader.Read(charArray, start, count);
 
             // Returns -1 if EOF
-            if (bytesRead == 0) return -1;
+            if (bytesRead == 0)
+                return -1;
 
             for (var index = start; index < start + bytesRead; index++)
-                target[index] = (byte)charArray[index];
+                target[index] = (byte) charArray[index];
 
             return bytesRead;
         }

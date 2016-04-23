@@ -1,4 +1,15 @@
-﻿using System.Collections.Generic;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System.Collections.Generic;
 using System.IO;
 using UCS.GameFiles;
 using UCS.Helpers;
@@ -19,7 +30,7 @@ namespace UCS.PacketProcessing
             UnitsToRemove = new List<UnitToRemove>();
             for (var i = 0; i < UnitTypesCount; i++)
             {
-                var unit = (CharacterData)br.ReadDataReference();
+                var unit = (CharacterData) br.ReadDataReference();
                 var count = br.ReadInt32WithEndian();
                 var level = br.ReadInt32WithEndian();
                 UnitsToRemove.Add(new UnitToRemove { Data = unit, Count = count, Level = level });
@@ -51,7 +62,7 @@ namespace UCS.PacketProcessing
                 var components = level.GetComponentManager().GetComponents(0);
                 for (var i = 0; i < components.Count; i++)
                 {
-                    var c = (UnitStorageComponent)components[i];
+                    var c = (UnitStorageComponent) components[i];
                     if (c.GetUnitTypeIndex(unit.Data) != -1)
                     {
                         var storageCount = c.GetUnitCountByData(unit.Data);

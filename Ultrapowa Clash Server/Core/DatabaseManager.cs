@@ -1,7 +1,19 @@
+/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using UCS.Database;
 using UCS.Logic;
@@ -209,7 +221,7 @@ namespace UCS.Core
         {
             long max = 0;
             using (var db = new ucsdbEntities(m_vConnectionString))
-                max = (from alliance in db.clan select (long?)alliance.ClanId ?? 0).DefaultIfEmpty().Max();
+                max = (from alliance in db.clan select (long?) alliance.ClanId ?? 0).DefaultIfEmpty().Max();
             return max;
         }
 
@@ -221,7 +233,7 @@ namespace UCS.Core
         {
             long max = 0;
             using (var db = new ucsdbEntities(m_vConnectionString))
-                max = (from ep in db.player select (long?)ep.PlayerId ?? 0).DefaultIfEmpty().Max();
+                max = (from ep in db.player select (long?) ep.PlayerId ?? 0).DefaultIfEmpty().Max();
             return max;
         }
 
@@ -234,7 +246,7 @@ namespace UCS.Core
             long id = alliance.GetAllianceId();
             using (var db = new ucsdbEntities(m_vConnectionString))
             {
-                db.clan.Remove(db.clan.Find((int)id));
+                db.clan.Remove(db.clan.Find((int) id));
                 db.SaveChanges();
             }
             ObjectManager.RemoveInMemoryAlliance(id);
@@ -246,7 +258,7 @@ namespace UCS.Core
             {
                 context.Configuration.AutoDetectChangesEnabled = false;
                 context.Configuration.ValidateOnSaveEnabled = false;
-                var c = context.clan.Find((int)alliance.GetAllianceId());
+                var c = context.clan.Find((int) alliance.GetAllianceId());
                 if (c != null)
                 {
                     c.LastUpdateTime = DateTime.Now;
@@ -374,7 +386,7 @@ namespace UCS.Core
                     foreach (var alliance in alliances)
                         lock (alliance)
                         {
-                            var c = context.clan.Find((int)alliance.GetAllianceId());
+                            var c = context.clan.Find((int) alliance.GetAllianceId());
                             if (c != null)
                             {
                                 c.LastUpdateTime = DateTime.Now;
@@ -405,6 +417,47 @@ namespace UCS.Core
             catch (Exception ex)
             {
                 Debugger.WriteLine("[UCS]    An exception occured during Save processing for alliances :", ex);
+            }
+        }
+
+        public void CheckConnection()
+        {
+            try
+            {
+                using (var db = new ucsdbEntities(m_vConnectionString))
+                {
+                    (from ep in db.player select (long?) ep.PlayerId ?? 0).DefaultIfEmpty().Max();
+                }
+            }
+            catch (System.Data.Entity.Core.EntityException)
+            {
+                if (ConfigurationManager.AppSettings["databaseConnectionName"] == "ucsdbEntities")
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("[UCS]    An exception occured when connecting to the MySQL Server.");
+                    Console.WriteLine("[UCS]    Please check your database configuration !");
+                    Console.ResetColor();
+                    Console.ReadKey();
+                    Environment.Exit(0);
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("[UCS]    An exception occured when connecting to the SQLite database.");
+                    Console.WriteLine("[UCS]    Please check your database configuration !");
+                    Console.ResetColor();
+                    Console.ReadKey();
+                    Environment.Exit(0);
+                }
+            }
+            catch (Exception)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("[UCS]    An unknown exception occured when trying to connect to the sql server.");
+                Console.WriteLine("[UCS]    Please check your database configuration !");
+                Console.ResetColor();
+                Console.ReadKey();
+                Environment.Exit(0);
             }
         }
 

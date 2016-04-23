@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System;
 using System.Configuration;
 using System.IO;
 using System.Reflection;
@@ -9,15 +20,6 @@ namespace UCS.Core.Threading
 {
     internal class ConsoleThread
     {
-        #region Public Fields
-
-        public static string Author = "ExPl0itR";
-        public static string Description = "Manages Console I/O";
-        public static string Name = "Console Thread";
-        public static string Version = "1.0.0";
-
-        #endregion Public Fields
-
         #region Private Fields
 
         private static string Title, Tmp, Command;
@@ -36,8 +38,7 @@ namespace UCS.Core.Threading
         {
             T = new Thread(() =>
             {
-                Console.Title = "Ultrapowa Clash Server " + Utils.AssemblyVersion;
-
+                Console.Title = "Ultrapowa Clash Server " + Utils.AssemblyVersion + " - © 2016";
                 Console.WriteLine(
                     @"
     888     888 888    88888888888 8888888b.         d8888 8888888b.   .d88888b.  888       888        d8888
@@ -52,10 +53,10 @@ namespace UCS.Core.Threading
                 if (Utils.OpenedInstances > 1)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("[EXCEPTION] You seem to run UCS more than once.");
-                    Console.WriteLine("[EXCEPTION] Aborting..");
+                    Console.WriteLine("[UCS]    You seem to run UCS more than once.");
+                    Console.WriteLine("[UCS]    Aborting..");
                     Console.ResetColor();
-                    System.Threading.Thread.Sleep(3500);
+                    Console.ReadKey();
                     Environment.Exit(0);
                 }
                 Console.WriteLine("[UCS]    -> This program is by the Ultrapowa Network development team.");
@@ -63,8 +64,6 @@ namespace UCS.Core.Threading
                 Console.WriteLine("[UCS]    -> Don't forget to visit www.ultrapowa.com daily for the latest news and updates!");
                 Console.WriteLine("[UCS]    -> UCS is now starting...");
                 Console.WriteLine("");
-                if (!Directory.Exists("logs"))
-                    Directory.CreateDirectory("logs");
                 Debugger.SetLogLevel(int.Parse(ConfigurationManager.AppSettings["loggingLevel"]));
                 MemoryThread.Start();
                 NetworkThread.Start();

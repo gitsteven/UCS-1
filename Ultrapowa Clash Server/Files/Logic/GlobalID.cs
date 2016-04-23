@@ -1,4 +1,15 @@
-﻿namespace UCS.Logic
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+namespace UCS.Logic
 {
     public static class GlobalID
     {
@@ -19,7 +30,7 @@
              */
 
             var r1 = 1125899907;
-            commandType = (int)((r1 * (long)commandType) >> 32);
+            commandType = (int) ((r1 * (long) commandType) >> 32);
             return (commandType >> 18) + (commandType >> 31);
         }
 
@@ -34,7 +45,7 @@
              */
 
             var r1 = 1125899907;
-            r1 = (int)((r1 * (long)globalID) >> 32);
+            r1 = (int) ((r1 * (long) globalID) >> 32);
             return globalID - 1000000 * ((r1 >> 18) + (r1 >> 31));
         }
 

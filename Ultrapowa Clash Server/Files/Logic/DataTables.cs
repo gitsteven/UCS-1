@@ -1,4 +1,15 @@
-﻿using System.Collections.Generic;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System.Collections.Generic;
 using UCS.Logic;
 
 namespace UCS.GameFiles
@@ -27,7 +38,7 @@ namespace UCS.GameFiles
         public CharacterData GetCharacterByName(string name)
         {
             var dt = m_vDataTables[3];
-            return (CharacterData)dt.GetDataByName(name);
+            return (CharacterData) dt.GetDataByName(name);
         }
 
         public Data GetDataById(int id)
@@ -39,19 +50,19 @@ namespace UCS.GameFiles
 
         public Globals GetGlobals()
         {
-            return (Globals)m_vDataTables[13];
+            return (Globals) m_vDataTables[13];
         }
 
         public HeroData GetHeroByName(string name)
         {
             var dt = m_vDataTables[27];
-            return (HeroData)dt.GetDataByName(name);
+            return (HeroData) dt.GetDataByName(name);
         }
 
         public ResourceData GetResourceByName(string name)
         {
             var dt = m_vDataTables[2];
-            return (ResourceData)dt.GetDataByName(name);
+            return (ResourceData) dt.GetDataByName(name);
         }
 
         public DataTable GetTable(int i)

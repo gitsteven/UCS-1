@@ -1,8 +1,19 @@
-﻿using Sodium;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using Sodium;
 using UCS.Logic;
 
 namespace UCS.PacketProcessing
@@ -92,7 +103,7 @@ namespace UCS.PacketProcessing
             if (DataStream.Count() >= 5)
             {
                 var length = (0x00 << 24) | (DataStream[2] << 16) | (DataStream[3] << 8) | DataStream[4];
-                var type = (ushort)((DataStream[0] << 8) | DataStream[1]);
+                var type = (ushort) ((DataStream[0] << 8) | DataStream[1]);
                 if (DataStream.Count - 7 >= length)
                 {
                     object obj = null;
@@ -103,7 +114,7 @@ namespace UCS.PacketProcessing
                     }
                     if (obj != null)
                     {
-                        p = (Message)obj;
+                        p = (Message) obj;
                         result = true;
                     }
                     else

@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System;
 using System.IO;
 using UCS.Core;
 using UCS.GameFiles;
@@ -45,7 +56,7 @@ namespace UCS.PacketProcessing
 
         public override void Execute(Level level)
         {
-            var rd = (ResourceData)ObjectManager.DataTables.GetDataById(m_vResourceId);
+            var rd = (ResourceData) ObjectManager.DataTables.GetDataById(m_vResourceId);
             if (rd != null)
             {
                 if (m_vResourceCount >= 1)
@@ -69,7 +80,7 @@ namespace UCS.PacketProcessing
                                         throw new ArgumentException(
                                             "A command contained embedded command depth was greater than max embedded commands.");
 
-                                    ((Command)m_vCommand).Execute(level);
+                                    ((Command) m_vCommand).Execute(level);
                                 }
                             }
                         }

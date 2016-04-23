@@ -1,5 +1,16 @@
-﻿using Newtonsoft.Json.Linq;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using UCS.Core;
 using UCS.GameFiles;
 
@@ -44,7 +55,7 @@ namespace UCS.Logic
             go.GlobalId = GenerateGameObjectGlobalId(go);
             if (go.ClassId == 0)
             {
-                var b = (Building)go;
+                var b = (Building) go;
                 var bd = b.GetBuildingData();
                 if (bd.IsWorkerBuilding())
                     m_vLevel.WorkerManager.IncreaseWorkerCount();
@@ -80,10 +91,10 @@ namespace UCS.Logic
 
         public void Load(JObject jsonObject)
         {
-            var jsonBuildings = (JArray)jsonObject["buildings"];
+            var jsonBuildings = (JArray) jsonObject["buildings"];
             foreach (JObject jsonBuilding in jsonBuildings)
             {
-                var bd = (BuildingData)ObjectManager.DataTables.GetDataById(jsonBuilding["data"].ToObject<int>());
+                var bd = (BuildingData) ObjectManager.DataTables.GetDataById(jsonBuilding["data"].ToObject<int>());
                 var b = new Building(bd, m_vLevel);
                 AddGameObject(b);
                 b.Load(jsonBuilding);
@@ -100,20 +111,20 @@ namespace UCS.Logic
             }
             */
 
-            var jsonTraps = (JArray)jsonObject["traps"];
+            var jsonTraps = (JArray) jsonObject["traps"];
             foreach (JObject jsonTrap in jsonTraps)
             {
-                var td = (TrapData)ObjectManager.DataTables.GetDataById(jsonTrap["data"].ToObject<int>());
+                var td = (TrapData) ObjectManager.DataTables.GetDataById(jsonTrap["data"].ToObject<int>());
                 var t = new Trap(td, m_vLevel);
                 AddGameObject(t);
                 t.Load(jsonTrap);
             }
 
-            var jsonDecos = (JArray)jsonObject["decos"];
+            var jsonDecos = (JArray) jsonObject["decos"];
 
             foreach (JObject jsonDeco in jsonDecos)
             {
-                var dd = (DecoData)ObjectManager.DataTables.GetDataById(jsonDeco["data"].ToObject<int>());
+                var dd = (DecoData) ObjectManager.DataTables.GetDataById(jsonDeco["data"].ToObject<int>());
                 var d = new Deco(dd, m_vLevel);
                 AddGameObject(d);
                 d.Load(jsonDeco);
@@ -127,7 +138,7 @@ namespace UCS.Logic
             m_vGameObjects[go.ClassId].Remove(go);
             if (go.ClassId == 0)
             {
-                var b = (Building)go;
+                var b = (Building) go;
                 var bd = b.GetBuildingData();
                 if (bd.IsWorkerBuilding())
                 {
@@ -153,7 +164,7 @@ namespace UCS.Logic
             var jsonBuildingsArray = new JArray();
             foreach (var go in new List<GameObject>(m_vGameObjects[0]))
             {
-                var b = (Building)go;
+                var b = (Building) go;
                 var jsonObject = new JObject();
                 jsonObject.Add("data", b.GetBuildingData().GetGlobalID());
                 b.Save(jsonObject);
@@ -180,7 +191,7 @@ namespace UCS.Logic
             var jsonTrapsArray = new JArray();
             foreach (var go in new List<GameObject>(m_vGameObjects[4]))
             {
-                var t = (Trap)go;
+                var t = (Trap) go;
                 var jsonObject = new JObject();
                 jsonObject.Add("data", t.GetTrapData().GetGlobalID());
                 t.Save(jsonObject);
@@ -191,7 +202,7 @@ namespace UCS.Logic
             var jsonDecosArray = new JArray();
             foreach (var go in new List<GameObject>(m_vGameObjects[6]))
             {
-                var d = (Deco)go;
+                var d = (Deco) go;
                 var jsonObject = new JObject();
                 jsonObject.Add("data", d.GetDecoData().GetGlobalID());
                 d.Save(jsonObject);
@@ -325,7 +336,7 @@ namespace UCS.Logic
             m_vGameObjects[go.ClassId].Remove(go);
             if (go.ClassId == 0)
             {
-                var b = (Building)go;
+                var b = (Building) go;
                 var bd = b.GetBuildingData();
                 if (bd.IsWorkerBuilding())
                     m_vLevel.WorkerManager.DecreaseWorkerCount();

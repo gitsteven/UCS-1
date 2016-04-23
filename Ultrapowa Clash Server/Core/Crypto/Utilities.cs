@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -98,15 +109,15 @@ namespace Sodium
                     switch (format)
                     {
                         case HexFormat.Colon:
-                            sb.Append((char)58);
+                            sb.Append((char) 58);
                             break;
 
                         case HexFormat.Hyphen:
-                            sb.Append((char)45);
+                            sb.Append((char) 45);
                             break;
 
                         case HexFormat.Space:
-                            sb.Append((char)32);
+                            sb.Append((char) 32);
                             break;
 
                         default:
@@ -119,21 +130,21 @@ namespace Sodium
 
                 if (hcase == HexCase.Lower)
                 {
-                    sb.Append((char)(87 + byteValue + (((byteValue - 10) >> 31) & -39))); //lower
+                    sb.Append((char) (87 + byteValue + (((byteValue - 10) >> 31) & -39))); //lower
                 }
                 else
                 {
-                    sb.Append((char)(55 + byteValue + (((byteValue - 10) >> 31) & -7))); //upper
+                    sb.Append((char) (55 + byteValue + (((byteValue - 10) >> 31) & -7))); //upper
                 }
                 byteValue = data[i] & 0xF;
 
                 if (hcase == HexCase.Lower)
                 {
-                    sb.Append((char)(87 + byteValue + (((byteValue - 10) >> 31) & -39))); //lower
+                    sb.Append((char) (87 + byteValue + (((byteValue - 10) >> 31) & -39))); //lower
                 }
                 else
                 {
-                    sb.Append((char)(55 + byteValue + (((byteValue - 10) >> 31) & -7))); //upper
+                    sb.Append((char) (55 + byteValue + (((byteValue - 10) >> 31) & -7))); //upper
                 }
             }
 

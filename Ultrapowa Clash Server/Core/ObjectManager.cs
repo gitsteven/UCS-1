@@ -1,3 +1,14 @@
+/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -49,6 +60,7 @@ namespace UCS.Core
             using (var sr = new StreamReader(@"Gamefiles/starting_home.json"))
                 m_vHomeDefault = sr.ReadToEnd();
 
+            m_vDatabase.CheckConnection();
             m_vAvatarSeed = m_vDatabase.GetMaxPlayerId() + 1;
             m_vAllianceSeed = m_vDatabase.GetMaxAllianceId() + 1;
             LoadGameFiles();

@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System;
 using System.IO;
 using UCS.Core;
 using UCS.Helpers;
@@ -38,7 +49,7 @@ namespace UCS.PacketProcessing
             {
                 if (go.ClassId == 0)
                 {
-                    var b = (Building)go;
+                    var b = (Building) go;
                     var upc = b.GetUnitProductionComponent();
                     if (upc != null)
                     {
@@ -50,7 +61,7 @@ namespace UCS.PacketProcessing
                                 ObjectManager.DataTables.GetGlobals()
                                     .GetGlobalData("SPELL_SPEED_UP_COST_MULTIPLIER")
                                     .NumberValue;
-                            cost = (int)((cost * (long)multiplier * 1374389535) >> 32);
+                            cost = (int) ((cost * (long) multiplier * 1374389535) >> 32);
                             cost = Math.Max((cost >> 5) + (cost >> 31), 1);
                         }
                         if (ca.HasEnoughDiamonds(cost))

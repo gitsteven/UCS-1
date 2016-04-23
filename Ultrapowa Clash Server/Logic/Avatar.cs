@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System;
 using System.Collections.Generic;
 using UCS.Core;
 using UCS.GameFiles;
@@ -81,11 +92,11 @@ namespace UCS.Logic
             {
                 if (commodityType == 0)
                 {
-                    var resourceCount = GetResourceCount((ResourceData)data);
+                    var resourceCount = GetResourceCount((ResourceData) data);
                     var newResourceValue = Math.Max(resourceCount + count, 0);
                     if (count >= 1)
                     {
-                        var resourceCap = GetResourceCap((ResourceData)data);
+                        var resourceCap = GetResourceCap((ResourceData) data);
                         if (resourceCount < resourceCap)
                         {
                             if (newResourceValue > resourceCap)
@@ -96,9 +107,9 @@ namespace UCS.Logic
                     }
                     Debugger.WriteLine(
                         string.Format("Old Resources: {0} New Resources: {1} Resource Cap: {2}",
-                            GetResourceCount((ResourceData)data), newResourceValue, GetResourceCap((ResourceData)data)),
+                            GetResourceCount((ResourceData) data), newResourceValue, GetResourceCap((ResourceData) data)),
                         null, 5);
-                    SetResourceCount((ResourceData)data, newResourceValue);
+                    SetResourceCount((ResourceData) data, newResourceValue);
                 }
             }
         }

@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System;
 using System.Collections.Concurrent;
 using System.Threading;
 using UCS.PacketProcessing;
@@ -79,14 +90,14 @@ namespace UCS.Core
                         player += " (" + pl.GetPlayerAvatar().GetId() + ", " + pl.GetPlayerAvatar().GetAvatarName() + ")";
                     try
                     {
-                        Debugger.WriteLine("[UCS][" + p.GetMessageType() + "] Processing " + p.GetType().Name + player);
+                        Debugger.WriteLine("[UCS]    Processing " + p.GetType().Name + player);
                         p.Decode();
                         p.Process(pl);
                     }
                     catch (Exception ex)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Debugger.WriteLine("[UCS][" + p.GetMessageType() + "] An exception occured during processing of message " + p.GetType().Name + player, ex);
+                        Debugger.WriteLine("[UCS]    An exception occured during processing of message " + p.GetType().Name + player, ex);
                         Console.ResetColor();
                     }
                 }

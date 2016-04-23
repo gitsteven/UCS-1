@@ -1,4 +1,15 @@
-﻿using System.Collections.Generic;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System.Collections.Generic;
 
 namespace UCS.Logic
 {
@@ -60,13 +71,13 @@ namespace UCS.Logic
             {
                 if (go.ClassId == 3)
                 {
-                    var o = (Obstacle)go;
+                    var o = (Obstacle) go;
                     if (o.IsClearingOnGoing())
                         o.SpeedUpClearing();
                 }
                 else
                 {
-                    var b = (ConstructionItem)go;
+                    var b = (ConstructionItem) go;
                     if (b.IsConstructing())
                         b.SpeedUpConstruction();
                     else
@@ -95,13 +106,13 @@ namespace UCS.Logic
                 currentGOTime = -1;
                 if (go.ClassId == 3)
                 {
-                    var o = (Obstacle)go;
+                    var o = (Obstacle) go;
                     if (o.IsClearingOnGoing())
                         currentGOTime = o.GetRemainingClearingTime();
                 }
                 else
                 {
-                    var c = (ConstructionItem)go;
+                    var c = (ConstructionItem) go;
                     if (c.IsConstructing())
                     {
                         currentGOTime = c.GetRemainingConstructionTime();

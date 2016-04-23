@@ -1,5 +1,16 @@
-﻿using Newtonsoft.Json.Linq;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
 using System;
+using Newtonsoft.Json.Linq;
 using UCS.Core;
 using UCS.GameFiles;
 using UCS.Helpers;
@@ -62,7 +73,7 @@ namespace UCS.Logic
                 var cost = bd.GetBuildCost(UpgradeLevel + 1);
                 var multiplier =
                     ObjectManager.DataTables.GetGlobals().GetGlobalData("BUILD_CANCEL_MULTIPLIER").NumberValue;
-                var resourceCount = (int)((cost * multiplier * (long)1374389535) >> 32);
+                var resourceCount = (int) ((cost * multiplier * (long) 1374389535) >> 32);
                 resourceCount = Math.Max((resourceCount >> 5) + (resourceCount >> 31), 0);
                 GetLevel().GetPlayerAvatar().CommodityCountChangeHelper(0, rd, resourceCount);
                 m_vLevel.WorkerManager.DeallocateWorker(this);
@@ -105,7 +116,7 @@ namespace UCS.Logic
 
             //Add exp to client avatar
             var constructionTime = GetConstructionItemData().GetConstructionTime(GetUpgradeLevel());
-            var exp = (int)Math.Pow(constructionTime, 0.5f);
+            var exp = (int) Math.Pow(constructionTime, 0.5f);
             GetLevel().GetPlayerAvatar().AddExperience(exp);
 
             //LogicAchievementManager::refreshStatus(v48)
@@ -113,7 +124,7 @@ namespace UCS.Logic
             //v28 = v27(v7, 10, 1);//enable
             if (GetHeroBaseComponent(true) != null) //(GetBuildingData().IsHeroBarrack)
             {
-                var data = (BuildingData)GetData();
+                var data = (BuildingData) GetData();
                 var hd = ObjectManager.DataTables.GetHeroByName(data.HeroType);
                 GetLevel().GetPlayerAvatar().SetUnitUpgradeLevel(hd, 0);
                 GetLevel().GetPlayerAvatar().SetHeroHealth(hd, 0);
@@ -178,7 +189,7 @@ namespace UCS.Logic
 
         public ConstructionItemData GetConstructionItemData()
         {
-            return (ConstructionItemData)GetData();
+            return (ConstructionItemData) GetData();
         }
 
         public HeroBaseComponent GetHeroBaseComponent(bool enabled = false)
@@ -186,7 +197,7 @@ namespace UCS.Logic
             var comp = GetComponent(10, enabled);
             if (comp != null && comp.Type != -1)
             {
-                return (HeroBaseComponent)comp;
+                return (HeroBaseComponent) comp;
             }
             return null;
         }
@@ -207,7 +218,7 @@ namespace UCS.Logic
             var comp = GetComponent(5, enabled);
             if (comp != null && comp.Type != -1)
             {
-                return (ResourceProductionComponent)comp;
+                return (ResourceProductionComponent) comp;
             }
             return null;
         }
@@ -217,7 +228,7 @@ namespace UCS.Logic
             var comp = GetComponent(6, enabled);
             if (comp != null && comp.Type != -1)
             {
-                return (ResourceStorageComponent)comp;
+                return (ResourceStorageComponent) comp;
             }
             return null;
         }
@@ -227,7 +238,7 @@ namespace UCS.Logic
             var comp = GetComponent(3, enabled);
             if (comp != null && comp.Type != -1)
             {
-                return (UnitProductionComponent)comp;
+                return (UnitProductionComponent) comp;
             }
             return null;
         }
@@ -237,7 +248,7 @@ namespace UCS.Logic
             var comp = GetComponent(0, enabled);
             if (comp != null && comp.Type != -1)
             {
-                return (UnitStorageComponent)comp;
+                return (UnitStorageComponent) comp;
             }
             return null;
         }
@@ -247,7 +258,7 @@ namespace UCS.Logic
             var comp = GetComponent(9, enabled);
             if (comp != null && comp.Type != -1)
             {
-                return (UnitUpgradeComponent)comp;
+                return (UnitUpgradeComponent) comp;
             }
             return null;
         }
@@ -314,9 +325,9 @@ namespace UCS.Logic
                 jsonObject.Add("locked", true);
             if (IsBoosted)
             {
-                if ((int)(m_vBoostEndTime - GetLevel().GetTime()).TotalSeconds >= 0)
+                if ((int) (m_vBoostEndTime - GetLevel().GetTime()).TotalSeconds >= 0)
                 {
-                    jsonObject.Add("boost_t", (int)(m_vBoostEndTime - GetLevel().GetTime()).TotalSeconds);
+                    jsonObject.Add("boost_t", (int) (m_vBoostEndTime - GetLevel().GetTime()).TotalSeconds);
                 }
                 jsonObject.Add("boost_endTime", m_vBoostEndTime);
             }
@@ -335,7 +346,7 @@ namespace UCS.Logic
             {
                 if (GetUnitStorageComponent(true) != null)
                 {
-                    var data = (BuildingData)GetData();
+                    var data = (BuildingData) GetData();
                     if (data.GetUnitStorageCapacity(level) > 0)
                     {
                         if (!data.Bunker)
@@ -348,7 +359,7 @@ namespace UCS.Logic
                 var resourceStorageComponent = GetResourceStorageComponent(true);
                 if (resourceStorageComponent != null)
                 {
-                    var maxStoredResourcesList = ((BuildingData)GetData()).GetMaxStoredResourceCounts(UpgradeLevel);
+                    var maxStoredResourcesList = ((BuildingData) GetData()).GetMaxStoredResourceCounts(UpgradeLevel);
                     resourceStorageComponent.SetMaxArray(maxStoredResourcesList);
                 }
             }

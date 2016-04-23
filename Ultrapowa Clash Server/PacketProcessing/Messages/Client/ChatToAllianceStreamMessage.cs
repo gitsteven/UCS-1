@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System;
 using System.IO;
 using UCS.Core;
 using UCS.Helpers;
@@ -48,7 +59,7 @@ namespace UCS.PacketProcessing
                             player += " (" + level.GetPlayerAvatar().GetId() + ", " +
                                       level.GetPlayerAvatar().GetAvatarName() + ")";
                         Debugger.WriteLine("\t" + obj.GetType().Name + player);
-                        ((GameOpCommand)obj).Execute(level);
+                        ((GameOpCommand) obj).Execute(level);
                     }
                 }
                 else
@@ -58,7 +69,7 @@ namespace UCS.PacketProcessing
                     if (allianceId > 0)
                     {
                         var cm = new ChatStreamEntry();
-                        cm.SetId((int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+                        cm.SetId((int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
                         cm.SetAvatar(avatar);
                         cm.SetMessage(m_vChatMessage);
 

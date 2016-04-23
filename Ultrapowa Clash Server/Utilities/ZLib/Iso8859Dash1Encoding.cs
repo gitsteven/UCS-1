@@ -1,3 +1,14 @@
+/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
 using System;
 
 namespace Ionic.Encoding
@@ -86,9 +97,9 @@ namespace Ionic.Encoding
                 var c = chars[start + i]; // get the unicode char
 
                 if (c >= '\x00FF') // out of range?
-                    bytes[byteIndex + i] = (byte)'?';
+                    bytes[byteIndex + i] = (byte) '?';
                 else
-                    bytes[byteIndex + i] = (byte)c;
+                    bytes[byteIndex + i] = (byte) c;
             }
             return count;
         }
@@ -139,7 +150,7 @@ namespace Ionic.Encoding
             // In the range 00 to FF, the Unicode characters are the same as the iso-8859-1
             // characters; because of that, decoding is trivial.
             for (var i = 0; i < count; i++)
-                chars[charIndex + i] = (char)bytes[i + start];
+                chars[charIndex + i] = (char) bytes[i + start];
 
             return count;
         }

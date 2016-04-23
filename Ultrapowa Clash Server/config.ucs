@@ -4,20 +4,13 @@
   <add key="startingElixir" value="500000000" /><!-- Beware, very high value will crash UCS -->
   <add key="startingDarkElixir" value="10000000" /><!-- Beware, very high value will crash UCS -->
   <add key="startingTrophies" value="random" /><!-- User starting trophies - set to random for random starting trophies -->
-  <add key="startingShieldTime" value="0" /><!-- Initial shield duration in seconds -->
   <add key="startingLevel" value="1" /><!-- User starting level (Beware, 9 is the highest starting level) -->
-  <add key="startingExperience" value="1" /><!-- User starting  experience - set to random for random starting experience -->
-  <add key="clientVersion" value="8.212" /><!-- Major version dot Client build -->
-  <add key="UpdateUrl" value="htts://www.gobelinland.fr/" /><!-- Specify where to redirect if the CoC version is outdated -->
-  <add key="useCustomPatch" value="true" /><!-- Specify if the server is using patches (.csv, .sc, ...) -->
-  <add key="patchingServer" value="http://178.33.6.244/" /><!-- Don't forget the trailing slash -->
-  <add key="maintenanceMode" value="false" /><!-- People trying to connect will see a maintenance message if set to true -->
-  <add key="maintenanceTimeleft" value="1200" /><!-- Please set the time in seconds like 1200 seconds for 20 minutes -->
+  <add key="UpdateUrl" value="http://www.yourdomain.com/" /><!-- Specify where to redirect if the CoC version is outdated -->
+  <add key="useCustomPatch" value="false" /><!-- Specify if the server is using patches (.csv, .sc, ...) -->
+  <add key="patchingServer" value="http://www.yourdomain.com/" /><!-- Don't forget the trailing slash -->
+  <add key="maintenanceTimeleft" value="0" /><!-- Please set the time in seconds like 1200 seconds for 20 minutes -->
   <add key="databaseConnectionName" value="ucsdbEntities" /><!-- Choose ucsdbEntities for MySQL and edit ucsdbEntities connection string in ucs.exe.config. If you want to use sqLite choose sqliteEntities -->
-  <add key="loggingLevel" value="1" /><!-- Enable logging for debugging, set value to 1 for (almost) no log -->
+  <add key="loggingLevel" value="5" /><!-- Enable logging for debugging, set value to 1 for (almost) no log -->
   <add key="proDebugPort" value="8888" /><!-- Choose the port for Pro API Manager, by default set value to 1173 -->
   <add key="ApiKey" value="UCSGL" /><!-- Your API Key -->
-  <add key="ServerCapacityMode" value="false" /><!-- Enable Server Capacity or disable it -->
-  <add key="ServerCapacity" value="1000" /><!-- The Amount of players allowed to play -->
-  <add key="ServerFullMessage" value="The Server is currently full! Please try again later." /><!-- The Message which should be displayed if the server is full -->
 </appSettings>

@@ -1,3 +1,13 @@
+/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
 // GZipStream.cs ------------------------------------------------------------------
 //
 // Copyright (c) 2009 Dino Chiesa and Microsoft Corporation. All rights reserved.
@@ -113,7 +123,8 @@ namespace Ionic.Zlib
             }
             set
             {
-                if (_disposed) throw new ObjectDisposedException("GZipStream");
+                if (_disposed)
+                    throw new ObjectDisposedException("GZipStream");
                 _Comment = value;
             }
         }
@@ -144,9 +155,11 @@ namespace Ionic.Zlib
             }
             set
             {
-                if (_disposed) throw new ObjectDisposedException("GZipStream");
+                if (_disposed)
+                    throw new ObjectDisposedException("GZipStream");
                 _FileName = value;
-                if (_FileName == null) return;
+                if (_FileName == null)
+                    return;
                 if (_FileName.IndexOf("/") != -1)
                 {
                     _FileName = _FileName.Replace("/", "\\");
@@ -474,7 +487,8 @@ namespace Ionic.Zlib
             }
             set
             {
-                if (_disposed) throw new ObjectDisposedException("GZipStream");
+                if (_disposed)
+                    throw new ObjectDisposedException("GZipStream");
                 _baseStream._flushMode = value;
             }
         }
@@ -501,7 +515,8 @@ namespace Ionic.Zlib
             }
             set
             {
-                if (_disposed) throw new ObjectDisposedException("GZipStream");
+                if (_disposed)
+                    throw new ObjectDisposedException("GZipStream");
                 if (_baseStream._workingBuffer != null)
                     throw new ZlibException("The working buffer is already set.");
                 if (value < ZlibConstants.WorkingBufferSizeMin)
@@ -580,7 +595,8 @@ namespace Ionic.Zlib
         {
             get
             {
-                if (_disposed) throw new ObjectDisposedException("GZipStream");
+                if (_disposed)
+                    throw new ObjectDisposedException("GZipStream");
                 return _baseStream._stream.CanRead;
             }
         }
@@ -602,7 +618,8 @@ namespace Ionic.Zlib
         {
             get
             {
-                if (_disposed) throw new ObjectDisposedException("GZipStream");
+                if (_disposed)
+                    throw new ObjectDisposedException("GZipStream");
                 return _baseStream._stream.CanWrite;
             }
         }
@@ -612,7 +629,8 @@ namespace Ionic.Zlib
         /// </summary>
         public override void Flush()
         {
-            if (_disposed) throw new ObjectDisposedException("GZipStream");
+            if (_disposed)
+                throw new ObjectDisposedException("GZipStream");
             _baseStream.Flush();
         }
 
@@ -679,7 +697,8 @@ namespace Ionic.Zlib
         /// <returns>the number of bytes actually read</returns>
         public override int Read(byte[] buffer, int offset, int count)
         {
-            if (_disposed) throw new ObjectDisposedException("GZipStream");
+            if (_disposed)
+                throw new ObjectDisposedException("GZipStream");
             var n = _baseStream.Read(buffer, offset, count);
 
             // Console.WriteLine("GZipStream::Read(buffer, off({0}), c({1}) = {2}", offset, count,
@@ -734,7 +753,8 @@ namespace Ionic.Zlib
         /// <param name="count">the number of bytes to write.</param>
         public override void Write(byte[] buffer, int offset, int count)
         {
-            if (_disposed) throw new ObjectDisposedException("GZipStream");
+            if (_disposed)
+                throw new ObjectDisposedException("GZipStream");
             if (_baseStream._streamMode == ZlibBaseStream.StreamMode.Undefined)
             {
                 //Console.WriteLine("GZipStream: First write");
@@ -788,9 +808,10 @@ namespace Ionic.Zlib
             header[i++] = flag;
 
             // mtime
-            if (!LastModified.HasValue) LastModified = DateTime.Now;
+            if (!LastModified.HasValue)
+                LastModified = DateTime.Now;
             var delta = LastModified.Value - _unixEpoch;
-            var timet = (int)delta.TotalSeconds;
+            var timet = (int) delta.TotalSeconds;
             Array.Copy(BitConverter.GetBytes(timet), 0, header, i, 4);
             i += 4;
 

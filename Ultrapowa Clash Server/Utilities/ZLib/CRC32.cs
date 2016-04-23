@@ -1,3 +1,13 @@
+/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
 // CRC32.cs ------------------------------------------------------------------
 //
 // Copyright (c) 2011 Dino Chiesa. All rights reserved.
@@ -72,7 +82,7 @@ namespace Ionic.Crc
         /// </para>
         /// </remarks>
         public CRC32(bool reverseBits) :
-            this(unchecked((int)0xEDB88320), reverseBits)
+            this(unchecked((int) 0xEDB88320), reverseBits)
         {
         }
 
@@ -98,7 +108,7 @@ namespace Ionic.Crc
         public CRC32(int polynomial, bool reverseBits)
         {
             this.reverseBits = reverseBits;
-            dwPolynomial = (uint)polynomial;
+            dwPolynomial = (uint) polynomial;
             GenerateLookupTable();
         }
 
@@ -112,7 +122,7 @@ namespace Ionic.Crc
         /// </summary>
         public int Crc32Result
         {
-            get { return unchecked((int)~_register); }
+            get { return unchecked((int) ~_register); }
         }
 
         /// <summary>
@@ -143,17 +153,19 @@ namespace Ionic.Crc
 
                 TotalBytesRead = 0;
                 var count = input.Read(buffer, 0, readSize);
-                if (output != null) output.Write(buffer, 0, count);
+                if (output != null)
+                    output.Write(buffer, 0, count);
                 TotalBytesRead += count;
                 while (count > 0)
                 {
                     SlurpBlock(buffer, 0, count);
                     count = input.Read(buffer, 0, readSize);
-                    if (output != null) output.Write(buffer, 0, count);
+                    if (output != null)
+                        output.Write(buffer, 0, count);
                     TotalBytesRead += count;
                 }
 
-                return (int)~_register;
+                return (int) ~_register;
             }
         }
 
@@ -166,12 +178,12 @@ namespace Ionic.Crc
         /// <returns>The CRC-ized result.</returns>
         public int ComputeCrc32(int W, byte B)
         {
-            return _InternalComputeCrc32((uint)W, B);
+            return _InternalComputeCrc32((uint) W, B);
         }
 
         internal int _InternalComputeCrc32(uint W, byte B)
         {
-            return (int)(crc32Table[(W ^ B) & 0xFF] ^ (W >> 8));
+            return (int) (crc32Table[(W ^ B) & 0xFF] ^ (W >> 8));
         }
 
         /// <summary>
@@ -274,11 +286,11 @@ namespace Ionic.Crc
         {
             unchecked
             {
-                var u = (uint)data * 0x00020202;
+                var u = (uint) data * 0x00020202;
                 uint m = 0x01044010;
                 var s = u & m;
                 var t = (u << 2) & (m << 1);
-                return (byte)((0x01001001 * (s + t)) >> 24);
+                return (byte) ((0x01001001 * (s + t)) >> 24);
             }
         }
 
@@ -371,7 +383,7 @@ namespace Ionic.Crc
                 return;
 
             var crc1 = ~_register;
-            var crc2 = (uint)crc;
+            var crc2 = (uint) crc;
 
             // put operator for one zero bit in odd
             odd[0] = dwPolynomial; // the CRC-32 polynomial
@@ -388,7 +400,7 @@ namespace Ionic.Crc
             // put operator for four zero bits in odd
             gf2_matrix_square(odd, even);
 
-            var len2 = (uint)length;
+            var len2 = (uint) length;
 
             // apply len2 zeros to crc1 (first square will put the operator for one zero byte, eight
             // zero bits, in even)
@@ -675,12 +687,15 @@ namespace Ionic.Crc
 
             if (_lengthLimit != UnsetLengthLimit)
             {
-                if (_Crc32.TotalBytesRead >= _lengthLimit) return 0; // EOF
+                if (_Crc32.TotalBytesRead >= _lengthLimit)
+                    return 0; // EOF
                 var bytesRemaining = _lengthLimit - _Crc32.TotalBytesRead;
-                if (bytesRemaining < count) bytesToRead = (int)bytesRemaining;
+                if (bytesRemaining < count)
+                    bytesToRead = (int) bytesRemaining;
             }
             var n = _innerStream.Read(buffer, offset, bytesToRead);
-            if (n > 0) _Crc32.SlurpBlock(buffer, offset, n);
+            if (n > 0)
+                _Crc32.SlurpBlock(buffer, offset, n);
             return n;
         }
 
@@ -692,7 +707,8 @@ namespace Ionic.Crc
         /// <param name="count">the number of bytes to write</param>
         public override void Write(byte[] buffer, int offset, int count)
         {
-            if (count > 0) _Crc32.SlurpBlock(buffer, offset, count);
+            if (count > 0)
+                _Crc32.SlurpBlock(buffer, offset, count);
             _innerStream.Write(buffer, offset, count);
         }
 

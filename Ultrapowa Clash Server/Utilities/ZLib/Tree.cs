@@ -1,3 +1,13 @@
+/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
 // Tree.cs ------------------------------------------------------------------
 //
 // Copyright (c) 2009 Dino Chiesa and Microsoft Corporation. All rights reserved.
@@ -212,7 +222,7 @@ namespace Ionic.Zlib
             for (bits = 1; bits <= InternalConstants.MAX_BITS; bits++)
                 unchecked
                 {
-                    next_code[bits] = code = (short)((code + bl_count[bits - 1]) << 1);
+                    next_code[bits] = code = (short) ((code + bl_count[bits - 1]) << 1);
                 }
 
             // Check that the bit counts in bl_count are consistent. The last code
@@ -227,7 +237,7 @@ namespace Ionic.Zlib
                 if (len == 0)
                     continue;
                 // Now reverse the bits
-                tree[n * 2] = unchecked((short)bi_reverse(next_code[len]++, len));
+                tree[n * 2] = unchecked((short) bi_reverse(next_code[len]++, len));
             }
         }
 
@@ -299,9 +309,9 @@ namespace Ionic.Zlib
                 s.heap[--s.heap_max] = m;
 
                 // Create a new node father of n and m
-                tree[node * 2] = unchecked((short)(tree[n * 2] + tree[m * 2]));
-                s.depth[node] = (sbyte)(Math.Max((byte)s.depth[n], (byte)s.depth[m]) + 1);
-                tree[n * 2 + 1] = tree[m * 2 + 1] = (short)node;
+                tree[node * 2] = unchecked((short) (tree[n * 2] + tree[m * 2]));
+                s.depth[node] = (sbyte) (Math.Max((byte) s.depth[n], (byte) s.depth[m]) + 1);
+                tree[n * 2 + 1] = tree[m * 2 + 1] = (short) node;
 
                 // and insert the new node in the heap
                 s.heap[1] = node++;
@@ -353,7 +363,7 @@ namespace Ionic.Zlib
                     bits = max_length;
                     overflow++;
                 }
-                tree[n * 2 + 1] = (short)bits;
+                tree[n * 2 + 1] = (short) bits;
                 // We overwrite tree[n*2+1] which is no longer needed
 
                 if (n > max_code)
@@ -379,7 +389,7 @@ namespace Ionic.Zlib
                 while (s.bl_count[bits] == 0)
                     bits--;
                 s.bl_count[bits]--; // move one leaf down the tree
-                s.bl_count[bits + 1] = (short)(s.bl_count[bits + 1] + 2); // move one overflow item as its brother
+                s.bl_count[bits + 1] = (short) (s.bl_count[bits + 1] + 2); // move one overflow item as its brother
                 s.bl_count[max_length]--;
                 // The brother of the overflow item also moves one step up, but this does not affect bl_count[max_length]
                 overflow -= 2;
@@ -395,8 +405,8 @@ namespace Ionic.Zlib
                         continue;
                     if (tree[m * 2 + 1] != bits)
                     {
-                        s.opt_len = (int)(s.opt_len + (bits - (long)tree[m * 2 + 1]) * tree[m * 2]);
-                        tree[m * 2 + 1] = (short)bits;
+                        s.opt_len = (int) (s.opt_len + (bits - (long) tree[m * 2 + 1]) * tree[m * 2]);
+                        tree[m * 2 + 1] = (short) bits;
                     }
                     n--;
                 }

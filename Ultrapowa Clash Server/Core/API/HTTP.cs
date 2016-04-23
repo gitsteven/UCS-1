@@ -1,4 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,6 +19,7 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace UCS.Core
 {
@@ -54,7 +65,7 @@ namespace UCS.Core
             //get an empty port
             var l = new TcpListener(IPAddress.Loopback, 0);
             l.Start();
-            var port = ((IPEndPoint)l.LocalEndpoint).Port;
+            var port = ((IPEndPoint) l.LocalEndpoint).Port;
             l.Stop();
             Initialize(port);
         }
@@ -203,17 +214,17 @@ namespace UCS.Core
                         fstream.Close();
                     }
 
-                    context.Response.StatusCode = (int)HttpStatusCode.OK;
+                    context.Response.StatusCode = (int) HttpStatusCode.OK;
                     context.Response.OutputStream.Flush();
                 }
                 catch (Exception ex)
                 {
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
                 }
             }
             else
             {
-                context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                context.Response.StatusCode = (int) HttpStatusCode.NotFound;
             }
             context.Response.OutputStream.Close();
         }

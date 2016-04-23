@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System;
 using System.Runtime.InteropServices;
 
 namespace Sodium
@@ -480,8 +491,8 @@ namespace Sodium
         {
             get
             {
-                const string LIBRARY_X86 = "libsodium.dll";
-                const string LIBRARY_X64 = "libsodium-64.dll";
+                const string LIBRARY_X86 = @"Library\libsodium.dll";
+                const string LIBRARY_X64 = @"Library\libsodium-64.dll";
                 const string LIBRARY_MONO = "libsodium";
 
                 var lib = Is64 ? LIBRARY_X64 : LIBRARY_X86;

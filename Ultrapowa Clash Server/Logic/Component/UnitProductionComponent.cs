@@ -1,5 +1,16 @@
-﻿using Newtonsoft.Json.Linq;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using UCS.Core;
 using UCS.GameFiles;
 
@@ -50,7 +61,7 @@ namespace UCS.Logic
             {
                 for (var i = 0; i < GetSlotCount(); i++)
                 {
-                    if ((CombatItemData)m_vUnits[i].Data == cd)
+                    if ((CombatItemData) m_vUnits[i].Data == cd)
                     {
                         m_vUnits[i].Value++;
                         return;
@@ -80,13 +91,13 @@ namespace UCS.Logic
         {
             CombatItemData cd = null;
             if (m_vUnits.Count >= 1)
-                cd = (CombatItemData)m_vUnits[0].Data;
+                cd = (CombatItemData) m_vUnits[0].Data;
             return cd;
         }
 
         public int GetMaxTrainCount()
         {
-            var b = (Building)GetParent();
+            var b = (Building) GetParent();
             var bd = b.GetBuildingData();
             return bd.GetUnitProduction(b.GetUpgradeLevel());
         }
@@ -104,7 +115,7 @@ namespace UCS.Logic
                 for (var i = 0; i < GetSlotCount(); i++)
                 {
                     var cnt = m_vUnits[i].Value;
-                    var housingSpace = ((CombatItemData)m_vUnits[i].Data).GetHousingSpace();
+                    var housingSpace = ((CombatItemData) m_vUnits[i].Data).GetHousingSpace();
                     count += cnt * housingSpace;
                 }
             }
@@ -123,7 +134,7 @@ namespace UCS.Logic
             {
                 foreach (var ds in m_vUnits)
                 {
-                    var cd = (CombatItemData)ds.Data;
+                    var cd = (CombatItemData) ds.Data;
                     if (cd != null)
                     {
                         var count = ds.Value;
@@ -152,7 +163,7 @@ namespace UCS.Logic
 
         public CombatItemData GetUnit(int index)
         {
-            return (CombatItemData)m_vUnits[index].Data;
+            return (CombatItemData) m_vUnits[index].Data;
         }
 
         public bool HasHousingSpaceForSpeedUp()
@@ -162,7 +173,7 @@ namespace UCS.Logic
             {
                 foreach (var ds in m_vUnits)
                 {
-                    var cd = (CombatItemData)ds.Data;
+                    var cd = (CombatItemData) ds.Data;
                     totalRoom += cd.GetHousingSpace() * ds.Value;
                 }
             }
@@ -195,7 +206,7 @@ namespace UCS.Logic
 
         public override void Load(JObject jsonObject)
         {
-            var unitProdObject = (JObject)jsonObject["unit_prod"];
+            var unitProdObject = (JObject) jsonObject["unit_prod"];
             m_vIsSpellForge = unitProdObject["unit_type"].ToObject<int>() == 1;
             var timeToken = unitProdObject["t"];
             if (timeToken != null)
@@ -204,7 +215,7 @@ namespace UCS.Logic
                 var remainingTime = timeToken.ToObject<int>();
                 m_vTimer.StartTimer(remainingTime, GetParent().GetLevel().GetTime());
             }
-            var unitJsonArray = (JArray)unitProdObject["slots"];
+            var unitJsonArray = (JArray) unitProdObject["slots"];
             if (unitJsonArray != null)
             {
                 foreach (JObject unitJsonObject in unitJsonArray)
@@ -232,7 +243,7 @@ namespace UCS.Logic
                 Data d = null;
                 if (m_vUnits.Count > 0)
                     d = m_vUnits[0].Data;
-                if (!((UnitStorageComponent)c).CanAddUnit((CombatItemData)d))
+                if (!((UnitStorageComponent) c).CanAddUnit((CombatItemData) d))
                 {
                     //Storage camp is full
                     cf.AddIgnoreObject(c.GetParent());
@@ -244,8 +255,8 @@ namespace UCS.Logic
 
             if (c != null)
             {
-                var cd = (CombatItemData)m_vUnits[0].Data;
-                ((UnitStorageComponent)c).AddUnit(cd);
+                var cd = (CombatItemData) m_vUnits[0].Data;
+                ((UnitStorageComponent) c).AddUnit(cd);
                 StartProducingNextUnit();
                 result = true;
             }
@@ -278,7 +289,7 @@ namespace UCS.Logic
                         if (GetSlotCount() >= 1)
                         {
                             var ds = m_vUnits[0];
-                            var newcd = (CombatItemData)m_vUnits[0].Data;
+                            var newcd = (CombatItemData) m_vUnits[0].Data;
                             var ca = GetParent().GetLevel().GetHomeOwnerAvatar();
                             m_vTimer = new Timer();
                             var trainingTime = newcd.GetTrainingTime(ca.GetUnitUpgradeLevel(newcd));
@@ -321,7 +332,7 @@ namespace UCS.Logic
 
         public void SetUnitType(GameObject go)
         {
-            var b = (Building)GetParent();
+            var b = (Building) GetParent();
             var bd = b.GetBuildingData();
             m_vIsSpellForge = bd.IsSpellForge();
         }
@@ -338,7 +349,7 @@ namespace UCS.Logic
             m_vTimer = null;
             if (GetSlotCount() >= 1)
             {
-                RemoveUnit((CombatItemData)m_vUnits[0].Data);
+                RemoveUnit((CombatItemData) m_vUnits[0].Data);
             }
         }
 

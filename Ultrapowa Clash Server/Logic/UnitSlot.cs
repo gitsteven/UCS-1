@@ -1,4 +1,15 @@
-﻿using System.IO;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System.IO;
 using UCS.GameFiles;
 using UCS.Helpers;
 
@@ -33,7 +44,7 @@ namespace UCS.Logic
 
         public void Decode(BinaryReader br)
         {
-            UnitData = (CombatItemData)br.ReadDataReference();
+            UnitData = (CombatItemData) br.ReadDataReference();
             Level = br.ReadInt32WithEndian();
             Count = br.ReadInt32WithEndian();
         }

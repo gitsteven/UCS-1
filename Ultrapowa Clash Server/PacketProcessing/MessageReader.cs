@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System;
 using System.IO;
 using System.Text;
 
@@ -59,7 +70,7 @@ namespace UCS.PacketProcessing
         /// <returns>A 2-byte signed integer read from the current stream.</returns>
         public override short ReadInt16()
         {
-            return (short)ReadUInt16();
+            return (short) ReadUInt16();
         }
 
         /// <summary>
@@ -69,7 +80,7 @@ namespace UCS.PacketProcessing
         /// <returns>A 4-byte signed integer read from the current stream.</returns>
         public override int ReadInt32()
         {
-            return (int)ReadUInt32();
+            return (int) ReadUInt32();
         }
 
         /// <summary>
@@ -79,7 +90,7 @@ namespace UCS.PacketProcessing
         /// <returns>A 8-byte signed integer from the current stream.</returns>
         public override long ReadInt64()
         {
-            return (long)ReadUInt64();
+            return (long) ReadUInt64();
         }
 
         /// <summary>

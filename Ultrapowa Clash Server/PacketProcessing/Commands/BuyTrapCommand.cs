@@ -1,4 +1,15 @@
-﻿using System.IO;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System.IO;
 using UCS.Core;
 using UCS.GameFiles;
 using UCS.Helpers;
@@ -38,7 +49,7 @@ namespace UCS.PacketProcessing
         {
             var ca = level.GetPlayerAvatar();
 
-            var td = (TrapData)ObjectManager.DataTables.GetDataById(TrapId);
+            var td = (TrapData) ObjectManager.DataTables.GetDataById(TrapId);
             var t = new Trap(td, level);
 
             if (ca.HasEnoughResources(td.GetBuildResource(0), td.GetBuildCost(0)))

@@ -1,4 +1,15 @@
-﻿using System.Data.Entity;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 
 namespace UCS.Database
@@ -7,8 +18,7 @@ namespace UCS.Database
     {
         #region Public Constructors
 
-        public ucsdbEntities(string connectionString)
-            : base("name=" + connectionString)
+        public ucsdbEntities(string connectionString) : base("name=" + connectionString)
         {
         }
 

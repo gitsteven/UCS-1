@@ -1,8 +1,19 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace UCS.GameFiles
 {
@@ -43,7 +54,7 @@ namespace UCS.GameFiles
         {
             var jsonObject = JObject.Parse(jsonString);
 
-            var jsonFilesArray = (JArray)jsonObject["files"];
+            var jsonFilesArray = (JArray) jsonObject["files"];
             foreach (JObject jsonFile in jsonFilesArray)
             {
                 var gf = new GameFile();

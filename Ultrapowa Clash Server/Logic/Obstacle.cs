@@ -1,5 +1,16 @@
-﻿using Newtonsoft.Json.Linq;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
 using System;
+using Newtonsoft.Json.Linq;
 using UCS.Core;
 using UCS.GameFiles;
 using UCS.Helpers;
@@ -57,7 +68,7 @@ namespace UCS.Logic
 
             //Add exp to client avatar
             var constructionTime = GetObstacleData().ClearTimeSeconds;
-            var exp = (int)Math.Pow(constructionTime, 0.5f);
+            var exp = (int) Math.Pow(constructionTime, 0.5f);
             GetLevel().GetPlayerAvatar().AddExperience(exp);
 
             var rd = ObjectManager.DataTables.GetResourceByName(GetObstacleData().LootResource);
@@ -69,7 +80,7 @@ namespace UCS.Logic
 
         public ObstacleData GetObstacleData()
         {
-            return (ObstacleData)GetData();
+            return (ObstacleData) GetData();
         }
 
         public int GetRemainingClearingTime()

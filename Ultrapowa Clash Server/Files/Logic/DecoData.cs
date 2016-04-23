@@ -1,4 +1,15 @@
-﻿using UCS.Core;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
+using UCS.Core;
 
 namespace UCS.GameFiles
 {
@@ -62,7 +73,7 @@ namespace UCS.GameFiles
 
         public int GetSellPrice()
         {
-            var calculation = (int)((BuildCost * (long)1717986919) >> 32);
+            var calculation = (int) ((BuildCost * (long) 1717986919) >> 32);
             return (calculation >> 2) + (calculation >> 31);
         }
 

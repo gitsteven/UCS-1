@@ -1,5 +1,16 @@
-﻿using Newtonsoft.Json.Linq;
+﻿/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
 using System;
+using Newtonsoft.Json.Linq;
 using UCS.Core;
 using UCS.GameFiles;
 using UCS.Helpers;
@@ -46,7 +57,7 @@ namespace UCS.Logic
                 var cost = m_vHeroData.GetUpgradeCost(currentLevel);
                 var multiplier =
                     ObjectManager.DataTables.GetGlobals().GetGlobalData("HERO_UPGRADE_CANCEL_MULTIPLIER").NumberValue;
-                var resourceCount = (int)((cost * multiplier * (long)1374389535) >> 32);
+                var resourceCount = (int) ((cost * multiplier * (long) 1374389535) >> 32);
                 resourceCount = Math.Max((resourceCount >> 5) + (resourceCount >> 31), 0);
                 ca.CommodityCountChangeHelper(0, rd, resourceCount);
                 GetParent().GetLevel().WorkerManager.DeallocateWorker(GetParent());
@@ -104,7 +115,7 @@ namespace UCS.Logic
 
         public override void Load(JObject jsonObject)
         {
-            var unitUpgradeObject = (JObject)jsonObject["hero_upg"];
+            var unitUpgradeObject = (JObject) jsonObject["hero_upg"];
             if (unitUpgradeObject != null)
             {
                 m_vTimer = new Timer();

@@ -1,3 +1,14 @@
+/*
+ * Program : Ultrapowa Clash Server
+ * Description : A C# Writted 'Clash of Clans' Server Emulator !
+ *
+ * Authors:  Jean-Baptiste Martin <Ultrapowa at Ultrapowa.com>,
+ *           And the Official Ultrapowa Developement Team
+ *
+ * Copyright (c) 2016  UltraPowa
+ * All Rights Reserved.
+ */
+
 using System;
 using System.Configuration;
 using System.IO;
@@ -16,7 +27,6 @@ namespace UCS.PacketProcessing
 
         public string AdvertisingGUID;
         public string AndroidDeviceID;
-        public bool banned;
         public string ClientVersion;
         public int ContentVersion;
         public string DeviceModel;
@@ -30,7 +40,6 @@ namespace UCS.PacketProcessing
         public int MinorVersion;
         public string OpenUDID;
         public string OSVersion;
-        public byte[] PlainText;
         public int Seed;
         public int Unknown;
         public string Unknown1;
@@ -92,7 +101,7 @@ namespace UCS.PacketProcessing
 
         public override void Process(Level level)
         {
-            if (Convert.ToBoolean(ConfigurationManager.AppSettings["maintenanceMode"]) || banned || Client.CState == 0)
+            if (Convert.ToInt32(ConfigurationManager.AppSettings["maintenanceTimeleft"]) > 0 || Client.CState == 0)
             {
                 var p = new LoginFailedMessage(Client);
                 p.SetErrorCode(10);
@@ -100,48 +109,34 @@ namespace UCS.PacketProcessing
                 return;
             }
 
-            var versionData = ConfigurationManager.AppSettings["clientVersion"].Split('.');
-            if (versionData.Length >= 2)
+            var cv = ClientVersion.Split('.');
+            if (cv[0] != "8" || cv[1] != "212")
             {
-                var cv = ClientVersion.Split('.');
-                if (cv[0] != versionData[0] || cv[1] != versionData[1])
-                {
-                    var p = new LoginFailedMessage(Client);
-                    p.SetErrorCode(8);
-                    p.SetUpdateURL(Convert.ToString(ConfigurationManager.AppSettings["UpdateUrl"]));
-                    PacketManager.ProcessOutgoingPacket(p);
-                    return;
-                }
-            }
-            else
-            {
-                Debugger.WriteLine("[UCS][10101] Connection failed. UCS config key clientVersion is not properly set.");
+                var p = new LoginFailedMessage(Client);
+                p.SetErrorCode(8);
+                p.SetUpdateURL(Convert.ToString(ConfigurationManager.AppSettings["UpdateUrl"]));
+                PacketManager.ProcessOutgoingPacket(p);
+                return;
             }
 
-            if (Convert.ToBoolean(ConfigurationManager.AppSettings["useCustomPatch"]))
+            if (Convert.ToBoolean(ConfigurationManager.AppSettings["useCustomPatch"]) && MasterHash != ObjectManager.FingerPrint.sha)
             {
-                if (MasterHash != ObjectManager.FingerPrint.sha)
-                {
-                    var p = new LoginFailedMessage(Client);
-                    p.SetErrorCode(7);
-                    p.SetResourceFingerprintData(ObjectManager.FingerPrint.SaveToJson());
-                    p.SetContentURL(ConfigurationManager.AppSettings["patchingServer"]);
-                    p.SetUpdateURL("http://www.ultrapowa.com/client");
-                    PacketManager.ProcessOutgoingPacket(p);
-                    return;
-                }
+                var p = new LoginFailedMessage(Client);
+                p.SetErrorCode(7);
+                p.SetResourceFingerprintData(ObjectManager.FingerPrint.SaveToJson());
+                p.SetContentURL(ConfigurationManager.AppSettings["patchingServer"]);
+                p.SetUpdateURL(ConfigurationManager.AppSettings["UpdateUrl"]);
+                PacketManager.ProcessOutgoingPacket(p);
+                return;
             }
 
             level = ResourcesManager.GetPlayer(UserID);
-            if (level != null)
+            if (level != null && level.GetAccountStatus() == 99)
             {
-                if (level.GetAccountStatus() == 99)
-                {
-                    var p = new LoginFailedMessage(Client);
-                    p.SetErrorCode(11);
-                    PacketManager.ProcessOutgoingPacket(p);
-                    return;
-                }
+                var p = new LoginFailedMessage(Client);
+                p.SetErrorCode(11);
+                PacketManager.ProcessOutgoingPacket(p);
+                return;
             }
             else
             {
@@ -159,7 +154,7 @@ namespace UCS.PacketProcessing
             ResourcesManager.LogPlayerIn(level, Client);
             level.Tick();
             var savedtoken = level.GetPlayerAvatar().GetUserToken();
-            if (savedtoken != null || savedtoken != string.Empty)
+            if (!string.IsNullOrEmpty(savedtoken))
                 level.GetPlayerAvatar().SetToken(UserToken);
             if (level.GetPlayerAvatar().GetUserToken() == UserToken)
             {
