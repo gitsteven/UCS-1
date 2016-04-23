@@ -20,7 +20,7 @@ namespace UCS.Core.Threading
         {
             T = new Thread(() =>
             {
-                Title = "Ultrapowa Clash Server v" + Assembly.GetExecutingAssembly().GetName().Version;
+                Title = "Ultrapowa Clash Server v" + Utils.AssemblyVersion;
 
                 Console.WriteLine(
                     @"
