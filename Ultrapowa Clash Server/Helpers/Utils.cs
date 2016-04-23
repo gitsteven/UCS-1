@@ -166,7 +166,7 @@ namespace UCS.Helpers
         {
             get
             {
-                return "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString().Remove(5);
+                return "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();
             }
         }
     }
