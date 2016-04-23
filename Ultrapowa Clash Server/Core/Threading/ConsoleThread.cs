@@ -33,6 +33,15 @@ namespace UCS.Core.Threading
     Y88b. .d88P 888        888     888  T88b   d8888888888 888        Y88b. .d88P 8888P   Y8888  d8888888888
      'Y88888P'  88888888   888     888   T88b d88P     888 888         'Y88888P'  888P     Y888 d88P     888
                   ");
+                if (Utils.OpenedInstances > 1)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("[EXCEPTION] You seem to run UCS more than once.");
+                    Console.WriteLine("[EXCEPTION] Aborting..");
+                    Console.ResetColor();
+                    System.Threading.Thread.Sleep(3500);
+                    Environment.Exit(0);
+                }
                 Console.WriteLine("[UCS]    -> This program is by the Ultrapowa Network development team.");
                 Console.WriteLine("[UCS]    -> You can find the source at www.ultrapowa.com and https://github.com/UltraPowaDev/UCS/");
                 Console.WriteLine("[UCS]    -> Don't forget to visit www.ultrapowa.com daily for the latest news and updates!");

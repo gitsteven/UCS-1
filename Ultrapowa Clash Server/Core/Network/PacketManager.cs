@@ -46,8 +46,8 @@ namespace UCS.Network
                 var pl = p.Client.GetLevel();
                 var player = "";
                 if (pl != null)
-                    player = " (" + pl.GetPlayerAvatar().GetAvatarName() + ")";
-                Debugger.WriteLine("[UCS]    Processing " + p.GetType().Name + player);
+                    player = " (" + pl.GetPlayerAvatar().GetId() + ", " + pl.GetPlayerAvatar().GetAvatarName() + ")";
+                Debugger.WriteLine("[UCS][" + p.GetMessageType() + "] Processing " + p.GetType().Name + player);
                 m_vOutgoingPackets.Enqueue(p);
                 m_vOutgoingWaitHandle.Set();
             }

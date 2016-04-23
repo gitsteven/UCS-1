@@ -1,5 +1,6 @@
 ﻿using Sodium;
 using System;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using UCP;
@@ -33,6 +34,34 @@ namespace UCP
                 state.sessionKey = plainText.Take(24).ToArray();
                 state.clientState.nonce = plainText.Skip(24).Take(24).ToArray();
                 plainText = plainText.Skip(24).Skip(24).ToArray();
+                using (var reader = new PacketReader(new MemoryStream(plainText)))
+                {
+                    Console.WriteLine("User ID                      -> " + reader.ReadInt64());
+                    Console.WriteLine("User Token                   -> " + reader.ReadString());
+                    Console.WriteLine("Major Version                -> " + reader.ReadInt32());
+                    Console.WriteLine("Content Version              -> " + reader.ReadInt32());
+                    Console.WriteLine("Minor Version                -> " + reader.ReadInt32());
+                    Console.WriteLine("MasterHash                   -> " + reader.ReadString());
+                    Console.WriteLine("Unknown1                     -> " + reader.ReadString());
+                    Console.WriteLine("OpenUDID                     -> " + reader.ReadString());
+                    Console.WriteLine("MacAddress                   -> " + reader.ReadString());
+                    Console.WriteLine("DeviceModel                  -> " + reader.ReadString());
+                    Console.WriteLine("LocaleKey                    -> " + reader.ReadInt32());
+                    Console.WriteLine("Language                     -> " + reader.ReadString());
+                    Console.WriteLine("AdvertisingGUID              -> " + reader.ReadString());
+                    Console.WriteLine("OSVersion                    -> " + reader.ReadString());
+                    Console.WriteLine("Unknown2                     -> " + reader.ReadByte());
+                    Console.WriteLine("Unknown3                     -> " + reader.ReadString());
+                    Console.WriteLine("AndroidDeviceID              -> " + reader.ReadString());
+                    Console.WriteLine("FacebookDistributionID       -> " + reader.ReadString());
+                    Console.WriteLine("IsAdvertisingTrackingEnabled -> " + reader.ReadBoolean());
+                    Console.WriteLine("VendorGUID                   -> " + reader.ReadString());
+                    Console.WriteLine("Seed                         -> " + reader.ReadInt32());
+                    Console.WriteLine("Unknown4                     -> " + reader.ReadByte());
+                    Console.WriteLine("Unknown5                     -> " + reader.ReadString());
+                    Console.WriteLine("Unknown6                     -> " + reader.ReadString());
+                    Console.WriteLine("ClientVersion                -> " + reader.ReadString());
+                }
             }
             else
             {

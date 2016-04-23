@@ -67,12 +67,10 @@ namespace UCS.Network
             try
             {
                 var clientSocket = Socket.EndAccept(result);
-                ResourcesManager.AddClient(new Client(clientSocket),
-                    ((IPEndPoint) clientSocket.RemoteEndPoint).Address.ToString());
+                var region = new WebClient().DownloadString("http://ipinfo.io/" + ((IPEndPoint)clientSocket.RemoteEndPoint).Address + "/country").Trim();
+                Console.WriteLine("[UCS]    Client connected (" + ((IPEndPoint) clientSocket.RemoteEndPoint).Address + ":" + ((IPEndPoint) clientSocket.RemoteEndPoint).Port + ":" + region + ")");
+                ResourcesManager.AddClient(new Client(clientSocket), ((IPEndPoint)clientSocket.RemoteEndPoint).Address.ToString());
                 SocketRead.Begin(clientSocket, OnReceive, OnReceiveError);
-                Console.WriteLine("[UCS]    Client connected (" + ((IPEndPoint) clientSocket.RemoteEndPoint).Address +
-                                  ":" +
-                                  ((IPEndPoint) clientSocket.RemoteEndPoint).Port + ")");
             }
             catch (Exception e)
             {

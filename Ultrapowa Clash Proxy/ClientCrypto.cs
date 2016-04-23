@@ -8,7 +8,7 @@ namespace UCP
     public class ClientCrypto : Protocol
     {
         protected static byte[] serverKey =
-            Utilities.HexToBinary("150C52DB12BA1C9DD809B8934A535F428A91B7B61E15AB469E42B9614C76A325");
+            Utilities.HexToBinary("9b39b440ff6c13ad07b506fc55e37f69856895c3fd5ab35978cdf5e34eb37471");
 
         protected KeyPair clientKey = PublicKeyBox.GenerateKeyPair();
 
