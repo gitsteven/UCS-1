@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Threading;
 using UCS.Network;
 
@@ -25,8 +26,7 @@ namespace UCS.Core.Threading
                 new ResourcesManager();
                 new ObjectManager();
                 new Gateway().Start();
-
-                //HTTP API = new HTTP(Convert.ToInt32(ConfigurationManager.AppSettings["proDebugPort"]));
+                //HTTP API = new HTTP(Convert.ToInt32(ConfigurationManager.AppSettings["DebugPort"]));
                 //new UCSList();
                 Console.WriteLine("[UCS]    Server started, let's play Clash of Clans!");
             });

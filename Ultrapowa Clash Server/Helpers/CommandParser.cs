@@ -43,6 +43,8 @@ namespace UCS.Helpers
                     break;
 
                 case "/restart":
+                    DatabaseManager.Singelton.Save(ResourcesManager.GetInMemoryLevels());
+                    DatabaseManager.Singelton.Save(ObjectManager.GetInMemoryAlliances());
                     foreach (var onlinePlayer in ResourcesManager.GetOnlinePlayers())
                     {
                         var p = new ShutdownStartedMessage(onlinePlayer.GetClient());
@@ -50,8 +52,6 @@ namespace UCS.Helpers
                         PacketManager.ProcessOutgoingPacket(p);
                     }
                     Console.WriteLine("Shutdown Message Initiated!");
-                    DatabaseManager.Singelton.Save(ResourcesManager.GetInMemoryLevels());
-                    DatabaseManager.Singelton.Save(ObjectManager.GetInMemoryAlliances());
                     Process.Start(Application.ExecutablePath);
                     Environment.Exit(0);
                     break;
