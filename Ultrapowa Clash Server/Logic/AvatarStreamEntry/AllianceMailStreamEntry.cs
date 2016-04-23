@@ -6,11 +6,19 @@ namespace UCS.Logic
 {
     internal class AllianceMailStreamEntry : AvatarStreamEntry
     {
+        #region Private Fields
+
         private int m_vAllianceBadgeData;
         private long m_vAllianceId;
         private string m_vAllianceName;
         private string m_vMessage;
-        private long m_vSenderId;   
+        private long m_vSenderId;
+
+        #endregion Private Fields
+
+
+
+        #region Public Methods
 
         public override byte[] Encode()
         {
@@ -23,7 +31,7 @@ namespace UCS.Logic
             data.AddInt64(m_vAllianceId);
             data.AddString(m_vAllianceName);
             data.AddInt32(m_vAllianceBadgeData);
-            
+
             return data.ToArray();
         }
 
@@ -61,5 +69,7 @@ namespace UCS.Logic
         {
             m_vSenderId = id;
         }
+
+        #endregion Public Methods
     }
 }

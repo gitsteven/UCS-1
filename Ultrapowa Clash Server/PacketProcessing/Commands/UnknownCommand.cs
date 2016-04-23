@@ -5,6 +5,8 @@ namespace UCS.PacketProcessing
 {
     internal class UnknownCommand : Command
     {
+        #region Public Constructors
+
         public UnknownCommand(BinaryReader br)
         {
             //Unknown1 = br.ReadInt32();
@@ -12,9 +14,17 @@ namespace UCS.PacketProcessing
             //Packet = br.ReadAllBytes();
         }
 
-        public static int Unknown1 { get; set; }
-        public static int Tick { get; set; }
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public static byte[] Packet { get; set; }
+        public static int Tick { get; set; }
+        public static int Unknown1 { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -22,5 +32,7 @@ namespace UCS.PacketProcessing
             //Console.WriteLine("[CMD][0]     " + Tick);
             //Console.WriteLine("[CMD][0][FULL] " + Encoding.ASCII.GetString(Packet));
         }
+
+        #endregion Public Methods
     }
 }

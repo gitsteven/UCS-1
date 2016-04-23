@@ -5,11 +5,17 @@ namespace UCS.GameFiles
 {
     internal class CharacterData : CombatItemData
     {
+        #region Public Constructors
+
         public CharacterData(CSVRow row, DataTable dt)
             : base(row, dt)
         {
             LoadData(this, GetType(), row);
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         public bool AirTargets { get; set; }
 
@@ -201,6 +207,10 @@ namespace UCS.GameFiles
 
         public List<int> UpgradeTimeH { get; set; }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
         public override int GetCombatItemType()
         {
             return 0;
@@ -253,7 +263,9 @@ namespace UCS.GameFiles
 
         public override int GetUpgradeTime(int level)
         {
-            return UpgradeTimeH[level]*3600;
+            return UpgradeTimeH[level] * 3600;
         }
+
+        #endregion Public Methods
     }
 }

@@ -7,51 +7,55 @@ using System.Runtime.InteropServices;
 
 namespace Sodium
 {
-  internal static class DynamicInvoke
-  {
-    //shamelessly copied from https://stackoverflow.com/a/1660807/230543
-    public static T GetDynamicInvoke<T>(string function, string library)
+    internal static class DynamicInvoke
     {
-      // create in-memory assembly, module and type
-      var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(
-          new AssemblyName("DynamicDllInvoke"),
-          AssemblyBuilderAccess.Run);
+        #region Public Methods
 
-      var modBuilder = assemblyBuilder.DefineDynamicModule("DynamicDllModule");
+        //shamelessly copied from https://stackoverflow.com/a/1660807/230543
+        public static T GetDynamicInvoke<T>(string function, string library)
+        {
+            // create in-memory assembly, module and type
+            var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(
+                new AssemblyName("DynamicDllInvoke"),
+                AssemblyBuilderAccess.Run);
 
-      // note: without TypeBuilder, you can create global functions
-      // on the module level, but you cannot create delegates to them
-      var typeBuilder = modBuilder.DefineType(
-          "DynamicDllInvokeType",
-          TypeAttributes.Public | TypeAttributes.UnicodeClass);
+            var modBuilder = assemblyBuilder.DefineDynamicModule("DynamicDllModule");
 
-      // get params from delegate dynamically (!), trick from Eric Lippert
-      var delegateMi = typeof(T).GetMethod("Invoke");
-      var delegateParams = (from param in delegateMi.GetParameters()
-                               select param.ParameterType).ToArray();
+            // note: without TypeBuilder, you can create global functions on the module level, but
+            // you cannot create delegates to them
+            var typeBuilder = modBuilder.DefineType(
+                "DynamicDllInvokeType",
+                TypeAttributes.Public | TypeAttributes.UnicodeClass);
 
-      // automatically create the correct signagure for PInvoke
-      var methodBuilder = typeBuilder.DefinePInvokeMethod(
-          function,
-          library,
-          MethodAttributes.Public |
-          MethodAttributes.Static |
-          MethodAttributes.PinvokeImpl,
-          CallingConventions.Standard,
-          delegateMi.ReturnType,        /* the return type */
-          delegateParams,               /* array of parameters from delegate T */
-          CallingConvention.Cdecl,
-          CharSet.Ansi);
+            // get params from delegate dynamically (!), trick from Eric Lippert
+            var delegateMi = typeof(T).GetMethod("Invoke");
+            var delegateParams = (from param in delegateMi.GetParameters()
+                                  select param.ParameterType).ToArray();
 
-      // needed according to MSDN
-      methodBuilder.SetImplementationFlags(methodBuilder.GetMethodImplementationFlags() | MethodImplAttributes.PreserveSig);
+            // automatically create the correct signagure for PInvoke
+            var methodBuilder = typeBuilder.DefinePInvokeMethod(
+                function,
+                library,
+                MethodAttributes.Public |
+                MethodAttributes.Static |
+                MethodAttributes.PinvokeImpl,
+                CallingConventions.Standard,
+                delegateMi.ReturnType,        /* the return type */
+                delegateParams,               /* array of parameters from delegate T */
+                CallingConvention.Cdecl,
+                CharSet.Ansi);
 
-      var dynamicType = typeBuilder.CreateType();
+            // needed according to MSDN
+            methodBuilder.SetImplementationFlags(methodBuilder.GetMethodImplementationFlags() | MethodImplAttributes.PreserveSig);
 
-      var methodInfo = dynamicType.GetMethod(function);
+            var dynamicType = typeBuilder.CreateType();
 
-      // create the delegate of type T, double casting is necessary
-      return (T)(object)Delegate.CreateDelegate(typeof(T), methodInfo, true);
+            var methodInfo = dynamicType.GetMethod(function);
+
+            // create the delegate of type T, double casting is necessary
+            return (T)(object)Delegate.CreateDelegate(typeof(T), methodInfo, true);
+        }
+
+        #endregion Public Methods
     }
-  }
 }

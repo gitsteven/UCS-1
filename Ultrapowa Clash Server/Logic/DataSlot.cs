@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json.Linq;
 using UCS.Core;
 using UCS.GameFiles;
 using UCS.Helpers;
@@ -9,14 +9,24 @@ namespace UCS.Logic
 {
     internal class DataSlot
     {
+        #region Public Fields
+
         public Data Data;
         public int Value;
+
+        #endregion Public Fields
+
+        #region Public Constructors
 
         public DataSlot(Data d, int value)
         {
             Data = d;
             Value = value;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public void Decode(BinaryReader br)
         {
@@ -44,5 +54,7 @@ namespace UCS.Logic
             jsonObject.Add("value", Value);
             return jsonObject;
         }
+
+        #endregion Public Methods
     }
 }

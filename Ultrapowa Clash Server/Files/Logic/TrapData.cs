@@ -5,11 +5,17 @@ namespace UCS.GameFiles
 {
     internal class TrapData : ConstructionItemData
     {
+        #region Public Constructors
+
         public TrapData(CSVRow row, DataTable dt)
             : base(row, dt)
         {
             LoadData(this, GetType(), row);
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         public int ActionFrame { get; set; }
 
@@ -101,6 +107,10 @@ namespace UCS.GameFiles
 
         public int Width { get; set; }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
         public override int GetBuildCost(int level)
         {
             return BuildCost[level];
@@ -113,7 +123,7 @@ namespace UCS.GameFiles
 
         public override int GetConstructionTime(int level)
         {
-            return BuildTimeM[level]*60 + BuildTimeH[level]*60*60 + BuildTimeD[level]*60*60*24;
+            return BuildTimeM[level] * 60 + BuildTimeH[level] * 60 * 60 + BuildTimeD[level] * 60 * 60 * 24;
         }
 
         public override int GetRequiredTownHallLevel(int level)
@@ -124,7 +134,7 @@ namespace UCS.GameFiles
 
         public int GetSellPrice(int level)
         {
-            var calculation = (int) (((long) BuildCost[level]*2*1717986919) >> 32);
+            var calculation = (int)(((long)BuildCost[level] * 2 * 1717986919) >> 32);
             return (calculation >> 2) + (calculation >> 31);
         }
 
@@ -132,5 +142,7 @@ namespace UCS.GameFiles
         {
             return BuildCost.Count;
         }
+
+        #endregion Public Methods
     }
 }

@@ -5,8 +5,14 @@ namespace UCS.GameFiles
 {
     internal class DataTable
     {
+        #region Protected Fields
+
         protected List<Data> m_vData;
         protected int m_vIndex;
+
+        #endregion Protected Fields
+
+        #region Public Constructors
 
         public DataTable()
         {
@@ -26,6 +32,10 @@ namespace UCS.GameFiles
                 m_vData.Add(data);
             }
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public Data CreateItem(CSVRow row)
         {
@@ -179,5 +189,7 @@ namespace UCS.GameFiles
         {
             return m_vIndex;
         }
+
+        #endregion Public Methods
     }
 }

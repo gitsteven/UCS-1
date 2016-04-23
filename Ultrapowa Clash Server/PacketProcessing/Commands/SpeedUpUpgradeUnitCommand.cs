@@ -7,7 +7,13 @@ namespace UCS.PacketProcessing
     //Commande 0x205
     internal class SpeedUpUpgradeUnitCommand : Command
     {
+        #region Private Fields
+
         private readonly int m_vBuildingId;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public SpeedUpUpgradeUnitCommand(BinaryReader br)
         {
@@ -15,7 +21,11 @@ namespace UCS.PacketProcessing
             br.ReadInt32WithEndian();
         }
 
+        #endregion Public Constructors
+
         //00 00 02 05 1D CD 65 13 00 00 53 8F
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -25,7 +35,7 @@ namespace UCS.PacketProcessing
             {
                 if (go.ClassId == 0)
                 {
-                    var b = (Building) go;
+                    var b = (Building)go;
                     var uuc = b.GetUnitUpgradeComponent();
                     if (uuc != null)
                     {
@@ -37,5 +47,7 @@ namespace UCS.PacketProcessing
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

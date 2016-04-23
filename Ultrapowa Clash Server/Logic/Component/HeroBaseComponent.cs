@@ -1,5 +1,5 @@
-﻿using System;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using UCS.Core;
 using UCS.GameFiles;
 using UCS.Helpers;
@@ -8,19 +8,33 @@ namespace UCS.Logic
 {
     internal class HeroBaseComponent : Component
     {
+        #region Private Fields
+
         private readonly HeroData m_vHeroData;
         private Timer m_vTimer;
         private int m_vUpgradeLevelInProgress;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public HeroBaseComponent(GameObject go, HeroData hd) : base(go)
         {
             m_vHeroData = hd;
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public override int Type
         {
             get { return 10; }
         }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public void CancelUpgrade()
         {
@@ -32,7 +46,7 @@ namespace UCS.Logic
                 var cost = m_vHeroData.GetUpgradeCost(currentLevel);
                 var multiplier =
                     ObjectManager.DataTables.GetGlobals().GetGlobalData("HERO_UPGRADE_CANCEL_MULTIPLIER").NumberValue;
-                var resourceCount = (int) ((cost*multiplier*(long) 1374389535) >> 32);
+                var resourceCount = (int)((cost * multiplier * (long)1374389535) >> 32);
                 resourceCount = Math.Max((resourceCount >> 5) + (resourceCount >> 31), 0);
                 ca.CommodityCountChangeHelper(0, rd, resourceCount);
                 GetParent().GetLevel().WorkerManager.DeallocateWorker(GetParent());
@@ -90,7 +104,7 @@ namespace UCS.Logic
 
         public override void Load(JObject jsonObject)
         {
-            var unitUpgradeObject = (JObject) jsonObject["hero_upg"];
+            var unitUpgradeObject = (JObject)jsonObject["hero_upg"];
             if (unitUpgradeObject != null)
             {
                 m_vTimer = new Timer();
@@ -152,5 +166,7 @@ namespace UCS.Logic
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

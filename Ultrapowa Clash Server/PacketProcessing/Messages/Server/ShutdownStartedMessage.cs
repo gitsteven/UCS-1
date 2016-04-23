@@ -6,13 +6,23 @@ namespace UCS.PacketProcessing
     //Packet 20161
     internal class ShutdownStartedMessage : Message
     {
+        #region Private Fields
+
         private int m_vCode;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public ShutdownStartedMessage(Client client)
             : base(client)
         {
             SetMessageType(20161);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -25,5 +35,7 @@ namespace UCS.PacketProcessing
         {
             m_vCode = code;
         }
+
+        #endregion Public Methods
     }
 }

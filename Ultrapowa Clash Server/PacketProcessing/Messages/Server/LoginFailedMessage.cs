@@ -7,6 +7,8 @@ namespace UCS.PacketProcessing
     //Packet 20103
     internal class LoginFailedMessage : Message
     {
+        #region Private Fields
+
         private string m_vContentURL;
         private int m_vErrorCode;
         private string m_vReason;
@@ -14,6 +16,10 @@ namespace UCS.PacketProcessing
         private int m_vRemainingTime;
         private string m_vResourceFingerprintData;
         private string m_vUpdateURL;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public LoginFailedMessage(Client client) : base(client)
         {
@@ -26,6 +32,10 @@ namespace UCS.PacketProcessing
             // 12 : played too much
             // 13 : compte verrouillé
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -94,5 +104,7 @@ namespace UCS.PacketProcessing
         {
             m_vUpdateURL = url;
         }
+
+        #endregion Public Methods
     }
 }

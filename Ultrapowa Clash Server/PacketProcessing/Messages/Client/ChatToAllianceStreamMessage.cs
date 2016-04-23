@@ -10,11 +10,21 @@ namespace UCS.PacketProcessing
     //14315
     internal class ChatToAllianceStreamMessage : Message
     {
+        #region Private Fields
+
         private string m_vChatMessage;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public ChatToAllianceStreamMessage(Client client, BinaryReader br) : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -38,7 +48,7 @@ namespace UCS.PacketProcessing
                             player += " (" + level.GetPlayerAvatar().GetId() + ", " +
                                       level.GetPlayerAvatar().GetAvatarName() + ")";
                         Debugger.WriteLine("\t" + obj.GetType().Name + player);
-                        ((GameOpCommand) obj).Execute(level);
+                        ((GameOpCommand)obj).Execute(level);
                     }
                 }
                 else
@@ -48,7 +58,7 @@ namespace UCS.PacketProcessing
                     if (allianceId > 0)
                     {
                         var cm = new ChatStreamEntry();
-                        cm.SetId((int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+                        cm.SetId((int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
                         cm.SetAvatar(avatar);
                         cm.SetMessage(m_vChatMessage);
 
@@ -71,5 +81,7 @@ namespace UCS.PacketProcessing
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

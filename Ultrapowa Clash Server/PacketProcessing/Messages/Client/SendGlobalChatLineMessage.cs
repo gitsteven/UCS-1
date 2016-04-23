@@ -12,11 +12,21 @@ namespace UCS.PacketProcessing
     //14715
     internal class SendGlobalChatLineMessage : Message
     {
+        #region Public Constructors
+
         public SendGlobalChatLineMessage(Client client, BinaryReader br) : base(client, br)
         {
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public string Message { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -40,13 +50,13 @@ namespace UCS.PacketProcessing
                             player += " (" + level.GetPlayerAvatar().GetId() + ", " +
                                       level.GetPlayerAvatar().GetAvatarName() + ")";
                         Debugger.WriteLine("\t" + obj.GetType().Name + player);
-                        ((GameOpCommand) obj).Execute(level);
+                        ((GameOpCommand)obj).Execute(level);
                     }
                 }
                 else
                 {
                     if (File.Exists(@"filter.ucs"))
-                        //If you rename filter.ucs, you can simply deactivate with it the global Chat and send a Message to the player.
+                    //If you rename filter.ucs, you can simply deactivate with it the global Chat and send a Message to the player.
                     {
                         var senderId = level.GetPlayerAvatar().GetId();
                         var senderName = level.GetPlayerAvatar().GetAvatarName();
@@ -99,5 +109,7 @@ namespace UCS.PacketProcessing
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

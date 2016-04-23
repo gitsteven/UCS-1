@@ -7,12 +7,18 @@ namespace UCS.Core
 {
     internal class MessageManager
     {
-        private static ConcurrentQueue<Message> m_vPackets;
+        #region Private Fields
+
         private static readonly EventWaitHandle m_vWaitHandle = new AutoResetEvent(false);
+        private static ConcurrentQueue<Message> m_vPackets;
         private bool m_vIsRunning;
 
+        #endregion Private Fields
+
+        #region Public Constructors
+
         /// <summary>
-        ///     The loader of the MessageManager class.
+        /// The loader of the MessageManager class.
         /// </summary>
         public MessageManager()
         {
@@ -20,8 +26,28 @@ namespace UCS.Core
             m_vIsRunning = false;
         }
 
+        #endregion Public Constructors
+
+        #region Private Delegates
+
+        private delegate void PacketProcessingDelegate();
+
+        #endregion Private Delegates
+
+        #region Public Methods
+
         /// <summary>
-        ///     This function start the MessageManager.
+        /// This function handle the packet by enqueue him.
+        /// </summary>
+        /// <param name="p">The message/packet.</param>
+        public static void ProcessPacket(Message p)
+        {
+            m_vPackets.Enqueue(p);
+            m_vWaitHandle.Set();
+        }
+
+        /// <summary>
+        /// This function start the MessageManager.
         /// </summary>
         public void Start()
         {
@@ -31,8 +57,12 @@ namespace UCS.Core
             Console.WriteLine("[UCS]    Message manager has been successfully started !");
         }
 
+        #endregion Public Methods
+
+        #region Private Methods
+
         /// <summary>
-        ///     This function process packets.
+        /// This function process packets.
         /// </summary>
         private void PacketProcessing()
         {
@@ -63,16 +93,6 @@ namespace UCS.Core
             }
         }
 
-        /// <summary>
-        ///     This function handle the packet by enqueue him.
-        /// </summary>
-        /// <param name="p">The message/packet.</param>
-        public static void ProcessPacket(Message p)
-        {
-            m_vPackets.Enqueue(p);
-            m_vWaitHandle.Set();
-        }
-
-        private delegate void PacketProcessingDelegate();
+        #endregion Private Methods
     }
 }

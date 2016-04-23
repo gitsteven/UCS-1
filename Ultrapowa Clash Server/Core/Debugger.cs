@@ -5,12 +5,18 @@ namespace UCS.Core
 {
     internal static class Debugger
     {
+        #region Private Fields
+
         private static readonly object m_vSyncObject = new object();
         private static readonly TextWriter m_vTextWriter;
         private static int m_vLogLevel;
 
+        #endregion Private Fields
+
+        #region Public Constructors
+
         /// <summary>
-        ///     This is the loader of the Debugger class.
+        /// This is the loader of the Debugger class.
         /// </summary>
         static Debugger()
         {
@@ -19,8 +25,17 @@ namespace UCS.Core
             m_vLogLevel = 1;
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        public static int GetLogLevel()
+        {
+            return m_vLogLevel;
+        }
+
         /// <summary>
-        ///     This function set the log level.
+        /// This function set the log level.
         /// </summary>
         /// <param name="level">Enum : 1, 4, 5.</param>
         public static void SetLogLevel(int level)
@@ -29,13 +44,8 @@ namespace UCS.Core
             Logger.SetLogLevel(level);
         }
 
-        public static int GetLogLevel()
-        {
-            return m_vLogLevel;
-        }
-
         /// <summary>
-        ///     This function write the specific text and exception in the log file and on the console.
+        /// This function write the specific text and exception in the log file and on the console.
         /// </summary>
         /// <param name="text">The text to write.</param>
         /// <param name="ex">The exception.</param>
@@ -59,5 +69,7 @@ namespace UCS.Core
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

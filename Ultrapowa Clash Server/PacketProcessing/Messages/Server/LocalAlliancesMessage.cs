@@ -8,13 +8,23 @@ namespace UCS.PacketProcessing
 {
     internal class LocalAlliancesMessage : Message
     {
+        #region Private Fields
+
         private List<Alliance> m_vAlliances;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public LocalAlliancesMessage(Client client) : base(client)
         {
             SetMessageType(24402);
             m_vAlliances = new List<Alliance>();
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -42,5 +52,7 @@ namespace UCS.PacketProcessing
             packet.AddRange(data.ToArray());
             Encrypt(packet.ToArray());
         }
+
+        #endregion Public Methods
     }
 }

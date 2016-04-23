@@ -8,13 +8,23 @@ namespace UCS.PacketProcessing
     //Packet 24311
     internal class AllianceStreamMessage : Message
     {
+        #region Private Fields
+
         private readonly Alliance m_vAlliance;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public AllianceStreamMessage(Client client, Alliance alliance) : base(client)
         {
             SetMessageType(24311);
             m_vAlliance = alliance;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -27,5 +37,7 @@ namespace UCS.PacketProcessing
             }
             Encrypt(pack.ToArray());
         }
+
+        #endregion Public Methods
     }
 }

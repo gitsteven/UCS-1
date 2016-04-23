@@ -6,13 +6,23 @@ namespace UCS.PacketProcessing
     //Packet 24115
     internal class ServerErrorMessage : Message
     {
+        #region Private Fields
+
         private string m_vErrorMessage;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public ServerErrorMessage(Client client)
             : base(client)
         {
             SetMessageType(24115);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -25,5 +35,7 @@ namespace UCS.PacketProcessing
         {
             m_vErrorMessage = message;
         }
+
+        #endregion Public Methods
     }
 }

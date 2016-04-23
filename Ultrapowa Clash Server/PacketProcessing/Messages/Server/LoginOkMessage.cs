@@ -6,12 +6,14 @@ namespace UCS.PacketProcessing
     //Packet 20104
     internal class LoginOkMessage : Message
     {
+        #region Private Fields
+
+        private readonly string m_vFacebookAppID = "297484437009394";
         private string m_vAccountCreatedDate;
         private long m_vAccountId;
         private int m_vContentVersion;
         private string m_vCountryCode;
         private int m_vDaysSinceStartedPlaying;
-        private readonly string m_vFacebookAppID = "297484437009394";
         private string m_vFacebookId;
         private string m_vGamecenterId;
         private int m_vGoogleID;
@@ -25,14 +27,26 @@ namespace UCS.PacketProcessing
         private int m_vSessionCount;
         private int m_vStartupCooldownSeconds;
 
+        #endregion Private Fields
+
+        #region Public Constructors
+
         public LoginOkMessage(Client client) : base(client)
         {
             SetMessageType(20104);
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public string Unknown11 { get; set; }
 
         public string Unknown9 { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -154,5 +168,7 @@ namespace UCS.PacketProcessing
         {
             m_vStartupCooldownSeconds = seconds;
         }
+
+        #endregion Public Methods
     }
 }

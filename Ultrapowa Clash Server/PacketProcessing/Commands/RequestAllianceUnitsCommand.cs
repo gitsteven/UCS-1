@@ -6,6 +6,8 @@ namespace UCS.PacketProcessing
 {
     internal class RequestAllianceUnitsCommand : Command
     {
+        #region Public Constructors
+
         public RequestAllianceUnitsCommand(BinaryReader br)
         {
             Unknown1 = br.ReadUInt32WithEndian();
@@ -16,10 +18,18 @@ namespace UCS.PacketProcessing
                 Message = "I need reinforcements !";
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public byte FlagHasRequestMessage { get; set; }
         public string Message { get; set; }
         public int MessageLength { get; set; }
         public uint Unknown1 { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -47,5 +57,7 @@ namespace UCS.PacketProcessing
                 }
             */
         }
+
+        #endregion Public Methods
     }
 }

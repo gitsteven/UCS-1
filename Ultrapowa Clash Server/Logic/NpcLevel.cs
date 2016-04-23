@@ -2,7 +2,13 @@
 {
     internal class NpcLevel
     {
+        #region Private Fields
+
         private const int m_vType = 0x01036640;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public NpcLevel()
         {
@@ -18,6 +24,10 @@
             LootedElixir = 0;
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public int Id
         {
             get { return m_vType + Index; }
@@ -28,5 +38,7 @@
         public int LootedGold { get; set; }
         public string Name { get; set; }
         public int Stars { get; set; }
+
+        #endregion Public Properties
     }
 }

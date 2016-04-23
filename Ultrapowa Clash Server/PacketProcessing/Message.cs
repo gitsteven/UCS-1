@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Sodium;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Sodium;
 using UCS.Helpers;
 using UCS.Logic;
 
@@ -11,10 +11,16 @@ namespace UCS.PacketProcessing
 {
     internal class Message
     {
+        #region Private Fields
+
         private byte[] m_vData;
         private int m_vLength;
         private ushort m_vMessageVersion;
         private ushort m_vType;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public Message()
         {
@@ -39,9 +45,54 @@ namespace UCS.PacketProcessing
             m_vData = br.ReadBytes(m_vLength);
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public int Broadcasting { get; set; }
 
         public Client Client { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        public virtual void Decode()
+        {
+        }
+
+        public void Decrypt()
+        {
+            try
+            {
+                if (m_vType == 10101)
+                {
+                    var cipherText = m_vData;
+                    Client.CPublicKey = cipherText.Take(32).ToArray();
+                    Client.CSharedKey = Client.CPublicKey;
+                    Client.CRNonce = Client.GenerateSessionKey();
+                    var nonce = GenericHash.Hash(Client.CPublicKey.Concat(Key.Crypto.PublicKey).ToArray(), null, 24);
+                    cipherText = cipherText.Skip(32).ToArray();
+                    var PlainText = PublicKeyBox.Open(cipherText, nonce, Key.Crypto.PrivateKey, Client.CPublicKey);
+                    Client.CSessionKey = PlainText.Take(24).ToArray();
+                    Client.CSNonce = PlainText.Skip(24).Take(24).ToArray();
+                    SetData(PlainText.Skip(24).Skip(24).ToArray());
+                }
+                else if (m_vType != 10100)
+                {
+                    Client.CSNonce = Utilities.Increment(Utilities.Increment(Client.CSNonce));
+                    SetData(SecretBox.Open(new byte[16].Concat(m_vData).ToArray(), Client.CSNonce, Client.CSharedKey));
+                }
+            }
+            catch (Exception ex)
+            {
+                Client.CState = 0;
+            }
+        }
+
+        public virtual void Encode()
+        {
+        }
 
         public void Encrypt(byte[] plainText)
         {
@@ -74,43 +125,6 @@ namespace UCS.PacketProcessing
             {
                 Client.CState = 0;
             }
-        }
-
-        public void Decrypt()
-        {
-            try
-            {
-                if (m_vType == 10101)
-                {
-                    var cipherText = m_vData;
-                    Client.CPublicKey = cipherText.Take(32).ToArray();
-                    Client.CSharedKey = Client.CPublicKey;
-                    Client.CRNonce = Client.GenerateSessionKey();
-                    var nonce = GenericHash.Hash(Client.CPublicKey.Concat(Key.Crypto.PublicKey).ToArray(), null, 24);
-                    cipherText = cipherText.Skip(32).ToArray();
-                    var PlainText = PublicKeyBox.Open(cipherText, nonce, Key.Crypto.PrivateKey, Client.CPublicKey);
-                    Client.CSessionKey = PlainText.Take(24).ToArray();
-                    Client.CSNonce = PlainText.Skip(24).Take(24).ToArray();
-                    SetData(PlainText.Skip(24).Skip(24).ToArray());
-                }
-                else if (m_vType != 10100)
-                {
-                    Client.CSNonce = Utilities.Increment(Utilities.Increment(Client.CSNonce));
-                    SetData(SecretBox.Open(new byte[16].Concat(m_vData).ToArray(), Client.CSNonce, Client.CSharedKey));
-                }
-            }
-            catch (Exception ex)
-            {
-                Client.CState = 0;
-            }
-        }
-
-        public virtual void Decode()
-        {
-        }
-
-        public virtual void Encode()
-        {
         }
 
         public byte[] GetData()
@@ -173,5 +187,7 @@ namespace UCS.PacketProcessing
         {
             return Encoding.UTF8.GetString(m_vData, 0, m_vLength);
         }
+
+        #endregion Public Methods
     }
 }

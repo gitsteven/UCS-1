@@ -5,6 +5,8 @@ namespace UCS.PacketProcessing
     //Commande 0x203
     internal class CancelUpgradeUnitCommand : Command
     {
+        #region Public Constructors
+
         public CancelUpgradeUnitCommand(BinaryReader br)
         {
             /*
@@ -13,7 +15,13 @@ namespace UCS.PacketProcessing
             */
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public uint BuildingId { get; set; }
         public uint Unknown1 { get; set; }
+
+        #endregion Public Properties
     }
 }

@@ -7,14 +7,24 @@ namespace UCS.PacketProcessing
     //Commande 0x1F9
     internal class CancelConstructionCommand : Command
     {
+        #region Public Constructors
+
         public CancelConstructionCommand(BinaryReader br)
         {
             BuildingId = br.ReadInt32WithEndian(); //buildingId - 0x1DCD6500;
             Unknown1 = br.ReadUInt32WithEndian();
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public int BuildingId { get; set; }
         public uint Unknown1 { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -23,7 +33,7 @@ namespace UCS.PacketProcessing
             {
                 if (go.ClassId == 0 || go.ClassId == 4)
                 {
-                    var constructionItem = (ConstructionItem) go;
+                    var constructionItem = (ConstructionItem)go;
                     if (constructionItem.IsConstructing())
                     {
                         constructionItem.CancelConstruction();
@@ -31,7 +41,7 @@ namespace UCS.PacketProcessing
                 }
                 else if (go.ClassId == 3)
                 {
-                    var obstacle = (Obstacle) go;
+                    var obstacle = (Obstacle)go;
                     if (obstacle.IsClearingOnGoing())
                     {
                         obstacle.CancelClearing();
@@ -39,5 +49,7 @@ namespace UCS.PacketProcessing
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

@@ -9,6 +9,8 @@ namespace UCS.PacketProcessing
     //Commande 0x1FE
     internal class BuyTrapCommand : Command
     {
+        #region Public Constructors
+
         public BuyTrapCommand(BinaryReader br)
         {
             X = br.ReadInt32WithEndian();
@@ -17,18 +19,26 @@ namespace UCS.PacketProcessing
             Unknown1 = br.ReadUInt32WithEndian();
         }
 
+        #endregion Public Constructors
+
         //00 00 01 FE 00 00 00 02 00 00 00 28 00 B7 1B 02 00 00 06 56
+
+        #region Public Properties
 
         public int TrapId { get; set; }
         public uint Unknown1 { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
         public override void Execute(Level level)
         {
             var ca = level.GetPlayerAvatar();
 
-            var td = (TrapData) ObjectManager.DataTables.GetDataById(TrapId);
+            var td = (TrapData)ObjectManager.DataTables.GetDataById(TrapId);
             var t = new Trap(td, level);
 
             if (ca.HasEnoughResources(td.GetBuildResource(0), td.GetBuildCost(0)))
@@ -43,5 +53,7 @@ namespace UCS.PacketProcessing
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

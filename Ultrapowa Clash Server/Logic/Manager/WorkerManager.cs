@@ -4,13 +4,32 @@ namespace UCS.Logic
 {
     internal class WorkerManager
     {
+        #region Private Fields
+
         private readonly List<GameObject> m_vGameObjectReferences;
         private int m_vWorkerCount;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public WorkerManager()
         {
             m_vGameObjectReferences = new List<GameObject>();
             m_vWorkerCount = 0;
+        }
+
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        public static int GetFinishTaskOfOneWorkerCost()
+        {
+            return 0;
+        }
+
+        public static void RemoveGameObjectReferences(GameObject go)
+        {
         }
 
         public void AllocateWorker(GameObject go)
@@ -41,13 +60,13 @@ namespace UCS.Logic
             {
                 if (go.ClassId == 3)
                 {
-                    var o = (Obstacle) go;
+                    var o = (Obstacle)go;
                     if (o.IsClearingOnGoing())
                         o.SpeedUpClearing();
                 }
                 else
                 {
-                    var b = (ConstructionItem) go;
+                    var b = (ConstructionItem)go;
                     if (b.IsConstructing())
                         b.SpeedUpConstruction();
                     else
@@ -58,11 +77,6 @@ namespace UCS.Logic
                     }
                 }
             }
-        }
-
-        public static int GetFinishTaskOfOneWorkerCost()
-        {
-            return 0;
         }
 
         public int GetFreeWorkers()
@@ -81,13 +95,13 @@ namespace UCS.Logic
                 currentGOTime = -1;
                 if (go.ClassId == 3)
                 {
-                    var o = (Obstacle) go;
+                    var o = (Obstacle)go;
                     if (o.IsClearingOnGoing())
                         currentGOTime = o.GetRemainingClearingTime();
                 }
                 else
                 {
-                    var c = (ConstructionItem) go;
+                    var c = (ConstructionItem)go;
                     if (c.IsConstructing())
                     {
                         currentGOTime = c.GetRemainingConstructionTime();
@@ -134,8 +148,6 @@ namespace UCS.Logic
             m_vWorkerCount++;
         }
 
-        public static void RemoveGameObjectReferences(GameObject go)
-        {
-        }
+        #endregion Public Methods
     }
 }

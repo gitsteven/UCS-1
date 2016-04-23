@@ -8,9 +8,15 @@ namespace UCS.PacketProcessing
     //Packet 14101
     internal class GoHomeMessage : Message
     {
+        #region Public Constructors
+
         public GoHomeMessage(Client client, BinaryReader br) : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -26,5 +32,7 @@ namespace UCS.PacketProcessing
             if (alliance != null)
                 PacketManager.ProcessOutgoingPacket(new AllianceStreamMessage(Client, alliance));
         }
+
+        #endregion Public Methods
     }
 }

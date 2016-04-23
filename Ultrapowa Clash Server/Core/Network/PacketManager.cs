@@ -9,11 +9,17 @@ namespace UCS.Network
 {
     internal class PacketManager : IDisposable
     {
+        #region Private Fields
+
         private static readonly EventWaitHandle m_vIncomingWaitHandle = new AutoResetEvent(false);
         private static readonly EventWaitHandle m_vOutgoingWaitHandle = new AutoResetEvent(false);
         private static ConcurrentQueue<Message> m_vIncomingPackets;
         private static ConcurrentQueue<Message> m_vOutgoingPackets;
         private bool m_vIsRunning;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public PacketManager()
         {
@@ -23,12 +29,17 @@ namespace UCS.Network
             m_vIsRunning = false;
         }
 
-        public void Dispose()
-        {
-            m_vIncomingWaitHandle.Dispose();
-            GC.SuppressFinalize(this);
-            m_vOutgoingWaitHandle.Dispose();
-        }
+        #endregion Public Constructors
+
+        #region Private Delegates
+
+        private delegate void IncomingProcessingDelegate();
+
+        private delegate void OutgoingProcessingDelegate();
+
+        #endregion Private Delegates
+
+        #region Public Methods
 
         public static void ProcessIncomingPacket(Message p)
         {
@@ -53,8 +64,14 @@ namespace UCS.Network
             }
             catch (Exception)
             {
-
             }
+        }
+
+        public void Dispose()
+        {
+            m_vIncomingWaitHandle.Dispose();
+            GC.SuppressFinalize(this);
+            m_vOutgoingWaitHandle.Dispose();
         }
 
         public void Start()
@@ -68,6 +85,10 @@ namespace UCS.Network
             m_vIsRunning = true;
             Console.WriteLine("[UCS]    Packet Manager started successfully");
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
 
         private void IncomingProcessing()
         {
@@ -118,8 +139,6 @@ namespace UCS.Network
             }
         }
 
-        private delegate void IncomingProcessingDelegate();
-
-        private delegate void OutgoingProcessingDelegate();
+        #endregion Private Methods
     }
 }

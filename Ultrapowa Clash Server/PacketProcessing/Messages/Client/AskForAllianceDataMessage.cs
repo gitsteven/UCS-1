@@ -9,12 +9,22 @@ namespace UCS.PacketProcessing
 {
     internal class AskForAllianceDataMessage : Message
     {
+        #region Private Fields
+
         private long m_vAllianceId;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public AskForAllianceDataMessage(Client client, BinaryReader br)
             : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -31,5 +41,7 @@ namespace UCS.PacketProcessing
             if (alliance != null)
                 PacketManager.ProcessOutgoingPacket(new AllianceDataMessage(Client, alliance));
         }
+
+        #endregion Public Methods
     }
 }

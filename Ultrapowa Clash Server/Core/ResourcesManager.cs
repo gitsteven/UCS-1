@@ -12,6 +12,8 @@ namespace UCS.Core
 {
     internal class ResourcesManager : IDisposable
     {
+        #region Private Fields
+
         private static readonly object m_vOnlinePlayersLock = new object();
         private static ConcurrentDictionary<long, Client> m_vClients;
         private static DatabaseManager m_vDatabase;
@@ -20,8 +22,12 @@ namespace UCS.Core
         private readonly bool m_vTimerCanceled;
         private readonly Timer TimerReference;
 
+        #endregion Private Fields
+
+        #region Public Constructors
+
         /// <summary>
-        ///     This is the loader of the ResourcesManager class, which is neccessary for all UCS functionality.
+        /// This is the loader of the ResourcesManager class, which is neccessary for all UCS functionality.
         /// </summary>
         public ResourcesManager()
         {
@@ -35,17 +41,12 @@ namespace UCS.Core
             TimerReference = TimerItem;
         }
 
-        /// <summary>
-        ///     The Dispose() function launched by class.
-        /// </summary>
-        public void Dispose()
-        {
-            if (m_vTimerCanceled)
-                TimerReference.Dispose();
-        }
+        #endregion Public Constructors
+
+        #region Public Methods
 
         /// <summary>
-        ///     This function add a client in the m_vClients list.
+        /// This function add a client in the m_vClients list.
         /// </summary>
         /// <param name="c">The client data.</param>
         /// <param name="IP">The IP of the client.</param>
@@ -58,7 +59,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        ///     This function drop a client from m_vClients list.
+        /// This function drop a client from m_vClients list.
         /// </summary>
         /// <param name="socketHandle">The (Int64) SocketHandle ID of the client.</param>
         public static void DropClient(long socketHandle)
@@ -78,20 +79,20 @@ namespace UCS.Core
         }
 
         /// <summary>
-        ///     This function return the client data.
+        /// This function return all players ids in the database.
+        /// </summary>
+        /// <returns>List of players.</returns>
+        public static List<long> GetAllPlayerIds() => m_vDatabase.GetAllPlayerIds();
+
+        /// <summary>
+        /// This function return the client data.
         /// </summary>
         /// <param name="socketHandle">The (Int64) socket handle ID of the client.</param>
         /// <returns>Client Data.</returns>
         public static Client GetClient(long socketHandle) => m_vClients[socketHandle];
 
         /// <summary>
-        ///     This function return all players ids in the database.
-        /// </summary>
-        /// <returns>List of players.</returns>
-        public static List<long> GetAllPlayerIds() => m_vDatabase.GetAllPlayerIds();
-
-        /// <summary>
-        ///     This function return all connected clients.
+        /// This function return all connected clients.
         /// </summary>
         /// <returns>A list of connected clients.</returns>
         public static List<Client> GetConnectedClients()
@@ -101,12 +102,8 @@ namespace UCS.Core
             return clients;
         }
 
-        /// <summary>
-        ///     This function return all in-memory player.
-        /// </summary>
-        /// <returns>
-        ///     A List<> of in-memory players.
-        /// </returns>
+        /// <summary> This function return all in-memory player. </summary> <returns> A List<> of
+        /// in-memory players. </returns>
         public static List<Level> GetInMemoryLevels()
         {
             var levels = new List<Level>();
@@ -115,12 +112,8 @@ namespace UCS.Core
             return levels;
         }
 
-        /// <summary>
-        ///     This function return all online players.
-        /// </summary>
-        /// <returns>
-        ///     A List<> of online players.
-        /// </returns>
+        /// <summary> This function return all online players. </summary> <returns> A List<> of
+        /// online players. </returns>
         public static List<Level> GetOnlinePlayers()
         {
             var onlinePlayers = new List<Level>();
@@ -130,12 +123,12 @@ namespace UCS.Core
         }
 
         /// <summary>
-        ///     This function get the data of a certain player.
+        /// This function get the data of a certain player.
         /// </summary>
         /// <param name="id">The (int64) ID of the Player.</param>
         /// <param name="persistent">Load the player or no.</param>
         /// <returns>The player data.</returns>
-        /// <seealso cref="Level" />
+        /// <seealso cref="Level"/>
         public static Level GetPlayer(long id, bool persistent = false)
         {
             var result = GetInMemoryPlayer(id);
@@ -149,21 +142,21 @@ namespace UCS.Core
         }
 
         /// <summary>
-        ///     This function check if client is connected or no.
+        /// This function check if client is connected or no.
         /// </summary>
         /// <param name="socketHandle">The (Int64) Socket Handle ID of the Client.</param>
         /// <returns>A boolean value.</returns>
         public static bool IsClientConnected(long socketHandle) => m_vClients.ContainsKey(socketHandle);
 
         /// <summary>
-        ///     This function check if player is online.
+        /// This function check if player is online.
         /// </summary>
         /// <param name="l">The level() of the player.</param>
         /// <returns>A Boolean value.</returns>
         public static bool IsPlayerOnline(Level l) => m_vOnlinePlayers.Contains(l);
 
         /// <summary>
-        ///     This function load a player by adding him in memory.
+        /// This function load a player by adding him in memory.
         /// </summary>
         /// <param name="level">The level of the client.</param>
         public static void LoadLevel(Level level)
@@ -174,7 +167,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        ///     This function log a player in, by ading him to online players.
+        /// This function log a player in, by ading him to online players.
         /// </summary>
         /// <param name="level">The level of the player.</param>
         /// <param name="client">The client of the player.</param>
@@ -193,7 +186,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        ///     This function log a player out, by removing him from online players and saving him.
+        /// This function log a player out, by removing him from online players and saving him.
         /// </summary>
         /// <param name="level">The level of the player.</param>
         public static void LogPlayerOut(Level level)
@@ -205,7 +198,20 @@ namespace UCS.Core
         }
 
         /// <summary>
-        ///     This function return the data of an in-memory player.
+        /// The Dispose() function launched by class.
+        /// </summary>
+        public void Dispose()
+        {
+            if (m_vTimerCanceled)
+                TimerReference.Dispose();
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        /// <summary>
+        /// This function return the data of an in-memory player.
         /// </summary>
         /// <param name="id">The (Int64) ID of the player.</param>
         /// <returns>Return the level of the player.</returns>
@@ -219,7 +225,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        ///     This function is running at an interval, and check for dead clients.
+        /// This function is running at an interval, and check for dead clients.
         /// </summary>
         /// <param name="state">The state.</param>
         private void ReleaseOrphans(object state)
@@ -227,5 +233,7 @@ namespace UCS.Core
             if (m_vTimerCanceled)
                 TimerReference.Dispose();
         }
+
+        #endregion Private Methods
     }
 }

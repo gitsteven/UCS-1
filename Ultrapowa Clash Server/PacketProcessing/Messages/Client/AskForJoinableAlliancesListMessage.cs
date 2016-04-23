@@ -9,12 +9,22 @@ namespace UCS.PacketProcessing
 {
     internal class AskForJoinableAlliancesListMessage : Message
     {
+        #region Private Fields
+
         private const int m_vAllianceLimit = 40;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public AskForJoinableAlliancesListMessage(Client client, BinaryReader br)
             : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -41,5 +51,7 @@ namespace UCS.PacketProcessing
             p.SetJoinableAlliances(joinableAlliances);
             PacketManager.ProcessOutgoingPacket(p);
         }
+
+        #endregion Public Methods
     }
 }

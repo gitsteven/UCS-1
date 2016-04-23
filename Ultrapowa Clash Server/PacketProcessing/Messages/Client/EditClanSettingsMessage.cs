@@ -11,6 +11,8 @@ namespace UCS.PacketProcessing
 
     internal class EditClanSettingsMessage : Message
     {
+        #region Private Fields
+
         private int m_vAllianceBadgeData;
         private string m_vAllianceDescription;
         private int m_vAllianceOrigin;
@@ -19,9 +21,17 @@ namespace UCS.PacketProcessing
         private int m_vWarFrequency;
         private int Unknown;
 
+        #endregion Private Fields
+
+        #region Public Constructors
+
         public EditClanSettingsMessage(Client client, BinaryReader br) : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -73,5 +83,7 @@ namespace UCS.PacketProcessing
                 DatabaseManager.Singelton.Save(alliance);
             }
         }
+
+        #endregion Public Methods
     }
 }

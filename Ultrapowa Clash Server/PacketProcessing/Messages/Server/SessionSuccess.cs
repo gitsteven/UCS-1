@@ -6,13 +6,23 @@ namespace UCS.PacketProcessing
     //Packet 20100
     internal class SessionSuccess : Message
     {
+        #region Public Fields
+
         public byte[] SessionKey;
+
+        #endregion Public Fields
+
+        #region Public Constructors
 
         public SessionSuccess(Client client, SessionRequest cka) : base(client)
         {
             SetMessageType(20100);
             SessionKey = Client.GenerateSessionKey();
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -21,5 +31,7 @@ namespace UCS.PacketProcessing
             pack.AddRange(SessionKey);
             SetData(pack.ToArray());
         }
+
+        #endregion Public Methods
     }
 }

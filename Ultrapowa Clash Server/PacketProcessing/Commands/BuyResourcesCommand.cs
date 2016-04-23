@@ -10,11 +10,17 @@ namespace UCS.PacketProcessing
     //Commande 0x206
     internal class BuyResourcesCommand : Command
     {
+        #region Private Fields
+
         private readonly object m_vCommand;
         private readonly bool m_vIsCommandEmbedded;
         private readonly int m_vResourceCount;
         private readonly int m_vResourceId;
         private readonly int Unknown1;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public BuyResourcesCommand(BinaryReader br)
         {
@@ -33,9 +39,13 @@ namespace UCS.PacketProcessing
             Unknown1 = br.ReadInt32WithEndian();
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
         public override void Execute(Level level)
         {
-            var rd = (ResourceData) ObjectManager.DataTables.GetDataById(m_vResourceId);
+            var rd = (ResourceData)ObjectManager.DataTables.GetDataById(m_vResourceId);
             if (rd != null)
             {
                 if (m_vResourceCount >= 1)
@@ -59,7 +69,7 @@ namespace UCS.PacketProcessing
                                         throw new ArgumentException(
                                             "A command contained embedded command depth was greater than max embedded commands.");
 
-                                    ((Command) m_vCommand).Execute(level);
+                                    ((Command)m_vCommand).Execute(level);
                                 }
                             }
                         }
@@ -67,5 +77,7 @@ namespace UCS.PacketProcessing
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

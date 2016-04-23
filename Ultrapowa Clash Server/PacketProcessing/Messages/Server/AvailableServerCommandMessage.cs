@@ -6,13 +6,23 @@ namespace UCS.PacketProcessing
     //Packet 24111
     internal class AvailableServerCommandMessage : Message
     {
+        #region Private Fields
+
         private Command m_vCommand;
         private int m_vServerCommandId;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public AvailableServerCommandMessage(Client client) : base(client)
         {
             SetMessageType(24111);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -31,5 +41,7 @@ namespace UCS.PacketProcessing
         {
             m_vServerCommandId = id;
         }
+
+        #endregion Public Methods
     }
 }

@@ -5,10 +5,16 @@ namespace UCS.PacketProcessing
 {
     internal class BookmarkMessage : Message
     {
+        #region Public Constructors
+
         public BookmarkMessage(Client client) : base(client)
         {
             SetMessageType(24340);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -17,5 +23,7 @@ namespace UCS.PacketProcessing
             data.AddInt64(2);
             Encrypt(data.ToArray());
         }
+
+        #endregion Public Methods
     }
 }

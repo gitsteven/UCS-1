@@ -5,9 +5,15 @@ namespace UCS.PacketProcessing
 {
     internal class TakeDecisionJoinRequestMessage : Message
     {
+        #region Public Constructors
+
         public TakeDecisionJoinRequestMessage(Client client, BinaryReader br) : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -18,5 +24,7 @@ namespace UCS.PacketProcessing
         {
             // PacketManager.ProcessOutgoingPacket(new DecisionJoinRequestMessage(Client));
         }
+
+        #endregion Public Methods
     }
 }

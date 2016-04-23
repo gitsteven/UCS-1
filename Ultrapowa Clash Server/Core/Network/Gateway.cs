@@ -9,9 +9,15 @@ namespace UCS.Network
 {
     internal class Gateway
     {
+        #region Private Fields
+
         private const int kHostConnectionBacklog = 30;
         private const int kPort = 9339;
         private IPAddress ip;
+
+        #endregion Private Fields
+
+        #region Public Properties
 
         public static Socket Socket { get; private set; }
 
@@ -30,6 +36,10 @@ namespace UCS.Network
                 return ip;
             }
         }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public bool Host(int port)
         {
@@ -56,34 +66,14 @@ namespace UCS.Network
                 Console.WriteLine("[UCS]    Gateway started on port " + kPort);
         }
 
+        #endregion Public Methods
+
+        #region Private Methods
+
         private static void Disconnect()
         {
             if (Socket != null)
                 Socket.BeginDisconnect(false, OnEndHostComplete, Socket);
-        }
-
-        private void OnClientConnect(IAsyncResult result)
-        {
-            try
-            {
-                var clientSocket = Socket.EndAccept(result);
-                var region = new WebClient().DownloadString("http://ipinfo.io/" + ((IPEndPoint)clientSocket.RemoteEndPoint).Address + "/country").Trim();
-                Console.WriteLine("[UCS]    Client connected (" + ((IPEndPoint) clientSocket.RemoteEndPoint).Address + ":" + ((IPEndPoint) clientSocket.RemoteEndPoint).Port + ":" + region + ")");
-                ResourcesManager.AddClient(new Client(clientSocket), ((IPEndPoint)clientSocket.RemoteEndPoint).Address.ToString());
-                SocketRead.Begin(clientSocket, OnReceive, OnReceiveError);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("[UCS]    Exception when accepting incoming connection: " + e);
-            }
-            try
-            {
-                Socket.BeginAccept(OnClientConnect, Socket);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("[UCS]    Exception when starting new accept process: " + e);
-            }
         }
 
         private static void OnEndHostComplete(IAsyncResult result)
@@ -112,5 +102,35 @@ namespace UCS.Network
         private static void OnReceiveError(SocketRead read, Exception exception)
         {
         }
+
+        private void OnClientConnect(IAsyncResult result)
+        {
+            try
+            {
+                var clientSocket = Socket.EndAccept(result);
+                WebClient c = new WebClient();
+                c.DownloadStringCompleted += (sender, e) =>
+                {
+                    Console.WriteLine("[UCS]    Client connected (" + ((IPEndPoint)clientSocket.RemoteEndPoint).Address + ", " + e.Result.Trim() + ")");
+                };
+                c.DownloadStringAsync(new Uri("http://ipinfo.io/" + ((IPEndPoint)clientSocket.RemoteEndPoint).Address + "/country"));
+                ResourcesManager.AddClient(new Client(clientSocket), ((IPEndPoint)clientSocket.RemoteEndPoint).Address.ToString());
+                SocketRead.Begin(clientSocket, OnReceive, OnReceiveError);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("[UCS]    Exception when accepting incoming connection: " + e);
+            }
+            try
+            {
+                Socket.BeginAccept(OnClientConnect, Socket);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("[UCS]    Exception when starting new accept process: " + e);
+            }
+        }
+
+        #endregion Private Methods
     }
 }

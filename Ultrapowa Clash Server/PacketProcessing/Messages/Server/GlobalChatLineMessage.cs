@@ -7,6 +7,8 @@ namespace UCS.PacketProcessing
     //Packet 24715
     internal class GlobalChatLineMessage : Message
     {
+        #region Private Fields
+
         private readonly int m_vPlayerLevel;
         private int m_vAllianceIcon;
         private long m_vAllianceId;
@@ -17,6 +19,10 @@ namespace UCS.PacketProcessing
         private int m_vLeagueId;
         private string m_vMessage;
         private string m_vPlayerName;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public GlobalChatLineMessage(Client client) : base(client)
         {
@@ -29,6 +35,10 @@ namespace UCS.PacketProcessing
             m_vPlayerLevel = 1;
             m_vHasAlliance = false;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -87,5 +97,7 @@ namespace UCS.PacketProcessing
         {
             m_vPlayerName = name;
         }
+
+        #endregion Public Methods
     }
 }

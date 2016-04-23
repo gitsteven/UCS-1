@@ -7,6 +7,8 @@ namespace UCS.PacketProcessing
     //Commande 0x1F5
     internal class MoveBuildingCommand : Command
     {
+        #region Public Constructors
+
         public MoveBuildingCommand(BinaryReader br)
         {
             X = br.ReadInt32WithEndian();
@@ -15,7 +17,11 @@ namespace UCS.PacketProcessing
             Unknown1 = br.ReadUInt32WithEndian();
         }
 
+        #endregion Public Constructors
+
         //30/08/2014 18:51;S;14102(0);32;00 00 2D BE 01 EB 32 0C 00 00 00 01 00 00 01 F5 00 00 00 13 00 00 00 1F 1D CD 65 06 00 00 2D 7F
+
+        #region Public Properties
 
         public int BuildingId { get; set; }
 
@@ -23,12 +29,20 @@ namespace UCS.PacketProcessing
         public uint Unknown1 { get; set; }
 
         public int X { get; set; } //00 00 00 13
-        public int Y { get; set; } //00 00 00 1F
+        public int Y { get; set; }
+
+        #endregion Public Properties
+
+        //00 00 00 1F
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
             var go = level.GameObjectManager.GetGameObjectByID(BuildingId);
             go.SetPositionXY(X, Y);
         }
+
+        #endregion Public Methods
     }
 }

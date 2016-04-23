@@ -9,9 +9,15 @@ namespace UCS.Core
 {
     internal class UCSList
     {
+        #region Private Fields
+
         private static readonly string APIKey = ConfigurationManager.AppSettings["UCSList - APIKey"];
         private static readonly int Status = CheckStatus();
         private static readonly string UCSPanel = "https://www.ultrapowa.xyz/api/";
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public UCSList()
         {
@@ -31,7 +37,15 @@ namespace UCS.Core
                 Console.WriteLine("[UCS]     UCSList API is disabled - Visit www.ultrapowa.xyz for more info.");
         }
 
+        #endregion Public Constructors
+
+        #region Private Properties
+
         private static Thread T { get; set; }
+
+        #endregion Private Properties
+
+        #region Public Methods
 
         public static int CheckStatus()
         {
@@ -56,8 +70,14 @@ namespace UCS.Core
                 Console.WriteLine("[UCS]    UCSList Server answer uncorrectly : " + result);
         }
 
+        #endregion Public Methods
+
+        #region Public Classes
+
         public static class Http
         {
+            #region Public Methods
+
             public static string Post(string uri, NameValueCollection pairs)
             {
                 byte[] response = null;
@@ -67,6 +87,10 @@ namespace UCS.Core
                 }
                 return Encoding.UTF8.GetString(response);
             }
+
+            #endregion Public Methods
         }
+
+        #endregion Public Classes
     }
 }

@@ -1,19 +1,36 @@
-﻿using System.Security.Cryptography;
+﻿using Sodium.Exceptions;
+using System.Security.Cryptography;
 using System.Text;
-using Sodium.Exceptions;
 
 namespace Sodium
 {
-    /// <summary> Create and Open SealedPublicKeyBoxes. </summary>
+    /// <summary>
+    /// Create and Open SealedPublicKeyBoxes.
+    /// </summary>
     public static class SealedPublicKeyBox
     {
+        #region Public Fields
+
         public const int RecipientPublicKeyBytes = 32;
         public const int RecipientSecretKeyBytes = 32;
+
+        #endregion Public Fields
+
+        #region Private Fields
+
         private const int CryptoBoxSealbytes = 48;
 
-        /// <summary> Creates a SealedPublicKeyBox</summary>
+        #endregion Private Fields
+
+        #region Public Methods
+
+        /// <summary>
+        /// Creates a SealedPublicKeyBox
+        /// </summary>
         /// <param name="message">The message.</param>
-        /// <param name="recipientKeyPair">The recipientKeyPair key pair (uses only the public key).</param>
+        /// <param name="recipientKeyPair">
+        /// The recipientKeyPair key pair (uses only the public key).
+        /// </param>
         /// <returns>The anonymously encrypted message.</returns>
         /// <exception cref="KeyOutOfRangeException"></exception>
         /// <exception cref="CryptographicException"></exception>
@@ -22,9 +39,13 @@ namespace Sodium
             return Create(Encoding.UTF8.GetBytes(message), recipientKeyPair.PublicKey);
         }
 
-        /// <summary> Creates a SealedPublicKeyBox</summary>
+        /// <summary>
+        /// Creates a SealedPublicKeyBox
+        /// </summary>
         /// <param name="message">The message.</param>
-        /// <param name="recipientKeyPair">The recipientKeyPair key pair (uses only the public key).</param>
+        /// <param name="recipientKeyPair">
+        /// The recipientKeyPair key pair (uses only the public key).
+        /// </param>
         /// <returns>The anonymously encrypted message.</returns>
         /// <exception cref="KeyOutOfRangeException"></exception>
         /// <exception cref="CryptographicException"></exception>
@@ -33,7 +54,9 @@ namespace Sodium
             return Create(message, recipientKeyPair.PublicKey);
         }
 
-        /// <summary> Creates a SealedPublicKeyBox</summary>
+        /// <summary>
+        /// Creates a SealedPublicKeyBox
+        /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="recipientPublicKey">The 32 byte recipient's public key.</param>
         /// <returns>The anonymously encrypted message.</returns>
@@ -44,7 +67,9 @@ namespace Sodium
             return Create(Encoding.UTF8.GetBytes(message), recipientPublicKey);
         }
 
-        /// <summary> Creates a SealedPublicKeyBox</summary>
+        /// <summary>
+        /// Creates a SealedPublicKeyBox
+        /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="recipientPublicKey">The 32 byte recipient's public key.</param>
         /// <returns>The anonymously encrypted message.</returns>
@@ -67,7 +92,9 @@ namespace Sodium
             return buffer;
         }
 
-        /// <summary>Opens a SealedPublicKeyBox</summary>
+        /// <summary>
+        /// Opens a SealedPublicKeyBox
+        /// </summary>
         /// <param name="cipherText">Hex-encoded cipherText to be opened.</param>
         /// <param name="recipientKeyPair">The recipient's key pair.</param>
         /// <returns>The decrypted message.</returns>
@@ -78,7 +105,9 @@ namespace Sodium
             return Open(Utilities.HexToBinary(cipherText), recipientKeyPair.PrivateKey, recipientKeyPair.PublicKey);
         }
 
-        /// <summary>Opens a SealedPublicKeyBox</summary>
+        /// <summary>
+        /// Opens a SealedPublicKeyBox
+        /// </summary>
         /// <param name="cipherText">The cipherText to be opened.</param>
         /// <param name="recipientKeyPair">The recipient's key pair.</param>
         /// <returns>The decrypted message.</returns>
@@ -89,7 +118,9 @@ namespace Sodium
             return Open(cipherText, recipientKeyPair.PrivateKey, recipientKeyPair.PublicKey);
         }
 
-        /// <summary>Opens a SealedPublicKeyBox</summary>
+        /// <summary>
+        /// Opens a SealedPublicKeyBox
+        /// </summary>
         /// <param name="cipherText">Hex-encoded cipherText to be opened.</param>
         /// <param name="recipientSecretKey">The recipient's secret key.</param>
         /// <param name="recipientPublicKey">The recipient's public key.</param>
@@ -101,7 +132,9 @@ namespace Sodium
             return Open(Utilities.HexToBinary(cipherText), recipientSecretKey, recipientPublicKey);
         }
 
-        /// <summary>Opens a SealedPublicKeyBox</summary>
+        /// <summary>
+        /// Opens a SealedPublicKeyBox
+        /// </summary>
         /// <param name="cipherText">The cipherText to be opened.</param>
         /// <param name="recipientSecretKey">The recipient's secret key.</param>
         /// <param name="recipientPublicKey">The recipient's public key.</param>
@@ -122,7 +155,6 @@ namespace Sodium
                     (recipientPublicKey == null) ? 0 : recipientPublicKey.Length,
                     string.Format("recipientPublicKey must be {0} bytes in length.", RecipientPublicKeyBytes));
 
-
             var buffer = new byte[cipherText.Length - CryptoBoxSealbytes];
             var ret = SodiumLibrary.crypto_box_seal_open(buffer, cipherText, cipherText.Length, recipientPublicKey,
                 recipientSecretKey);
@@ -132,5 +164,7 @@ namespace Sodium
 
             return buffer;
         }
+
+        #endregion Public Methods
     }
 }

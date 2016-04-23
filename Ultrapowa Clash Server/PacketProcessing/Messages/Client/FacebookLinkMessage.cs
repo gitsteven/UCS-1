@@ -8,9 +8,15 @@ namespace UCS.PacketProcessing
 {
     internal class FacebookLinkMessage : Message
     {
+        #region Public Constructors
+
         public FacebookLinkMessage(Client client, BinaryReader br) : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -31,5 +37,7 @@ namespace UCS.PacketProcessing
         public override void Process(Level level)
         {
         }
+
+        #endregion Public Methods
     }
 }

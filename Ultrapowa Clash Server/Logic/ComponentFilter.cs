@@ -2,12 +2,24 @@
 {
     internal class ComponentFilter : GameObjectFilter
     {
-        public int Type; //a1 + 20
+        #region Public Fields
+
+        public int Type;
+
+        #endregion Public Fields
+
+        //a1 + 20
+
+        #region Public Constructors
 
         public ComponentFilter(int type)
         {
             Type = type;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override bool IsComponentFilter()
         {
@@ -28,5 +40,7 @@
                 result = base.TestGameObject(go);
             return result;
         }
+
+        #endregion Public Methods
     }
 }

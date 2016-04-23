@@ -5,7 +5,13 @@ namespace UCS.GameFiles
 {
     internal class DataTables
     {
+        #region Private Fields
+
         private readonly List<DataTable> m_vDataTables;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public DataTables()
         {
@@ -14,10 +20,14 @@ namespace UCS.GameFiles
                 m_vDataTables.Add(new DataTable());
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
         public CharacterData GetCharacterByName(string name)
         {
             var dt = m_vDataTables[3];
-            return (CharacterData) dt.GetDataByName(name);
+            return (CharacterData)dt.GetDataByName(name);
         }
 
         public Data GetDataById(int id)
@@ -29,19 +39,19 @@ namespace UCS.GameFiles
 
         public Globals GetGlobals()
         {
-            return (Globals) m_vDataTables[13];
+            return (Globals)m_vDataTables[13];
         }
 
         public HeroData GetHeroByName(string name)
         {
             var dt = m_vDataTables[27];
-            return (HeroData) dt.GetDataByName(name);
+            return (HeroData)dt.GetDataByName(name);
         }
 
         public ResourceData GetResourceByName(string name)
         {
             var dt = m_vDataTables[2];
-            return (ResourceData) dt.GetDataByName(name);
+            return (ResourceData)dt.GetDataByName(name);
         }
 
         public DataTable GetTable(int i)
@@ -56,5 +66,7 @@ namespace UCS.GameFiles
             else
                 m_vDataTables[index] = new DataTable(t, index);
         }
+
+        #endregion Public Methods
     }
 }

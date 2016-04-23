@@ -15,6 +15,34 @@ namespace UCS.Helpers
 {
     internal static class Utils
     {
+        #region Public Properties
+
+        /// <summary>
+        /// Returns Proxy-Version in the following format: v1.2.3
+        /// </summary>
+        public static string AssemblyVersion
+        {
+            get
+            {
+                return "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Returns opened instances
+        /// </summary>
+        public static int OpenedInstances
+        {
+            get
+            {
+                return Process.GetProcessesByName(Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location)).Length;
+            }
+        }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
         public static void AddDataSlots(this List<byte> list, List<DataSlot> data)
         {
             list.AddInt32(data.Count);
@@ -43,6 +71,30 @@ namespace UCS.Helpers
                 list.AddRange(BitConverter.GetBytes(Encoding.UTF8.GetByteCount(data)).Reverse());
                 list.AddRange(Encoding.UTF8.GetBytes(data));
             }
+        }
+
+        public static string ByteArrayToHex(byte[] ba)
+        {
+            string hex = BitConverter.ToString(ba);
+            return hex.Replace("-", " ").ToUpper();
+        }
+
+        public static byte[] HexaToBytes(string hex)
+        {
+            return Enumerable.Range(0, hex.Length)
+                .Where(x => x % 2 == 0)
+                .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
+                .ToArray();
+        }
+
+        public static int ParseConfigInt(string str)
+        {
+            return int.Parse(ConfigurationManager.AppSettings[str]);
+        }
+
+        public static string parseConfigString(string str)
+        {
+            return ConfigurationManager.AppSettings[str];
         }
 
         public static byte[] ReadAllBytes(this BinaryReader br)
@@ -124,50 +176,6 @@ namespace UCS.Helpers
             return self.TryRemove(key, out ignored);
         }
 
-        public static int ParseConfigInt(string str)
-        {
-            return int.Parse(ConfigurationManager.AppSettings[str]);
-        }
-
-        public static string parseConfigString(string str)
-        {
-            return ConfigurationManager.AppSettings[str];
-        }
-
-        public static byte[] HexaToBytes(string hex)
-        {
-            return Enumerable.Range(0, hex.Length)
-                .Where(x => x%2 == 0)
-                .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
-                .ToArray();
-        }
-        public static string ByteArrayToHex(byte[] ba)
-        {
-            string hex = BitConverter.ToString(ba);
-            return hex.Replace("-", " ").ToUpper();
-        }
-
-        /// <summary>
-        /// Returns opened instances
-        /// </summary>
-        public static int OpenedInstances
-        {
-            get
-            {
-                return Process.GetProcessesByName(Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location)).Length;
-            }
-        }
-
-        /// <summary>
-        /// Returns Proxy-Version in the following format:
-        /// v1.2.3
-        /// </summary>
-        public static string AssemblyVersion
-        {
-            get
-            {
-                return "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            }
-        }
+        #endregion Public Methods
     }
 }

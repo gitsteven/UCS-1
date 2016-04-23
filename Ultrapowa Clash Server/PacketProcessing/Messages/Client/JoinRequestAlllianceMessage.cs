@@ -6,15 +6,25 @@ namespace UCS.PacketProcessing
 {
     internal class JoinRequestAllianceMessage : Message
     {
+        #region Public Constructors
+
         // 14317
         public JoinRequestAllianceMessage(Client client, BinaryReader br) : base(client, br)
         {
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public static string Message { get; set; }
         public static bool Unknown1 { get; set; }
         public static long Unknown2 { get; set; }
         public static int Unknown3 { get; set; }
-        public static string Message { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -31,5 +41,7 @@ namespace UCS.PacketProcessing
         {
             PacketManager.ProcessOutgoingPacket(new AnswerJoinRequestAllianceMessage(Client));
         }
+
+        #endregion Public Methods
     }
 }

@@ -9,8 +9,14 @@ namespace UCS.PacketProcessing
     //Commande 0x225
     internal class UpgradeMultipleBuildingsCommand : Command
     {
+        #region Private Fields
+
         private readonly List<int> m_vBuildingIdList;
         private readonly byte m_vIsAltResource;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public UpgradeMultipleBuildingsCommand(BinaryReader br)
         {
@@ -25,8 +31,12 @@ namespace UCS.PacketProcessing
             br.ReadInt32WithEndian();
         }
 
+        #endregion Public Constructors
+
         //00 00 02 25 00 00 00 00 07 1D CD 65 0A 1D CD 65 09 1D CD 65 0B 1D CD 65 08 1D CD 65 0C 1D CD 65 07 1D CD 65 06 00 00 1B 07
         //public uint Unknown1 { get; set; } //00 00 2D 7F some client tick
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -34,7 +44,7 @@ namespace UCS.PacketProcessing
 
             foreach (var buildingId in m_vBuildingIdList)
             {
-                var b = (Building) level.GameObjectManager.GetGameObjectByID(buildingId);
+                var b = (Building)level.GameObjectManager.GetGameObjectByID(buildingId);
                 if (b.CanUpgrade())
                 {
                     var bd = b.GetBuildingData();
@@ -55,5 +65,7 @@ namespace UCS.PacketProcessing
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

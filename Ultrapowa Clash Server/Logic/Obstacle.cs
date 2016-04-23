@@ -1,5 +1,5 @@
-﻿using System;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using UCS.Core;
 using UCS.GameFiles;
 using UCS.Helpers;
@@ -8,18 +8,32 @@ namespace UCS.Logic
 {
     internal class Obstacle : GameObject
     {
+        #region Private Fields
+
         private readonly Level m_vLevel;
         private Timer m_vTimer;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public Obstacle(Data data, Level l) : base(data, l)
         {
             m_vLevel = l;
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public override int ClassId
         {
             get { return 3; }
         }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public void CancelClearing()
         {
@@ -43,7 +57,7 @@ namespace UCS.Logic
 
             //Add exp to client avatar
             var constructionTime = GetObstacleData().ClearTimeSeconds;
-            var exp = (int) Math.Pow(constructionTime, 0.5f);
+            var exp = (int)Math.Pow(constructionTime, 0.5f);
             GetLevel().GetPlayerAvatar().AddExperience(exp);
 
             var rd = ObjectManager.DataTables.GetResourceByName(GetObstacleData().LootResource);
@@ -55,7 +69,7 @@ namespace UCS.Logic
 
         public ObstacleData GetObstacleData()
         {
-            return (ObstacleData) GetData();
+            return (ObstacleData)GetData();
         }
 
         public int GetRemainingClearingTime()
@@ -115,5 +129,7 @@ namespace UCS.Logic
             jsonObject.Add("y", Y);
             return jsonObject;
         }
+
+        #endregion Public Methods
     }
 }

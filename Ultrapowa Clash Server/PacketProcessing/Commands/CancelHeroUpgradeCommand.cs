@@ -7,13 +7,23 @@ namespace UCS.PacketProcessing
     //Commande 0x0213
     internal class CancelHeroUpgradeCommand : Command
     {
+        #region Private Fields
+
         private readonly int m_vBuildingId;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public CancelHeroUpgradeCommand(BinaryReader br)
         {
             m_vBuildingId = br.ReadInt32WithEndian();
             br.ReadInt32WithEndian();
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         //00 00 02 13 1D CD 65 06 00 01 8B 0F
         public override void Execute(Level level)
@@ -23,7 +33,7 @@ namespace UCS.PacketProcessing
             {
                 if (go.ClassId == 0)
                 {
-                    var b = (Building) go;
+                    var b = (Building)go;
                     var hbc = b.GetHeroBaseComponent();
                     if (hbc != null)
                     {
@@ -32,5 +42,7 @@ namespace UCS.PacketProcessing
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

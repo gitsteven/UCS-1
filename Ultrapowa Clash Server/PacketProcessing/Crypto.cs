@@ -1,22 +1,65 @@
-﻿using System;
-using Sodium;
+﻿using Sodium;
+using System;
 
 namespace UCS.PacketProcessing
 {
+    public static class Key
+    {
+        #region Private Fields
+
+        // We store the standard private key in a byte array
+        private static readonly byte[] _standardPrivateKey =
+        {
+            0x18, 0x91, 0xD4, 0x01, 0xFA, 0xDB, 0x51, 0xD2, 0x5D, 0x3A, 0x91, 0x74,
+            0xD4, 0x72, 0xA9, 0xF6, 0x91, 0xA4, 0x5B, 0x97, 0x42, 0x85, 0xD4, 0x77,
+            0x29, 0xC4, 0x5C, 0x65, 0x38, 0x07, 0x0D, 0x85
+        };
+
+        // We store the standard public key in a byte array
+        private static readonly byte[] _standardPublicKey =
+        {
+            0x72, 0xF1, 0xA4, 0xA4, 0xC4, 0x8E, 0x44, 0xDA, 0x0C, 0x42, 0x31, 0x0F,
+            0x80, 0x0E, 0x96, 0x62, 0x4E, 0x6D, 0xC6, 0xA6, 0x41, 0xA9, 0xD4, 0x1C,
+            0x3B, 0x50, 0x39, 0xD8, 0xDF, 0xAD, 0xC2, 0x7E
+        };
+
+        #endregion Private Fields
+
+        #region Public Properties
+
+        public static Crypto Crypto
+        {
+            // We return a keypair , public key + private key
+            get { return new Crypto((byte[])_standardPublicKey.Clone(), (byte[])_standardPrivateKey.Clone()); }
+        }
+
+        #endregion Public Properties
+    }
+
     // This class is disposable
     public class Crypto : IDisposable
     {
+        #region Public Fields
+
         // This is the key length ( constant )
         public const int KeyLength = 32;
 
         // This is the nonce length ( constant )
         public const int NonceLength = 24;
 
+        #endregion Public Fields
+
+        #region Private Fields
+
         // Storing keypair
         private readonly KeyPair _keyPair;
 
         // Disposed or no, who know ?
         private bool _disposed;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public Crypto(byte[] publicKey, byte[] privateKey)
         {
@@ -37,6 +80,10 @@ namespace UCS.PacketProcessing
             // We return a keypair
             _keyPair = new KeyPair(publicKey, privateKey);
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         // The private key of server
         public byte[] PrivateKey
@@ -65,6 +112,10 @@ namespace UCS.PacketProcessing
             }
         }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
         // Function for dispose the class
         public void Dispose()
         {
@@ -79,30 +130,7 @@ namespace UCS.PacketProcessing
             GC.SuppressFinalize(this);
             // Garbage Collector is collecting all useless data dropped
         }
-    }
 
-    public static class Key
-    {
-        // We store the standard private key in a byte array
-        private static readonly byte[] _standardPrivateKey =
-        {
-            0x18, 0x91, 0xD4, 0x01, 0xFA, 0xDB, 0x51, 0xD2, 0x5D, 0x3A, 0x91, 0x74,
-            0xD4, 0x72, 0xA9, 0xF6, 0x91, 0xA4, 0x5B, 0x97, 0x42, 0x85, 0xD4, 0x77,
-            0x29, 0xC4, 0x5C, 0x65, 0x38, 0x07, 0x0D, 0x85
-        };
-
-        // We store the standard public key in a byte array
-        private static readonly byte[] _standardPublicKey =
-        {
-            0x72, 0xF1, 0xA4, 0xA4, 0xC4, 0x8E, 0x44, 0xDA, 0x0C, 0x42, 0x31, 0x0F,
-            0x80, 0x0E, 0x96, 0x62, 0x4E, 0x6D, 0xC6, 0xA6, 0x41, 0xA9, 0xD4, 0x1C,
-            0x3B, 0x50, 0x39, 0xD8, 0xDF, 0xAD, 0xC2, 0x7E
-        };
-
-        public static Crypto Crypto
-        {
-            // We return a keypair , public key + private key
-            get { return new Crypto((byte[]) _standardPublicKey.Clone(), (byte[]) _standardPrivateKey.Clone()); }
-        }
+        #endregion Public Methods
     }
 }

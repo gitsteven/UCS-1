@@ -6,6 +6,8 @@ namespace UCS.Logic
 {
     internal class AvatarStreamEntry
     {
+        #region Private Fields
+
         private DateTime m_vCreationTime;
         private int m_vId;
         private byte m_vIsNew;
@@ -13,12 +15,21 @@ namespace UCS.Logic
         private int m_vSenderLeagueId;
         private int m_vSenderLevel;
         private string m_vSenderName;
+
+        #endregion Private Fields
+
         //private byte m_vIsRemoved;
+
+        #region Public Constructors
 
         public AvatarStreamEntry()
         {
             m_vCreationTime = DateTime.UtcNow;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public virtual byte[] Encode()
         {
@@ -37,8 +48,8 @@ namespace UCS.Logic
 
         public int GetAgeSeconds()
         {
-            return (int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds -
-                   (int) m_vCreationTime.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+            return (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds -
+                   (int)m_vCreationTime.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
         }
 
         public int GetId()
@@ -113,5 +124,7 @@ namespace UCS.Logic
         {
             m_vSenderName = name;
         }
+
+        #endregion Public Methods
     }
 }

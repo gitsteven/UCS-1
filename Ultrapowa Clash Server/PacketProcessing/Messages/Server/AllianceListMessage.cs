@@ -7,14 +7,24 @@ namespace UCS.PacketProcessing
     //Packet 24310
     internal class AllianceListMessage : Message
     {
+        #region Private Fields
+
         private List<Alliance> m_vAlliances;
         private string m_vSearchString;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public AllianceListMessage(Client client) : base(client)
         {
             SetMessageType(24310);
             m_vAlliances = new List<Alliance>();
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -37,5 +47,7 @@ namespace UCS.PacketProcessing
         {
             m_vSearchString = searchString;
         }
+
+        #endregion Public Methods
     }
 }

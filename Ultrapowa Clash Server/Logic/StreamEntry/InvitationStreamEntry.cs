@@ -1,14 +1,20 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using UCS.Helpers;
 
 namespace UCS.Logic
 {
     internal class InvitationStreamEntry : StreamEntry
     {
-        public static string Message = "Hello, i want to join your clan.";
+        #region Public Fields
+
         public static string Judge;
+        public static string Message = "Hello, i want to join your clan.";
         public static int State = 3;
+
+        #endregion Public Fields
+
+        #region Public Methods
 
         public override byte[] Encode()
         {
@@ -56,5 +62,7 @@ namespace UCS.Logic
         {
             State = status;
         }
+
+        #endregion Public Methods
     }
 }

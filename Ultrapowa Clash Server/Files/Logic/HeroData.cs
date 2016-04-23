@@ -5,11 +5,17 @@ namespace UCS.GameFiles
 {
     internal class HeroData : CombatItemData
     {
+        #region Public Constructors
+
         public HeroData(CSVRow row, DataTable dt)
             : base(row, dt)
         {
             LoadData(this, GetType(), row);
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         public string AbilityAffectsCharacter { get; set; }
 
@@ -207,6 +213,10 @@ namespace UCS.GameFiles
 
         public int WakeUpSpeed { get; set; }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
         public override int GetCombatItemType()
         {
             return 2;
@@ -234,7 +244,9 @@ namespace UCS.GameFiles
 
         public override int GetUpgradeTime(int level)
         {
-            return UpgradeTimeH[level]*3600;
+            return UpgradeTimeH[level] * 3600;
         }
+
+        #endregion Public Methods
     }
 }

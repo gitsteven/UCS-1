@@ -7,12 +7,22 @@ namespace UCS.PacketProcessing
 {
     internal class AttackNpcMessage : Message
     {
+        #region Public Constructors
+
         public AttackNpcMessage(Client client, BinaryReader br)
             : base(client, br)
         {
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public int LevelId { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -27,5 +37,7 @@ namespace UCS.PacketProcessing
             var san = new NpcDataMessage(Client, level, this);
             PacketManager.ProcessOutgoingPacket(san);
         }
+
+        #endregion Public Methods
     }
 }

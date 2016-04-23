@@ -2,9 +2,15 @@
 {
     internal class ConstructionItemData : Data
     {
+        #region Public Constructors
+
         public ConstructionItemData(CSVRow row, DataTable dt) : base(row, dt)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public virtual int GetBuildCost(int level)
         {
@@ -35,5 +41,7 @@
         {
             return false;
         }
+
+        #endregion Public Methods
     }
 }

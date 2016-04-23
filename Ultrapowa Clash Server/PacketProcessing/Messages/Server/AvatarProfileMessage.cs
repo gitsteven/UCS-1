@@ -7,13 +7,23 @@ namespace UCS.PacketProcessing
     //Packet 24334
     internal class AvatarProfileMessage : Message
     {
+        #region Private Fields
+
         private Level m_vLevel;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public AvatarProfileMessage(Client client)
             : base(client)
         {
             SetMessageType(24334);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -23,7 +33,7 @@ namespace UCS.PacketProcessing
 
             pack.AddRange(m_vLevel.GetPlayerAvatar().Encode());
             pack.AddInt32(ch.GetHomeJSON().Length + 4);
-            pack.AddInt32(unchecked((int) 0xFFFF0000));
+            pack.AddInt32(unchecked((int)0xFFFF0000));
             pack.AddRange(ch.GetHomeJSON());
 
             pack.AddInt32(200);
@@ -38,5 +48,7 @@ namespace UCS.PacketProcessing
         {
             m_vLevel = level;
         }
+
+        #endregion Public Methods
     }
 }

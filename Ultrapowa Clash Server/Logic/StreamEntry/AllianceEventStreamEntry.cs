@@ -1,14 +1,20 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using UCS.Helpers;
 
 namespace UCS.Logic
 {
     internal class AllianceEventStreamEntry : StreamEntry
     {
+        #region Private Fields
+
         private long m_vAvatarId;
         private string m_vAvatarName;
         private int m_vEventType;
+
+        #endregion Private Fields
+
+        #region Public Methods
 
         public override byte[] Encode()
         {
@@ -58,5 +64,7 @@ namespace UCS.Logic
         {
             m_vEventType = type;
         }
+
+        #endregion Public Methods
     }
 }

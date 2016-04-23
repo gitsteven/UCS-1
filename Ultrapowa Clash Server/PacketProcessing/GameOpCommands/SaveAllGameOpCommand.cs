@@ -6,14 +6,24 @@ namespace UCS.PacketProcessing.GameOpCommands
 {
     internal class SaveAllGameOpCommand : GameOpCommand
     {
+        #region Private Fields
+
         private static DatabaseManager m_vDatabase;
         private readonly string[] m_vArgs;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public SaveAllGameOpCommand(string[] args)
         {
             m_vArgs = args;
             SetRequiredAccountPrivileges(3);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -62,5 +72,7 @@ namespace UCS.PacketProcessing.GameOpCommands
                 PacketManager.ProcessOutgoingPacket(p);
             }
         }
+
+        #endregion Public Methods
     }
 }

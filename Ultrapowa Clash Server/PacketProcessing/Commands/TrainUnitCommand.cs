@@ -9,6 +9,8 @@ namespace UCS.PacketProcessing
     //Commande 0x1FC 508
     internal class TrainUnitCommand : Command
     {
+        #region Public Constructors
+
         public TrainUnitCommand(BinaryReader br)
         {
             BuildingId = br.ReadInt32WithEndian(); //buildingId - 0x1DCD6500;
@@ -18,6 +20,10 @@ namespace UCS.PacketProcessing
             Unknown3 = br.ReadUInt32WithEndian();
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public int BuildingId { get; set; }
         public int Count { get; set; }
         public int UnitType { get; set; }
@@ -25,16 +31,22 @@ namespace UCS.PacketProcessing
 
         //00 3D 09 03
         //00 00 00 01
-        public uint Unknown3 { get; set; } //FF FF FF FF
+        public uint Unknown3 { get; set; }
+
+        #endregion Public Properties
+
+        //FF FF FF FF
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
             var go = level.GameObjectManager.GetGameObjectByID(BuildingId);
             if (Count > 0)
             {
-                var b = (Building) go;
+                var b = (Building)go;
                 var c = b.GetUnitProductionComponent();
-                var cid = (CombatItemData) ObjectManager.DataTables.GetDataById(UnitType);
+                var cid = (CombatItemData)ObjectManager.DataTables.GetDataById(UnitType);
                 do
                 {
                     if (!c.CanAddUnitToQueue(cid))
@@ -50,5 +62,7 @@ namespace UCS.PacketProcessing
                 } while (Count > 0);
             }
         }
+
+        #endregion Public Methods
     }
 }

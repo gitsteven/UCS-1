@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json.Linq;
 using UCS.Core;
 using UCS.Helpers;
 
@@ -8,10 +8,12 @@ namespace UCS.Logic
 {
     internal class AllianceMemberEntry
     {
+        #region Private Fields
+
         private readonly int m_vDonatedTroops;
         private readonly byte m_vIsNewMember;
         private readonly int m_vReceivedTroops;
-        private readonly int[] m_vRoleTable = {1, 1, 4, 2, 3};
+        private readonly int[] m_vRoleTable = { 1, 1, 4, 2, 3 };
 
         private readonly int m_vWarCooldown;
 
@@ -28,7 +30,13 @@ namespace UCS.Logic
         private int m_vPreviousOrder;
 
         //private string m_vName;
-        private int m_vRole; //1 : member, 2 : chef, 3 : aîné, 4 : chef adjoint
+        private int m_vRole;
+
+        #endregion Private Fields
+
+        //1 : member, 2 : chef, 3 : aîné, 4 : chef adjoint
+
+        #region Public Constructors
 
         public AllianceMemberEntry(long avatarId)
         {
@@ -42,6 +50,10 @@ namespace UCS.Logic
             m_vWarCooldown = 0;
             m_vWarOptInStatus = 1;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public static void Decode(byte[] avatarData)
         {
@@ -66,6 +78,11 @@ namespace UCS.Logic
         //00 00 00 01
         //01
         //00 00 00 2A 00 17 E8 BD
+
+        public static int GetDonations()
+        {
+            return 150;
+        }
 
         public byte[] Encode()
         {
@@ -94,11 +111,6 @@ namespace UCS.Logic
         public long GetAvatarId()
         {
             return m_vAvatarId;
-        }
-
-        public static int GetDonations()
-        {
-            return 150;
         }
 
         /*public long GetHomeid()
@@ -199,6 +211,8 @@ namespace UCS.Logic
         {
             m_vRole = role;
         }
+
+        #endregion Public Methods
 
         /*public void SetScore(int score)
         {

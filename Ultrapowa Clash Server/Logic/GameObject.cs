@@ -1,15 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.Windows;
-using Newtonsoft.Json.Linq;
 using UCS.GameFiles;
 
 namespace UCS.Logic
 {
     internal class GameObject
     {
+        #region Private Fields
+
         private readonly List<Component> m_vComponents;
         private readonly Data m_vData;
         private readonly Level m_vLevel;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public GameObject(Data data, Level level)
         {
@@ -20,14 +26,22 @@ namespace UCS.Logic
                 m_vComponents.Add(new Component());
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public virtual int ClassId
         {
             get { return -1; }
         }
-            
+
         public int GlobalId { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         //a1 + 4
         //a1 + 8
@@ -103,5 +117,7 @@ namespace UCS.Logic
                     comp.Tick();
             }
         }
+
+        #endregion Public Methods
     }
 }

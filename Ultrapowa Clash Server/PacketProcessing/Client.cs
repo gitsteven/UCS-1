@@ -1,17 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using Sodium;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
-using Sodium;
 using UCS.Logic;
 
 namespace UCS.PacketProcessing
 {
     internal class Client
     {
+        #region Private Fields
+
         private readonly long m_vSocketHandle;
 
         private Level m_vLevel;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public Client(Socket so)
         {
@@ -21,17 +27,25 @@ namespace UCS.PacketProcessing
             CState = 0;
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public string CIPAddress { get; set; }
         public byte[] CPublicKey { get; set; }
+        public byte[] CRNonce { get; set; }
         public byte[] CSessionKey { get; set; }
+        public byte[] CSharedKey { get; set; }
         public byte[] CSNonce { get; set; }
         public int CState { get; set; }
-        public string CIPAddress { get; set; }
-        public byte[] CRNonce { get; set; }
-        public byte[] CSharedKey { get; set; }
         public List<byte> DataStream { get; set; }
         public byte[] IncomingPacketsKey { get; set; }
         public byte[] OutgoingPacketsKey { get; set; }
         public Socket Socket { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public static Crypto GenerateKeyPair()
         {
@@ -78,7 +92,7 @@ namespace UCS.PacketProcessing
             if (DataStream.Count() >= 5)
             {
                 var length = (0x00 << 24) | (DataStream[2] << 16) | (DataStream[3] << 8) | DataStream[4];
-                var type = (ushort) ((DataStream[0] << 8) | DataStream[1]);
+                var type = (ushort)((DataStream[0] << 8) | DataStream[1]);
                 if (DataStream.Count - 7 >= length)
                 {
                     object obj = null;
@@ -89,7 +103,7 @@ namespace UCS.PacketProcessing
                     }
                     if (obj != null)
                     {
-                        p = (Message) obj;
+                        p = (Message)obj;
                         result = true;
                     }
                     else
@@ -101,5 +115,7 @@ namespace UCS.PacketProcessing
             }
             return result;
         }
+
+        #endregion Public Methods
     }
 }

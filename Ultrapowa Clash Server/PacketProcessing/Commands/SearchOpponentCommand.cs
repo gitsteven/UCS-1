@@ -9,6 +9,8 @@ namespace UCS.PacketProcessing
     //Commande 700
     internal class SearchOpponentCommand : Command
     {
+        #region Public Constructors
+
         public SearchOpponentCommand(BinaryReader br)
         {
             br.ReadInt32WithEndian();
@@ -16,7 +18,11 @@ namespace UCS.PacketProcessing
             br.ReadInt32WithEndian();
         }
 
+        #endregion Public Constructors
+
         //00 00 00 00 00 00 00 00 00 00 00 97
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -28,5 +34,7 @@ namespace UCS.PacketProcessing
                 PacketManager.ProcessOutgoingPacket(p);
             }
         }
+
+        #endregion Public Methods
     }
 }

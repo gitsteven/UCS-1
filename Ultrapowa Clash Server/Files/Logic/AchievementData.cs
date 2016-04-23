@@ -2,10 +2,16 @@
 {
     internal class AchievementData : Data
     {
+        #region Public Constructors
+
         public AchievementData(CSVRow row, DataTable dt) : base(row, dt)
         {
             LoadData(this, GetType(), row);
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         public string Action { get; set; }
         public int ActionCount { get; set; }
@@ -20,5 +26,7 @@
         public int Level { get; set; }
         public bool ShowValue { get; set; }
         public string TID { get; set; }
+
+        #endregion Public Properties
     }
 }

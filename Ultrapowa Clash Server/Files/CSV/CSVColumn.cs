@@ -4,11 +4,26 @@ namespace UCS.GameFiles
 {
     internal class CSVColumn
     {
+        #region Private Fields
+
         private readonly List<string> m_vValues;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public CSVColumn()
         {
             m_vValues = new List<string>();
+        }
+
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        public static int GetArraySize(int currentOffset, int nextOffset)
+        {
+            return nextOffset - currentOffset;
         }
 
         public void Add(string value)
@@ -24,14 +39,11 @@ namespace UCS.GameFiles
             return m_vValues[row];
         }
 
-        public static int GetArraySize(int currentOffset, int nextOffset)
-        {
-            return nextOffset - currentOffset;
-        }
-
         public int GetSize()
         {
             return m_vValues.Count;
         }
+
+        #endregion Public Methods
     }
 }

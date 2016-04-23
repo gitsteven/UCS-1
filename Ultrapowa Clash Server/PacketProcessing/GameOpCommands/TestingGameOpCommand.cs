@@ -7,17 +7,27 @@ namespace UCS.PacketProcessing
 {
     internal class TestingGameOpCommand : GameOpCommand
     {
+        #region Private Fields
+
         private readonly string[] m_vArgs;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public TestingGameOpCommand(string[] args)
         {
             m_vArgs = args;
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
         public override void Execute(Level level)
         {
             var cm = new ShareStreamEntry();
-            cm.SetId((int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+            cm.SetId((int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
             cm.SetSenderId(0);
             cm.SetHomeId(0);
             cm.SetSenderLeagueId(22);
@@ -39,5 +49,7 @@ namespace UCS.PacketProcessing
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

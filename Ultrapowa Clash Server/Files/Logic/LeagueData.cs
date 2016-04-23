@@ -4,11 +4,17 @@ namespace UCS.GameFiles
 {
     internal class LeagueData : Data
     {
+        #region Public Constructors
+
         public LeagueData(CSVRow row, DataTable dt)
             : base(row, dt)
         {
             LoadData(this, GetType(), row);
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         public List<int> BucketPlacementHardLimit { get; set; }
         public List<int> BucketPlacementRangeHigh { get; set; }
@@ -30,5 +36,7 @@ namespace UCS.GameFiles
         public int PromoteLimit { get; set; }
         public string TID { get; set; }
         public string TIDShort { get; set; }
+
+        #endregion Public Properties
     }
 }

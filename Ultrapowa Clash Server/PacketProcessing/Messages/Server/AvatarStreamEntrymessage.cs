@@ -6,12 +6,22 @@ namespace UCS.PacketProcessing
     //Packet 24412
     internal class AvatarStreamEntryMessage : Message
     {
+        #region Private Fields
+
         private AvatarStreamEntry m_vAvatarStreamEntry;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public AvatarStreamEntryMessage(Client client) : base(client)
         {
             SetMessageType(24412);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -26,5 +36,7 @@ namespace UCS.PacketProcessing
         {
             m_vAvatarStreamEntry = entry;
         }
+
+        #endregion Public Methods
     }
 }

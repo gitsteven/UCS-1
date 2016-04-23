@@ -8,10 +8,16 @@ namespace UCS.PacketProcessing
 {
     internal class GlobalPlayersMessage : Message
     {
+        #region Public Constructors
+
         public GlobalPlayersMessage(Client client) : base(client)
         {
             SetMessageType(24403);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -58,12 +64,14 @@ namespace UCS.PacketProcessing
             data.AddInt32(i - 1);
             data.AddRange(packet1);
 
-            data.AddInt32((int) TimeSpan.FromDays(1).TotalSeconds);
+            data.AddInt32((int)TimeSpan.FromDays(1).TotalSeconds);
             data.AddInt32(DateTime.Now.Year);
             data.AddInt32(DateTime.Now.Month);
             data.AddInt32(DateTime.Now.Year);
             data.AddInt32(DateTime.Now.Month - 1);
             Encrypt(data.ToArray());
         }
+
+        #endregion Public Methods
     }
 }

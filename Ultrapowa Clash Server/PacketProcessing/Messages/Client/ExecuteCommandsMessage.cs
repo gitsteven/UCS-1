@@ -9,15 +9,25 @@ namespace UCS.PacketProcessing
     //Packet 14102
     internal class ExecuteCommandsMessage : Message
     {
+        #region Public Fields
+
         public uint Checksum;
 
         public byte[] NestedCommands;
         public uint NumberOfCommands;
         public uint Subtick;
 
+        #endregion Public Fields
+
+        #region Public Constructors
+
         public ExecuteCommandsMessage(Client client, BinaryReader br) : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -48,7 +58,7 @@ namespace UCS.PacketProcessing
                             if (obj != null)
                             {
                                 Debugger.WriteLine("\t Processing " + obj.GetType().Name);
-                                ((Command) obj).Execute(level);
+                                ((Command)obj).Execute(level);
                             }
                             else
                                 break;
@@ -61,5 +71,7 @@ namespace UCS.PacketProcessing
                 Console.ResetColor();
             }
         }
+
+        #endregion Public Methods
     }
 }

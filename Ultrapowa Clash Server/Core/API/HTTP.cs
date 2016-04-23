@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -8,20 +9,34 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 using System.Threading;
-using Newtonsoft.Json;
 
 namespace UCS.Core
 {
+    public struct JsonApi
+    {
+        #region Public Properties
+
+        public Dictionary<string, string> UCS { get; set; }
+
+        #endregion Public Properties
+    }
+
     internal class HTTP
     {
+        #region Private Fields
+
         private HttpListener _listener;
         private int _port;
         private Thread _serverThread;
         private string jsonapp;
         private string mime = "text/plain";
 
+        #endregion Private Fields
+
+        #region Public Constructors
+
         /// <summary>
-        ///     Construct server with given port.
+        /// Construct server with given port.
         /// </summary>
         /// <param name="path">Directory path to serve.</param>
         /// <param name="port">Port of the server.</param>
@@ -31,7 +46,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        ///     Construct server with suitable port.
+        /// Construct server with suitable port.
         /// </summary>
         /// <param name="path">Directory path to serve.</param>
         public HTTP()
@@ -39,10 +54,14 @@ namespace UCS.Core
             //get an empty port
             var l = new TcpListener(IPAddress.Loopback, 0);
             l.Start();
-            var port = ((IPEndPoint) l.LocalEndpoint).Port;
+            var port = ((IPEndPoint)l.LocalEndpoint).Port;
             l.Stop();
             Initialize(port);
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         public int Port
         {
@@ -52,40 +71,9 @@ namespace UCS.Core
 
         public Dictionary<string, string> UCS { get; internal set; }
 
-        /// <summary>
-        ///     Stop server and dispose all functions.
-        /// </summary>
-        public void Stop()
-        {
-            _serverThread.Abort();
-            _listener.Stop();
-        }
+        #endregion Public Properties
 
-        private void Listen()
-        {
-            _listener = new HttpListener();
-            _listener.Prefixes.Add("http://+:" + _port + "/" + ConfigurationManager.AppSettings["ApiKey"] + "/");
-            _listener.Start();
-            while (true)
-            {
-                try
-                {
-                    var context = _listener.GetContext();
-                    Process(context);
-                }
-                catch (Exception ex)
-                {
-                    // We should do nothing
-                }
-            }
-        }
-
-        private static byte[] GetBytes(string str)
-        {
-            var bytes = new byte[str.Length*sizeof (char)];
-            Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
-            return bytes;
-        }
+        #region Public Methods
 
         public Stream GenerateStreamFromString(string s)
         {
@@ -95,6 +83,26 @@ namespace UCS.Core
             writer.Flush();
             stream.Position = 0;
             return stream;
+        }
+
+        /// <summary>
+        /// Stop server and dispose all functions.
+        /// </summary>
+        public void Stop()
+        {
+            _serverThread.Abort();
+            _listener.Stop();
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private static byte[] GetBytes(string str)
+        {
+            var bytes = new byte[str.Length * sizeof(char)];
+            Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            return bytes;
         }
 
         private void Handler(string type)
@@ -142,9 +150,36 @@ namespace UCS.Core
             }
         }
 
+        private void Initialize(int port)
+        {
+            _port = port;
+            _serverThread = new Thread(Listen);
+            _serverThread.Start();
+            Console.WriteLine("[UCS]    API has been successfully started");
+        }
+
+        private void Listen()
+        {
+            _listener = new HttpListener();
+            _listener.Prefixes.Add("http://+:" + _port + "/" + ConfigurationManager.AppSettings["ApiKey"] + "/");
+            _listener.Start();
+            while (true)
+            {
+                try
+                {
+                    var context = _listener.GetContext();
+                    Process(context);
+                }
+                catch (Exception ex)
+                {
+                    // We should do nothing
+                }
+            }
+        }
+
         private void Process(HttpListenerContext context)
         {
-            string[] Apis = {"inmemclans", "inmemplayers", "onlineplayers", "totalclients", "ram", ""};
+            string[] Apis = { "inmemclans", "inmemplayers", "onlineplayers", "totalclients", "ram", "" };
             var type = context.Request.Url.AbsolutePath.Substring(7).ToLower();
 
             if (Apis.Contains(type))
@@ -158,7 +193,7 @@ namespace UCS.Core
                     context.Response.AddHeader("Last-Modified", DateTime.UtcNow.ToString("r"));
                     context.Response.AddHeader("APIVersion", "1.0a");
 
-                    var buffer = new byte[1024*16];
+                    var buffer = new byte[1024 * 16];
                     int nbytes;
 
                     using (var fstream = GenerateStreamFromString(jsonapp))
@@ -168,33 +203,21 @@ namespace UCS.Core
                         fstream.Close();
                     }
 
-                    context.Response.StatusCode = (int) HttpStatusCode.OK;
+                    context.Response.StatusCode = (int)HttpStatusCode.OK;
                     context.Response.OutputStream.Flush();
                 }
                 catch (Exception ex)
                 {
-                    context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 }
             }
             else
             {
-                context.Response.StatusCode = (int) HttpStatusCode.NotFound;
+                context.Response.StatusCode = (int)HttpStatusCode.NotFound;
             }
             context.Response.OutputStream.Close();
         }
 
-
-        private void Initialize(int port)
-        {
-            _port = port;
-            _serverThread = new Thread(Listen);
-            _serverThread.Start();
-            Console.WriteLine("[UCS]    API has been successfully started");
-        }
-    }
-
-    public struct JsonApi
-    {
-        public Dictionary<string, string> UCS { get; set; }
+        #endregion Private Methods
     }
 }

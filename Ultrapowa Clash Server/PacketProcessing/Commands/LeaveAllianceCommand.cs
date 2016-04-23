@@ -8,8 +8,14 @@ namespace UCS.PacketProcessing
     //Commande 0x0002
     internal class LeaveAllianceCommand : Command
     {
+        #region Private Fields
+
         private Alliance m_vAlliance;
         private int m_vReason;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public LeaveAllianceCommand()
         {
@@ -22,6 +28,10 @@ namespace UCS.PacketProcessing
             br.ReadInt32WithEndian();
             br.ReadInt32WithEndian();
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override byte[] Encode()
         {
@@ -41,6 +51,8 @@ namespace UCS.PacketProcessing
         {
             m_vReason = reason;
         }
+
+        #endregion Public Methods
 
         //00 00 00 3B 00 0A 40 1E
         //00 00 00 01 ////reason? 1= leave, 2=kick

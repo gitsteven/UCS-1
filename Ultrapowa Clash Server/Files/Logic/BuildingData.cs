@@ -5,10 +5,16 @@ namespace UCS.GameFiles
 {
     internal class BuildingData : ConstructionItemData
     {
+        #region Public Constructors
+
         public BuildingData(CSVRow row, DataTable dt) : base(row, dt)
         {
             LoadData(this, GetType(), row);
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         public int AimRotateStep { get; set; }
 
@@ -300,6 +306,10 @@ namespace UCS.GameFiles
 
         public int Width { get; set; }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
         public ResourceData GetAltBuildResource(int level)
         {
             return ObjectManager.DataTables.GetResourceByName(AltBuildResource[level]);
@@ -322,7 +332,7 @@ namespace UCS.GameFiles
 
         public override int GetConstructionTime(int level)
         {
-            return BuildTimeS[level] + BuildTimeM[level]*60 + BuildTimeH[level]*60*60 + BuildTimeD[level]*60*60*24;
+            return BuildTimeS[level] + BuildTimeM[level] * 60 + BuildTimeH[level] * 60 * 60 + BuildTimeD[level] * 60 * 60 * 24;
         }
 
         public List<int> GetMaxStoredResourceCounts(int level)
@@ -332,12 +342,12 @@ namespace UCS.GameFiles
             for (var i = 0; i < resourceDataTable.GetItemCount(); i++)
             {
                 var value = 0;
-                var resourceData = (ResourceData) resourceDataTable.GetItemAt(i);
+                var resourceData = (ResourceData)resourceDataTable.GetItemAt(i);
                 var propertyName = "MaxStored" + resourceData.GetName();
                 if (GetType().GetProperty(propertyName) != null)
                 {
                     var obj = GetType().GetProperty(propertyName).GetValue(this, null);
-                    value = ((List<int>) obj)[level];
+                    value = ((List<int>)obj)[level];
                 }
                 maxStoredResourceCounts.Add(value);
             }
@@ -379,5 +389,7 @@ namespace UCS.GameFiles
         {
             return BuildingClass == "Worker";
         }
+
+        #endregion Public Methods
     }
 }

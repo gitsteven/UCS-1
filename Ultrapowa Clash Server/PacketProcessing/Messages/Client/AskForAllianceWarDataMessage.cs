@@ -7,9 +7,15 @@ namespace UCS.PacketProcessing
     // 14331
     internal class AskForAllianceWarDataMessage : Message
     {
+        #region Public Constructors
+
         public AskForAllianceWarDataMessage(Client client, BinaryReader br) : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -22,5 +28,7 @@ namespace UCS.PacketProcessing
         {
             PacketManager.ProcessOutgoingPacket(new AllianceWarDataMessage(Client));
         }
+
+        #endregion Public Methods
     }
 }

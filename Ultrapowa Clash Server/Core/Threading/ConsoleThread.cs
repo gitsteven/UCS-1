@@ -9,12 +9,28 @@ namespace UCS.Core.Threading
 {
     internal class ConsoleThread
     {
+        #region Public Fields
+
         public static string Author = "ExPl0itR";
         public static string Description = "Manages Console I/O";
         public static string Name = "Console Thread";
         public static string Version = "1.0.0";
+
+        #endregion Public Fields
+
+        #region Private Fields
+
         private static string Title, Tmp, Command;
+
+        #endregion Private Fields
+
+        #region Private Properties
+
         private static Thread T { get; set; }
+
+        #endregion Private Properties
+
+        #region Public Methods
 
         public static void Start()
         {
@@ -63,5 +79,7 @@ namespace UCS.Core.Threading
             if (T.ThreadState == ThreadState.Running)
                 T.Abort();
         }
+
+        #endregion Public Methods
     }
 }

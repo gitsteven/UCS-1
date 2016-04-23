@@ -8,15 +8,21 @@ namespace UCS.PacketProcessing
     //Commande 0x204
     internal class UpgradeUnitCommand : Command
     {
+        #region Public Constructors
+
         public UpgradeUnitCommand(BinaryReader br)
         {
             BuildingId = br.ReadInt32WithEndian(); //buildingId - 0x1DCD6500;
             Unknown1 = br.ReadUInt32WithEndian();
-            UnitData = (CombatItemData) br.ReadDataReference(); //.ReadInt32WithEndian();
+            UnitData = (CombatItemData)br.ReadDataReference(); //.ReadInt32WithEndian();
             Unknown2 = br.ReadUInt32WithEndian();
         }
 
+        #endregion Public Constructors
+
         //00 00 02 04 1D CD 65 13 00 00 00 00 00 3D 09 00 00 00 51 E9
+
+        #region Public Properties
 
         public int BuildingId { get; set; }
         public CombatItemData UnitData { get; set; }
@@ -25,11 +31,15 @@ namespace UCS.PacketProcessing
         //00 3D 09 00
         public uint Unknown2 { get; set; }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
         public override void Execute(Level level)
         {
             var ca = level.GetPlayerAvatar();
             var go = level.GameObjectManager.GetGameObjectByID(BuildingId);
-            var b = (Building) go;
+            var b = (Building)go;
             var uuc = b.GetUnitUpgradeComponent();
             var unitLevel = ca.GetUnitUpgradeLevel(UnitData);
             if (uuc.CanStartUpgrading(UnitData))
@@ -43,5 +53,7 @@ namespace UCS.PacketProcessing
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

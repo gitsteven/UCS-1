@@ -9,6 +9,8 @@ namespace UCS.PacketProcessing
     //Commande 0x1FD
     internal class CancelUnitProductionCommand : Command
     {
+        #region Public Constructors
+
         public CancelUnitProductionCommand(BinaryReader br)
         {
             BuildingId = br.ReadInt32WithEndian(); //buildingId - 0x1DCD6500;
@@ -19,6 +21,10 @@ namespace UCS.PacketProcessing
             Unknown4 = br.ReadUInt32WithEndian();
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public int BuildingId { get; set; }
         public int Count { get; set; }
         public int UnitType { get; set; }
@@ -28,18 +34,24 @@ namespace UCS.PacketProcessing
         //00 00 00 01
         public uint Unknown3 { get; set; } //00 00 00 00
 
-        public uint Unknown4 { get; set; } //00 00 34 E4
+        public uint Unknown4 { get; set; }
+
+        #endregion Public Properties
+
+        //00 00 34 E4
 
         //00 00 01 FD 1D CD 65 05 00 00 00 00 00 3D 09 09 00 00 00 01 00 00 00 00 00 00 04 24
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
             var go = level.GameObjectManager.GetGameObjectByID(BuildingId);
             if (Count > 0)
             {
-                var b = (Building) go;
+                var b = (Building)go;
                 var c = b.GetUnitProductionComponent();
-                var cd = (CombatItemData) ObjectManager.DataTables.GetDataById(UnitType);
+                var cd = (CombatItemData)ObjectManager.DataTables.GetDataById(UnitType);
                 do
                 {
                     //Ajouter gestion remboursement ressources
@@ -48,5 +60,7 @@ namespace UCS.PacketProcessing
                 } while (Count > 0);
             }
         }
+
+        #endregion Public Methods
     }
 }

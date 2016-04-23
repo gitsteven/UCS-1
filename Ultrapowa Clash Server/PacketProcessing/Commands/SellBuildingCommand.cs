@@ -7,13 +7,23 @@ namespace UCS.PacketProcessing
     //Commande 503
     internal class SellBuildingCommand : Command
     {
+        #region Private Fields
+
         private readonly int m_vBuildingId;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public SellBuildingCommand(BinaryReader br)
         {
             m_vBuildingId = br.ReadInt32WithEndian();
             br.ReadUInt32WithEndian();
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -24,7 +34,7 @@ namespace UCS.PacketProcessing
             {
                 if (go.ClassId == 4)
                 {
-                    var t = (Trap) go;
+                    var t = (Trap)go;
                     var upgradeLevel = t.GetUpgradeLevel();
                     var rd = t.GetTrapData().GetBuildResource(upgradeLevel);
                     var sellPrice = t.GetTrapData().GetSellPrice(upgradeLevel);
@@ -33,7 +43,7 @@ namespace UCS.PacketProcessing
                 }
                 else if (go.ClassId == 6)
                 {
-                    var d = (Deco) go;
+                    var d = (Deco)go;
                     var rd = d.GetDecoData().GetBuildResource();
                     var sellPrice = d.GetDecoData().GetSellPrice();
                     if (rd.PremiumCurrency)
@@ -48,5 +58,7 @@ namespace UCS.PacketProcessing
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

@@ -7,13 +7,23 @@ namespace UCS.PacketProcessing
     //Packet 24304
     internal class JoinableAllianceListMessage : Message
     {
+        #region Private Fields
+
         private List<Alliance> m_vAlliances;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public JoinableAllianceListMessage(Client client) : base(client)
         {
             SetMessageType(24304);
             m_vAlliances = new List<Alliance>();
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -31,5 +41,7 @@ namespace UCS.PacketProcessing
         {
             m_vAlliances = alliances;
         }
+
+        #endregion Public Methods
     }
 }

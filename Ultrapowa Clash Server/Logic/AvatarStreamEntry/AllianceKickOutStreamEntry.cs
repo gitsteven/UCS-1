@@ -5,10 +5,16 @@ namespace UCS.Logic
 {
     internal class AllianceKickOutStreamEntry : AvatarStreamEntry
     {
+        #region Private Fields
+
         private int m_vAllianceBadgeData;
         private long m_vAllianceId;
         private string m_vAllianceName;
         private string m_vMessage;
+
+        #endregion Private Fields
+
+        #region Public Methods
 
         public override byte[] Encode()
         {
@@ -59,5 +65,7 @@ namespace UCS.Logic
         {
             m_vMessage = message;
         }
+
+        #endregion Public Methods
     }
 }

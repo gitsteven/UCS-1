@@ -2,8 +2,14 @@
 {
     internal class CSVRow
     {
+        #region Private Fields
+
         private readonly CSVTable m_vCSVTable;
         private readonly int m_vRowStart;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public CSVRow(CSVTable table)
         {
@@ -11,6 +17,10 @@
             m_vRowStart = m_vCSVTable.GetColumnRowCount();
             m_vCSVTable.AddRow(this);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public int GetArraySize(string name)
         {
@@ -35,5 +45,7 @@
         {
             return m_vCSVTable.GetValue(name, level + m_vRowStart);
         }
+
+        #endregion Public Methods
     }
 }

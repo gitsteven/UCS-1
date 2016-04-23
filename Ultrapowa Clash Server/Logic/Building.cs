@@ -5,6 +5,8 @@ namespace UCS.Logic
 {
     internal class Building : ConstructionItem
     {
+        #region Public Constructors
+
         public Building(Data data, Level level) : base(data, level)
         {
             Locked = GetBuildingData().Locked;
@@ -41,14 +43,24 @@ namespace UCS.Logic
                 AddComponent(new ResourceStorageComponent(this));
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public override int ClassId
         {
             get { return 0; }
         }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
         public BuildingData GetBuildingData()
         {
-            return (BuildingData) GetData();
+            return (BuildingData)GetData();
         }
+
+        #endregion Public Methods
     }
 }

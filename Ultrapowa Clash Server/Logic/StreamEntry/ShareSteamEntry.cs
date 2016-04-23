@@ -1,21 +1,27 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using UCS.Helpers;
 
 namespace UCS.Logic
 {
     internal class ShareStreamEntry : StreamEntry
     {
+        #region Public Fields
+
+        public static string EnemyName = "UltraPowa";
+        public static string Message = "Look this battle !";
+        public static string ReplayJson;
         public static int Unknown1;
         public static int Unknown2;
         public static int Unknown3;
         public static byte Unknown4;
-        public static string Message = "Look this battle !";
-        public static string EnemyName = "UltraPowa";
-        public static string ReplayJson;
         public static int Unknown5;
         public static int Unknown6;
         public static int Unknown7;
+
+        #endregion Public Fields
+
+        #region Public Methods
 
         public override byte[] Encode()
         {
@@ -86,5 +92,7 @@ namespace UCS.Logic
         {
             ReplayJson = json;
         }
+
+        #endregion Public Methods
     }
 }

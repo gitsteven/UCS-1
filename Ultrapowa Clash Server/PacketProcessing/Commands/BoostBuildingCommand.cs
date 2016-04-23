@@ -9,6 +9,8 @@ namespace UCS.PacketProcessing
     //Commande 0x20E
     internal class BoostBuildingCommand : Command
     {
+        #region Public Constructors
+
         public BoostBuildingCommand(BinaryReader br)
         {
             BuildingIds = new List<int>();
@@ -19,10 +21,18 @@ namespace UCS.PacketProcessing
             }
         }
 
+        #endregion Public Constructors
+
         //00 00 02 0E 1D CD 65 05 00 00 8C 52
+
+        #region Public Properties
 
         public int BoostedBuildingsCount { get; set; }
         public List<int> BuildingIds { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -31,8 +41,8 @@ namespace UCS.PacketProcessing
             {
                 var go = level.GameObjectManager.GetGameObjectByID(buildingId);
 
-                var b = (ConstructionItem) go;
-                var costs = ((BuildingData) b.GetConstructionItemData()).BoostCost[b.UpgradeLevel];
+                var b = (ConstructionItem)go;
+                var costs = ((BuildingData)b.GetConstructionItemData()).BoostCost[b.UpgradeLevel];
                 if (ca.HasEnoughDiamonds(costs))
                 {
                     b.BoostBuilding();
@@ -40,5 +50,7 @@ namespace UCS.PacketProcessing
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

@@ -7,9 +7,15 @@ namespace UCS.PacketProcessing
 {
     internal class AddToBookmarkMessage : Message
     {
+        #region Public Constructors
+
         public AddToBookmarkMessage(Client client, BinaryReader br) : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -21,5 +27,7 @@ namespace UCS.PacketProcessing
         {
             PacketManager.ProcessOutgoingPacket(new BookmarkAddAllianceMessage(Client));
         }
+
+        #endregion Public Methods
     }
 }

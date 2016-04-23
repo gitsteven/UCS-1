@@ -6,14 +6,24 @@ namespace UCS.PacketProcessing
 {
     internal class SpeedUpHeroUpgradeCommand : Command
     {
+        #region Private Fields
+
         private readonly int m_vBuildingId;
         private int m_vUnknown1;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public SpeedUpHeroUpgradeCommand(BinaryReader br)
         {
             m_vBuildingId = br.ReadInt32WithEndian(); //buildingId - 0x1DCD6500;
             m_vUnknown1 = br.ReadInt32WithEndian();
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -22,11 +32,13 @@ namespace UCS.PacketProcessing
 
             if (go != null)
             {
-                var b = (Building) go;
+                var b = (Building)go;
                 var hbc = b.GetHeroBaseComponent();
                 if (hbc != null)
                     hbc.SpeedUpUpgrade();
             }
         }
+
+        #endregion Public Methods
     }
 }

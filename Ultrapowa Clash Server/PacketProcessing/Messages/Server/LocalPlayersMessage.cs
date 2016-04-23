@@ -7,10 +7,16 @@ namespace UCS.PacketProcessing
 {
     internal class LocalPlayersMessage : Message
     {
+        #region Public Constructors
+
         public LocalPlayersMessage(Client client) : base(client)
         {
             SetMessageType(24404);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -57,5 +63,7 @@ namespace UCS.PacketProcessing
             packet.AddRange(data.ToArray());
             Encrypt(packet.ToArray());
         }
+
+        #endregion Public Methods
     }
 }

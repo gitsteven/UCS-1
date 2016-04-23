@@ -3,38 +3,10 @@ using System.Runtime.InteropServices;
 
 namespace UCS.Core
 {
-    internal class Performances
-    {
-        public static string GetFreeMemoryMB()
-        {
-            return PerformanceInfo.GetPhysicalAvailableMemoryInMiB().ToString();
-        }
-
-        public static string GetTotalMemory()
-        {
-            return PerformanceInfo.GetTotalMemoryInMiB().ToString();
-        }
-
-        public static string GetUsedMemory()
-        {
-            var phav = PerformanceInfo.GetPhysicalAvailableMemoryInMiB();
-            var tot = PerformanceInfo.GetTotalMemoryInMiB();
-            var percentFree = phav/(decimal) tot*100;
-            var percentOccupied = 100 - percentFree;
-            return percentOccupied.ToString("##.##");
-        }
-
-        public static string GetFreeMemory()
-        {
-            var phav = PerformanceInfo.GetPhysicalAvailableMemoryInMiB();
-            var tot = PerformanceInfo.GetTotalMemoryInMiB();
-            var percentFree = phav/(decimal) tot*100;
-            return percentFree.ToString("##.##");
-        }
-    }
-
     public static class PerformanceInfo
     {
+        #region Public Methods
+
         [DllImport("psapi.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool GetPerformanceInfo([Out] out PerformanceInformation PerformanceInformation,
@@ -44,7 +16,7 @@ namespace UCS.Core
         {
             var pi = new PerformanceInformation();
             if (GetPerformanceInfo(out pi, Marshal.SizeOf(pi)))
-                return Convert.ToInt64(pi.PhysicalAvailable.ToInt64()*pi.PageSize.ToInt64()/1048576);
+                return Convert.ToInt64(pi.PhysicalAvailable.ToInt64() * pi.PageSize.ToInt64() / 1048576);
             return -1;
         }
 
@@ -52,9 +24,13 @@ namespace UCS.Core
         {
             var pi = new PerformanceInformation();
             if (GetPerformanceInfo(out pi, Marshal.SizeOf(pi)))
-                return Convert.ToInt64(pi.PhysicalTotal.ToInt64()*pi.PageSize.ToInt64()/1048576);
+                return Convert.ToInt64(pi.PhysicalTotal.ToInt64() * pi.PageSize.ToInt64() / 1048576);
             return -1;
         }
+
+        #endregion Public Methods
+
+        #region Public Structs
 
         [StructLayout(LayoutKind.Sequential)]
         public struct PerformanceInformation
@@ -74,5 +50,41 @@ namespace UCS.Core
             public int ProcessCount;
             public int ThreadCount;
         }
+
+        #endregion Public Structs
+    }
+
+    internal class Performances
+    {
+        #region Public Methods
+
+        public static string GetFreeMemory()
+        {
+            var phav = PerformanceInfo.GetPhysicalAvailableMemoryInMiB();
+            var tot = PerformanceInfo.GetTotalMemoryInMiB();
+            var percentFree = phav / (decimal)tot * 100;
+            return percentFree.ToString("##.##");
+        }
+
+        public static string GetFreeMemoryMB()
+        {
+            return PerformanceInfo.GetPhysicalAvailableMemoryInMiB().ToString();
+        }
+
+        public static string GetTotalMemory()
+        {
+            return PerformanceInfo.GetTotalMemoryInMiB().ToString();
+        }
+
+        public static string GetUsedMemory()
+        {
+            var phav = PerformanceInfo.GetPhysicalAvailableMemoryInMiB();
+            var tot = PerformanceInfo.GetTotalMemoryInMiB();
+            var percentFree = phav / (decimal)tot * 100;
+            var percentOccupied = 100 - percentFree;
+            return percentOccupied.ToString("##.##");
+        }
+
+        #endregion Public Methods
     }
 }

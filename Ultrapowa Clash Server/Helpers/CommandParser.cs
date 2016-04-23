@@ -11,6 +11,8 @@ namespace UCS.Helpers
 {
     internal class CommandParser
     {
+        #region Public Methods
+
         public static void Parse(string Command)
         {
             switch (Command)
@@ -75,5 +77,7 @@ namespace UCS.Helpers
                     break;
             }
         }
+
+        #endregion Public Methods
     }
 }

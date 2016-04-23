@@ -7,15 +7,25 @@ namespace UCS.PacketProcessing
 {
     internal class BuildingToMove
     {
+        #region Public Properties
+
         public int GameObjectId { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
+
+        #endregion Public Properties
     }
 
     //Commande 0x215
     internal class MoveMultipleBuildingsCommand : Command
     {
+        #region Private Fields
+
         private readonly List<BuildingToMove> m_vBuildingsToMove;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public MoveMultipleBuildingsCommand(BinaryReader br)
         {
@@ -32,6 +42,10 @@ namespace UCS.PacketProcessing
             br.ReadInt32WithEndian();
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
         public override void Execute(Level level)
         {
             foreach (var buildingToMove in m_vBuildingsToMove)
@@ -40,5 +54,7 @@ namespace UCS.PacketProcessing
                 go.SetPositionXY(buildingToMove.X, buildingToMove.Y);
             }
         }
+
+        #endregion Public Methods
     }
 }

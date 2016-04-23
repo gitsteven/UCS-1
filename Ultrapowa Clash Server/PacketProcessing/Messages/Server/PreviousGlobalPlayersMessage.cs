@@ -7,10 +7,16 @@ namespace UCS.PacketProcessing
 {
     internal class PreviousGlobalPlayersMessage : Message
     {
+        #region Public Constructors
+
         public PreviousGlobalPlayersMessage(Client client) : base(client)
         {
             SetMessageType(24405);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -55,5 +61,7 @@ namespace UCS.PacketProcessing
             data.AddInt32(DateTime.Now.Year);
             Encrypt(data.ToArray());
         }
+
+        #endregion Public Methods
     }
 }

@@ -7,6 +7,8 @@ namespace UCS.PacketProcessing
 {
     internal class SessionRequest : Message
     {
+        #region Public Fields
+
         public string Hash;
         public int MajorVersion;
         public int MinorVersion;
@@ -18,9 +20,17 @@ namespace UCS.PacketProcessing
         public int Unknown6;
         public int Unknown7;
 
+        #endregion Public Fields
+
+        #region Public Constructors
+
         public SessionRequest(Client client, BinaryReader br) : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -46,5 +56,7 @@ namespace UCS.PacketProcessing
             var authOk = new SessionSuccess(Client, this);
             PacketManager.ProcessOutgoingPacket(authOk);
         }
+
+        #endregion Public Methods
     }
 }

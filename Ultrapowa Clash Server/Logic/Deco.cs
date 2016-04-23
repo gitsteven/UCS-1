@@ -5,21 +5,35 @@ namespace UCS.Logic
 {
     internal class Deco : GameObject
     {
+        #region Private Fields
+
         private Level m_vLevel;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public Deco(Data data, Level l) : base(data, l)
         {
             m_vLevel = l;
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public override int ClassId
         {
             get { return 6; }
         }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
         public DecoData GetDecoData()
         {
-            return (DecoData) GetData();
+            return (DecoData)GetData();
         }
 
         public new void Load(JObject jsonObject)
@@ -32,5 +46,7 @@ namespace UCS.Logic
             base.Save(jsonObject);
             return jsonObject;
         }
+
+        #endregion Public Methods
     }
 }

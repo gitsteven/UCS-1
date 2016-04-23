@@ -5,9 +5,15 @@ namespace UCS.Logic
 {
     internal class ResourceStorageComponent : Component
     {
+        #region Private Fields
+
         private readonly List<int> m_vCurrentResources;
         private readonly List<int> m_vStolenResources;
         private List<int> m_vMaxResources;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public ResourceStorageComponent(GameObject go) : base(go)
         {
@@ -25,10 +31,18 @@ namespace UCS.Logic
             }
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public override int Type
         {
             get { return 6; }
         }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public int GetCount(int resourceIndex)
         {
@@ -45,5 +59,7 @@ namespace UCS.Logic
             m_vMaxResources = resourceCaps;
             GetParent().GetLevel().GetComponentManager().RefreshResourcesCaps();
         }
+
+        #endregion Public Methods
     }
 }

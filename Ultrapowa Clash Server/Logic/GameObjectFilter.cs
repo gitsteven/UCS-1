@@ -4,10 +4,18 @@ namespace UCS.Logic
 {
     internal class GameObjectFilter
     {
+        #region Private Fields
+
         //a1 + 4 gameobjecttypes
         //a1 + 8
         //a1 + 12
-        private List<int> m_vIgnoredObjects; //a1 + 16
+        private List<int> m_vIgnoredObjects;
+
+        #endregion Private Fields
+
+        //a1 + 16
+
+        #region Public Methods
 
         public void AddIgnoreObject(GameObject go)
         {
@@ -39,5 +47,7 @@ namespace UCS.Logic
             }
             return result;
         }
+
+        #endregion Public Methods
     }
 }

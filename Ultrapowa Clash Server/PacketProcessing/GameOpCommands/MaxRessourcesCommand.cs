@@ -6,10 +6,16 @@ namespace UCS.PacketProcessing
 {
     internal class MaxRessourcesCommand : GameOpCommand
     {
+        #region Public Constructors
+
         public MaxRessourcesCommand(string[] Args)
         {
             SetRequiredAccountPrivileges(0);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -26,5 +32,7 @@ namespace UCS.PacketProcessing
             else
                 SendCommandFailedMessage(level.GetClient());
         }
+
+        #endregion Public Methods
     }
 }

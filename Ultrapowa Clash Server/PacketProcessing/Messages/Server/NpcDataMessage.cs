@@ -9,6 +9,8 @@ namespace UCS.PacketProcessing
     //Packet 24133
     internal class NpcDataMessage : Message
     {
+        #region Public Constructors
+
         public NpcDataMessage(Client client, Level level, AttackNpcMessage cnam) : base(client)
         {
             SetMessageType(24133);
@@ -17,11 +19,19 @@ namespace UCS.PacketProcessing
             JsonBase = ObjectManager.NpcLevels[LevelId];
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public string JsonBase { get; set; }
 
         public int LevelId { get; set; }
 
         public Level Player { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -36,5 +46,7 @@ namespace UCS.PacketProcessing
 
             Encrypt(data.ToArray());
         }
+
+        #endregion Public Methods
     }
 }

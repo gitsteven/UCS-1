@@ -11,6 +11,8 @@ namespace UCS.PacketProcessing
     //Packet 14324
     internal class SearchAlliancesMessage : Message
     {
+        #region Private Fields
+
         private const int m_vAllianceLimit = 60;
         private int m_vAllianceOrigin;
         private int m_vAllianceScore;
@@ -21,9 +23,15 @@ namespace UCS.PacketProcessing
         private byte m_vShowOnlyJoinableAlliances;
         private int m_vWarFrequency;
 
+        #endregion Private Fields
+
+        #region Public Constructors
+
         public SearchAlliancesMessage(Client client, BinaryReader br) : base(client, br)
         {
         }
+
+        #endregion Public Constructors
 
         //00 00 00 03
         //61 61 61
@@ -35,6 +43,8 @@ namespace UCS.PacketProcessing
         //01
         //00 00 00 00 //???
         //00 00 00 06
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -75,5 +85,7 @@ namespace UCS.PacketProcessing
             p.SetSearchString(m_vSearchString);
             PacketManager.ProcessOutgoingPacket(p);
         }
+
+        #endregion Public Methods
     }
 }

@@ -9,12 +9,22 @@ namespace UCS.PacketProcessing
     //Packet 14113
     internal class VisitHomeMessage : Message
     {
+        #region Public Constructors
+
         public VisitHomeMessage(Client client, BinaryReader br)
             : base(client, br)
         {
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public long AvatarId { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -33,5 +43,7 @@ namespace UCS.PacketProcessing
             //if (clan != null)*/
             //    PacketHandler.ProcessOutgoingPacket(new ServerAllianceChatHistory(this.Client, clan));
         }
+
+        #endregion Public Methods
     }
 }

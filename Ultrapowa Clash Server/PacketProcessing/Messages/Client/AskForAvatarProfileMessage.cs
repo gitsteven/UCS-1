@@ -8,13 +8,23 @@ namespace UCS.PacketProcessing
 {
     internal class AskForAvatarProfileMessage : Message
     {
+        #region Private Fields
+
         private long m_vAvatarId;
         private long m_vCurrentHomeId;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public AskForAvatarProfileMessage(Client client, BinaryReader br)
             : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -36,5 +46,7 @@ namespace UCS.PacketProcessing
                 PacketManager.ProcessOutgoingPacket(p);
             }
         }
+
+        #endregion Public Methods
     }
 }

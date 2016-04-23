@@ -1,14 +1,20 @@
-﻿using System.Collections.Generic;
-using Ionic.Zlib;
+﻿using Ionic.Zlib;
+using System.Collections.Generic;
 using UCS.Helpers;
 
 namespace UCS.Logic
 {
     internal class ClientHome : Base
     {
+        #region Private Fields
+
         private readonly long m_vId;
         private int m_vRemainingShieldTime;
         private byte[] m_vSerializedVillage;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public ClientHome() : base(0)
         {
@@ -18,6 +24,10 @@ namespace UCS.Logic
         {
             m_vId = id;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override byte[] Encode()
         {
@@ -56,5 +66,7 @@ namespace UCS.Logic
         {
             m_vRemainingShieldTime = seconds;
         }
+
+        #endregion Public Methods
     }
 }

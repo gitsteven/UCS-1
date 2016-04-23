@@ -6,8 +6,14 @@ namespace UCS.PacketProcessing
     //Packet 24111
     internal class AvatarNameChangeOkMessage : Message
     {
+        #region Private Fields
+
         private readonly int m_vServerCommandType;
         private string m_vAvatarName;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public AvatarNameChangeOkMessage(Client client) : base(client)
         {
@@ -16,6 +22,10 @@ namespace UCS.PacketProcessing
             m_vServerCommandType = 0x03;
             m_vAvatarName = "Megapumba";
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -39,5 +49,7 @@ namespace UCS.PacketProcessing
         {
             m_vAvatarName = name;
         }
+
+        #endregion Public Methods
     }
 }

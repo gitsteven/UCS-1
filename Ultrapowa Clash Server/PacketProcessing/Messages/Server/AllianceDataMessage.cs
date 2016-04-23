@@ -7,7 +7,13 @@ namespace UCS.PacketProcessing
     //Packet 24301
     internal class AllianceDataMessage : Message
     {
+        #region Private Fields
+
         private readonly Alliance m_vAlliance;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public AllianceDataMessage(Client client, Alliance alliance)
             : base(client)
@@ -15,6 +21,10 @@ namespace UCS.PacketProcessing
             SetMessageType(24301);
             m_vAlliance = alliance;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -31,5 +41,7 @@ namespace UCS.PacketProcessing
                 pack.AddRange(allianceMember.Encode());
             Encrypt(pack.ToArray());
         }
+
+        #endregion Public Methods
     }
 }

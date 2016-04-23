@@ -2,10 +2,16 @@
 {
     internal class CombatItemData : Data
     {
+        #region Public Constructors
+
         public CombatItemData(CSVRow row, DataTable dt)
             : base(row, dt)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public virtual int GetCombatItemType()
         {
@@ -61,5 +67,7 @@
         {
             return -1;
         }
+
+        #endregion Public Methods
     }
 }

@@ -7,10 +7,18 @@ namespace UCS.Logic
 {
     internal class UnitUpgradeComponent : Component
     {
+        #region Private Fields
+
         private CombatItemData m_vCurrentlyUpgradedUnit;
-        private Timer m_vTimer; //a1 + 12
+        private Timer m_vTimer;
+
+        #endregion Private Fields
+
+        //a1 + 12
         //a1 + 16
         //a1 + 20 -- Listener?
+
+        #region Public Constructors
 
         public UnitUpgradeComponent(GameObject go) : base(go)
         {
@@ -18,17 +26,25 @@ namespace UCS.Logic
             m_vCurrentlyUpgradedUnit = null;
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public override int Type
         {
             get { return 9; }
         }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public bool CanStartUpgrading(CombatItemData cid)
         {
             var result = false;
             if (m_vCurrentlyUpgradedUnit == null)
             {
-                var b = (Building) GetParent();
+                var b = (Building)GetParent();
                 var ca = GetParent().GetLevel().GetHomeOwnerAvatar();
                 var cm = GetParent().GetLevel().GetComponentManager();
                 int maxProductionBuildingLevel;
@@ -89,7 +105,7 @@ namespace UCS.Logic
 
         public override void Load(JObject jsonObject)
         {
-            var unitUpgradeObject = (JObject) jsonObject["unit_upg"];
+            var unitUpgradeObject = (JObject)jsonObject["unit_upg"];
             if (unitUpgradeObject != null)
             {
                 m_vTimer = new Timer();
@@ -97,7 +113,7 @@ namespace UCS.Logic
                 m_vTimer.StartTimer(remainingTime, GetParent().GetLevel().GetTime());
 
                 var id = unitUpgradeObject["id"].ToObject<int>();
-                m_vCurrentlyUpgradedUnit = (CombatItemData) ObjectManager.DataTables.GetDataById(id);
+                m_vCurrentlyUpgradedUnit = (CombatItemData)ObjectManager.DataTables.GetDataById(id);
             }
         }
 
@@ -156,5 +172,7 @@ namespace UCS.Logic
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

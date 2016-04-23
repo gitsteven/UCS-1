@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using UCS.Core;
 using UCS.GameFiles;
 
@@ -7,12 +7,24 @@ namespace UCS.Logic
 {
     internal class UnitStorageComponent : Component
     {
-        private readonly List<UnitSlot> m_vUnits;
+        #region Public Fields
+
         public bool IsSpellForge;
+
+        #endregion Public Fields
+
+        #region Private Fields
+
+        private readonly List<UnitSlot> m_vUnits;
         private int m_vMaxCapacity;
+
+        #endregion Private Fields
+
         //a1 + 12;
         //a1 + 16
         //a1 + 20
+
+        #region Public Constructors
 
         public UnitStorageComponent(GameObject go, int capacity) : base(go)
         {
@@ -21,10 +33,18 @@ namespace UCS.Logic
             SetStorageType(go);
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public override int Type
         {
             get { return 0; }
         }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public void AddUnit(CombatItemData cd)
 
@@ -145,7 +165,7 @@ namespace UCS.Logic
                 {
                     var cnt = m_vUnits[i].Count;
                     var housingSpace = m_vUnits[i].UnitData.GetHousingSpace();
-                    count += cnt*housingSpace;
+                    count += cnt * housingSpace;
                 }
             }
             return count;
@@ -159,7 +179,7 @@ namespace UCS.Logic
             else
                 IsSpellForge = false; */
 
-            var unitArray = (JArray) jsonObject["units"];
+            var unitArray = (JArray)jsonObject["units"];
             if (unitArray != null)
             {
                 if (unitArray.Count > 0)
@@ -168,13 +188,13 @@ namespace UCS.Logic
                     {
                         var id = unitSlotArray[0].ToObject<int>();
                         var cnt = unitSlotArray[1].ToObject<int>();
-                        m_vUnits.Add(new UnitSlot((CombatItemData) ObjectManager.DataTables.GetDataById(id), -1, cnt));
+                        m_vUnits.Add(new UnitSlot((CombatItemData)ObjectManager.DataTables.GetDataById(id), -1, cnt));
                     }
                 }
             }
 
             if (jsonObject["storage_type"] != null)
-                IsSpellForge = (int) jsonObject["storage_type"] == 1;
+                IsSpellForge = (int)jsonObject["storage_type"] == 1;
             else
                 IsSpellForge = false;
         }
@@ -243,9 +263,11 @@ namespace UCS.Logic
 
         public void SetStorageType(GameObject go)
         {
-            var b = (Building) GetParent();
+            var b = (Building)GetParent();
             var bd = b.GetBuildingData();
             IsSpellForge = bd.IsSpellForge();
         }
+
+        #endregion Public Methods
     }
 }

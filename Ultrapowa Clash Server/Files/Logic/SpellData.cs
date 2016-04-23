@@ -5,11 +5,17 @@ namespace UCS.GameFiles
 {
     internal class SpellData : CombatItemData
     {
+        #region Public Constructors
+
         public SpellData(CSVRow row, DataTable dt)
             : base(row, dt)
         {
             LoadData(this, GetType(), row);
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         public string BigPicture { get; set; }
 
@@ -93,6 +99,10 @@ namespace UCS.GameFiles
 
         public List<int> UpgradeTimeH { get; set; }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
         public override int GetCombatItemType()
         {
             return 1;
@@ -145,7 +155,9 @@ namespace UCS.GameFiles
 
         public override int GetUpgradeTime(int level)
         {
-            return UpgradeTimeH[level]*3600;
+            return UpgradeTimeH[level] * 3600;
         }
+
+        #endregion Public Methods
     }
 }

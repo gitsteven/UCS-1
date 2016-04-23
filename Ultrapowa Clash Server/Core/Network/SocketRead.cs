@@ -7,17 +7,23 @@ namespace UCS.Network
 {
     public class SocketRead
     {
-        public delegate void IncomingReadErrorHandler(SocketRead read, Exception exception);
-
-        public delegate void IncomingReadHandler(SocketRead read, byte[] data);
+        #region Public Fields
 
         public const int kBufferSize = 256;
+
+        #endregion Public Fields
+
+        #region Private Fields
 
         private readonly byte[] buffer = new byte[kBufferSize];
 
         private readonly IncomingReadErrorHandler errorHandler;
 
         private readonly IncomingReadHandler readHandler;
+
+        #endregion Private Fields
+
+        #region Private Constructors
 
         private SocketRead(Socket socket, IncomingReadHandler readHandler, IncomingReadErrorHandler errorHandler = null)
         {
@@ -27,13 +33,33 @@ namespace UCS.Network
             BeginReceive();
         }
 
+        #endregion Private Constructors
+
+        #region Public Delegates
+
+        public delegate void IncomingReadErrorHandler(SocketRead read, Exception exception);
+
+        public delegate void IncomingReadHandler(SocketRead read, byte[] data);
+
+        #endregion Public Delegates
+
+        #region Public Properties
+
         public Socket Socket { get; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public static SocketRead Begin(Socket socket, IncomingReadHandler readHandler,
             IncomingReadErrorHandler errorHandler = null)
         {
             return new SocketRead(socket, readHandler, errorHandler);
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
 
         private void BeginReceive()
         {
@@ -63,5 +89,7 @@ namespace UCS.Network
                     errorHandler(this, e);
             }
         }
+
+        #endregion Private Methods
     }
 }

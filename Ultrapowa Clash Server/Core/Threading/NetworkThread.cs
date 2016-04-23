@@ -7,6 +7,8 @@ namespace UCS.Core.Threading
 {
     internal class NetworkThread
     {
+        #region Public Fields
+
         public static string Author = "ExPl0itR";
 
         public static string Description = "Includes the Core (PacketManager etc.)";
@@ -15,7 +17,15 @@ namespace UCS.Core.Threading
 
         public static string Version = "1.0.0";
 
+        #endregion Public Fields
+
+        #region Private Properties
+
         private static Thread T { get; set; }
+
+        #endregion Private Properties
+
+        #region Public Methods
 
         public static void Start()
         {
@@ -38,5 +48,7 @@ namespace UCS.Core.Threading
             if (T.ThreadState == ThreadState.Running)
                 T.Abort();
         }
+
+        #endregion Public Methods
     }
 }

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Newtonsoft.Json.Linq;
 using UCS.Core;
 using UCS.GameFiles;
 
@@ -11,20 +11,31 @@ namespace UCS.Logic
 {
     public static class ThreadSafeRandom
     {
-        [ThreadStatic] private static Random Local;
+        #region Private Fields
+
+        [ThreadStatic]
+        private static Random Local;
+
+        #endregion Private Fields
+
+        #region Public Properties
 
         public static Random ThisThreadsRandom
         {
             get
             {
                 return Local ??
-                       (Local = new Random(unchecked(Environment.TickCount*31 + Thread.CurrentThread.ManagedThreadId)));
+                       (Local = new Random(unchecked(Environment.TickCount * 31 + Thread.CurrentThread.ManagedThreadId)));
             }
         }
+
+        #endregion Public Properties
     }
 
     internal static class MyExtensions
     {
+        #region Public Methods
+
         public static void Shuffle<T>(this IList<T> list)
         {
             var n = list.Count;
@@ -37,10 +48,14 @@ namespace UCS.Logic
                 list[n] = value;
             }
         }
+
+        #endregion Public Methods
     }
 
     internal class ObstacleManager
     {
+        #region Private Fields
+
         private static readonly List<ObstacleData> m_vGemBoxes = new List<ObstacleData>();
 
         private static readonly List<ObstacleData> m_vSpawnAbleObstacles = new List<ObstacleData>();
@@ -63,6 +78,10 @@ namespace UCS.Logic
 
         private int m_vRespawnSeed;
 
+        #endregion Private Fields
+
+        #region Public Constructors
+
         public ObstacleManager(Level level)
         {
             m_vLevel = level;
@@ -77,7 +96,7 @@ namespace UCS.Logic
                 var dt = ObjectManager.DataTables.GetTable(7);
                 for (var i = 0; i < dt.GetItemCount(); i++)
                 {
-                    var od = (ObstacleData) dt.GetItemAt(i);
+                    var od = (ObstacleData)dt.GetItemAt(i);
                     if (!od.IsTombstone)
                     {
                         if (!od.GetName().Contains("Gembox"))
@@ -97,11 +116,15 @@ namespace UCS.Logic
             m_vGemBoxTimer = new Timer();
             m_vSpecialTimer = new Timer();
             m_vNormalTimer.StartTimer(m_vObstacleRespawnSeconds, level.GetTime());
-            m_vGemBoxTimer.StartTimer(m_vObstacleRespawnSeconds*2, level.GetTime());
+            m_vGemBoxTimer.StartTimer(m_vObstacleRespawnSeconds * 2, level.GetTime());
             m_vSpecialTimer.StartTimer(m_vObstacleRespawnSeconds, level.GetTime());
             m_vObstacleClearCount = 0;
             m_vRespawnSeed = new Random().Next();
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public void IncreaseObstacleClearCount()
         {
@@ -131,7 +154,7 @@ namespace UCS.Logic
             else
             {
                 m_vNormalTimer.StartTimer(m_vObstacleRespawnSeconds, m_vLevel.GetTime());
-                m_vGemBoxTimer.StartTimer(m_vObstacleRespawnSeconds*2, m_vLevel.GetTime());
+                m_vGemBoxTimer.StartTimer(m_vObstacleRespawnSeconds * 2, m_vLevel.GetTime());
                 m_vSpecialTimer.StartTimer(m_vObstacleRespawnSeconds, m_vLevel.GetTime());
             }
         }
@@ -196,14 +219,18 @@ namespace UCS.Logic
                     if (pos != null)
                     {
                         SpawnObstacle(pos, ob);
-                        m_vGemBoxTimer.StartTimer(m_vObstacleRespawnSeconds*2, m_vLevel.GetTime());
+                        m_vGemBoxTimer.StartTimer(m_vObstacleRespawnSeconds * 2, m_vLevel.GetTime());
                         Debugger.WriteLine("Finished adding new Obstacle " + ob.GetName(), null, 5);
                     }
                 }
                 else
-                    m_vGemBoxTimer.StartTimer(m_vObstacleRespawnSeconds*2, m_vLevel.GetTime());
+                    m_vGemBoxTimer.StartTimer(m_vObstacleRespawnSeconds * 2, m_vLevel.GetTime());
             }
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
 
         private int[] GetFreePlace(ObstacleData od)
         {
@@ -225,27 +252,27 @@ namespace UCS.Logic
                             case 0:
                                 x--;
                                 y--;
-                                w = ((BuildingData) go.GetData()).Width + 2;
-                                h = ((BuildingData) go.GetData()).Height + 2;
+                                w = ((BuildingData)go.GetData()).Width + 2;
+                                h = ((BuildingData)go.GetData()).Height + 2;
                                 break;
 
                             case 7:
-                                w = ((ObstacleData) go.GetData()).Width;
-                                h = ((ObstacleData) go.GetData()).Height;
+                                w = ((ObstacleData)go.GetData()).Width;
+                                h = ((ObstacleData)go.GetData()).Height;
                                 break;
 
                             case 11:
                                 x--;
                                 y--;
-                                w = ((TrapData) go.GetData()).Width + 2;
-                                h = ((TrapData) go.GetData()).Height + 2;
+                                w = ((TrapData)go.GetData()).Width + 2;
+                                h = ((TrapData)go.GetData()).Height + 2;
                                 break;
 
                             case 17:
                                 x--;
                                 y--;
-                                w = ((DecoData) go.GetData()).Width + 2;
-                                h = ((DecoData) go.GetData()).Height + 2;
+                                w = ((DecoData)go.GetData()).Width + 2;
+                                h = ((DecoData)go.GetData()).Height + 2;
                                 break;
                         }
 
@@ -262,11 +289,11 @@ namespace UCS.Logic
                     for (var j = 2; j < 42 - od.Width; j++)
                     {
                         if (field[i, j] != 1)
-                            freePositions.Add(new[] {i, j});
+                            freePositions.Add(new[] { i, j });
                     }
                 }
 
-                if (freePositions.Count < od.Height*od.Width)
+                if (freePositions.Count < od.Height * od.Width)
                     return null;
 
                 freePositions.Shuffle();
@@ -344,5 +371,7 @@ namespace UCS.Logic
             o.SetPositionXY(position[0], position[1]);
             m_vLevel.GameObjectManager.AddGameObject(o);
         }
+
+        #endregion Private Methods
     }
 }

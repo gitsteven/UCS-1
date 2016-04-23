@@ -7,11 +7,17 @@ namespace UCS.PacketProcessing
     //Commande 0x1FB 507
     internal class ClearObstacleCommand : Command
     {
+        #region Public Constructors
+
         public ClearObstacleCommand(BinaryReader br)
         {
             ObstacleId = br.ReadInt32WithEndian(); //ObstacleId - 0x1DFB2BC0;
             Unknown1 = br.ReadUInt32WithEndian();
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         public int ObstacleId { get; set; }
 
@@ -19,12 +25,16 @@ namespace UCS.PacketProcessing
         //1D FB 2B C1
         public uint Unknown1 { get; set; }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
         public override void Execute(Level level)
         {
             var ca = level.GetPlayerAvatar();
             var go = level.GameObjectManager.GetGameObjectByID(ObstacleId);
 
-            var o = (Obstacle) go;
+            var o = (Obstacle)go;
             var od = o.GetObstacleData();
             if (ca.HasEnoughResources(od.GetClearingResource(), od.ClearCost))
             {
@@ -36,5 +46,7 @@ namespace UCS.PacketProcessing
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

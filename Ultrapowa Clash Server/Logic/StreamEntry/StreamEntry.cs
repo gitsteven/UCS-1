@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
 using UCS.Helpers;
 
 namespace UCS.Logic
 {
     internal class StreamEntry
     {
+        #region Private Fields
+
         private long m_vHomeId;
         private int m_vId;
         private DateTime m_vMessageTime;
@@ -18,10 +20,18 @@ namespace UCS.Logic
         private int m_vSenderRole;
         private int m_vType = -1;
 
+        #endregion Private Fields
+
+        #region Public Constructors
+
         public StreamEntry()
         {
             m_vMessageTime = DateTime.UtcNow;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public virtual byte[] Encode()
         {
@@ -42,8 +52,8 @@ namespace UCS.Logic
 
         public int GetAgeSeconds()
         {
-            return (int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds -
-                   (int) m_vMessageTime.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+            return (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds -
+                   (int)m_vMessageTime.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
         }
 
         public long GetHomeId()
@@ -163,5 +173,7 @@ namespace UCS.Logic
         {
             m_vType = type;
         }
+
+        #endregion Public Methods
     }
 }

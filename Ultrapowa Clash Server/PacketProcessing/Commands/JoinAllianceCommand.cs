@@ -8,7 +8,13 @@ namespace UCS.PacketProcessing
     //Commande 0x001
     internal class JoinAllianceCommand : Command
     {
+        #region Private Fields
+
         private Alliance m_vAlliance;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public JoinAllianceCommand()
         {
@@ -26,6 +32,10 @@ namespace UCS.PacketProcessing
             br.ReadInt32WithEndian();
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
         public override byte[] Encode()
         {
             var data = new List<byte>();
@@ -37,5 +47,7 @@ namespace UCS.PacketProcessing
         {
             m_vAlliance = alliance;
         }
+
+        #endregion Public Methods
     }
 }

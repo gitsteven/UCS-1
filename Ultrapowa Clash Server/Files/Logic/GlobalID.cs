@@ -2,9 +2,11 @@
 {
     public static class GlobalID
     {
+        #region Public Methods
+
         public static int CreateGlobalID(int index, int count)
         {
-            return count + 1000000*index;
+            return count + 1000000 * index;
         }
 
         public static int GetClassID(int commandType)
@@ -17,7 +19,7 @@
              */
 
             var r1 = 1125899907;
-            commandType = (int) ((r1*(long) commandType) >> 32);
+            commandType = (int)((r1 * (long)commandType) >> 32);
             return (commandType >> 18) + (commandType >> 31);
         }
 
@@ -32,8 +34,10 @@
              */
 
             var r1 = 1125899907;
-            r1 = (int) ((r1*(long) globalID) >> 32);
-            return globalID - 1000000*((r1 >> 18) + (r1 >> 31));
+            r1 = (int)((r1 * (long)globalID) >> 32);
+            return globalID - 1000000 * ((r1 >> 18) + (r1 >> 31));
         }
+
+        #endregion Public Methods
     }
 }

@@ -8,13 +8,23 @@ namespace UCS.PacketProcessing
 {
     internal class RequestAvatarNameChange : Message
     {
+        #region Public Constructors
+
         public RequestAvatarNameChange(Client client, BinaryReader br) : base(client, br)
         {
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public string PlayerName { get; set; }
 
         public byte Unknown1 { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -36,5 +46,7 @@ namespace UCS.PacketProcessing
                 PacketManager.ProcessOutgoingPacket(p);
             }
         }
+
+        #endregion Public Methods
     }
 }

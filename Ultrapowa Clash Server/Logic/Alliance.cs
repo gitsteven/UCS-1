@@ -1,14 +1,16 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using UCS.Helpers;
 
 namespace UCS.Logic
 {
     internal class Alliance
     {
+        #region Private Fields
+
         private const int m_vMaxAllianceMembers = 50;
         private const int m_vMaxChatMessagesNumber = 30;
         private readonly Dictionary<long, AllianceMemberEntry> m_vAllianceMembers;
@@ -27,6 +29,10 @@ namespace UCS.Logic
         private int m_vScore;
         private int m_vWarFrequency;
         private int m_vWonWars;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public Alliance()
         {
@@ -53,6 +59,16 @@ namespace UCS.Logic
             m_vDrawWars = r.Next(0, 300);
             m_vChatMessages = new List<StreamEntry>();
             m_vAllianceMembers = new Dictionary<long, AllianceMemberEntry>();
+        }
+
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        public static byte[] EncodeMembers()
+        {
+            var data = new List<byte>();
+            return data.ToArray();
         }
 
         public void AddAllianceMember(AllianceMemberEntry entry)
@@ -114,12 +130,6 @@ namespace UCS.Logic
             data.AddInt32(1);
             data.AddInt32(-1);
 
-            return data.ToArray();
-        }
-
-        public static byte[] EncodeMembers()
-        {
-            var data = new List<byte>();
             return data.ToArray();
         }
 
@@ -228,7 +238,7 @@ namespace UCS.Logic
             if (jsonObject["alliance_origin"] != null)
                 m_vAllianceOrigin = jsonObject["alliance_origin"].ToObject<int>();
 
-            var jsonMembers = (JArray) jsonObject["members"];
+            var jsonMembers = (JArray)jsonObject["members"];
             foreach (JObject jsonMember in jsonMembers)
             {
                 var id = jsonMember["avatar_id"].ToObject<long>();
@@ -239,9 +249,9 @@ namespace UCS.Logic
                 member.Load(jsonMember);
                 m_vAllianceMembers.Add(id, member);
             }
-            m_vScore = m_vScore/2;
+            m_vScore = m_vScore / 2;
 
-            var jsonMessages = (JArray) jsonObject["chatMessages"];
+            var jsonMessages = (JArray)jsonObject["chatMessages"];
             if (jsonMessages != null)
             {
                 foreach (JObject jsonMessage in jsonMessages)
@@ -252,15 +262,19 @@ namespace UCS.Logic
                         case 1:
                             se = new TroopRequestStreamEntry();
                             break;
+
                         case 2:
                             se = new ChatStreamEntry();
                             break;
+
                         case 3:
                             se = new InvitationStreamEntry();
                             break;
+
                         case 4:
                             se = new AllianceEventStreamEntry();
                             break;
+
                         case 5:
                             se = new ShareStreamEntry();
                             break;
@@ -355,5 +369,7 @@ namespace UCS.Logic
         {
             m_vWarFrequency = frequency;
         }
+
+        #endregion Public Methods
     }
 }

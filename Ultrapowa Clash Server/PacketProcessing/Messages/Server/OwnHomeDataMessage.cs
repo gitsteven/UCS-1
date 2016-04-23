@@ -8,13 +8,23 @@ namespace UCS.PacketProcessing
     //Packet 24101
     internal class OwnHomeDataMessage : Message
     {
+        #region Public Constructors
+
         public OwnHomeDataMessage(Client client, Level level) : base(client)
         {
             SetMessageType(24101);
             Player = level;
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public Level Player { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -32,7 +42,7 @@ namespace UCS.PacketProcessing
 
             data.AddInt32(-1);
 
-            data.AddInt32((int) Player.GetTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+            data.AddInt32((int)Player.GetTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
 
             data.AddRange(home.Encode());
 
@@ -46,5 +56,7 @@ namespace UCS.PacketProcessing
 
             Encrypt(data.ToArray());
         }
+
+        #endregion Public Methods
     }
 }

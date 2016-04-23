@@ -7,12 +7,22 @@ namespace UCS.PacketProcessing
 {
     internal class GetDeviceTokenMessage : Message
     {
+        #region Public Fields
+
         public int Unknown1;
         public string UserToken;
+
+        #endregion Public Fields
+
+        #region Public Constructors
 
         public GetDeviceTokenMessage(Client client, BinaryReader br) : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -34,5 +44,7 @@ namespace UCS.PacketProcessing
             }
             PacketManager.ProcessOutgoingPacket(p);
         }
+
+        #endregion Public Methods
     }
 }

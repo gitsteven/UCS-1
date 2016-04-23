@@ -10,13 +10,23 @@ namespace UCS.PacketProcessing
     //Commande 0x219
     internal class SendAllianceMailCommand : Command
     {
+        #region Private Fields
+
         private readonly string m_vMailContent;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public SendAllianceMailCommand(BinaryReader br)
         {
             m_vMailContent = br.ReadScString();
             br.ReadInt32WithEndian();
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -28,7 +38,7 @@ namespace UCS.PacketProcessing
                 if (alliance != null)
                 {
                     var mail = new AllianceMailStreamEntry();
-                    mail.SetId((int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+                    mail.SetId((int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
                     mail.SetAvatar(avatar);
                     mail.SetIsNew(0);
                     mail.SetSenderId(avatar.GetId());
@@ -47,5 +57,7 @@ namespace UCS.PacketProcessing
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

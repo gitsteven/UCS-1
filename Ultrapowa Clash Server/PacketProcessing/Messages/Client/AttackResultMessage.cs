@@ -7,10 +7,16 @@ namespace UCS.PacketProcessing
 {
     internal class AttackResultMessage : Message
     {
+        #region Public Constructors
+
         public AttackResultMessage(Client client, BinaryReader br)
             : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -20,5 +26,7 @@ namespace UCS.PacketProcessing
         public override void Process(Level level)
         {
         }
+
+        #endregion Public Methods
     }
 }

@@ -1,19 +1,25 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using UCS.Helpers;
 
 namespace UCS.Logic
 {
     internal class TroopRequestStreamEntry : StreamEntry
     {
+        #region Public Fields
+
+        public static DataSlot AllianceDonation;
+        public static string Message;
+        public static DataSlot UnitComponent;
         public static int Unknown1;
         public static int Unknown2 = 2;
         public static int Unknown3;
         public static int Unknown4 = 2;
         public static int Unknown5;
-        public static string Message;
-        public static DataSlot AllianceDonation;
-        public static DataSlot UnitComponent;
+
+        #endregion Public Fields
+
+        #region Public Methods
 
         public override byte[] Encode()
         {
@@ -56,7 +62,7 @@ namespace UCS.Logic
             jsonObject.Add("unknown3", Unknown3);
             jsonObject.Add("unknown4", Unknown4);
             jsonObject.Add("unknown5", Unknown5);
-            jsonObject.Add("donations", new JArray {300000, 0});
+            jsonObject.Add("donations", new JArray { 300000, 0 });
             jsonObject.Add("message", Message);
             jsonObject.Add("tdonations", new JArray());
             return jsonObject;
@@ -66,5 +72,7 @@ namespace UCS.Logic
         {
             Message = msg;
         }
+
+        #endregion Public Methods
     }
 }

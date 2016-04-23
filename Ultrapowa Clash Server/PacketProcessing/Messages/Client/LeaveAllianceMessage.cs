@@ -10,11 +10,21 @@ namespace UCS.PacketProcessing
     //Packet 14308
     internal class LeaveAllianceMessage : Message
     {
+        #region Public Fields
+
         public static bool done;
+
+        #endregion Public Fields
+
+        #region Public Constructors
 
         public LeaveAllianceMessage(Client client, BinaryReader br) : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -55,7 +65,7 @@ namespace UCS.PacketProcessing
 
             alliance.RemoveMember(avatar.GetId());
             avatar.SetAllianceId(0);
-            
+
             if (alliance.GetAllianceMembers().Count > 0)
             {
                 var eventStreamEntry = new AllianceEventStreamEntry();
@@ -80,5 +90,7 @@ namespace UCS.PacketProcessing
             PacketManager.ProcessOutgoingPacket(new LeaveAllianceOkMessage(Client, alliance));
             DatabaseManager.Singelton.Save(level);
         }
+
+        #endregion Public Methods
     }
 }

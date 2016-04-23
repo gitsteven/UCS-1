@@ -10,8 +10,14 @@ namespace UCS.PacketProcessing
     //Commande 0x21F
     internal class KickAllianceMemberCommand : Command
     {
+        #region Private Fields
+
         private readonly long m_vAvatarId;
         private readonly string m_vMessage;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public KickAllianceMemberCommand(BinaryReader br)
         {
@@ -21,12 +27,16 @@ namespace UCS.PacketProcessing
             br.ReadInt32WithEndian();
         }
 
+        #endregion Public Constructors
+
         //00 00 02 24 20 41 6A 6B 00 00 00 01 00 00 02 1F
         //00 00 00 17 00 9E 81 01
         //01
         //00 00 00 33
         //44 C3 A9 73 6F 6C C3 A9 2C 20 6E 6F 75 73 20 61 76 6F 6E 73 20 64 C3 A9 63 69 64 C3 A9 20 64 65 20 74 27 65 78 63 6C 75 72 65 20 64 75 20 63 6C 61 6E 2E
         //00 00 01 E6
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -60,7 +70,7 @@ namespace UCS.PacketProcessing
 
                             var kickOutStreamEntry = new AllianceKickOutStreamEntry();
                             kickOutStreamEntry.SetId(
-                                (int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+                                (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
                             kickOutStreamEntry.SetAvatar(requesterAvatar);
                             kickOutStreamEntry.SetIsNew(0);
                             kickOutStreamEntry.SetAllianceId(alliance.GetAllianceId());
@@ -73,7 +83,7 @@ namespace UCS.PacketProcessing
                         }
 
                         var eventStreamEntry = new AllianceEventStreamEntry();
-                        eventStreamEntry.SetId((int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+                        eventStreamEntry.SetId((int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
                         eventStreamEntry.SetAvatar(targetAvatar);
                         eventStreamEntry.SetEventType(1);
                         eventStreamEntry.SetAvatarId(requesterAvatar.GetId());
@@ -91,5 +101,7 @@ namespace UCS.PacketProcessing
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

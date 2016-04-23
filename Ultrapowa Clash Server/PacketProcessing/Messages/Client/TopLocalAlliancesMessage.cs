@@ -6,9 +6,15 @@ namespace UCS.PacketProcessing
 {
     internal class TopLocalAlliancesMessage : Message
     {
+        #region Public Constructors
+
         public TopLocalAlliancesMessage(Client client, BinaryReader br) : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -18,5 +24,7 @@ namespace UCS.PacketProcessing
         {
             PacketManager.ProcessOutgoingPacket(new LocalAlliancesMessage(Client));
         }
+
+        #endregion Public Methods
     }
 }

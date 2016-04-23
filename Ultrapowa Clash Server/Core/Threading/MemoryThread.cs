@@ -9,10 +9,16 @@ namespace UCS.Core.Threading
 {
     internal class MemoryThread
     {
+        #region Private Properties
+
         /// <summary>
-        ///     Variable holding the thread itself
+        /// Variable holding the thread itself
         /// </summary>
         private static Thread T { get; set; }
+
+        #endregion Private Properties
+
+        #region Public Methods
 
         public static void Start()
         {
@@ -24,8 +30,8 @@ namespace UCS.Core.Threading
                 {
                     GC.Collect(GC.MaxGeneration);
                     GC.WaitForPendingFinalizers();
-                    SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle, (UIntPtr) 0xFFFFFFFF,
-                        (UIntPtr) 0xFFFFFFFF);
+                    SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle, (UIntPtr)0xFFFFFFFF,
+                        (UIntPtr)0xFFFFFFFF);
                 };
                 t.Enabled = true;
             });
@@ -38,14 +44,22 @@ namespace UCS.Core.Threading
                 T.Abort();
         }
 
+        #endregion Public Methods
+
+        #region Private Methods
+
         [DllImport("kernel32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool SetProcessWorkingSetSize(IntPtr process, UIntPtr minimumWorkingSetSize,
             UIntPtr maximumWorkingSetSize);
+
+        #endregion Private Methods
     }
 
     internal class PerformanceInfo
     {
+        #region Public Methods
+
         [DllImport("psapi.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool GetPerformanceInfo();
@@ -54,7 +68,7 @@ namespace UCS.Core.Threading
         {
             var pi = new PerformanceInformation();
             if (GetPerformanceInfo())
-                return Convert.ToInt64(pi.PhysicalAvailable.ToInt64()*pi.PageSize.ToInt64()/1048576);
+                return Convert.ToInt64(pi.PhysicalAvailable.ToInt64() * pi.PageSize.ToInt64() / 1048576);
             return -1;
         }
 
@@ -62,9 +76,13 @@ namespace UCS.Core.Threading
         {
             var pi = new PerformanceInformation();
             if (GetPerformanceInfo())
-                return Convert.ToInt64(pi.PhysicalTotal.ToInt64()*pi.PageSize.ToInt64()/1048576);
+                return Convert.ToInt64(pi.PhysicalTotal.ToInt64() * pi.PageSize.ToInt64() / 1048576);
             return -1;
         }
+
+        #endregion Public Methods
+
+        #region Public Structs
 
         [StructLayout(LayoutKind.Sequential)]
         public struct PerformanceInformation
@@ -84,5 +102,7 @@ namespace UCS.Core.Threading
             public int ProcessCount;
             public int ThreadCount;
         }
+
+        #endregion Public Structs
     }
 }

@@ -12,6 +12,8 @@ namespace UCS.PacketProcessing
     //Packet 10101
     internal class LoginMessage : Message
     {
+        #region Public Fields
+
         public string AdvertisingGUID;
         public string AndroidDeviceID;
         public bool banned;
@@ -41,9 +43,17 @@ namespace UCS.PacketProcessing
         public string UserToken;
         public string VendorGUID;
 
+        #endregion Public Fields
+
+        #region Public Constructors
+
         public LoginMessage(Client client, BinaryReader br) : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -187,5 +197,7 @@ namespace UCS.PacketProcessing
                 ResourcesManager.LogPlayerOut(level);
             }
         }
+
+        #endregion Public Methods
     }
 }

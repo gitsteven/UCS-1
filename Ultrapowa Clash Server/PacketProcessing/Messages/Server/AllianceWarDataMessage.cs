@@ -5,10 +5,16 @@ namespace UCS.PacketProcessing
 {
     internal class AllianceWarDataMessage : Message
     {
+        #region Public Constructors
+
         public AllianceWarDataMessage(Client client) : base(client)
         {
             SetMessageType(24331);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -21,7 +27,7 @@ namespace UCS.PacketProcessing
             data.AddInt32(0);
             data.AddInt32(1);
             data.Add(0);
-            data.AddRange(new List<byte> {1, 2, 3, 4});
+            data.AddRange(new List<byte> { 1, 2, 3, 4 });
             data.AddInt32(0);
             data.AddInt32(0);
             data.AddInt32(0);
@@ -33,7 +39,7 @@ namespace UCS.PacketProcessing
             data.AddInt32(0);
             data.AddInt32(1);
             data.Add(0);
-            data.AddRange(new List<byte> {1, 2, 3, 4});
+            data.AddRange(new List<byte> { 1, 2, 3, 4 });
             data.AddInt32(0);
             data.AddInt32(0);
             data.AddInt32(0);
@@ -70,8 +76,9 @@ namespace UCS.PacketProcessing
             data.AddInt32(0);
             data.AddInt32(0);
 
-
             Encrypt(data.ToArray());
         }
+
+        #endregion Public Methods
     }
 }

@@ -4,11 +4,17 @@ namespace UCS.GameFiles
 {
     internal class DecoData : Data
     {
+        #region Public Constructors
+
         public DecoData(CSVRow row, DataTable dt)
             : base(row, dt)
         {
             LoadData(this, GetType(), row);
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         public int BuildCost { get; set; }
 
@@ -40,6 +46,10 @@ namespace UCS.GameFiles
 
         public int Width { get; set; }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
         public int GetBuildCost()
         {
             return BuildCost;
@@ -52,8 +62,10 @@ namespace UCS.GameFiles
 
         public int GetSellPrice()
         {
-            var calculation = (int) ((BuildCost*(long) 1717986919) >> 32);
+            var calculation = (int)((BuildCost * (long)1717986919) >> 32);
             return (calculation >> 2) + (calculation >> 31);
         }
+
+        #endregion Public Methods
     }
 }

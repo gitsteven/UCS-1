@@ -4,6 +4,8 @@ namespace UCS.PacketProcessing
 {
     internal class ToggleHeroAttackModeCommand : Command
     {
+        #region Public Constructors
+
         public ToggleHeroAttackModeCommand(BinaryReader br)
         {
             /*
@@ -14,9 +16,15 @@ namespace UCS.PacketProcessing
             */
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public uint BuildingId { get; set; }
         public byte Unknown1 { get; set; }
         public uint Unknown2 { get; set; }
         public uint Unknown3 { get; set; }
+
+        #endregion Public Properties
     }
 }

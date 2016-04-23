@@ -4,11 +4,17 @@ namespace UCS.GameFiles
 {
     internal class ObstacleData : Data
     {
+        #region Public Constructors
+
         public ObstacleData(CSVRow row, DataTable dt)
             : base(row, dt)
         {
             LoadData(this, GetType(), row);
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         public int AppearancePeriodHours { get; set; }
 
@@ -54,9 +60,15 @@ namespace UCS.GameFiles
 
         public int Width { get; set; }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
         public ResourceData GetClearingResource()
         {
             return ObjectManager.DataTables.GetResourceByName(ClearResource);
         }
+
+        #endregion Public Methods
     }
 }

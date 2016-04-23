@@ -8,13 +8,23 @@ namespace UCS.PacketProcessing
 {
     internal class SystemMessageGameOpCommand : GameOpCommand
     {
+        #region Private Fields
+
         private readonly string[] m_vArgs;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public SystemMessageGameOpCommand(string[] args)
         {
             m_vArgs = args;
             SetRequiredAccountPrivileges(1);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -25,7 +35,7 @@ namespace UCS.PacketProcessing
                     var message = string.Join(" ", m_vArgs.Skip(1));
                     var avatar = level.GetPlayerAvatar();
                     var mail = new AllianceMailStreamEntry();
-                    mail.SetId((int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+                    mail.SetId((int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
                     mail.SetSenderId(avatar.GetId());
                     mail.SetSenderAvatarId(avatar.GetId());
                     mail.SetSenderName(avatar.GetAvatarName());
@@ -50,5 +60,7 @@ namespace UCS.PacketProcessing
                 SendCommandFailedMessage(level.GetClient());
             }
         }
+
+        #endregion Public Methods
     }
 }

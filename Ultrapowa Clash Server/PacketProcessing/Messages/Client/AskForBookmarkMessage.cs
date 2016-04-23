@@ -6,10 +6,16 @@ namespace UCS.PacketProcessing
 {
     internal class AskForBookmarkMessage : Message
     {
+        #region Public Constructors
+
         public AskForBookmarkMessage(Client client, BinaryReader br)
             : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -19,5 +25,7 @@ namespace UCS.PacketProcessing
         {
             PacketManager.ProcessOutgoingPacket(new BookmarkListMessage(Client));
         }
+
+        #endregion Public Methods
     }
 }

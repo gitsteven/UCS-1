@@ -7,8 +7,14 @@ namespace UCS.PacketProcessing
     //Packet 24107
     internal class EnemyHomeDataMessage : Message
     {
+        #region Private Fields
+
         private readonly Level m_vOwnerLevel;
         private readonly Level m_vVisitorLevel;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public EnemyHomeDataMessage(Client client, Level ownerLevel, Level visitorLevel) : base(client)
         {
@@ -16,6 +22,10 @@ namespace UCS.PacketProcessing
             m_vOwnerLevel = ownerLevel;
             m_vVisitorLevel = visitorLevel;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -32,7 +42,7 @@ namespace UCS.PacketProcessing
             data.AddRange(ch.Encode());
             data.AddRange(m_vOwnerLevel.GetPlayerAvatar().Encode());
             data.AddRange(m_vVisitorLevel.GetPlayerAvatar().Encode());
-            data.AddRange(new byte[] {0x00, 0x00, 0x00, 0x03, 0x00});
+            data.AddRange(new byte[] { 0x00, 0x00, 0x00, 0x03, 0x00 });
             data.AddInt32(200);
             data.AddInt32(100);
             data.AddInt32(0);
@@ -40,5 +50,7 @@ namespace UCS.PacketProcessing
             data.Add(0);
             Encrypt(data.ToArray());
         }
+
+        #endregion Public Methods
     }
 }

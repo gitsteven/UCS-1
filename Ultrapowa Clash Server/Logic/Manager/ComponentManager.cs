@@ -7,9 +7,15 @@ namespace UCS.Logic
 {
     internal class ComponentManager
     {
+        #region Private Fields
+
         private readonly List<List<Component>> m_vComponents;
 
         private readonly Level m_vLevel;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public ComponentManager(Level l)
         {
@@ -18,6 +24,10 @@ namespace UCS.Logic
                 m_vComponents.Add(new List<Component>());
             m_vLevel = l;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public void AddComponent(Component c)
         {
@@ -60,7 +70,7 @@ namespace UCS.Logic
                 foreach (UnitProductionComponent c in components)
                     if (!c.IsSpellForge())
                     {
-                        var level = ((Building) c.GetParent()).GetUpgradeLevel();
+                        var level = ((Building)c.GetParent()).GetUpgradeLevel();
                         if (level > result)
                             result = level;
                     }
@@ -75,7 +85,7 @@ namespace UCS.Logic
                 foreach (UnitProductionComponent c in components)
                     if (c.IsSpellForge())
                     {
-                        var b = (Building) c.GetParent();
+                        var b = (Building)c.GetParent();
                         if (!b.IsConstructing() || b.IsUpgrading())
                         {
                             var level = b.GetUpgradeLevel();
@@ -92,8 +102,8 @@ namespace UCS.Logic
             var components = m_vComponents[0];
             if (components.Count >= 1)
                 foreach (var c in components)
-                    if (((UnitStorageComponent) c).IsSpellForge == IsSpellForge)
-                        result += ((UnitStorageComponent) c).GetMaxCapacity();
+                    if (((UnitStorageComponent)c).IsSpellForge == IsSpellForge)
+                        result += ((UnitStorageComponent)c).GetMaxCapacity();
             return result;
         }
 
@@ -103,8 +113,8 @@ namespace UCS.Logic
             var components = m_vComponents[0];
             if (components.Count >= 1)
                 foreach (var c in components)
-                    if (((UnitStorageComponent) c).IsSpellForge == IsSpellForge)
-                        result += ((UnitStorageComponent) c).GetUsedCapacity();
+                    if (((UnitStorageComponent)c).IsSpellForge == IsSpellForge)
+                        result += ((UnitStorageComponent)c).GetUsedCapacity();
             return result;
         }
 
@@ -118,10 +128,10 @@ namespace UCS.Logic
                 var resourceCap = 0;
                 for (var j = 0; j < resourceStorageComponentCount; j++)
                 {
-                    var res = (ResourceStorageComponent) GetComponents(6)[j];
+                    var res = (ResourceStorageComponent)GetComponents(6)[j];
                     if (res.IsEnabled())
                         resourceCap += res.GetMax(i);
-                    var resource = (ResourceData) table.GetItemAt(i);
+                    var resource = (ResourceData)table.GetItemAt(i);
                     if (!resource.PremiumCurrency)
                         m_vLevel.GetPlayerAvatar().SetResourceCap(resource, resourceCap);
                 }
@@ -144,5 +154,7 @@ namespace UCS.Logic
         public void Tick()
         {
         }
+
+        #endregion Public Methods
     }
 }

@@ -9,12 +9,22 @@ namespace UCS.PacketProcessing
 {
     internal class GlobalAlliancesMessage : Message
     {
+        #region Private Fields
+
         private List<Alliance> m_vAlliances;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public GlobalAlliancesMessage(Client client) : base(client)
         {
             SetMessageType(24401);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -41,12 +51,14 @@ namespace UCS.PacketProcessing
             data.AddInt32(i - 1);
             data.AddRange(packet1);
 
-            data.AddInt32((int) TimeSpan.FromDays(1).TotalSeconds);
+            data.AddInt32((int)TimeSpan.FromDays(1).TotalSeconds);
             data.AddInt32(3);
             data.AddInt32(50000);
             data.AddInt32(30000);
             data.AddInt32(15000);
             Encrypt(data.ToArray());
         }
+
+        #endregion Public Methods
     }
 }

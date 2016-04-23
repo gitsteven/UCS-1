@@ -9,6 +9,8 @@ namespace UCS.PacketProcessing
     //Packet 14301
     internal class CreateAllianceMessage : Message
     {
+        #region Private Fields
+
         private int m_vAllianceBadgeData;
         private string m_vAllianceDescription;
         private string m_vAllianceName;
@@ -17,10 +19,18 @@ namespace UCS.PacketProcessing
         private int m_vRequiredScore;
         private int m_vWarFrequency;
 
+        #endregion Private Fields
+
+        #region Public Constructors
+
         public CreateAllianceMessage(Client client, BinaryReader br) : base(client, br)
         {
             Decrypt();
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         //00 00 00 04 6E 61 6D 65 00 00 00 0B 64 65 73 63 72 69 70 74 69 6F 6E 5B 00 02 52 00 00 00 01 00 00 07 D0 00 00 00 02 01 E8 48 39
         //00 00 00 04 6E 61 6D 65 00 00 00 0B 64 65 73 63 72 69 70 74 69 6F 6E 00 00 00 00 00 00 00 02 00 00 07 D0 00 00 00 02 01 E8 48 3A
@@ -67,5 +77,7 @@ namespace UCS.PacketProcessing
             //PacketManager.ProcessOutgoingPacket(new OutOfSyncMessage(level.GetClient()));
             // Necessary to display the "Customize" Button.
         }
+
+        #endregion Public Methods
     }
 }

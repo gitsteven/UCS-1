@@ -6,9 +6,15 @@ namespace UCS.PacketProcessing
 {
     internal class TopLocalPlayersMessage : Message
     {
+        #region Public Constructors
+
         public TopLocalPlayersMessage(Client client, BinaryReader br) : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -18,5 +24,7 @@ namespace UCS.PacketProcessing
         {
             PacketManager.ProcessOutgoingPacket(new LocalPlayersMessage(Client));
         }
+
+        #endregion Public Methods
     }
 }

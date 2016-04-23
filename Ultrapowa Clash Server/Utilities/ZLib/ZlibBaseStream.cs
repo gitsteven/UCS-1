@@ -1,33 +1,29 @@
-// ZlibBaseStream.cs
-// ------------------------------------------------------------------
+// ZlibBaseStream.cs ------------------------------------------------------------------
 //
-// Copyright (c) 2009 Dino Chiesa and Microsoft Corporation.
-// All rights reserved.
+// Copyright (c) 2009 Dino Chiesa and Microsoft Corporation. All rights reserved.
 //
 // This code module is part of DotNetZip, a zipfile class library.
 //
 // ------------------------------------------------------------------
 //
-// This code is licensed under the Microsoft Public License.
-// See the file License.txt for the license details.
-// More info on: http://dotnetzip.codeplex.com
+// This code is licensed under the Microsoft Public License. See the file License.txt for the license
+// details. More info on: http://dotnetzip.codeplex.com
 //
 // ------------------------------------------------------------------
 //
-// last saved (in emacs):
-// Time-stamp: <2011-August-06 21:22:38>
+// last saved (in emacs): Time-stamp: <2011-August-06 21:22:38>
 //
 // ------------------------------------------------------------------
 //
-// This module defines the ZlibBaseStream class, which is an intnernal
-// base class for DeflateStream, ZlibStream and GZipStream.
+// This module defines the ZlibBaseStream class, which is an intnernal base class for DeflateStream,
+// ZlibStream and GZipStream.
 //
 // ------------------------------------------------------------------
 
+using Ionic.Crc;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Ionic.Crc;
 
 namespace Ionic.Zlib
 {
@@ -57,6 +53,7 @@ namespace Ionic.Zlib
 
         // workitem 7159
         private readonly CRC32 crc;
+
         protected internal string _GzipFileName;
         protected internal string _GzipComment;
         protected internal DateTime _GzipMtime;
@@ -91,7 +88,6 @@ namespace Ionic.Zlib
             }
         }
 
-
         protected internal bool _wantCompress
         {
             get { return _compressionMode == CompressionMode.Compress; }
@@ -119,7 +115,6 @@ namespace Ionic.Zlib
             }
         }
 
-
         private byte[] workingBuffer
         {
             get
@@ -130,11 +125,9 @@ namespace Ionic.Zlib
             }
         }
 
-
         public override void Write(byte[] buffer, int offset, int count)
         {
-            // workitem 7159
-            // calculate the CRC on the unccompressed data  (before writing)
+            // workitem 7159 calculate the CRC on the unccompressed data (before writing)
             if (crc != null)
                 crc.SlurpBlock(buffer, offset, count);
 
@@ -172,7 +165,6 @@ namespace Ionic.Zlib
                     done = _z.AvailableBytesIn == 8 && _z.AvailableBytesOut != 0;
             } while (!done);
         }
-
 
         private void finish()
         {
@@ -216,10 +208,10 @@ namespace Ionic.Zlib
                 {
                     if (_wantCompress)
                     {
-                        // Emit the GZIP trailer: CRC32 and  size mod 2^32
+                        // Emit the GZIP trailer: CRC32 and size mod 2^32
                         var c1 = crc.Crc32Result;
                         _stream.Write(BitConverter.GetBytes(c1), 0, 4);
-                        var c2 = (int) (crc.TotalBytesRead & 0x00000000FFFFFFFF);
+                        var c2 = (int)(crc.TotalBytesRead & 0x00000000FFFFFFFF);
                         _stream.Write(BitConverter.GetBytes(c2), 0, 4);
                     }
                     else
@@ -239,8 +231,7 @@ namespace Ionic.Zlib
                         if (_z.TotalBytesOut == 0L)
                             return;
 
-                        // Read and potentially verify the GZIP trailer:
-                        // CRC32 and size mod 2^32
+                        // Read and potentially verify the GZIP trailer: CRC32 and size mod 2^32
                         var trailer = new byte[8];
 
                         // workitems 8679 & 12554
@@ -267,7 +258,7 @@ namespace Ionic.Zlib
                         var crc32_expected = BitConverter.ToInt32(trailer, 0);
                         var crc32_actual = crc.Crc32Result;
                         var isize_expected = BitConverter.ToInt32(trailer, 4);
-                        var isize_actual = (int) (_z.TotalBytesOut & 0x00000000FFFFFFFF);
+                        var isize_actual = (int)(_z.TotalBytesOut & 0x00000000FFFFFFFF);
 
                         if (crc32_actual != crc32_expected)
                             throw new ZlibException(
@@ -287,7 +278,6 @@ namespace Ionic.Zlib
             }
         }
 
-
         private void end()
         {
             if (z == null)
@@ -302,7 +292,6 @@ namespace Ionic.Zlib
             }
             _z = null;
         }
-
 
         public override void Close()
         {
@@ -335,7 +324,6 @@ namespace Ionic.Zlib
             _stream.SetLength(value);
         }
 
-
 #if NOT
         public int Read()
         {
@@ -349,7 +337,6 @@ namespace Ionic.Zlib
 #endif
 
         private bool nomoreinput;
-
 
         private string ReadZeroTerminatedString()
         {
@@ -369,7 +356,6 @@ namespace Ionic.Zlib
             var a = list.ToArray();
             return GZipStream.iso8859dash1.GetString(a, 0, a.Length);
         }
-
 
         private int _ReadAndValidateGzipHeader()
         {
@@ -397,7 +383,7 @@ namespace Ionic.Zlib
                 n = _stream.Read(header, 0, 2); // 2-byte length field
                 totalBytesRead += n;
 
-                var extraLength = (short) (header[0] + header[1]*256);
+                var extraLength = (short)(header[0] + header[1] * 256);
                 var extra = new byte[extraLength];
                 n = _stream.Read(extra, 0, extra.Length);
                 if (n != extraLength)
@@ -414,22 +400,19 @@ namespace Ionic.Zlib
             return totalBytesRead;
         }
 
-
         public override int Read(byte[] buffer, int offset, int count)
         {
             // According to MS documentation, any implementation of the IO.Stream.Read function must:
-            // (a) throw an exception if offset & count reference an invalid part of the buffer,
-            //     or if count < 0, or if buffer is null
-            // (b) return 0 only upon EOF, or if count = 0
-            // (c) if not EOF, then return at least 1 byte, up to <count> bytes
+            // (a) throw an exception if offset & count reference an invalid part of the buffer, or
+            // if count < 0, or if buffer is null (b) return 0 only upon EOF, or if count = 0 (c) if
+            // not EOF, then return at least 1 byte, up to <count> bytes
 
             if (_streamMode == StreamMode.Undefined)
             {
                 if (!_stream.CanRead) throw new ZlibException("The stream is not readable.");
                 // for the first read, set up some controls.
                 _streamMode = StreamMode.Reader;
-                // (The first reference to _z goes through the private accessor which
-                // may initialize it.)
+                // (The first reference to _z goes through the private accessor which may initialize it.)
                 z.AvailableBytesIn = 0;
                 if (_flavor == ZlibStreamFlavor.GZIP)
                 {
@@ -457,14 +440,13 @@ namespace Ionic.Zlib
             _z.NextOut = offset;
             _z.AvailableBytesOut = count;
 
-            // This is necessary in case _workingBuffer has been resized. (new byte[])
-            // (The first reference to _workingBuffer goes through the private accessor which
-            // may initialize it.)
+            // This is necessary in case _workingBuffer has been resized. (new byte[]) (The first
+            // reference to _workingBuffer goes through the private accessor which may initialize it.)
             _z.InputBuffer = workingBuffer;
 
             do
             {
-                // need data in _workingBuffer in order to deflate/inflate.  Here, we check if we have any.
+                // need data in _workingBuffer in order to deflate/inflate. Here, we check if we have any.
                 if ((_z.AvailableBytesIn == 0) && !nomoreinput)
                 {
                     // No data available, so try to Read data from the captive stream.
@@ -488,12 +470,10 @@ namespace Ionic.Zlib
                 if ((nomoreinput || rc == ZlibConstants.Z_STREAM_END) && (_z.AvailableBytesOut == count))
                     break; // nothing more to read
             }
-                //while (_z.AvailableBytesOut == count && rc == ZlibConstants.Z_OK);
+            //while (_z.AvailableBytesOut == count && rc == ZlibConstants.Z_OK);
             while (_z.AvailableBytesOut > 0 && !nomoreinput && rc == ZlibConstants.Z_OK);
 
-
-            // workitem 8557
-            // is there more room in output?
+            // workitem 8557 is there more room in output?
             if (_z.AvailableBytesOut > 0)
             {
                 if (rc == ZlibConstants.Z_OK && _z.AvailableBytesIn == 0)
@@ -507,8 +487,7 @@ namespace Ionic.Zlib
                     // and in compression?
                     if (_wantCompress)
                     {
-                        // no more input data available; therefore we flush to
-                        // try to complete the read
+                        // no more input data available; therefore we flush to try to complete the read
                         rc = _z.Deflate(FlushType.Finish);
 
                         if (rc != ZlibConstants.Z_OK && rc != ZlibConstants.Z_STREAM_END)
@@ -516,7 +495,6 @@ namespace Ionic.Zlib
                     }
                 }
             }
-
 
             rc = count - _z.AvailableBytesOut;
 
@@ -526,7 +504,6 @@ namespace Ionic.Zlib
 
             return rc;
         }
-
 
         public override bool CanRead
         {
@@ -560,7 +537,6 @@ namespace Ionic.Zlib
             Reader,
             Undefined
         }
-
 
         public static void CompressString(string s, Stream compressor)
         {

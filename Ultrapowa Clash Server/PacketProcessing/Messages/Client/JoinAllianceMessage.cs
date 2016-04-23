@@ -9,12 +9,22 @@ namespace UCS.PacketProcessing
     //Packet 14305
     internal class JoinAllianceMessage : Message
     {
+        #region Private Fields
+
         private long m_vAllianceId;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public JoinAllianceMessage(Client client, BinaryReader br) : base(client, br)
         {
             Decrypt();
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -46,5 +56,7 @@ namespace UCS.PacketProcessing
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

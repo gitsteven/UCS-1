@@ -5,7 +5,13 @@ namespace UCS.PacketProcessing
     //Commande 0x0212
     internal class SpeedUpHeroHealthCommand : Command
     {
+        #region Private Fields
+
         private int m_vBuildingId;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public SpeedUpHeroHealthCommand(BinaryReader br)
         {
@@ -14,5 +20,7 @@ namespace UCS.PacketProcessing
             br.ReadInt32WithEndian();
             */
         }
+
+        #endregion Public Constructors
     }
 }

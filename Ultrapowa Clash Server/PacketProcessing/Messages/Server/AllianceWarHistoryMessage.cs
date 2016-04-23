@@ -6,10 +6,16 @@ namespace UCS.PacketProcessing
 {
     internal class AllianceWarHistoryMessage : Message
     {
+        #region Public Constructors
+
         public AllianceWarHistoryMessage(Client client) : base(client)
         {
             SetMessageType(24338);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -42,11 +48,13 @@ namespace UCS.PacketProcessing
 
             data.AddInt32(1); // War Won Count
 
-            data.AddRange(new byte[] {0x0A});
-            data.AddInt32((int) TimeSpan.FromDays(1).TotalSeconds);
-            data.AddInt64((int) (TimeSpan.FromDays(1).TotalSeconds - TimeSpan.FromDays(0.5).TotalSeconds));
+            data.AddRange(new byte[] { 0x0A });
+            data.AddInt32((int)TimeSpan.FromDays(1).TotalSeconds);
+            data.AddInt64((int)(TimeSpan.FromDays(1).TotalSeconds - TimeSpan.FromDays(0.5).TotalSeconds));
 
             Encrypt(data.ToArray());
         }
+
+        #endregion Public Methods
     }
 }

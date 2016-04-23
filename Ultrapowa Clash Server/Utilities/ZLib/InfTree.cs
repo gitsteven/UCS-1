@@ -1,64 +1,55 @@
-// Inftree.cs
-// ------------------------------------------------------------------
+// Inftree.cs ------------------------------------------------------------------
 //
-// Copyright (c) 2009 Dino Chiesa and Microsoft Corporation.  
-// All rights reserved.
+// Copyright (c) 2009 Dino Chiesa and Microsoft Corporation. All rights reserved.
 //
 // This code module is part of DotNetZip, a zipfile class library.
 //
 // ------------------------------------------------------------------
 //
-// This code is licensed under the Microsoft Public License. 
-// See the file License.txt for the license details.
-// More info on: http://dotnetzip.codeplex.com
+// This code is licensed under the Microsoft Public License. See the file License.txt for the license
+// details. More info on: http://dotnetzip.codeplex.com
 //
 // ------------------------------------------------------------------
 //
-// last saved (in emacs): 
-// Time-stamp: <2009-October-28 12:43:54>
+// last saved (in emacs): Time-stamp: <2009-October-28 12:43:54>
 //
 // ------------------------------------------------------------------
 //
-// This module defines classes used in  decompression. This code is derived
-// from the jzlib implementation of zlib. In keeping with the license for jzlib, 
-// the copyright to that code is below.
+// This module defines classes used in decompression. This code is derived from the jzlib
+// implementation of zlib. In keeping with the license for jzlib, the copyright to that code is below.
 //
 // ------------------------------------------------------------------
-// 
+//
 // Copyright (c) 2000,2001,2002,2003 ymnk, JCraft,Inc. All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are met:
-// 
-// 1. Redistributions of source code must retain the above copyright notice,
-// this list of conditions and the following disclaimer.
-// 
-// 2. Redistributions in binary form must reproduce the above copyright 
-// notice, this list of conditions and the following disclaimer in 
-// the documentation and/or other materials provided with the distribution.
-// 
-// 3. The names of the authors may not be used to endorse or promote products
-// derived from this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
-// INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
-// FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL JCRAFT,
-// INC. OR ANY CONTRIBUTORS TO THIS SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT,
-// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
-// OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-// NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-// EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
-// -----------------------------------------------------------------------
 //
-// This program is based on zlib-1.1.3; credit to authors
-// Jean-loup Gailly(jloup@gzip.org) and Mark Adler(madler@alumni.caltech.edu)
-// and contributors of zlib.
+// Redistribution and use in source and binary forms, with or without modification, are permitted
+// provided that the following conditions are met:
+//
+// 1. Redistributions of source code must retain the above copyright notice, this list of conditions
+// and the following disclaimer.
+//
+// 2. Redistributions in binary form must reproduce the above copyright notice, this list of
+// conditions and the following disclaimer in the documentation and/or other materials provided with
+// the distribution.
+//
+// 3. The names of the authors may not be used to endorse or promote products derived from this
+// software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+// DISCLAIMED. IN NO EVENT SHALL JCRAFT, INC. OR ANY CONTRIBUTORS TO THIS SOFTWARE BE LIABLE FOR ANY
+// DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+// BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+// LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 // -----------------------------------------------------------------------
-
+//
+// This program is based on zlib-1.1.3; credit to authors Jean-loup Gailly(jloup@gzip.org) and Mark
+// Adler(madler@alumni.caltech.edu) and contributors of zlib.
+//
+// -----------------------------------------------------------------------
 
 using System;
 
@@ -66,23 +57,52 @@ namespace Ionic.Zlib
 {
     internal sealed class InfTree
     {
-        private const int MANY = 1440;
-
-        private const int Z_OK = 0;
-        private const int Z_STREAM_END = 1;
-        private const int Z_NEED_DICT = 2;
-        private const int Z_ERRNO = -1;
-        private const int Z_STREAM_ERROR = -2;
-        private const int Z_DATA_ERROR = -3;
-        private const int Z_MEM_ERROR = -4;
-        private const int Z_BUF_ERROR = -5;
-        private const int Z_VERSION_ERROR = -6;
-
-        internal const int fixed_bl = 9;
-        internal const int fixed_bd = 5;
+        #region Internal Fields
 
         // If BMAX needs to be larger than 16, then h and x[] should be uLong.
-        internal const int BMAX = 15; // maximum bit length of any code
+        internal const int BMAX = 15;
+
+        internal const int fixed_bd = 5;
+        internal const int fixed_bl = 9;
+
+        //UPGRADE_NOTE: Final was removed from the declaration of 'cpdext'. "ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?index='!DefaultContextWindowIndex'&keyword='jlca1003'"
+        internal static readonly int[] cpdext =
+        {
+            0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10,
+            10, 11, 11, 12, 12, 13, 13
+        };
+
+        //UPGRADE_NOTE: Final was removed from the declaration of 'cpdist'. "ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?index='!DefaultContextWindowIndex'&keyword='jlca1003'"
+        internal static readonly int[] cpdist =
+        {
+            1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385,
+            513, 769, 1025, 1537, 2049, 3073, 4097, 6145, 8193, 12289, 16385, 24577
+        };
+
+        // Tables for deflate from PKZIP's appnote.txt.
+        //UPGRADE_NOTE: Final was removed from the declaration of 'cplens'. "ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?index='!DefaultContextWindowIndex'&keyword='jlca1003'"
+        internal static readonly int[] cplens =
+        {
+            3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59,
+            67, 83, 99, 115, 131, 163, 195, 227, 258, 0, 0
+        };
+
+        // see note #13 above about 258
+        //UPGRADE_NOTE: Final was removed from the declaration of 'cplext'. "ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?index='!DefaultContextWindowIndex'&keyword='jlca1003'"
+        internal static readonly int[] cplext =
+        {
+            0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4,
+            5, 5, 5, 5, 0, 112, 112
+        };
+
+        //UPGRADE_NOTE: Final was removed from the declaration of 'fixed_td'. "ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?index='!DefaultContextWindowIndex'&keyword='jlca1003'"
+        internal static readonly int[] fixed_td =
+        {
+            80, 5, 1, 87, 5, 257, 83, 5, 17, 91, 5, 4097, 81, 5, 5, 89, 5, 1025,
+            85, 5, 65, 93, 5, 16385, 80, 5, 3, 88, 5, 513, 84, 5, 33, 92, 5, 8193, 82, 5, 9, 90, 5, 2049, 86, 5, 129,
+            192, 5, 24577, 80, 5, 2, 87, 5, 385, 83, 5, 25, 91, 5, 6145, 81, 5, 7, 89, 5, 1537, 85, 5, 97, 93, 5, 24577,
+            80, 5, 4, 88, 5, 769, 84, 5, 49, 92, 5, 12289, 82, 5, 13, 90, 5, 3073, 86, 5, 193, 192, 5, 24577
+        };
 
         //UPGRADE_NOTE: Final was removed from the declaration of 'fixed_tl'. "ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?index='!DefaultContextWindowIndex'&keyword='jlca1003'"
         internal static readonly int[] fixed_tl =
@@ -140,61 +160,135 @@ namespace Ionic.Zlib
             7, 27, 0, 8, 111, 0, 8, 47, 0, 9, 191, 0, 8, 15, 0, 8, 143, 0, 8, 79, 0, 9, 255
         };
 
-        //UPGRADE_NOTE: Final was removed from the declaration of 'fixed_td'. "ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?index='!DefaultContextWindowIndex'&keyword='jlca1003'"
-        internal static readonly int[] fixed_td =
+        // maximum bit length of any code
+        internal int[] c;
+
+        internal int[] hn;
+
+        // hufts used in space
+        internal int[] r;
+
+        // table entry for structure assignment
+        internal int[] u;
+
+        // table stack
+        internal int[] v;
+
+        // work area for huft_build
+        internal int[] x;
+
+        #endregion Internal Fields
+
+        #region Private Fields
+
+        private const int MANY = 1440;
+
+        private const int Z_BUF_ERROR = -5;
+        private const int Z_DATA_ERROR = -3;
+        private const int Z_ERRNO = -1;
+        private const int Z_MEM_ERROR = -4;
+        private const int Z_NEED_DICT = 2;
+        private const int Z_OK = 0;
+        private const int Z_STREAM_END = 1;
+        private const int Z_STREAM_ERROR = -2;
+        private const int Z_VERSION_ERROR = -6;
+
+        #endregion Private Fields
+
+        // bit length count table
+
+        // bit offsets, then code stack
+
+        #region Internal Methods
+
+        internal static int inflate_trees_fixed(int[] bl, int[] bd, int[][] tl, int[][] td, ZlibCodec z)
         {
-            80, 5, 1, 87, 5, 257, 83, 5, 17, 91, 5, 4097, 81, 5, 5, 89, 5, 1025,
-            85, 5, 65, 93, 5, 16385, 80, 5, 3, 88, 5, 513, 84, 5, 33, 92, 5, 8193, 82, 5, 9, 90, 5, 2049, 86, 5, 129,
-            192, 5, 24577, 80, 5, 2, 87, 5, 385, 83, 5, 25, 91, 5, 6145, 81, 5, 7, 89, 5, 1537, 85, 5, 97, 93, 5, 24577,
-            80, 5, 4, 88, 5, 769, 84, 5, 49, 92, 5, 12289, 82, 5, 13, 90, 5, 3073, 86, 5, 193, 192, 5, 24577
-        };
+            bl[0] = fixed_bl;
+            bd[0] = fixed_bd;
+            tl[0] = fixed_tl;
+            td[0] = fixed_td;
+            return Z_OK;
+        }
 
-        // Tables for deflate from PKZIP's appnote.txt.
-        //UPGRADE_NOTE: Final was removed from the declaration of 'cplens'. "ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?index='!DefaultContextWindowIndex'&keyword='jlca1003'"
-        internal static readonly int[] cplens =
+        internal int inflate_trees_bits(int[] c, int[] bb, int[] tb, int[] hp, ZlibCodec z)
         {
-            3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59,
-            67, 83, 99, 115, 131, 163, 195, 227, 258, 0, 0
-        };
+            int result;
+            initWorkArea(19);
+            hn[0] = 0;
+            result = huft_build(c, 0, 19, 19, null, null, tb, bb, hp, hn, v);
 
-        // see note #13 above about 258
-        //UPGRADE_NOTE: Final was removed from the declaration of 'cplext'. "ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?index='!DefaultContextWindowIndex'&keyword='jlca1003'"
-        internal static readonly int[] cplext =
+            if (result == Z_DATA_ERROR)
+            {
+                z.Message = "oversubscribed dynamic bit lengths tree";
+            }
+            else if (result == Z_BUF_ERROR || bb[0] == 0)
+            {
+                z.Message = "incomplete dynamic bit lengths tree";
+                result = Z_DATA_ERROR;
+            }
+            return result;
+        }
+
+        internal int inflate_trees_dynamic(int nl, int nd, int[] c, int[] bl, int[] bd, int[] tl, int[] td, int[] hp,
+            ZlibCodec z)
         {
-            0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4,
-            5, 5, 5, 5, 0, 112, 112
-        };
+            int result;
 
-        //UPGRADE_NOTE: Final was removed from the declaration of 'cpdist'. "ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?index='!DefaultContextWindowIndex'&keyword='jlca1003'"
-        internal static readonly int[] cpdist =
-        {
-            1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385,
-            513, 769, 1025, 1537, 2049, 3073, 4097, 6145, 8193, 12289, 16385, 24577
-        };
+            // build literal/length tree
+            initWorkArea(288);
+            hn[0] = 0;
+            result = huft_build(c, 0, nl, 257, cplens, cplext, tl, bl, hp, hn, v);
+            if (result != Z_OK || bl[0] == 0)
+            {
+                if (result == Z_DATA_ERROR)
+                {
+                    z.Message = "oversubscribed literal/length tree";
+                }
+                else if (result != Z_MEM_ERROR)
+                {
+                    z.Message = "incomplete literal/length tree";
+                    result = Z_DATA_ERROR;
+                }
+                return result;
+            }
 
-        //UPGRADE_NOTE: Final was removed from the declaration of 'cpdext'. "ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?index='!DefaultContextWindowIndex'&keyword='jlca1003'"
-        internal static readonly int[] cpdext =
-        {
-            0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10,
-            10, 11, 11, 12, 12, 13, 13
-        };
+            // build distance tree
+            initWorkArea(288);
+            result = huft_build(c, nl, nd, 0, cpdist, cpdext, td, bd, hp, hn, v);
 
-        internal int[] c; // bit length count table
+            if (result != Z_OK || (bd[0] == 0 && nl > 257))
+            {
+                if (result == Z_DATA_ERROR)
+                {
+                    z.Message = "oversubscribed distance tree";
+                }
+                else if (result == Z_BUF_ERROR)
+                {
+                    z.Message = "incomplete distance tree";
+                    result = Z_DATA_ERROR;
+                }
+                else if (result != Z_MEM_ERROR)
+                {
+                    z.Message = "empty distance tree with lengths";
+                    result = Z_DATA_ERROR;
+                }
+                return result;
+            }
 
-        internal int[] hn; // hufts used in space
-        internal int[] r; // table entry for structure assignment
-        internal int[] u; // table stack
-        internal int[] v; // work area for huft_build 
-        internal int[] x; // bit offsets, then code stack
+            return Z_OK;
+        }
+
+        #endregion Internal Methods
+
+        #region Private Methods
 
         private int huft_build(int[] b, int bindex, int n, int s, int[] d, int[] e, int[] t, int[] m, int[] hp, int[] hn,
-            int[] v)
+                                    int[] v)
         {
-            // Given a list of code lengths and a maximum table size, make a set of
-            // tables to decode that set of codes.  Return Z_OK on success, Z_BUF_ERROR
-            // if the given code set is incomplete (the tables are still built in this
-            // case), Z_DATA_ERROR if the input is invalid (an over-subscribed set of
-            // lengths), or Z_MEM_ERROR if not enough memory.
+            // Given a list of code lengths and a maximum table size, make a set of tables to decode
+            // that set of codes. Return Z_OK on success, Z_BUF_ERROR if the given code set is
+            // incomplete (the tables are still built in this case), Z_DATA_ERROR if the input is
+            // invalid (an over-subscribed set of lengths), or Z_MEM_ERROR if not enough memory.
 
             int a; // counter for codes of length k
             int f; // i repeats in table every f entries
@@ -307,8 +401,8 @@ namespace Ionic.Zlib
                 a = c[k];
                 while (a-- != 0)
                 {
-                    // here i is the Huffman code of length k bits for value *p
-                    // make tables up to required level
+                    // here i is the Huffman code of length k bits for value *p make tables up to
+                    // required level
                     while (k > w + l)
                     {
                         h++;
@@ -318,8 +412,7 @@ namespace Ionic.Zlib
                         z = z > l ? l : z; // table size upper limit
                         if ((f = 1 << (j = k - w)) > a + 1)
                         {
-                            // try a k-w bit table
-                            // too few codes for k-w bit table
+                            // try a k-w bit table too few codes for k-w bit table
                             f -= a + 1; // deduct codes from patterns left
                             xp = k;
                             if (j < z)
@@ -348,11 +441,11 @@ namespace Ionic.Zlib
                         if (h != 0)
                         {
                             x[h] = i; // save pattern for backing up
-                            r[0] = (sbyte) j; // bits in this table
-                            r[1] = (sbyte) l; // bits to dump before this table
+                            r[0] = (sbyte)j; // bits in this table
+                            r[1] = (sbyte)l; // bits to dump before this table
                             j = SharedUtils.URShift(i, w - l);
                             r[2] = q - u[h - 1] - j; // offset to this table
-                            Array.Copy(r, 0, hp, (u[h - 1] + j)*3, 3); // connect to last table
+                            Array.Copy(r, 0, hp, (u[h - 1] + j) * 3, 3); // connect to last table
                         }
                         else
                         {
@@ -361,19 +454,19 @@ namespace Ionic.Zlib
                     }
 
                     // set up table entry in r
-                    r[1] = (sbyte) (k - w);
+                    r[1] = (sbyte)(k - w);
                     if (p >= n)
                     {
                         r[0] = 128 + 64; // out of values--invalid code
                     }
                     else if (v[p] < s)
                     {
-                        r[0] = (sbyte) (v[p] < 256 ? 0 : 32 + 64); // 256 is end-of-block
+                        r[0] = (sbyte)(v[p] < 256 ? 0 : 32 + 64); // 256 is end-of-block
                         r[2] = v[p++]; // simple code is just the value
                     }
                     else
                     {
-                        r[0] = (sbyte) (e[v[p] - s] + 16 + 64); // non-simple--look up in lists
+                        r[0] = (sbyte)(e[v[p] - s] + 16 + 64); // non-simple--look up in lists
                         r[2] = d[v[p++] - s];
                     }
 
@@ -381,7 +474,7 @@ namespace Ionic.Zlib
                     f = 1 << (k - w);
                     for (j = SharedUtils.URShift(i, w); j < z; j += f)
                     {
-                        Array.Copy(r, 0, hp, (q + j)*3, 3);
+                        Array.Copy(r, 0, hp, (q + j) * 3, 3);
                     }
 
                     // backwards increment the k-bit code i
@@ -403,83 +496,6 @@ namespace Ionic.Zlib
             }
             // Return Z_BUF_ERROR if we were given an incomplete table
             return y != 0 && g != 1 ? Z_BUF_ERROR : Z_OK;
-        }
-
-        internal int inflate_trees_bits(int[] c, int[] bb, int[] tb, int[] hp, ZlibCodec z)
-        {
-            int result;
-            initWorkArea(19);
-            hn[0] = 0;
-            result = huft_build(c, 0, 19, 19, null, null, tb, bb, hp, hn, v);
-
-            if (result == Z_DATA_ERROR)
-            {
-                z.Message = "oversubscribed dynamic bit lengths tree";
-            }
-            else if (result == Z_BUF_ERROR || bb[0] == 0)
-            {
-                z.Message = "incomplete dynamic bit lengths tree";
-                result = Z_DATA_ERROR;
-            }
-            return result;
-        }
-
-        internal int inflate_trees_dynamic(int nl, int nd, int[] c, int[] bl, int[] bd, int[] tl, int[] td, int[] hp,
-            ZlibCodec z)
-        {
-            int result;
-
-            // build literal/length tree
-            initWorkArea(288);
-            hn[0] = 0;
-            result = huft_build(c, 0, nl, 257, cplens, cplext, tl, bl, hp, hn, v);
-            if (result != Z_OK || bl[0] == 0)
-            {
-                if (result == Z_DATA_ERROR)
-                {
-                    z.Message = "oversubscribed literal/length tree";
-                }
-                else if (result != Z_MEM_ERROR)
-                {
-                    z.Message = "incomplete literal/length tree";
-                    result = Z_DATA_ERROR;
-                }
-                return result;
-            }
-
-            // build distance tree
-            initWorkArea(288);
-            result = huft_build(c, nl, nd, 0, cpdist, cpdext, td, bd, hp, hn, v);
-
-            if (result != Z_OK || (bd[0] == 0 && nl > 257))
-            {
-                if (result == Z_DATA_ERROR)
-                {
-                    z.Message = "oversubscribed distance tree";
-                }
-                else if (result == Z_BUF_ERROR)
-                {
-                    z.Message = "incomplete distance tree";
-                    result = Z_DATA_ERROR;
-                }
-                else if (result != Z_MEM_ERROR)
-                {
-                    z.Message = "empty distance tree with lengths";
-                    result = Z_DATA_ERROR;
-                }
-                return result;
-            }
-
-            return Z_OK;
-        }
-
-        internal static int inflate_trees_fixed(int[] bl, int[] bd, int[][] tl, int[][] td, ZlibCodec z)
-        {
-            bl[0] = fixed_bl;
-            bd[0] = fixed_bd;
-            tl[0] = fixed_tl;
-            td[0] = fixed_td;
-            return Z_OK;
         }
 
         private void initWorkArea(int vsize)
@@ -512,5 +528,7 @@ namespace Ionic.Zlib
                 Array.Clear(x, 0, BMAX + 1);
             }
         }
+
+        #endregion Private Methods
     }
 }

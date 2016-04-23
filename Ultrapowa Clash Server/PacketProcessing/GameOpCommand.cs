@@ -5,16 +5,13 @@ namespace UCS.PacketProcessing
 {
     internal class GameOpCommand
     {
+        #region Private Fields
+
         private byte m_vRequiredAccountPrivileges;
 
-        public virtual void Execute(Level level)
-        {
-        }
+        #endregion Private Fields
 
-        public byte GetRequiredAccountPrivileges()
-        {
-            return m_vRequiredAccountPrivileges;
-        }
+        #region Public Methods
 
         public static void SendCommandFailedMessage(Client c)
         {
@@ -26,9 +23,20 @@ namespace UCS.PacketProcessing
             PacketManager.ProcessOutgoingPacket(p);
         }
 
+        public virtual void Execute(Level level)
+        {
+        }
+
+        public byte GetRequiredAccountPrivileges()
+        {
+            return m_vRequiredAccountPrivileges;
+        }
+
         public void SetRequiredAccountPrivileges(byte level)
         {
             m_vRequiredAccountPrivileges = level;
         }
+
+        #endregion Public Methods
     }
 }

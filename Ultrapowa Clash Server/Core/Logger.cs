@@ -7,12 +7,18 @@ namespace UCS.Core
 {
     internal static class Logger
     {
+        #region Private Fields
+
         private static readonly object m_vSyncObject = new object();
         private static readonly TextWriter m_vTextWriter;
         private static int m_vLogLevel;
 
+        #endregion Private Fields
+
+        #region Public Constructors
+
         /// <summary>
-        ///     The launcher of the Logger class.
+        /// The launcher of the Logger class.
         /// </summary>
         static Logger()
         {
@@ -21,14 +27,9 @@ namespace UCS.Core
             m_vLogLevel = 1;
         }
 
-        /// <summary>
-        ///     This function set the logging level of the logger.
-        /// </summary>
-        /// <param name="level">Enum : 1, 4, 5.</param>
-        public static void SetLogLevel(int level)
-        {
-            m_vLogLevel = level;
-        }
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public static int GetLogLevel()
         {
@@ -36,7 +37,16 @@ namespace UCS.Core
         }
 
         /// <summary>
-        ///     This function write the specific text to the actually logging file.
+        /// This function set the logging level of the logger.
+        /// </summary>
+        /// <param name="level">Enum : 1, 4, 5.</param>
+        public static void SetLogLevel(int level)
+        {
+            m_vLogLevel = level;
+        }
+
+        /// <summary>
+        /// This function write the specific text to the actually logging file.
         /// </summary>
         /// <param name="p">The message/packet.</param>
         /// <param name="prefix">The prefix of the log.</param>
@@ -66,7 +76,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        ///     This function write the specific string in the logging file.
+        /// This function write the specific string in the logging file.
         /// </summary>
         /// <param name="s">The string to add.</param>
         /// <param name="prefix">The prefix of the log.</param>
@@ -88,5 +98,7 @@ namespace UCS.Core
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

@@ -1,23 +1,39 @@
-using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using UCS.PacketProcessing;
 
 namespace UCS.Logic
 {
     internal class Level
     {
+        #region Public Fields
+
+        public GameObjectManager GameObjectManager;
+        public WorkerManager WorkerManager;
+
+        #endregion Public Fields
+
+        #region Private Fields
+
         private readonly ClientAvatar m_vClientAvatar;
-        public GameObjectManager GameObjectManager; //a1 + 44
+
+        //a1 + 44
         private byte m_vAccountPrivileges;
+
         private byte m_vAccountStatus;
         private Client m_vClient;
         private string m_vIPAddress;
-        private DateTime m_vTime; //a1 + 40
-        public WorkerManager WorkerManager;
+        private DateTime m_vTime;
+
+        #endregion Private Fields
+
+        //a1 + 40
         //MissionManager
         //AchievementManager
         //CooldownManager
+
+        #region Public Constructors
 
         public Level()
         {
@@ -40,33 +56,13 @@ namespace UCS.Logic
             m_vIPAddress = "0.0.0.0";
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
         public byte GetAccountPrivileges()
         {
             return m_vAccountPrivileges;
-        }
-
-        public string GetIPAddress()
-        {
-            return m_vIPAddress;
-        }
-
-        /*
-        public void BanIP()
-        {
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"banned-ip.txt", true))
-                file.WriteLine(m_vIPAddress);
-        }
-
-        public void DeBanIP()
-        {
-            var oldLines = System.IO.File.ReadAllLines("banned-ip.txt");
-            var newLines = oldLines.Where(line => !line.Contains(m_vIPAddress));
-            System.IO.File.WriteAllLines("banned-ip.txt", newLines);
-        }*/
-
-        public void SetIPAddress(string IP)
-        {
-            m_vIPAddress = IP;
         }
 
         public byte GetAccountStatus()
@@ -88,6 +84,25 @@ namespace UCS.Logic
         {
             return m_vClientAvatar;
         }
+
+        public string GetIPAddress()
+        {
+            return m_vIPAddress;
+        }
+
+        /*
+        public void BanIP()
+        {
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"banned-ip.txt", true))
+                file.WriteLine(m_vIPAddress);
+        }
+
+        public void DeBanIP()
+        {
+            var oldLines = System.IO.File.ReadAllLines("banned-ip.txt");
+            var newLines = oldLines.Where(line => !line.Contains(m_vIPAddress));
+            System.IO.File.WriteAllLines("banned-ip.txt", newLines);
+        }*/
 
         public ClientAvatar GetPlayerAvatar()
         {
@@ -135,6 +150,11 @@ namespace UCS.Logic
             GameObjectManager.Load(JObject.Parse(jsonHome));
         }
 
+        public void SetIPAddress(string IP)
+        {
+            m_vIPAddress = IP;
+        }
+
         public void SetTime(DateTime t)
         {
             m_vTime = t;
@@ -145,5 +165,7 @@ namespace UCS.Logic
             SetTime(DateTime.UtcNow);
             GameObjectManager.Tick();
         }
+
+        #endregion Public Methods
     }
 }

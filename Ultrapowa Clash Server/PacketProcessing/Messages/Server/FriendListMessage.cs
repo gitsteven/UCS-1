@@ -7,10 +7,16 @@ namespace UCS.PacketProcessing
     //Packet 20105
     internal class FriendListMessage : Message
     {
+        #region Public Constructors
+
         public FriendListMessage(Client client) : base(client)
         {
             SetMessageType(20105);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -20,5 +26,7 @@ namespace UCS.PacketProcessing
             pack.AddDataSlots(new List<DataSlot>());
             Encrypt(pack.ToArray());
         }
+
+        #endregion Public Methods
     }
 }

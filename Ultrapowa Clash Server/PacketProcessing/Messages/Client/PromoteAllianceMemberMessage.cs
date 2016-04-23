@@ -11,12 +11,22 @@ namespace UCS.PacketProcessing
 
     internal class PromoteAllianceMemberMessage : Message
     {
+        #region Public Fields
+
         public long m_vId;
         public int m_vRole;
+
+        #endregion Public Fields
+
+        #region Public Constructors
 
         public PromoteAllianceMemberMessage(Client client, BinaryReader br) : base(client, br)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Decode()
         {
@@ -58,5 +68,7 @@ namespace UCS.PacketProcessing
             // PacketManager.ProcessOutgoingPacket(new AllianceDataMessage(Client, alliance));
             PacketManager.ProcessOutgoingPacket(new PromoteAllianceMemberOkMessage(Client, target, this));
         }
+
+        #endregion Public Methods
     }
 }

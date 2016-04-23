@@ -2,11 +2,17 @@
 {
     internal class TownhallLevelData : Data
     {
+        #region Public Constructors
+
         public TownhallLevelData(CSVRow row, DataTable dt)
             : base(row, dt)
         {
             LoadData(this, GetType(), row);
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         public int AirDefense { get; set; }
         public int AirTrap { get; set; }
@@ -48,5 +54,7 @@
         public int Wall { get; set; }
         public int WizardTower { get; set; }
         public int WorkerBuilding { get; set; }
+
+        #endregion Public Properties
     }
 }

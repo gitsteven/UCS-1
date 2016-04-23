@@ -9,7 +9,13 @@ namespace UCS.PacketProcessing
     //Commande 0x201
     internal class SpeedUpTrainingCommand : Command
     {
+        #region Private Fields
+
         private readonly int m_vBuildingId;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public SpeedUpTrainingCommand(BinaryReader br)
         {
@@ -17,7 +23,11 @@ namespace UCS.PacketProcessing
             br.ReadInt32WithEndian();
         }
 
+        #endregion Public Constructors
+
         //00 00 02 01 1D CD 65 10 00 00 38 A6
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -28,7 +38,7 @@ namespace UCS.PacketProcessing
             {
                 if (go.ClassId == 0)
                 {
-                    var b = (Building) go;
+                    var b = (Building)go;
                     var upc = b.GetUnitProductionComponent();
                     if (upc != null)
                     {
@@ -40,7 +50,7 @@ namespace UCS.PacketProcessing
                                 ObjectManager.DataTables.GetGlobals()
                                     .GetGlobalData("SPELL_SPEED_UP_COST_MULTIPLIER")
                                     .NumberValue;
-                            cost = (int) ((cost*(long) multiplier*1374389535) >> 32);
+                            cost = (int)((cost * (long)multiplier * 1374389535) >> 32);
                             cost = Math.Max((cost >> 5) + (cost >> 31), 1);
                         }
                         if (ca.HasEnoughDiamonds(cost))
@@ -55,5 +65,7 @@ namespace UCS.PacketProcessing
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

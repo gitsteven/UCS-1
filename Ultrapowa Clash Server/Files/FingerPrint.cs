@@ -1,13 +1,15 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace UCS.GameFiles
 {
     internal class FingerPrint
     {
+        #region Public Constructors
+
         public FingerPrint(string filePath)
         {
             files = new List<GameFile>();
@@ -25,15 +27,23 @@ namespace UCS.GameFiles
                     "[UCS]    LoadFingerPrint: error! tried to load FingerPrint without file, run gen_patch first");
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public List<GameFile> files { get; set; }
         public string sha { get; set; }
         public string version { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public void LoadFromJson(string jsonString)
         {
             var jsonObject = JObject.Parse(jsonString);
 
-            var jsonFilesArray = (JArray) jsonObject["files"];
+            var jsonFilesArray = (JArray)jsonObject["files"];
             foreach (JObject jsonFile in jsonFilesArray)
             {
                 var gf = new GameFile();
@@ -61,12 +71,20 @@ namespace UCS.GameFiles
 
             return JsonConvert.SerializeObject(jsonData).Replace("/", @"\/");
         }
+
+        #endregion Public Methods
     }
 
     internal class GameFile
     {
+        #region Public Properties
+
         public string file { get; set; }
         public string sha { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public void Load(JObject jsonObject)
         {
@@ -81,5 +99,7 @@ namespace UCS.GameFiles
 
             return JsonConvert.SerializeObject(fingerPrint);
         }
+
+        #endregion Public Methods
     }
 }

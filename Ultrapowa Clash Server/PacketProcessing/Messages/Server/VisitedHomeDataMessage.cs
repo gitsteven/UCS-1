@@ -9,8 +9,14 @@ namespace UCS.PacketProcessing
     //Packet 24113
     internal class VisitedHomeDataMessage : Message
     {
+        #region Private Fields
+
         private readonly Level m_vOwnerLevel;
         private readonly Level m_vVisitorLevel;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public VisitedHomeDataMessage(Client client, Level ownerLevel, Level visitorLevel) : base(client)
         {
@@ -18,6 +24,10 @@ namespace UCS.PacketProcessing
             m_vOwnerLevel = ownerLevel;
             m_vVisitorLevel = visitorLevel;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -42,5 +52,7 @@ namespace UCS.PacketProcessing
             data.Add(0);
             Encrypt(data.ToArray());
         }
+
+        #endregion Public Methods
     }
 }

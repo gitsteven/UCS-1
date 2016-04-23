@@ -5,10 +5,16 @@ namespace UCS.PacketProcessing
 {
     internal class LeaguePlayersMessage : Message
     {
+        #region Public Constructors
+
         public LeaguePlayersMessage(Client client) : base(client)
         {
             SetMessageType(24503);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Encode()
         {
@@ -32,5 +38,7 @@ namespace UCS.PacketProcessing
             data.AddInt32(0);
             Encrypt(data.ToArray());
         }
+
+        #endregion Public Methods
     }
 }

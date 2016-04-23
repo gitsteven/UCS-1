@@ -6,13 +6,23 @@ namespace UCS.PacketProcessing
 {
     internal class BecomeLeaderGameOpCommand : GameOpCommand
     {
+        #region Private Fields
+
         private readonly string[] m_vArgs;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public BecomeLeaderGameOpCommand(string[] args)
         {
             m_vArgs = args;
             SetRequiredAccountPrivileges(5);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -42,5 +52,7 @@ namespace UCS.PacketProcessing
                 PacketManager.ProcessOutgoingPacket(p);
             }
         }
+
+        #endregion Public Methods
     }
 }

@@ -8,16 +8,26 @@ namespace UCS.PacketProcessing
     //Commande 0x020F
     internal class UpgradeHeroCommand : Command
     {
+        #region Public Constructors
+
         public UpgradeHeroCommand(BinaryReader br)
         {
             BuildingId = br.ReadInt32WithEndian();
             Unknown1 = br.ReadUInt32WithEndian();
         }
 
+        #endregion Public Constructors
+
         //00 00 02 0F 1D CD 65 09 00 01 03 63
+
+        #region Public Properties
 
         public int BuildingId { get; set; }
         public uint Unknown1 { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -25,7 +35,7 @@ namespace UCS.PacketProcessing
             var go = level.GameObjectManager.GetGameObjectByID(BuildingId);
             if (go != null)
             {
-                var b = (Building) go;
+                var b = (Building)go;
                 var hbc = b.GetHeroBaseComponent();
                 if (hbc != null)
                 {
@@ -46,5 +56,7 @@ namespace UCS.PacketProcessing
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

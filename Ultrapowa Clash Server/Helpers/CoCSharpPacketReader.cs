@@ -5,13 +5,15 @@ using System.Text;
 namespace UCS.Helpers
 {
     /// <summary>
-    ///     Implements methods to read Clash of Clans packets.
+    /// Implements methods to read Clash of Clans packets.
     /// </summary>
     public class CoCSharpPacketReader : BinaryReader
     {
+        #region Public Constructors
+
         /// <summary>
-        ///     Initializes a new instance of the <see cref="PacketReader" /> class with
-        ///     the specified base <see cref="Stream" />.
+        /// Initializes a new instance of the <see cref="PacketReader"/> class with the specified
+        /// base <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The base stream.</param>
         public CoCSharpPacketReader(Stream stream)
@@ -20,11 +22,17 @@ namespace UCS.Helpers
             // Space
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
         /// <summary>
-        ///     Reads a sequence of bytes from the underlying stream and advances the
-        ///     position within the stream by the number of bytes read.
+        /// Reads a sequence of bytes from the underlying stream and advances the position within the
+        /// stream by the number of bytes read.
         /// </summary>
-        /// <param name="buffer">The byte array which contains the read bytes from the underlying stream.</param>
+        /// <param name="buffer">
+        /// The byte array which contains the read bytes from the underlying stream.
+        /// </param>
         /// <param name="offset">The zero-based index at which to begin reading data.</param>
         /// <param name="count">The number of bytes to read.</param>
         /// <returns>The number of byte read.</returns>
@@ -34,9 +42,9 @@ namespace UCS.Helpers
         }
 
         /// <summary>
-        ///     Reads a <see cref="bool" /> from the underlying stream.
+        /// Reads a <see cref="bool"/> from the underlying stream.
         /// </summary>
-        /// <returns><see cref="bool" /> read.</returns>
+        /// <returns><see cref="bool"/> read.</returns>
         public override bool ReadBoolean()
         {
             var state = ReadByte();
@@ -54,18 +62,18 @@ namespace UCS.Helpers
         }
 
         /// <summary>
-        ///     Reads a <see cref="byte" /> from the underlying stream.
+        /// Reads a <see cref="byte"/> from the underlying stream.
         /// </summary>
-        /// <returns><see cref="byte" /> read.</returns>
+        /// <returns><see cref="byte"/> read.</returns>
         public override byte ReadByte()
         {
-            return (byte) BaseStream.ReadByte();
+            return (byte)BaseStream.ReadByte();
         }
 
         /// <summary>
-        ///     Reads an array of <see cref="byte" /> from the underlying stream.
+        /// Reads an array of <see cref="byte"/> from the underlying stream.
         /// </summary>
-        /// <returns>The array of <see cref="byte" /> read.</returns>
+        /// <returns>The array of <see cref="byte"/> read.</returns>
         public byte[] ReadByteArray()
         {
             var length = ReadInt32();
@@ -81,16 +89,16 @@ namespace UCS.Helpers
         }
 
         /// <summary>
-        ///     Reads an <see cref="short" /> from the underlying stream.
+        /// Reads an <see cref="short"/> from the underlying stream.
         /// </summary>
-        /// <returns><see cref="short" /> read.</returns>
+        /// <returns><see cref="short"/> read.</returns>
         public override short ReadInt16()
         {
-            return (short) ReadUInt16();
+            return (short)ReadUInt16();
         }
 
         /// <summary>
-        ///     Reads a 3 bytes long int. Clash of Clans packets uses this to encode there length.
+        /// Reads a 3 bytes long int. Clash of Clans packets uses this to encode there length.
         /// </summary>
         /// <returns>3 bytes int.</returns>
         public int ReadInt24()
@@ -100,25 +108,25 @@ namespace UCS.Helpers
         }
 
         /// <summary>
-        ///     Reads an <see cref="int" /> from the underlying stream.
+        /// Reads an <see cref="int"/> from the underlying stream.
         /// </summary>
-        /// <returns><see cref="int" /> read.</returns>
+        /// <returns><see cref="int"/> read.</returns>
         public override int ReadInt32()
         {
-            return (int) ReadUInt32();
+            return (int)ReadUInt32();
         }
 
         /// <summary>
-        ///     Reads an <see cref="long" /> from the underlying stream.
+        /// Reads an <see cref="long"/> from the underlying stream.
         /// </summary>
-        /// <returns><see cref="long" /> read.</returns>
+        /// <returns><see cref="long"/> read.</returns>
         public override long ReadInt64()
         {
-            return (long) ReadUInt64();
+            return (long)ReadUInt64();
         }
 
         /// <summary>
-        ///     Reads a <see cref="string" /> from the underlying stream.
+        /// Reads a <see cref="string"/> from the underlying stream.
         /// </summary>
         /// <returns></returns>
         public override string ReadString()
@@ -136,9 +144,9 @@ namespace UCS.Helpers
         }
 
         /// <summary>
-        ///     Reads a <see cref="ushort" /> from the underlying stream.
+        /// Reads a <see cref="ushort"/> from the underlying stream.
         /// </summary>
-        /// <returns><see cref="ushort" /> read.</returns>
+        /// <returns><see cref="ushort"/> read.</returns>
         public override ushort ReadUInt16()
         {
             var buffer = ReadBytesWithEndian(2);
@@ -146,18 +154,18 @@ namespace UCS.Helpers
         }
 
         /// <summary>
-        ///     Reads a 3 bytes long uint.
+        /// Reads a 3 bytes long uint.
         /// </summary>
         /// <returns>3 bytes int.</returns>
         public uint ReadUInt24()
         {
-            return (uint) ReadInt24();
+            return (uint)ReadInt24();
         }
 
         /// <summary>
-        ///     Reads a <see cref="uint" /> from the underlying stream.
+        /// Reads a <see cref="uint"/> from the underlying stream.
         /// </summary>
-        /// <returns><see cref="uint" /> read.</returns>
+        /// <returns><see cref="uint"/> read.</returns>
         public override uint ReadUInt32()
         {
             var buffer = ReadBytesWithEndian(4);
@@ -165,9 +173,9 @@ namespace UCS.Helpers
         }
 
         /// <summary>
-        ///     Reads a <see cref="ulong" /> from the underlying stream.
+        /// Reads a <see cref="ulong"/> from the underlying stream.
         /// </summary>
-        /// <returns><see cref="ulong" /> read.</returns>
+        /// <returns><see cref="ulong"/> read.</returns>
         public override ulong ReadUInt64()
         {
             var buffer = ReadBytesWithEndian(8);
@@ -175,18 +183,22 @@ namespace UCS.Helpers
         }
 
         /// <summary>
-        ///     Sets the position of the underlying stream.
+        /// Sets the position of the underlying stream.
         /// </summary>
         /// <param name="offset">A byte offset relative to the origin parameter.</param>
         /// <param name="origin">
-        ///     A value of type <see cref="SeekOrigin" /> indicating the reference point
-        ///     used to obtain the new position.
+        /// A value of type <see cref="SeekOrigin"/> indicating the reference point used to obtain
+        /// the new position.
         /// </param>
         /// <returns>The new position of the underlying stream.</returns>
         public long Seek(long offset, SeekOrigin origin)
         {
             return BaseStream.Seek(offset, origin);
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
 
         private byte[] ReadBytesWithEndian(int count, bool switchEndian = true)
         {
@@ -196,5 +208,7 @@ namespace UCS.Helpers
                 Array.Reverse(buffer);
             return buffer;
         }
+
+        #endregion Private Methods
     }
 }

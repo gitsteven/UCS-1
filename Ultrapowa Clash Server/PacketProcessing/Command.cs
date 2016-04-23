@@ -5,8 +5,19 @@ namespace UCS.PacketProcessing
 {
     internal class Command
     {
+        #region Public Fields
+
         public const int MaxEmbeddedDepth = 10;
+
+        #endregion Public Fields
+
+        #region Internal Properties
+
         internal int Depth { get; set; }
+
+        #endregion Internal Properties
+
+        #region Public Methods
 
         public virtual byte[] Encode()
         {
@@ -16,5 +27,7 @@ namespace UCS.PacketProcessing
         public virtual void Execute(Level level)
         {
         }
+
+        #endregion Public Methods
     }
 }

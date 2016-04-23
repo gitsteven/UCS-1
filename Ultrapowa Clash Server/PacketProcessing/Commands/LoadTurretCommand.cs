@@ -9,6 +9,8 @@ namespace UCS.PacketProcessing
     //Commande 0x20D
     internal class LoadTurretCommand : Command
     {
+        #region Public Constructors
+
         public LoadTurretCommand(BinaryReader br)
         {
             m_vUnknown1 = br.ReadUInt32WithEndian();
@@ -18,11 +20,19 @@ namespace UCS.PacketProcessing
                 1);
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public int m_vBuildingId { get; set; }
 
         public uint m_vUnknown1 { get; set; }
 
         public uint m_vUnknown2 { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -31,5 +41,7 @@ namespace UCS.PacketProcessing
                 if (go.GetComponent(1, true) != null)
                     ((CombatComponent)go.GetComponent(1, true)).FillAmmo();
         }
+
+        #endregion Public Methods
     }
 }

@@ -5,9 +5,15 @@ namespace UCS.GameFiles
 {
     internal class Globals : DataTable
     {
+        #region Public Constructors
+
         public Globals(CSVTable table, int index) : base(table, index)
         {
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public static int GetDarkElixirDiamondCost(int resourceCount)
         {
@@ -82,11 +88,6 @@ namespace UCS.GameFiles
                 }
             }
             return result;
-        }
-
-        public GlobalData GetGlobalData(string name)
-        {
-            return (GlobalData) GetDataByName(name);
         }
 
         public static int GetResourceDiamondCost(int resourceCount, ResourceData resourceData)
@@ -240,5 +241,12 @@ namespace UCS.GameFiles
             }
             return cost;
         }
+
+        public GlobalData GetGlobalData(string name)
+        {
+            return (GlobalData)GetDataByName(name);
+        }
+
+        #endregion Public Methods
     }
 }

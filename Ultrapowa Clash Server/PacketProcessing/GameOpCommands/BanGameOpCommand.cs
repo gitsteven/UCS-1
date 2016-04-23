@@ -7,13 +7,23 @@ namespace UCS.PacketProcessing
 {
     internal class BanGameOpCommand : GameOpCommand
     {
+        #region Private Fields
+
         private readonly string[] m_vArgs;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public BanGameOpCommand(string[] args)
         {
             m_vArgs = args;
             SetRequiredAccountPrivileges(2);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -58,5 +68,7 @@ namespace UCS.PacketProcessing
                 SendCommandFailedMessage(level.GetClient());
             }
         }
+
+        #endregion Public Methods
     }
 }

@@ -2,25 +2,29 @@
 
 namespace Sodium.Exceptions
 {
-  public class SeedOutOfRangeException : ArgumentOutOfRangeException
-  {
-    public SeedOutOfRangeException()
+    public class SeedOutOfRangeException : ArgumentOutOfRangeException
     {
-    }
+        #region Public Constructors
 
-    public SeedOutOfRangeException(string message)
-      : base(message)
-    {
-    }
+        public SeedOutOfRangeException()
+        {
+        }
 
-    public SeedOutOfRangeException(string message, Exception inner)
-      : base(message, inner)
-    {
-    }
+        public SeedOutOfRangeException(string message)
+          : base(message)
+        {
+        }
 
-    public SeedOutOfRangeException(string paramName, object actualValue, string message)
-      : base(paramName, actualValue, message)
-    {
+        public SeedOutOfRangeException(string message, Exception inner)
+          : base(message, inner)
+        {
+        }
+
+        public SeedOutOfRangeException(string paramName, object actualValue, string message)
+          : base(paramName, actualValue, message)
+        {
+        }
+
+        #endregion Public Constructors
     }
-  }
 }

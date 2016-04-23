@@ -5,6 +5,8 @@ namespace UCS.PacketProcessing
     //Commande 0x207
     internal class MissionProgressCommand : Command
     {
+        #region Public Constructors
+
         public MissionProgressCommand(BinaryReader br)
         {
             /*
@@ -13,7 +15,13 @@ namespace UCS.PacketProcessing
             */
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public uint MissionId { get; set; }
         public uint Unknown1 { get; set; }
+
+        #endregion Public Properties
     }
 }

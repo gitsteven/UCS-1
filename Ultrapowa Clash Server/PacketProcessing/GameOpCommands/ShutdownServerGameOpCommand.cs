@@ -6,13 +6,23 @@ namespace UCS.PacketProcessing
 {
     internal class ShutdownServerGameOpCommand : GameOpCommand
     {
+        #region Private Fields
+
         private string[] m_vArgs;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public ShutdownServerGameOpCommand(string[] args)
         {
             m_vArgs = args;
             SetRequiredAccountPrivileges(4);
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
@@ -30,5 +40,7 @@ namespace UCS.PacketProcessing
                 SendCommandFailedMessage(level.GetClient());
             }
         }
+
+        #endregion Public Methods
     }
 }

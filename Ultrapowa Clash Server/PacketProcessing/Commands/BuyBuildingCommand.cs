@@ -9,6 +9,8 @@ namespace UCS.PacketProcessing
     //Commande 0x1F4
     internal class BuyBuildingCommand : Command
     {
+        #region Public Constructors
+
         public BuyBuildingCommand(BinaryReader br)
         {
             X = br.ReadInt32WithEndian();
@@ -17,17 +19,26 @@ namespace UCS.PacketProcessing
             Unknown1 = br.ReadUInt32WithEndian();
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public int BuildingId { get; set; }
         public uint Unknown1 { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
+
+        #endregion Public Properties
+
         //00 00 2D 7F some client tick
+
+        #region Public Methods
 
         public override void Execute(Level level)
         {
             var ca = level.GetPlayerAvatar();
 
-            var bd = (BuildingData) ObjectManager.DataTables.GetDataById(BuildingId);
+            var bd = (BuildingData)ObjectManager.DataTables.GetDataById(BuildingId);
             var b = new Building(bd, level);
 
             if (ca.HasEnoughResources(bd.GetBuildResource(0), bd.GetBuildCost(0)))
@@ -43,5 +54,7 @@ namespace UCS.PacketProcessing
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }
