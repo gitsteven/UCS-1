@@ -44,7 +44,7 @@ namespace UCS.Network
             try
             {
                 var pl = p.Client.GetLevel();
-                var player = "";
+                var player = "NoNameYet";
                 if (pl != null)
                     player = " (" + pl.GetPlayerAvatar().GetAvatarName() + ")";
                 Debugger.WriteLine("[UCS]    Processing " + p.GetType().Name + player);
