@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using UCS.Core;
 using UCS.Helpers;
 
 namespace UCS.Logic
@@ -230,35 +231,29 @@ namespace UCS.Logic
             m_vAllianceName = jsonObject["alliance_name"].ToObject<string>();
             m_vAllianceBadgeData = jsonObject["alliance_badge"].ToObject<int>();
             m_vAllianceType = jsonObject["alliance_type"].ToObject<int>();
-            if (jsonObject["required_score"] != null)
-                m_vRequiredScore = jsonObject["required_score"].ToObject<int>();
-            // m_vScore = jsonObject["score"].ToObject<int>();
+            m_vRequiredScore = jsonObject["required_score"].ToObject<int>();
+            //m_vScore = jsonObject["score"].ToObject<int>();
             m_vAllianceDescription = jsonObject["description"].ToObject<string>();
             m_vAllianceExperience = jsonObject["alliance_experience"].ToObject<int>();
             m_vAllianceLevel = jsonObject["alliance_level"].ToObject<int>();
-            if (jsonObject["won_wars"] != null)
-                m_vWonWars = jsonObject["won_wars"].ToObject<int>();
-            if (jsonObject["lost_wars"] != null)
-                m_vLostWars = jsonObject["lost_wars"].ToObject<int>();
-            if (jsonObject["draw_wars"] != null)
-                m_vDrawWars = jsonObject["draw_wars"].ToObject<int>();
-            if (jsonObject["war_frequency"] != null)
-                m_vWarFrequency = jsonObject["war_frequency"].ToObject<int>();
-            if (jsonObject["alliance_origin"] != null)
-                m_vAllianceOrigin = jsonObject["alliance_origin"].ToObject<int>();
+            m_vWonWars = jsonObject["won_wars"].ToObject<int>();
+            m_vLostWars = jsonObject["lost_wars"].ToObject<int>();
+            m_vDrawWars = jsonObject["draw_wars"].ToObject<int>();
+            m_vWarFrequency = jsonObject["war_frequency"].ToObject<int>();
+            m_vAllianceOrigin = jsonObject["alliance_origin"].ToObject<int>();
 
             var jsonMembers = (JArray) jsonObject["members"];
             foreach (JObject jsonMember in jsonMembers)
             {
                 var id = jsonMember["avatar_id"].ToObject<long>();
-                var token = UCS.Core.ResourcesManager.GetPlayer(id).GetPlayerAvatar().GetUserToken();
+                var pl = ResourcesManager.GetPlayer(id);
                 var member = new AllianceMemberEntry(id);
-                var scorem = new Level(id, token);
-                m_vScore = m_vScore + scorem.GetPlayerAvatar().GetScore();
+                m_vScore = m_vScore + pl.GetPlayerAvatar().GetScore();
                 member.Load(jsonMember);
                 m_vAllianceMembers.Add(id, member);
             }
-            m_vScore = m_vScore / 2;
+
+            m_vScore = (m_vScore / 2);
 
             var jsonMessages = (JArray) jsonObject["chatMessages"];
             if (jsonMessages != null)

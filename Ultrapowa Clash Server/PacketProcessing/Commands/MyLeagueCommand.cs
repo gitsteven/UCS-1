@@ -10,6 +10,8 @@
  */
 
 using System.IO;
+using UCS.Logic;
+using UCS.Network;
 
 namespace UCS.PacketProcessing
 {
@@ -19,8 +21,13 @@ namespace UCS.PacketProcessing
 
         public MyLeagueCommand(BinaryReader br)
         {
+
         }
 
+        public override void Execute(Level level)
+        {
+            PacketManager.ProcessOutgoingPacket(new LeaguePlayersMessage(level.GetClient()));
+        }
         #endregion Public Constructors
     }
 }

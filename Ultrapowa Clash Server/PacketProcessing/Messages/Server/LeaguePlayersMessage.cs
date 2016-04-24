@@ -47,6 +47,7 @@ namespace UCS.PacketProcessing
             data.AddInt32(0);
             data.AddInt32(0);
             data.AddInt32(0);
+            data.AddInt32(0);
             Encrypt(data.ToArray());
         }
 
