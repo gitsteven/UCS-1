@@ -27,6 +27,7 @@ namespace UCS.PacketProcessing
 
         public string AdvertisingGUID;
         public string AndroidDeviceID;
+        public bool banned;
         public string ClientVersion;
         public int ContentVersion;
         public string DeviceModel;
@@ -40,6 +41,7 @@ namespace UCS.PacketProcessing
         public int MinorVersion;
         public string OpenUDID;
         public string OSVersion;
+        public byte[] PlainText;
         public int Seed;
         public int Unknown;
         public string Unknown1;
@@ -108,35 +110,41 @@ namespace UCS.PacketProcessing
                 PacketManager.ProcessOutgoingPacket(p);
                 return;
             }
-
+            
             var cv = ClientVersion.Split('.');
             if (cv[0] != "8" || cv[1] != "212")
             {
                 var p = new LoginFailedMessage(Client);
                 p.SetErrorCode(8);
-                p.SetUpdateURL(Convert.ToString(ConfigurationManager.AppSettings["UpdateUrl"]));
-                PacketManager.ProcessOutgoingPacket(p);
-                return;
-            }
-
-            if (Convert.ToBoolean(ConfigurationManager.AppSettings["useCustomPatch"]) && MasterHash != ObjectManager.FingerPrint.sha)
-            {
-                var p = new LoginFailedMessage(Client);
-                p.SetErrorCode(7);
-                p.SetResourceFingerprintData(ObjectManager.FingerPrint.SaveToJson());
-                p.SetContentURL(ConfigurationManager.AppSettings["patchingServer"]);
                 p.SetUpdateURL(ConfigurationManager.AppSettings["UpdateUrl"]);
                 PacketManager.ProcessOutgoingPacket(p);
                 return;
             }
 
-            level = ResourcesManager.GetPlayer(UserID);
-            if (level != null && level.GetAccountStatus() == 99)
+            if (Convert.ToBoolean(ConfigurationManager.AppSettings["useCustomPatch"]))
             {
-                var p = new LoginFailedMessage(Client);
-                p.SetErrorCode(11);
-                PacketManager.ProcessOutgoingPacket(p);
-                return;
+                if (MasterHash != ObjectManager.FingerPrint.sha)
+                {
+                    var p = new LoginFailedMessage(Client);
+                    p.SetErrorCode(7);
+                    p.SetResourceFingerprintData(ObjectManager.FingerPrint.SaveToJson());
+                    p.SetContentURL(ConfigurationManager.AppSettings["patchingServer"]);
+                    p.SetUpdateURL(ConfigurationManager.AppSettings["UpdateUrl"]);
+                    PacketManager.ProcessOutgoingPacket(p);
+                    return;
+                }
+            }
+
+            level = ResourcesManager.GetPlayer(UserID);
+            if (level != null)
+            {
+                if (level.GetAccountStatus() == 99)
+                {
+                    var p = new LoginFailedMessage(Client);
+                    p.SetErrorCode(11);
+                    PacketManager.ProcessOutgoingPacket(p);
+                    return;
+                }
             }
             else
             {
@@ -154,7 +162,7 @@ namespace UCS.PacketProcessing
             ResourcesManager.LogPlayerIn(level, Client);
             level.Tick();
             var savedtoken = level.GetPlayerAvatar().GetUserToken();
-            if (!string.IsNullOrEmpty(savedtoken))
+            if (savedtoken != null || savedtoken != string.Empty)
                 level.GetPlayerAvatar().SetToken(UserToken);
             if (level.GetPlayerAvatar().GetUserToken() == UserToken)
             {
@@ -182,7 +190,7 @@ namespace UCS.PacketProcessing
                     level.GetPlayerAvatar().SetAllianceId(0);
                 else
                     PacketManager.ProcessOutgoingPacket(new AllianceStreamMessage(Client, alliance));
-                //PacketManager.ProcessOutgoingPacket(new BookmarkMessage(Client));
+                PacketManager.ProcessOutgoingPacket(new BookmarkMessage(Client));
             }
             else
             {

@@ -48,7 +48,6 @@ namespace UCS.PacketProcessing
         public override void Process(Level level)
         {
             var alliance = ObjectManager.GetAlliance(m_vAllianceId);
-            Console.WriteLine("ID DU CLAN : " + m_vAllianceId);
             if (alliance != null)
                 PacketManager.ProcessOutgoingPacket(new AllianceDataMessage(Client, alliance));
         }

@@ -59,7 +59,7 @@ namespace UCS.PacketProcessing
                     var count = alliance.GetAllianceMembers().Count;
                     var rnd = new Random();
                     var id = rnd.Next(1, count);
-                    while (id == level.GetPlayerAvatar().GetId())
+                    while (id != level.GetPlayerAvatar().GetId())
                         id = rnd.Next(1, count);
                     var loop = 0;
                     foreach (var player in members)

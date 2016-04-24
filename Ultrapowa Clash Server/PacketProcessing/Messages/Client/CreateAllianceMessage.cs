@@ -70,9 +70,7 @@ namespace UCS.PacketProcessing
             alliance.SetAllianceBadgeData(m_vAllianceBadgeData);
             alliance.SetAllianceOrigin(m_vAllianceOrigin);
             alliance.SetWarFrequency(m_vWarFrequency);
-
-            //Set player clan
-            //ObjectManager.OnlinePlayers.TryGetValue(p.Client, out player);
+            
             level.GetPlayerAvatar().SetAllianceId(alliance.GetAllianceId());
             var member = new AllianceMemberEntry(level.GetPlayerAvatar().GetId());
             member.SetRole(2);
@@ -84,9 +82,6 @@ namespace UCS.PacketProcessing
             availableServerCommandMessage.SetCommandId(1);
             availableServerCommandMessage.SetCommand(joinAllianceCommand);
             PacketManager.ProcessOutgoingPacket(availableServerCommandMessage);
-            PacketManager.ProcessOutgoingPacket(new OwnHomeDataMessage(Client, level));
-            //PacketManager.ProcessOutgoingPacket(new OutOfSyncMessage(level.GetClient()));
-            // Necessary to display the "Customize" Button.
         }
 
         #endregion Public Methods
