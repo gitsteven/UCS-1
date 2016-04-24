@@ -131,12 +131,15 @@ namespace UCS.PacketProcessing
             }
 
             level = ResourcesManager.GetPlayer(UserID);
-            if (level != null && level.GetAccountStatus() == 99)
+            if (level != null)
             {
-                var p = new LoginFailedMessage(Client);
-                p.SetErrorCode(11);
-                PacketManager.ProcessOutgoingPacket(p);
-                return;
+                if (level.GetAccountStatus() == 99)
+                {
+                    var p = new LoginFailedMessage(Client);
+                    p.SetErrorCode(11);
+                    PacketManager.ProcessOutgoingPacket(p);
+                    return;
+                }
             }
             else
             {
@@ -154,7 +157,7 @@ namespace UCS.PacketProcessing
             ResourcesManager.LogPlayerIn(level, Client);
             level.Tick();
             var savedtoken = level.GetPlayerAvatar().GetUserToken();
-            if (!string.IsNullOrEmpty(savedtoken))
+            if (string.IsNullOrEmpty(savedtoken))
                 level.GetPlayerAvatar().SetToken(UserToken);
             if (level.GetPlayerAvatar().GetUserToken() == UserToken)
             {

@@ -86,6 +86,7 @@ namespace UCS.PacketProcessing
                             var p = new GlobalChatLineMessage(level.GetClient());
                             p.SetPlayerId(0);
                             p.SetPlayerName("UCS Chat Filter System");
+                            p.SetLeagueId(22);
                             p.SetChatMessage("DETECTED BAD WORD! PLEASE AVOID USING BAD WORDS!");
                             PacketManager.ProcessOutgoingPacket(p);
                             return;
@@ -105,8 +106,6 @@ namespace UCS.PacketProcessing
                             p.SetAlliance(ObjectManager.GetAlliance(level.GetPlayerAvatar().GetAllianceId()));
                             PacketManager.ProcessOutgoingPacket(p);
                         }
-
-                        Console.WriteLine("[UCS][{0}]{1}", level.GetPlayerAvatar().GetAvatarName(), Message);
                     }
                     else
                     {

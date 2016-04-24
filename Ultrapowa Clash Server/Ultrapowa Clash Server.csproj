@@ -264,6 +264,7 @@
     <Compile Include="PacketProcessing\Messages\Client\AskForFriendListMessage.cs" />
     <Compile Include="PacketProcessing\Messages\Client\JoinRequestAlllianceMessage.cs" />
     <Compile Include="PacketProcessing\Messages\Client\RemoveFromBookmark.cs" />
+    <Compile Include="PacketProcessing\Messages\Client\ReplayRequest.cs" />
     <Compile Include="PacketProcessing\Messages\Client\RequestAvatarNameChange.cs" />
     <Compile Include="PacketProcessing\Messages\Client\TakeDecisionJoinRequestMessage.cs" />
     <Compile Include="PacketProcessing\Messages\Client\TopLeaguePlayersMessage.cs" />
@@ -281,6 +282,7 @@
     <Compile Include="PacketProcessing\Messages\Server\LocalPlayersMessage.cs" />
     <Compile Include="PacketProcessing\Messages\Server\PreviousGlobalPlayersMessage.cs" />
     <Compile Include="PacketProcessing\Messages\Server\PromoteAllianceMemberOkMessage.cs" />
+    <Compile Include="PacketProcessing\Messages\Server\ReplayDataMessage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Utilities\ZLib\CRC32.cs" />
     <Compile Include="Utilities\ZLib\Deflate.cs" />

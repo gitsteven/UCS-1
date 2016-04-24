@@ -34,13 +34,13 @@ namespace UCS.PacketProcessing
 
         public JoinAllianceCommand(BinaryReader br)
         {
-            br.ReadInt64WithEndian();
-            br.ReadScString();
-            br.ReadInt32WithEndian();
+            br.ReadInt64();
+            br.ReadString();
+            br.ReadInt32();
             br.ReadByte();
-            br.ReadInt32WithEndian();
-            br.ReadInt32WithEndian();
-            br.ReadInt32WithEndian();
+            br.ReadInt32();
+            br.ReadInt32();
+            br.ReadInt32();
         }
 
         #endregion Public Constructors
