@@ -11,8 +11,10 @@
 
 using System;
 using System.Configuration;
+using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
+using Microsoft.SqlServer.Server;
 using UCS.Core;
 using UCS.Helpers;
 using UCS.Logic;
@@ -51,6 +53,7 @@ namespace UCS.PacketProcessing
         public long UserID;
         public string UserToken;
         public string VendorGUID;
+        public Level level;
 
         #endregion Public Fields
 
@@ -58,6 +61,7 @@ namespace UCS.PacketProcessing
 
         public LoginMessage(Client client, BinaryReader br) : base(client, br)
         {
+
         }
 
         #endregion Public Constructors
@@ -99,13 +103,69 @@ namespace UCS.PacketProcessing
             }
         }
 
-        public override void Process(Level level)
+        public override void Process(Level a)
+        {
+            if (UserID == 0 || string.IsNullOrEmpty(UserToken))
+            {
+                NewUser();
+                return;
+            }
+
+            level = ResourcesManager.GetPlayer(UserID);
+            if (level != null)
+            {
+                if (level.Banned())
+                {
+                    var p = new LoginFailedMessage(Client);
+                    p.SetErrorCode(11);
+                    PacketManager.ProcessOutgoingPacket(p);
+                    return;
+                }
+                if (level.GetPlayerAvatar().GetUserToken() == UserToken)
+                    LogUser();
+                else
+                    NewUser();
+            }
+            else
+                NewUser();
+        }
+
+        private void LogUser()
+        {
+            ResourcesManager.LogPlayerIn(level, Client);
+            level.Tick();
+            var loginOk = new LoginOkMessage(Client);
+            var avatar = level.GetPlayerAvatar();
+            loginOk.SetAccountId(avatar.GetId());
+            loginOk.SetPassToken(avatar.GetUserToken());
+            loginOk.SetServerMajorVersion(MajorVersion);
+            loginOk.SetServerBuild(MinorVersion);
+            loginOk.SetContentVersion(ContentVersion);
+            loginOk.SetServerEnvironment("stage");
+            loginOk.SetDaysSinceStartedPlaying(0);
+            loginOk.SetServerTime(Math.Round(level.GetTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds * 1000).ToString(CultureInfo.InvariantCulture));
+            loginOk.SetAccountCreatedDate("1414003838000");
+            loginOk.SetStartupCooldownSeconds(0);
+            loginOk.SetCountryCode(Language);
+            PacketManager.ProcessOutgoingPacket(loginOk);
+            var alliance = ObjectManager.GetAlliance(level.GetPlayerAvatar().GetAllianceId());
+            PacketManager.ProcessOutgoingPacket(new OwnHomeDataMessage(Client, level));
+
+            if (alliance == null)
+                level.GetPlayerAvatar().SetAllianceId(0);
+            else
+                PacketManager.ProcessOutgoingPacket(new AllianceFullEntryupdateMessage(Client, alliance));
+            PacketManager.ProcessOutgoingPacket(new BookmarkMessage(Client));
+        }
+
+        private void CheckClient()
         {
             if (Convert.ToInt32(ConfigurationManager.AppSettings["maintenanceTimeleft"]) > 0 || Client.CState == 0)
             {
                 var p = new LoginFailedMessage(Client);
                 p.SetErrorCode(10);
                 PacketManager.ProcessOutgoingPacket(p);
+                ResourcesManager.LogPlayerOut(level);
                 return;
             }
 
@@ -116,6 +176,7 @@ namespace UCS.PacketProcessing
                 p.SetErrorCode(8);
                 p.SetUpdateURL(Convert.ToString(ConfigurationManager.AppSettings["UpdateUrl"]));
                 PacketManager.ProcessOutgoingPacket(p);
+                ResourcesManager.LogPlayerOut(level);
                 return;
             }
 
@@ -127,75 +188,24 @@ namespace UCS.PacketProcessing
                 p.SetContentURL(ConfigurationManager.AppSettings["patchingServer"]);
                 p.SetUpdateURL(ConfigurationManager.AppSettings["UpdateUrl"]);
                 PacketManager.ProcessOutgoingPacket(p);
-                return;
-            }
-
-            level = ResourcesManager.GetPlayer(UserID);
-            if (level != null)
-            {
-                if (level.GetAccountStatus() == 99)
-                {
-                    var p = new LoginFailedMessage(Client);
-                    p.SetErrorCode(11);
-                    PacketManager.ProcessOutgoingPacket(p);
-                    return;
-                }
-            }
-            else
-            {
-                level = ObjectManager.CreateAvatar(UserID, UserToken);
-                var tokenSeed = new byte[20];
-                new Random().NextBytes(tokenSeed);
-                using (SHA1 sha = new SHA1CryptoServiceProvider())
-                {
-                    UserToken = BitConverter.ToString(sha.ComputeHash(tokenSeed)).Replace("-", string.Empty);
-                    level.GetPlayerAvatar().SetToken(UserToken);
-                    DatabaseManager.Singelton.Save(level);
-                }
-            }
-
-            ResourcesManager.LogPlayerIn(level, Client);
-            level.Tick();
-            var savedtoken = level.GetPlayerAvatar().GetUserToken();
-            if (string.IsNullOrEmpty(savedtoken))
-                level.GetPlayerAvatar().SetToken(UserToken);
-            if (level.GetPlayerAvatar().GetUserToken() == UserToken)
-            {
-                var loginOk = new LoginOkMessage(Client);
-                var avatar = level.GetPlayerAvatar();
-                loginOk.SetAccountId(avatar.GetId());
-                loginOk.SetPassToken(UserToken);
-                loginOk.SetServerMajorVersion(MajorVersion);
-                loginOk.SetServerBuild(MinorVersion);
-                loginOk.SetContentVersion(ContentVersion);
-                loginOk.SetServerEnvironment("prod");
-                loginOk.SetDaysSinceStartedPlaying(10);
-                loginOk.SetServerTime(Math.Round(level.GetTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds * 1000).ToString());
-                loginOk.SetAccountCreatedDate("1414003838000");
-                loginOk.SetStartupCooldownSeconds(0);
-                loginOk.SetCountryCode("EN");
-                PacketManager.ProcessOutgoingPacket(loginOk);
-
-                if (level.GetAccountPrivileges() >= 3)
-                    level.GetPlayerAvatar().SetLeagueId(22);
-
-                var alliance = ObjectManager.GetAlliance(level.GetPlayerAvatar().GetAllianceId());
-                PacketManager.ProcessOutgoingPacket(new OwnHomeDataMessage(Client, level));
-                if (alliance == null)
-                    level.GetPlayerAvatar().SetAllianceId(0);
-                else
-                    PacketManager.ProcessOutgoingPacket(new AllianceFullEntryupdateMessage(Client, alliance));
-                //PacketManager.ProcessOutgoingPacket(new BookmarkMessage(Client));
-            }
-            else
-            {
-                var p = new LoginFailedMessage(Client);
-                p.SetErrorCode(0);
-                PacketManager.ProcessOutgoingPacket(p);
                 ResourcesManager.LogPlayerOut(level);
             }
         }
 
+        private void NewUser()
+        {
+            level = ObjectManager.CreateAvatar(0, null);
+            if (string.IsNullOrEmpty(UserToken))
+            {
+                var tokenSeed = new byte[20];
+                new Random().NextBytes(tokenSeed);
+                using (SHA1 sha = new SHA1CryptoServiceProvider())
+                UserToken = BitConverter.ToString(sha.ComputeHash(tokenSeed)).Replace("-", string.Empty);
+            }
+            level.GetPlayerAvatar().SetToken(UserToken);
+            DatabaseManager.Singelton.Save(level);
+            LogUser();
+        }
         #endregion Public Methods
     }
 }

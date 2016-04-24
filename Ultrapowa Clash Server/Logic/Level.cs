@@ -76,6 +76,13 @@ namespace UCS.Logic
             return m_vAccountPrivileges;
         }
 
+        public bool Banned()
+        {
+            if (m_vAccountPrivileges > 0)
+                return true;
+            return false;
+        }
+
         public byte GetAccountStatus()
         {
             return m_vAccountStatus;
@@ -100,20 +107,6 @@ namespace UCS.Logic
         {
             return m_vIPAddress;
         }
-
-        /*
-        public void BanIP()
-        {
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"banned-ip.txt", true))
-                file.WriteLine(m_vIPAddress);
-        }
-
-        public void DeBanIP()
-        {
-            var oldLines = System.IO.File.ReadAllLines("banned-ip.txt");
-            var newLines = oldLines.Where(line => !line.Contains(m_vIPAddress));
-            System.IO.File.WriteAllLines("banned-ip.txt", newLines);
-        }*/
 
         public ClientAvatar GetPlayerAvatar()
         {

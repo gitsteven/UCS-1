@@ -9,7 +9,9 @@
  * All Rights Reserved.
  */
 
+using System;
 using System.IO;
+using System.Text;
 using UCS.Core;
 using UCS.Logic;
 using UCS.Network;
@@ -18,17 +20,11 @@ namespace UCS.PacketProcessing
 {
     internal class GetDeviceTokenMessage : Message
     {
-        #region Public Fields
-
-        public int Unknown1;
-        public string UserToken;
-
-        #endregion Public Fields
-
         #region Public Constructors
 
         public GetDeviceTokenMessage(Client client, BinaryReader br) : base(client, br)
         {
+
         }
 
         #endregion Public Constructors
@@ -37,23 +33,12 @@ namespace UCS.PacketProcessing
 
         public override void Decode()
         {
-            using (var br = new BinaryReader(new MemoryStream(GetData())))
-            {
-                UserToken = br.ReadString();
-                Unknown1 = br.ReadInt32();
-            }
+
         }
 
         public override void Process(Level level)
         {
-            var p = new SetDeviceTokenMessage(Client);
-            p.UserToken = UserToken;
-            if (UserToken != null || UserToken != string.Empty)
-            {
-                level.GetPlayerAvatar().SetToken(UserToken);
-                DatabaseManager.Singelton.Save(level);
-            }
-            PacketManager.ProcessOutgoingPacket(p);
+            PacketManager.ProcessOutgoingPacket(new SetDeviceTokenMessage(Client));
         }
 
         #endregion Public Methods

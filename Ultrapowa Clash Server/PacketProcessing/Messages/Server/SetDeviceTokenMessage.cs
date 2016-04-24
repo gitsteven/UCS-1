@@ -11,6 +11,7 @@
 
 using System.Collections.Generic;
 using UCS.Helpers;
+using UCS.Logic;
 
 namespace UCS.PacketProcessing
 {
@@ -22,22 +23,19 @@ namespace UCS.PacketProcessing
         public SetDeviceTokenMessage(Client client) : base(client)
         {
             SetMessageType(20113);
+            level = client.GetLevel();
         }
 
         #endregion Public Constructors
 
-        #region Public Properties
-
-        public string UserToken { get; set; }
-
-        #endregion Public Properties
+        private readonly Level level;
 
         #region Public Methods
 
         public override void Encode()
         {
             var pack = new List<byte>();
-            pack.AddString(UserToken);
+            pack.AddString(level.GetPlayerAvatar().GetUserToken());
             Encrypt(pack.ToArray());
         }
 
