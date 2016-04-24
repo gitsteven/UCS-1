@@ -90,9 +90,7 @@ namespace UCS.Logic
         public void AddChatMessage(StreamEntry message)
         {
             while (m_vChatMessages.Count >= m_vMaxChatMessagesNumber)
-            {
                 m_vChatMessages.RemoveAt(0);
-            }
             m_vChatMessages.Add(message);
         }
 
