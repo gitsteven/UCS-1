@@ -184,7 +184,7 @@ namespace UCS.PacketProcessing
                 if (alliance == null)
                     level.GetPlayerAvatar().SetAllianceId(0);
                 else
-                    PacketManager.ProcessOutgoingPacket(new AllianceStreamMessage(Client, alliance));
+                    PacketManager.ProcessOutgoingPacket(new AllianceFullEntryupdateMessage(Client, alliance));
                 //PacketManager.ProcessOutgoingPacket(new BookmarkMessage(Client));
             }
             else
