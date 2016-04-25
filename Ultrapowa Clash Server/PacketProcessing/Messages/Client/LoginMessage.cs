@@ -105,28 +105,29 @@ namespace UCS.PacketProcessing
 
         public override void Process(Level a)
         {
+            // IF THE USER IS TOTALLY NEW, WITH ID 0 AND NO TOKEN
             if (UserID == 0 || string.IsNullOrEmpty(UserToken))
             {
                 NewUser();
                 return;
             }
 
-            level = ResourcesManager.GetPlayer(UserID);
+            level = ResourcesManager.GetPlayer(UserID); // THE USER HAVE AN ID, WE CHECK IF IT'S IN DATABASE
             if (level != null)
             {
-                if (level.Banned())
+                if (level.Banned()) // IF THE USER IS FOUND BUT BANNED
                 {
                     var p = new LoginFailedMessage(Client);
                     p.SetErrorCode(11);
                     PacketManager.ProcessOutgoingPacket(p);
                     return;
                 }
-                if (level.GetPlayerAvatar().GetUserToken() == UserToken)
+                if (level.GetPlayerAvatar().GetUserToken() == UserToken) // IF THE USER TOKEN MATCH THE CLIENT TOKEN
                     LogUser();
-                else
+                else // ELSE, HE IS TRYING TO STEAL AN ACCOUNT
                     NewUser();
             }
-            else
+            else // IF NOTHING IS FOUND IN DATABASE WITH THIS ID, WE CREATE A NEW
                 NewUser();
         }
 
