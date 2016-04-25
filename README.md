@@ -1,4 +1,3 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/hulprli5qvmke9u1/branch/ucs-recode?svg=true)](https://ci.appveyor.com/project/BerkanYildiz/ucs/branch/ucs-recode)
 # Readme!
 ##### This repository contains the Development build of Ultrapowa Clash Server, a C# server emulator for the game Clash of Clans. 
 ##### Keep in mind that this is the version written by the official development team containing:
@@ -38,6 +37,3 @@ This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
