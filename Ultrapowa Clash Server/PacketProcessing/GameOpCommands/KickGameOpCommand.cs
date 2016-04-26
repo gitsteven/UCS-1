@@ -13,6 +13,7 @@ using System;
 using UCS.Core;
 using UCS.Core.Network;
 using UCS.Logic;
+using static UCS.Core.Debugger;
 using UCS.PacketProcessing.Messages.Server;
 
 namespace UCS.PacketProcessing.GameOpCommands
@@ -54,12 +55,12 @@ namespace UCS.PacketProcessing.GameOpCommands
                         }
                         else
                         {
-                            Debugger.WriteLine("Kick failed: id " + id + " not found");
+                            WriteLine("Kick failed: id " + id + " not found");
                         }
                     }
                     catch (Exception ex)
                     {
-                        Debugger.WriteLine("Kick failed with error: " + ex);
+                        WriteLine("Kick failed with error: " + ex);
                     }
                 }
             }

@@ -74,7 +74,6 @@ namespace UCS.PacketProcessing.Messages.Client
             alliance.SetWarFrequency(m_vWarFrequency);
 
             //Set player clan
-            //ObjectManager.OnlinePlayers.TryGetValue(p.Client, out player);
             level.GetPlayerAvatar().SetAllianceId(alliance.GetAllianceId());
             var member = new AllianceMemberEntry(level.GetPlayerAvatar().GetId());
             member.SetRole(2);

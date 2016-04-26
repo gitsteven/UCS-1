@@ -12,16 +12,16 @@
 using System;
 using System.Configuration;
 using System.Threading;
-using UCS.Helpers;
+using static UCS.Helpers.Utils;
+using static UCS.Helpers.CommandParser;
+using static System.Console;
+using static System.Environment;
 
 namespace UCS.Core.Threading
 {
     internal class ConsoleThread
     {
         #region Private Fields
-
-        private static string Title;
-        private static string Tmp;
         private static string Command;
 
         #endregion Private Fields
@@ -38,8 +38,8 @@ namespace UCS.Core.Threading
         {
             T = new Thread(() =>
             {
-                Console.Title = "Ultrapowa Clash Server " + Utils.AssemblyVersion + " - © 2016";
-                Console.WriteLine(
+                Title = VersionTitle;
+                WriteLine(
                     @"
     888     888 888    88888888888 8888888b.         d8888 8888888b.   .d88888b.  888       888        d8888
     888     888 888        888     888   Y88b       d88888 888   Y88b d88P' 'Y88b 888   o   888       d88888
@@ -50,27 +50,25 @@ namespace UCS.Core.Threading
     Y88b. .d88P 888        888     888  T88b   d8888888888 888        Y88b. .d88P 8888P   Y8888  d8888888888
      'Y88888P'  88888888   888     888   T88b d88P     888 888         'Y88888P'  888P     Y888 d88P     888
                   ");
-                if (Utils.OpenedInstances > 1)
+                if (OpenedInstances > 1)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("[UCS]    You seem to run UCS more than once.");
-                    Console.WriteLine("[UCS]    Aborting..");
-                    Console.ResetColor();
-                    Console.ReadKey();
-                    Environment.Exit(0);
+                    ForegroundColor = ConsoleColor.Red;
+                    WriteLine("[UCS]    You seem to run UCS more than once.");
+                    WriteLine("[UCS]    Aborting..");
+                    ResetColor();
+                    ReadKey();
+                    Exit(0);
                 }
-                Console.WriteLine("[UCS]    -> This program is by the Ultrapowa Network development team.");
-                Console.WriteLine(
-                    "[UCS]    -> You can find the source at www.ultrapowa.com and https://github.com/UltraPowaDev/UCS/");
-                Console.WriteLine(
-                    "[UCS]    -> Don't forget to visit www.ultrapowa.com daily for the latest news and updates!");
-                Console.WriteLine("[UCS]    -> UCS is now starting...");
-                Console.WriteLine("");
+                WriteLine("[UCS]    -> This program is by the Ultrapowa Network development team.");
+                WriteLine("[UCS]    -> You can find the source at www.ultrapowa.com and https://github.com/UltraPowaDev/UCS/");
+                WriteLine("[UCS]    -> Don't forget to visit www.ultrapowa.com daily for the latest news and updates!");
+                WriteLine("[UCS]    -> UCS is now starting...");
+                WriteLine("");
                 Debugger.SetLogLevel(int.Parse(ConfigurationManager.AppSettings["loggingLevel"]));
                 MemoryThread.Start();
                 NetworkThread.Start();
-                while ((Command = Console.ReadLine()) != null)
-                    CommandParser.Parse(Command);
+                while ((Command = ReadLine()) != null)
+                    Parse(Command);
             });
             T.Start();
         }

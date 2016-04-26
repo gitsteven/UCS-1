@@ -13,6 +13,7 @@ using System;
 using UCS.Core;
 using UCS.Core.Network;
 using UCS.Logic;
+using static UCS.Core.Debugger;
 using UCS.PacketProcessing.Messages.Server;
 
 namespace UCS.PacketProcessing.GameOpCommands
@@ -61,17 +62,17 @@ namespace UCS.PacketProcessing.GameOpCommands
                             }
                             else
                             {
-                                Debugger.WriteLine("Ban failed: insufficient privileges");
+                                WriteLine("Ban failed: insufficient privileges");
                             }
                         }
                         else
                         {
-                            Debugger.WriteLine("Ban failed: id " + id + " not found");
+                            WriteLine("Ban failed: id " + id + " not found");
                         }
                     }
                     catch (Exception ex)
                     {
-                        Debugger.WriteLine("Ban failed with error: " + ex);
+                        WriteLine("Ban failed with error: " + ex);
                     }
                 }
             }

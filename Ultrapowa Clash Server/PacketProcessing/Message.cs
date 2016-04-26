@@ -18,6 +18,7 @@ using UCS.Helpers;
 using UCS.Logic;
 using UCS.Core.Crypto.CustomNaCl;
 using UCS.Core.Crypto.Blake2b;
+using static System.Console;
 
 namespace UCS.PacketProcessing
 {

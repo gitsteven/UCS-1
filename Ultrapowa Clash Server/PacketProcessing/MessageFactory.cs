@@ -79,10 +79,6 @@ namespace UCS.PacketProcessing
         {
             if (m_vMessages.ContainsKey(packetType))
                 return Activator.CreateInstance(m_vMessages[packetType], c, br);
-
-            c.CRNonce.Increment();
-            c.CSNonce.Increment();
-
             Console.WriteLine("[UCS]    The message '" + packetType + "' is unhandled");
             return null;
         }

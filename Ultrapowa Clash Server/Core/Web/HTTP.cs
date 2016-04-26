@@ -27,7 +27,7 @@ namespace UCS.Core.Web
     {
         #region Public Properties
 
-        public Dictionary<string, string> UCS { get; set; }
+        public Dictionary<string, string> Data { get; set; }
 
         #endregion Public Properties
     }
@@ -81,7 +81,7 @@ namespace UCS.Core.Web
             private set { }
         }
 
-        public Dictionary<string, string> UCS { get; internal set; }
+        public Dictionary<string, string> Data { get; internal set; }
 
         #endregion Public Properties
 
@@ -133,13 +133,13 @@ namespace UCS.Core.Web
                 {
                     var json = new JsonApi
                     {
-                        UCS = new Dictionary<string, string>
+                        Data = new Dictionary<string, string>
                         {
                             {"PatchingServer", ConfigurationManager.AppSettings["patchingServer"]},
                             {"Maintenance", ConfigurationManager.AppSettings["maintenanceMode"]},
                             {"MaintenanceTimeLeft", ConfigurationManager.AppSettings["maintenanceTimeLeft"]},
                             {"ClientVersion", ConfigurationManager.AppSettings["clientVersion"]},
-                            {"ServerVersion", Assembly.GetExecutingAssembly().GetName().Version.ToString()},
+                            {"ServerVersion", UCS.Helpers.Utils.VersionTitle},
                             {"OnlinePlayers", Convert.ToString(ResourcesManager.GetOnlinePlayers().Count)},
                             {"InMemoryPlayers", Convert.ToString(ResourcesManager.GetInMemoryLevels().Count)},
                             {"InMemoryClans", Convert.ToString(ObjectManager.GetInMemoryAlliances().Count)},

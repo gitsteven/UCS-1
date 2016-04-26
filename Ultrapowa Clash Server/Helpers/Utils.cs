@@ -29,13 +29,21 @@ namespace UCS.Helpers
         #region Public Properties
 
         /// <summary>
-        ///     Returns Proxy-Version in the following format: v1.2.3
+        ///     Returns Proxy-Version in the following format: v1.2.3.4
         /// </summary>
         public static string AssemblyVersion
         {
             get { return "v" + Assembly.GetExecutingAssembly().GetName().Version; }
         }
 
+        /// <summary>
+        ///     Returns SERVER-Version in the following format: v1.2.3.4 - © 2016
+        /// </summary>
+        public static string VersionTitle
+        {
+            get { return "Ultrapowa Clash Server v" + Assembly.GetExecutingAssembly().GetName().Version + " - © 2016"; }
+        }
+    
         /// <summary>
         ///     Returns opened instances
         /// </summary>

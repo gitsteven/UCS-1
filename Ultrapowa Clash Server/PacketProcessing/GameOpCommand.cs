@@ -12,6 +12,7 @@
 using UCS.Core;
 using UCS.Core.Network;
 using UCS.Logic;
+using static UCS.Core.Debugger;
 using UCS.PacketProcessing.Messages.Server;
 
 namespace UCS.PacketProcessing
@@ -28,7 +29,7 @@ namespace UCS.PacketProcessing
 
         public static void SendCommandFailedMessage(Client c)
         {
-            Debugger.WriteLine("GameOp command failed. Insufficient privileges. Requster ID -> " + c.GetLevel().GetPlayerAvatar().GetId());
+            WriteLine("GameOp command failed. Insufficient privileges. Requster ID -> " + c.GetLevel().GetPlayerAvatar().GetId());
             var p = new GlobalChatLineMessage(c);
             p.SetChatMessage("GameOp command failed. Insufficient privileges.");
             p.SetPlayerId(0);

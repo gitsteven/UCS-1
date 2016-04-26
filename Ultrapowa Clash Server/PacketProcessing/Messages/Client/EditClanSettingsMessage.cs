@@ -81,6 +81,8 @@ namespace UCS.PacketProcessing.Messages.Client
                 eventStreamEntry.SetEventType(10);
                 eventStreamEntry.SetAvatarId(avatar.GetId());
                 eventStreamEntry.SetAvatarName(avatar.GetAvatarName());
+                eventStreamEntry.SetSenderId(avatar.GetId());
+                eventStreamEntry.SetSenderName(avatar.GetAvatarName());
                 alliance.AddChatMessage(eventStreamEntry);
 
                 foreach (var onlinePlayer in ResourcesManager.GetOnlinePlayers())
