@@ -169,7 +169,6 @@ namespace UCS.PacketProcessing.Messages.Client
                 var p = new LoginFailedMessage(Client);
                 p.SetErrorCode(10);
                 p.RemainingTime(time);
-                p.SetResourceFingerprintData(ObjectManager.FingerPrint.SaveToJson());
                 PacketManager.ProcessOutgoingPacket(p);
                 return;
             }
@@ -179,7 +178,6 @@ namespace UCS.PacketProcessing.Messages.Client
             {
                 var p = new LoginFailedMessage(Client);
                 p.SetErrorCode(8);
-                p.SetResourceFingerprintData(ObjectManager.FingerPrint.SaveToJson());
                 p.SetUpdateURL(Convert.ToString(ConfigurationManager.AppSettings["UpdateUrl"]));
                 PacketManager.ProcessOutgoingPacket(p);
                 return;
