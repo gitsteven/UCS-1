@@ -18,7 +18,7 @@ namespace UCS.PacketProcessing.Commands
     {
         #region Private Fields
 
-        private int m_vBuildingId;
+        int m_vBuildingId;
 
         #endregion Private Fields
 

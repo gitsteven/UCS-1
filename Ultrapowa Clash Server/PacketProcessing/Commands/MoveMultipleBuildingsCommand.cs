@@ -32,7 +32,7 @@ namespace UCS.PacketProcessing.Commands
     {
         #region Private Fields
 
-        private readonly List<BuildingToMove> m_vBuildingsToMove;
+        readonly List<BuildingToMove> m_vBuildingsToMove;
 
         #endregion Private Fields
 

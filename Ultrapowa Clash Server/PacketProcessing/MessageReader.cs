@@ -158,7 +158,7 @@ namespace UCS.PacketProcessing
 
         #region Private Methods
 
-        private void CheckLength(int length, string typeName)
+        void CheckLength(int length, string typeName)
         {
             if (length < -1)
                 Console.WriteLine("The length of a " + typeName + " was invalid: " + length);
@@ -167,7 +167,7 @@ namespace UCS.PacketProcessing
                 Console.WriteLine("The length of a " + typeName + " was larger than the remaining bytes: " + length);
         }
 
-        private byte[] ReadByteArrayEndian(int count)
+        byte[] ReadByteArrayEndian(int count)
         {
             var buffer = ReadBytes(count);
             if (BitConverter.IsLittleEndian)

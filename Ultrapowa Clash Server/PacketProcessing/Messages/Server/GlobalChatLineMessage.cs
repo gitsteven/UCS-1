@@ -36,16 +36,16 @@ namespace UCS.PacketProcessing.Messages.Server
 
         #region Private Fields
 
-        private readonly int m_vPlayerLevel;
-        private int m_vAllianceIcon;
-        private long m_vAllianceId;
-        private string m_vAllianceName;
-        private long m_vCurrentHomeId;
-        private bool m_vHasAlliance;
-        private long m_vHomeId;
-        private int m_vLeagueId;
-        private string m_vMessage;
-        private string m_vPlayerName;
+        readonly int m_vPlayerLevel;
+        int m_vAllianceIcon;
+        long m_vAllianceId;
+        string m_vAllianceName;
+        long m_vCurrentHomeId;
+        bool m_vHasAlliance;
+        long m_vHomeId;
+        int m_vLeagueId;
+        string m_vMessage;
+        string m_vPlayerName;
 
         #endregion Private Fields
 

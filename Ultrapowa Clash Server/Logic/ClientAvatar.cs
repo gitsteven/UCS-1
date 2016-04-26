@@ -25,7 +25,7 @@ namespace UCS.Logic
     {
         #region Private Methods
 
-        private void updateLeague()
+        void updateLeague()
         {
             var table = ObjectManager.DataTables.GetTable(12);
             var i = 0;
@@ -49,18 +49,18 @@ namespace UCS.Logic
 
         #region Private Fields
 
-        private long m_vAllianceId;
-        private int m_vAvatarLevel;
-        private string m_vAvatarName;
-        private int m_vCurrentGems;
-        private long m_vCurrentHomeId;
-        private int m_vExperience;
-        private long m_vId;
-        private int m_vLeagueId;
-        private byte m_vNameChangingLeft;
-        private byte m_vnameChosenByUser;
-        private int m_vScore;
-        private string m_vToken;
+        long m_vAllianceId;
+        int m_vAvatarLevel;
+        string m_vAvatarName;
+        int m_vCurrentGems;
+        long m_vCurrentHomeId;
+        int m_vExperience;
+        long m_vId;
+        int m_vLeagueId;
+        byte m_vNameChangingLeft;
+        byte m_vnameChosenByUser;
+        int m_vScore;
+        string m_vToken;
 
         #endregion Private Fields
 

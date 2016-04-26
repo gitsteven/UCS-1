@@ -19,7 +19,7 @@ namespace UCS.Logic.StreamEntry
     {
         #region Private Fields
 
-        private string m_vMessage;
+        string m_vMessage;
 
         #endregion Private Fields
 

@@ -130,7 +130,7 @@ namespace UCS.PacketProcessing.Messages.Client
                 NewUser();
         }
 
-        private void LogUser()
+        void LogUser()
         {
             CheckClient();
             ResourcesManager.LogPlayerIn(level, Client);
@@ -164,7 +164,7 @@ namespace UCS.PacketProcessing.Messages.Client
             PacketManager.ProcessOutgoingPacket(new BookmarkMessage(Client));
         }
 
-        private void CheckClient()
+        void CheckClient()
         {
             int time = Convert.ToInt32(ConfigurationManager.AppSettings["maintenanceTimeleft"]);
             if (time != 0 || Client.CState == 0)
@@ -199,7 +199,7 @@ namespace UCS.PacketProcessing.Messages.Client
             }
         }
 
-        private void NewUser()
+        void NewUser()
         {
             level = ObjectManager.CreateAvatar(0, null);
             if (string.IsNullOrEmpty(UserToken))

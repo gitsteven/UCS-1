@@ -20,7 +20,7 @@ namespace UCS.Logic
         //a1 + 4 gameobjecttypes
         //a1 + 8
         //a1 + 12
-        private List<int> m_vIgnoredObjects;
+        List<int> m_vIgnoredObjects;
 
         #endregion Private Fields
 

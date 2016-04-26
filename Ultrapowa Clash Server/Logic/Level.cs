@@ -28,15 +28,15 @@ namespace UCS.Logic
 
         #region Private Fields
 
-        private readonly ClientAvatar m_vClientAvatar;
+        readonly ClientAvatar m_vClientAvatar;
 
         //a1 + 44
-        private byte m_vAccountPrivileges;
+        byte m_vAccountPrivileges;
 
-        private byte m_vAccountStatus;
-        private Client m_vClient;
-        private string m_vIPAddress;
-        private DateTime m_vTime;
+        byte m_vAccountStatus;
+        Client m_vClient;
+        string m_vIPAddress;
+        DateTime m_vTime;
 
         #endregion Private Fields
 

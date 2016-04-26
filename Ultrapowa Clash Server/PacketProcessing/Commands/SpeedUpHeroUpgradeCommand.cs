@@ -47,8 +47,8 @@ namespace UCS.PacketProcessing.Commands
 
         #region Private Fields
 
-        private readonly int m_vBuildingId;
-        private int m_vUnknown1;
+        readonly int m_vBuildingId;
+        int m_vUnknown1;
 
         #endregion Private Fields
     }

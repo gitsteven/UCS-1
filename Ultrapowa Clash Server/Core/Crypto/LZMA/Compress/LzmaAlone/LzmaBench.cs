@@ -22,14 +22,14 @@ namespace UCS.Core.Crypto.LZMA.Compress.LzmaAlone
     /// </summary>
     internal abstract class LzmaBench
     {
-        private const UInt32 kAdditionalSize = (6 << 20);
-        private const UInt32 kCompressedAdditionalSize = (1 << 10);
-        private const UInt32 kMaxLzmaPropSize = 10;
+        const UInt32 kAdditionalSize = (6 << 20);
+        const UInt32 kCompressedAdditionalSize = (1 << 10);
+        const UInt32 kMaxLzmaPropSize = 10;
 
-        private class CRandomGenerator
+        class CRandomGenerator
         {
-            private UInt32 A1;
-            private UInt32 A2;
+            UInt32 A1;
+            UInt32 A2;
 
             public CRandomGenerator()
             {
@@ -50,11 +50,11 @@ namespace UCS.Core.Crypto.LZMA.Compress.LzmaAlone
             }
         };
 
-        private class CBitRandomGenerator
+        class CBitRandomGenerator
         {
-            private CRandomGenerator RG = new CRandomGenerator();
-            private UInt32 Value;
-            private int NumBits;
+            CRandomGenerator RG = new CRandomGenerator();
+            UInt32 Value;
+            int NumBits;
 
             public void Init()
             {
@@ -82,11 +82,11 @@ namespace UCS.Core.Crypto.LZMA.Compress.LzmaAlone
             }
         };
 
-        private class CBenchRandomGenerator
+        class CBenchRandomGenerator
         {
-            private CBitRandomGenerator RG = new CBitRandomGenerator();
-            private UInt32 Pos;
-            private UInt32 Rep0;
+            CBitRandomGenerator RG = new CBitRandomGenerator();
+            UInt32 Pos;
+            UInt32 Rep0;
 
             public UInt32 BufferSize;
             public Byte[] Buffer = null;
@@ -102,26 +102,26 @@ namespace UCS.Core.Crypto.LZMA.Compress.LzmaAlone
                 BufferSize = bufferSize;
             }
 
-            private UInt32 GetRndBit()
+            UInt32 GetRndBit()
             { return RG.GetRnd(1); }
 
-            private UInt32 GetLogRandBits(int numBits)
+            UInt32 GetLogRandBits(int numBits)
             {
                 UInt32 len = RG.GetRnd(numBits);
                 return RG.GetRnd((int) len);
             }
 
-            private UInt32 GetOffset()
+            UInt32 GetOffset()
             {
                 if (GetRndBit() == 0)
                     return GetLogRandBits(4);
                 return (GetLogRandBits(4) << 10) | RG.GetRnd(10);
             }
 
-            private UInt32 GetLen1()
+            UInt32 GetLen1()
             { return RG.GetRnd(1 + (int) RG.GetRnd(2)); }
 
-            private UInt32 GetLen2()
+            UInt32 GetLen2()
             { return RG.GetRnd(2 + (int) RG.GetRnd(2)); }
 
             public void Generate()
@@ -152,7 +152,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LzmaAlone
             }
         };
 
-        private class CrcOutStream : System.IO.Stream
+        class CrcOutStream : System.IO.Stream
         {
             public CRC CRC = new CRC();
 
@@ -201,7 +201,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LzmaAlone
             }
         };
 
-        private class CProgressInfo : ICodeProgress
+        class CProgressInfo : ICodeProgress
         {
             public Int64 ApprovedStart;
             public Int64 InSize;
@@ -222,9 +222,9 @@ namespace UCS.Core.Crypto.LZMA.Compress.LzmaAlone
             }
         }
 
-        private const int kSubBits = 8;
+        const int kSubBits = 8;
 
-        private static UInt32 GetLogSize(UInt32 size)
+        static UInt32 GetLogSize(UInt32 size)
         {
             for (int i = kSubBits; i < 32; i++)
                 for (UInt32 j = 0; j < (1 << kSubBits); j++)
@@ -233,7 +233,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LzmaAlone
             return (32 << kSubBits);
         }
 
-        private static UInt64 MyMultDiv64(UInt64 value, UInt64 elapsedTime)
+        static UInt64 MyMultDiv64(UInt64 value, UInt64 elapsedTime)
         {
             UInt64 freq = TimeSpan.TicksPerSecond;
             UInt64 elTime = elapsedTime;
@@ -247,7 +247,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LzmaAlone
             return value * freq / elTime;
         }
 
-        private static UInt64 GetCompressRating(UInt32 dictionarySize, UInt64 elapsedTime, UInt64 size)
+        static UInt64 GetCompressRating(UInt32 dictionarySize, UInt64 elapsedTime, UInt64 size)
         {
             UInt64 t = GetLogSize(dictionarySize) - (18 << kSubBits);
             UInt64 numCommandsForOne = 1060 + ((t * t * 10) >> (2 * kSubBits));
@@ -255,13 +255,13 @@ namespace UCS.Core.Crypto.LZMA.Compress.LzmaAlone
             return MyMultDiv64(numCommands, elapsedTime);
         }
 
-        private static UInt64 GetDecompressRating(UInt64 elapsedTime, UInt64 outSize, UInt64 inSize)
+        static UInt64 GetDecompressRating(UInt64 elapsedTime, UInt64 outSize, UInt64 inSize)
         {
             UInt64 numCommands = inSize * 220 + outSize * 20;
             return MyMultDiv64(numCommands, elapsedTime);
         }
 
-        private static UInt64 GetTotalRating(
+        static UInt64 GetTotalRating(
             UInt32 dictionarySize,
             UInt64 elapsedTimeEn, UInt64 sizeEn,
             UInt64 elapsedTimeDe,
@@ -271,7 +271,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LzmaAlone
                 GetDecompressRating(elapsedTimeDe, inSizeDe, outSizeDe)) / 2;
         }
 
-        private static void PrintValue(UInt64 v)
+        static void PrintValue(UInt64 v)
         {
             string s = v.ToString();
             for (int i = 0; i + s.Length < 6; i++)
@@ -279,13 +279,13 @@ namespace UCS.Core.Crypto.LZMA.Compress.LzmaAlone
             System.Console.Write(s);
         }
 
-        private static void PrintRating(UInt64 rating)
+        static void PrintRating(UInt64 rating)
         {
             PrintValue(rating / 1000000);
             System.Console.Write(" MIPS");
         }
 
-        private static void PrintResults(
+        static void PrintResults(
             UInt32 dictionarySize,
             UInt64 elapsedTime,
             UInt64 size,

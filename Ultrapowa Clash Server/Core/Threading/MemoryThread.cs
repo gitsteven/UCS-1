@@ -25,7 +25,7 @@ namespace UCS.Core.Threading
         /// <summary>
         ///     Variable holding the thread itself
         /// </summary>
-        private static Thread T { get; set; }
+        static Thread T { get; set; }
 
         #endregion Private Properties
 
@@ -33,7 +33,7 @@ namespace UCS.Core.Threading
 
         [DllImport("kernel32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool SetProcessWorkingSetSize(IntPtr process, UIntPtr minimumWorkingSetSize,
+        static extern bool SetProcessWorkingSetSize(IntPtr process, UIntPtr minimumWorkingSetSize,
             UIntPtr maximumWorkingSetSize);
 
         #endregion Private Methods

@@ -36,7 +36,7 @@ namespace UCS.Core
         /// <summary>
         ///     This function process packets.
         /// </summary>
-        private void PacketProcessing()
+        void PacketProcessing()
         {
             while (m_vIsRunning)
             {
@@ -72,15 +72,15 @@ namespace UCS.Core
 
         #region Private Delegates
 
-        private delegate void PacketProcessingDelegate();
+        delegate void PacketProcessingDelegate();
 
         #endregion Private Delegates
 
         #region Private Fields
 
-        private static readonly EventWaitHandle m_vWaitHandle = new AutoResetEvent(false);
-        private static ConcurrentQueue<Message> m_vPackets;
-        private bool m_vIsRunning;
+        static readonly EventWaitHandle m_vWaitHandle = new AutoResetEvent(false);
+        static ConcurrentQueue<Message> m_vPackets;
+        bool m_vIsRunning;
 
         #endregion Private Fields
 

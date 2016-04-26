@@ -32,7 +32,7 @@ namespace UCS.Core.Crypto.LZMA.Common
             }
         }
 
-        private uint _value = 0xFFFFFFFF;
+        uint _value = 0xFFFFFFFF;
 
         public void Init()
         {
@@ -55,7 +55,7 @@ namespace UCS.Core.Crypto.LZMA.Common
             return _value ^ 0xFFFFFFFF;
         }
 
-        private static uint CalculateDigest(byte[] data, uint offset, uint size)
+        static uint CalculateDigest(byte[] data, uint offset, uint size)
         {
             CRC crc = new CRC();
             // crc.Init();
@@ -63,7 +63,7 @@ namespace UCS.Core.Crypto.LZMA.Common
             return crc.GetDigest();
         }
 
-        private static bool VerifyDigest(uint digest, byte[] data, uint offset, uint size)
+        static bool VerifyDigest(uint digest, byte[] data, uint offset, uint size)
         {
             return (CalculateDigest(data, offset, size) == digest);
         }

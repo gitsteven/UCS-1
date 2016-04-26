@@ -15,8 +15,8 @@ namespace UCS.Core.Crypto.LZMA.Compress.RangeCoder
 {
     internal struct BitTreeEncoder
     {
-        private BitEncoder[] Models;
-        private int NumBitLevels;
+        BitEncoder[] Models;
+        int NumBitLevels;
 
         public BitTreeEncoder(int numBitLevels)
         {
@@ -113,8 +113,8 @@ namespace UCS.Core.Crypto.LZMA.Compress.RangeCoder
 
     internal struct BitTreeDecoder
     {
-        private BitDecoder[] Models;
-        private int NumBitLevels;
+        BitDecoder[] Models;
+        int NumBitLevels;
 
         public BitTreeDecoder(int numBitLevels)
         {

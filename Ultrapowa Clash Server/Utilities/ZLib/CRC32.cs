@@ -32,14 +32,14 @@ namespace UCS.Utilities.ZLib
 #endif
     public class CRC32
     {
-        private const int BUFFER_SIZE = 8192;
+        const int BUFFER_SIZE = 8192;
 
         // private member vars
-        private readonly uint dwPolynomial;
+        readonly uint dwPolynomial;
 
-        private readonly bool reverseBits;
-        private uint _register = 0xFFFFFFFFU;
-        private uint[] crc32Table;
+        readonly bool reverseBits;
+        uint _register = 0xFFFFFFFFU;
+        uint[] crc32Table;
 
         /// <summary>
         ///     Create an instance of the CRC32 class using the default settings: no bit reversal, and a
@@ -249,7 +249,7 @@ namespace UCS.Utilities.ZLib
             }
         }
 
-        private static uint ReverseBits(uint data)
+        static uint ReverseBits(uint data)
         {
             unchecked
             {
@@ -262,7 +262,7 @@ namespace UCS.Utilities.ZLib
             }
         }
 
-        private static byte ReverseBits(byte data)
+        static byte ReverseBits(byte data)
         {
             unchecked
             {
@@ -274,7 +274,7 @@ namespace UCS.Utilities.ZLib
             }
         }
 
-        private void GenerateLookupTable()
+        void GenerateLookupTable()
         {
             crc32Table = new uint[256];
             unchecked
@@ -325,7 +325,7 @@ namespace UCS.Utilities.ZLib
 #endif
         }
 
-        private uint gf2_matrix_times(uint[] matrix, uint vec)
+        uint gf2_matrix_times(uint[] matrix, uint vec)
         {
             uint sum = 0;
             var i = 0;
@@ -339,7 +339,7 @@ namespace UCS.Utilities.ZLib
             return sum;
         }
 
-        private void gf2_matrix_square(uint[] square, uint[] mat)
+        void gf2_matrix_square(uint[] square, uint[] mat)
         {
             for (var i = 0; i < 32; i++)
                 square[i] = gf2_matrix_times(mat, mat[i]);
@@ -440,9 +440,9 @@ namespace UCS.Utilities.ZLib
     /// </remarks>
     public class CrcCalculatorStream : Stream, IDisposable
     {
-        private static readonly long UnsetLengthLimit = -99;
-        private readonly CRC32 _Crc32;
-        private readonly long _lengthLimit = -99;
+        static readonly long UnsetLengthLimit = -99;
+        readonly CRC32 _Crc32;
+        readonly long _lengthLimit = -99;
 
         internal Stream _innerStream;
 
@@ -550,7 +550,7 @@ namespace UCS.Utilities.ZLib
         // (specific) negative value for the _lengthLimit, to indicate that there is no length set.
         // So we validate the length limit in those ctors that use an explicit param, otherwise we
         // don't validate, because it could be our special value.
-        private CrcCalculatorStream
+        CrcCalculatorStream
             (bool leaveOpen, long length, Stream stream, CRC32 crc32)
         {
             _innerStream = stream;

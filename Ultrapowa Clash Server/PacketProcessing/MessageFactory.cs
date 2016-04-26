@@ -22,7 +22,7 @@ namespace UCS.PacketProcessing
     {
         #region Private Fields
 
-        private static readonly Dictionary<int, Type> m_vMessages;
+        static readonly Dictionary<int, Type> m_vMessages;
 
         #endregion Private Fields
 

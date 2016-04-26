@@ -18,7 +18,7 @@ namespace UCS.Files.Logic
     {
         #region Private Fields
 
-        private readonly List<DataTable> m_vDataTables;
+        readonly List<DataTable> m_vDataTables;
 
         #endregion Private Fields
 

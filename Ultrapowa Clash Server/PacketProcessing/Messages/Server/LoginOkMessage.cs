@@ -28,24 +28,24 @@ namespace UCS.PacketProcessing.Messages.Server
 
         #region Private Fields
 
-        private readonly string m_vFacebookAppID = "297484437009394";
-        private string m_vAccountCreatedDate;
-        private long m_vAccountId;
-        private int m_vContentVersion;
-        private string m_vCountryCode;
-        private int m_vDaysSinceStartedPlaying;
-        private string m_vFacebookId;
-        private string m_vGamecenterId;
-        private int m_vGoogleID;
-        private int m_vLastUpdate;
-        private string m_vPassToken;
-        private int m_vPlayTimeSeconds;
-        private int m_vServerBuild;
-        private string m_vServerEnvironment;
-        private int m_vServerMajorVersion;
-        private string m_vServerTime;
-        private int m_vSessionCount;
-        private int m_vStartupCooldownSeconds;
+        readonly string m_vFacebookAppID = "297484437009394";
+        string m_vAccountCreatedDate;
+        long m_vAccountId;
+        int m_vContentVersion;
+        string m_vCountryCode;
+        int m_vDaysSinceStartedPlaying;
+        string m_vFacebookId;
+        string m_vGamecenterId;
+        int m_vGoogleID;
+        int m_vLastUpdate;
+        string m_vPassToken;
+        int m_vPlayTimeSeconds;
+        int m_vServerBuild;
+        string m_vServerEnvironment;
+        int m_vServerMajorVersion;
+        string m_vServerTime;
+        int m_vSessionCount;
+        int m_vStartupCooldownSeconds;
 
         #endregion Private Fields
 

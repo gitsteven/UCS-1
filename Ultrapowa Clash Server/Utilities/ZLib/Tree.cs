@@ -84,7 +84,7 @@ namespace UCS.Utilities.ZLib
 
         #region Private Fields
 
-        private static readonly sbyte[] _dist_code =
+        static readonly sbyte[] _dist_code =
         {
             0, 1, 2, 3, 4, 4, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7,
             8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9,
@@ -120,7 +120,7 @@ namespace UCS.Utilities.ZLib
             29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29
         };
 
-        private static readonly int HEAP_SIZE = 2 * InternalConstants.L_CODES + 1;
+        static readonly int HEAP_SIZE = 2 * InternalConstants.L_CODES + 1;
 
         #endregion Private Fields
 

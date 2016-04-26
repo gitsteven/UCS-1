@@ -72,10 +72,10 @@ namespace UCS.Logic
 
         #region Private Fields
 
-        private int m_vCastleLevel;
-        private int m_vCastleTotalCapacity;
-        private int m_vCastleUsedCapacity;
-        private int m_vTownHallLevel;
+        int m_vCastleLevel;
+        int m_vCastleTotalCapacity;
+        int m_vCastleUsedCapacity;
+        int m_vTownHallLevel;
 
         #endregion Private Fields
 

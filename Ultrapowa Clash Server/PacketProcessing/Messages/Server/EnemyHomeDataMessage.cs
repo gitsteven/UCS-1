@@ -59,8 +59,8 @@ namespace UCS.PacketProcessing.Messages.Server
 
         #region Private Fields
 
-        private readonly Level m_vOwnerLevel;
-        private readonly Level m_vVisitorLevel;
+        readonly Level m_vOwnerLevel;
+        readonly Level m_vVisitorLevel;
 
         #endregion Private Fields
     }

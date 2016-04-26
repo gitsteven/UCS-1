@@ -20,9 +20,9 @@ namespace UCS.Logic
     {
         #region Private Fields
 
-        private readonly long m_vId;
-        private int m_vRemainingShieldTime;
-        private byte[] m_vSerializedVillage;
+        readonly long m_vId;
+        int m_vRemainingShieldTime;
+        byte[] m_vSerializedVillage;
 
         #endregion Private Fields
 

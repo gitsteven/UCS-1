@@ -17,11 +17,11 @@ namespace UCS.Core.Crypto.LZMA.Compress.RangeCoder
     {
         public const int kNumBitModelTotalBits = 11;
         public const uint kBitModelTotal = (1 << kNumBitModelTotalBits);
-        private const int kNumMoveBits = 5;
-        private const int kNumMoveReducingBits = 2;
+        const int kNumMoveBits = 5;
+        const int kNumMoveReducingBits = 2;
         public const int kNumBitPriceShiftBits = 6;
 
-        private uint Prob;
+        uint Prob;
 
         public void Init()
         {
@@ -59,7 +59,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.RangeCoder
             }
         }
 
-        private static UInt32[] ProbPrices = new UInt32[kBitModelTotal >> kNumMoveReducingBits];
+        static UInt32[] ProbPrices = new UInt32[kBitModelTotal >> kNumMoveReducingBits];
 
         static BitEncoder()
         {
@@ -94,9 +94,9 @@ namespace UCS.Core.Crypto.LZMA.Compress.RangeCoder
     {
         public const int kNumBitModelTotalBits = 11;
         public const uint kBitModelTotal = (1 << kNumBitModelTotalBits);
-        private const int kNumMoveBits = 5;
+        const int kNumMoveBits = 5;
 
-        private uint Prob;
+        uint Prob;
 
         public void UpdateModel(int numMoveBits, uint symbol)
         {

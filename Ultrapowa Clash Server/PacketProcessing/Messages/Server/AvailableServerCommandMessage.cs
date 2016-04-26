@@ -28,8 +28,8 @@ namespace UCS.PacketProcessing.Messages.Server
 
         #region Private Fields
 
-        private Command m_vCommand;
-        private int m_vServerCommandId;
+        Command m_vCommand;
+        int m_vServerCommandId;
 
         #endregion Private Fields
 

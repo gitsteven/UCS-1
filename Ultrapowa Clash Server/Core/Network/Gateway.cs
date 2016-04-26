@@ -19,78 +19,34 @@ namespace UCS.Core.Network
 {
     internal class Gateway
     {
-        #region Private Fields
+        IPAddress IPAddress;
 
-        private const int kHostConnectionBacklog = 30;
-        private const int kPort = 9339;
-        private IPAddress ip;
+        public static Socket Socket { get; set; }
 
-        #endregion Private Fields
+        public IPAddress IP => IPAddress ?? (IPAddress = (
+            from entry in Dns.GetHostEntry(Dns.GetHostName()).AddressList
+            where entry.AddressFamily == AddressFamily.InterNetwork
+            select entry
+            ).FirstOrDefault());
 
-        #region Public Properties
-
-        public static Socket Socket { get; private set; }
-
-        public IPAddress IP
-        {
-            get
-            {
-                if (ip == null)
-                {
-                    ip = (
-                        from entry in Dns.GetHostEntry(Dns.GetHostName()).AddressList
-                        where entry.AddressFamily == AddressFamily.InterNetwork
-                        select entry
-                        ).FirstOrDefault();
-                }
-                return ip;
-            }
-        }
-
-        #endregion Public Properties
-
-        #region Public Methods
-
-        public bool Host(int port)
+        public void Start()
         {
             Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
             {
-                Socket.Bind(new IPEndPoint(IPAddress.Any, port));
-                Socket.Listen(kHostConnectionBacklog);
+                Socket.Bind(new IPEndPoint(IPAddress.Any, 9339));
+                Socket.Listen(100);
                 Socket.BeginAccept(OnClientConnect, Socket);
+                Console.WriteLine("[UCS]    Gateway started on port 9339");
             }
             catch (Exception e)
             {
-                Console.WriteLine("[UCS]    Exception when attempting to host (" + port + "): " + e);
+                Console.WriteLine("[UCS]    Exception when attempting to host the server : " + e);
                 Socket = null;
-                return false;
             }
-            return true;
         }
 
-        public void Start()
-        {
-            if (Host(kPort))
-                Console.WriteLine("[UCS]    Gateway started on port " + kPort);
-        }
-
-        #endregion Public Methods
-
-        #region Private Methods
-
-        private static void Disconnect()
-        {
-            Socket?.BeginDisconnect(false, OnEndHostComplete, Socket);
-        }
-
-        private static void OnEndHostComplete(IAsyncResult result)
-        {
-            Socket.Close(5);
-            Socket = null;
-        }
-
-        private static void OnReceive(SocketRead read, byte[] data)
+        static void OnReceive(SocketRead read, byte[] data)
         {
             try
             {
@@ -106,33 +62,18 @@ namespace UCS.Core.Network
             }
         }
 
-        private static void OnReceiveError(SocketRead read, Exception exception)
+        static void OnReceiveError(SocketRead read, Exception exception)
         {
-            Debugger.WriteLine(
-                "[UCS]    The client '" + ((IPEndPoint) read.Socket.RemoteEndPoint).Address + "' throw an exception",
-                exception);
+            Debugger.WriteLine("[UCS]    The client '" + ((IPEndPoint) read.Socket.RemoteEndPoint).Address + "' throw an exception", exception);
         }
 
-        private void OnClientConnect(IAsyncResult result)
+        void OnClientConnect(IAsyncResult result)
         {
             try
             {
                 Socket clientSocket = Socket.EndAccept(result);
-                /* WebClient c = new WebClient();
-                c.DownloadStringCompleted +=
-                    (sender, e) =>
-                    {
-                        Console.WriteLine("[UCS]    Client connected (" +
-                                          ((IPEndPoint) clientSocket.RemoteEndPoint).Address + ", " + e.Result.Trim() +
-                                          ")");
-                    };
-                c.DownloadStringAsync(
-                    new Uri("http://ipinfo.io/" + ((IPEndPoint) clientSocket.RemoteEndPoint).Address + "/country"));
-
-                 */
                 Console.WriteLine("[UCS]    Client connected (" + ((IPEndPoint) clientSocket.RemoteEndPoint).Address + ")");
-                ResourcesManager.AddClient(new Client(clientSocket),
-                    ((IPEndPoint) clientSocket.RemoteEndPoint).Address.ToString());
+                ResourcesManager.AddClient(new Client(clientSocket), ((IPEndPoint) clientSocket.RemoteEndPoint).Address.ToString());
                 SocketRead.Begin(clientSocket, OnReceive, OnReceiveError);
                 Socket.BeginAccept(OnClientConnect, Socket);
             }
@@ -141,7 +82,61 @@ namespace UCS.Core.Network
                 Debugger.WriteLine("[UCS]    Exception when accepting incoming connection", e);
             }
         }
+    }
 
-        #endregion Private Methods
+    public class SocketRead
+    {
+        SocketRead(Socket socket, IncomingReadHandler readHandler, IncomingReadErrorHandler errorHandler = null)
+        {
+            Socket = socket;
+            _readHandler = readHandler;
+            _errorHandler = errorHandler;
+            BeginReceive();
+        }
+
+        public Socket Socket { get; }
+
+        public static SocketRead Begin(Socket socket, IncomingReadHandler readHandler, IncomingReadErrorHandler errorHandler = null)
+        {
+            return new SocketRead(socket, readHandler, errorHandler);
+        }
+
+        readonly byte[] _buffer = new byte[1024];
+
+        readonly IncomingReadErrorHandler _errorHandler;
+
+        readonly IncomingReadHandler _readHandler;
+
+        public delegate void IncomingReadErrorHandler(SocketRead read, Exception exception);
+
+        public delegate void IncomingReadHandler(SocketRead read, byte[] data);
+
+        void BeginReceive()
+        {
+            Socket.BeginReceive(_buffer, 0, 1024, SocketFlags.None, OnReceive, this);
+        }
+
+        void OnReceive(IAsyncResult result)
+        {
+            try
+            {
+                if (result.IsCompleted)
+                {
+                    var bytesRead = Socket.EndReceive(result);
+                    if (bytesRead > 0)
+                    {
+                        var read = new byte[bytesRead];
+                        Array.Copy(_buffer, 0, read, 0, bytesRead);
+
+                        _readHandler(this, read);
+                        Begin(Socket, _readHandler, _errorHandler);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                _errorHandler?.Invoke(this, e);
+            }
+        }
     }
 }

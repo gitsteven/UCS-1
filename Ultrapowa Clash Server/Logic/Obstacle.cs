@@ -39,8 +39,8 @@ namespace UCS.Logic
 
         #region Private Fields
 
-        private readonly Level m_vLevel;
-        private Timer m_vTimer;
+        readonly Level m_vLevel;
+        Timer m_vTimer;
 
         #endregion Private Fields
 

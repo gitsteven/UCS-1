@@ -17,14 +17,14 @@ namespace UCS.Core.Crypto.LZMA.Compress.RangeCoder
     {
         public const uint kTopValue = (1 << 24);
 
-        private System.IO.Stream Stream;
+        System.IO.Stream Stream;
 
         public UInt64 Low;
         public uint Range;
-        private uint _cacheSize;
-        private byte _cache;
+        uint _cacheSize;
+        byte _cache;
 
-        private long StartPosition;
+        long StartPosition;
 
         public void SetStream(System.IO.Stream stream)
         {

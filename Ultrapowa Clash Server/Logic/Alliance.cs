@@ -24,24 +24,24 @@ namespace UCS.Logic
     {
         #region Private Fields
 
-        private const int m_vMaxAllianceMembers = 50;
-        private const int m_vMaxChatMessagesNumber = 30;
-        private readonly Dictionary<long, AllianceMemberEntry> m_vAllianceMembers;
-        private readonly List<StreamEntry.StreamEntry> m_vChatMessages;
-        private int m_vAllianceBadgeData;
-        private string m_vAllianceDescription;
-        private int m_vAllianceExperience;
-        private long m_vAllianceId;
-        private int m_vAllianceLevel;
-        private string m_vAllianceName;
-        private int m_vAllianceOrigin;
-        private int m_vAllianceType;
-        private int m_vDrawWars;
-        private int m_vLostWars;
-        private int m_vRequiredScore;
-        private int m_vScore;
-        private int m_vWarFrequency;
-        private int m_vWonWars;
+        const int m_vMaxAllianceMembers = 50;
+        const int m_vMaxChatMessagesNumber = 30;
+        readonly Dictionary<long, AllianceMemberEntry> m_vAllianceMembers;
+        readonly List<StreamEntry.StreamEntry> m_vChatMessages;
+        int m_vAllianceBadgeData;
+        string m_vAllianceDescription;
+        int m_vAllianceExperience;
+        long m_vAllianceId;
+        int m_vAllianceLevel;
+        string m_vAllianceName;
+        int m_vAllianceOrigin;
+        int m_vAllianceType;
+        int m_vDrawWars;
+        int m_vLostWars;
+        int m_vRequiredScore;
+        int m_vScore;
+        int m_vWarFrequency;
+        int m_vWonWars;
 
         #endregion Private Fields
 

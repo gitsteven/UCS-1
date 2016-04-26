@@ -25,11 +25,11 @@ namespace UCS.Core.Crypto.Blake2b
 {
     internal class Blake2BHasher : Hasher
     {
-        private readonly Blake2BCore core = new Blake2BCore();
-        private readonly ulong[] rawConfig;
-        private readonly byte[] key;
-        private readonly int outputSizeInBytes;
-        private static readonly Blake2BConfig DefaultConfig = new Blake2BConfig();
+        readonly Blake2BCore core = new Blake2BCore();
+        readonly ulong[] rawConfig;
+        readonly byte[] key;
+        readonly int outputSizeInBytes;
+        static readonly Blake2BConfig DefaultConfig = new Blake2BConfig();
 
         public override void Init()
         {

@@ -366,7 +366,7 @@ namespace UCS.Utilities.ZLib
                 InternalConstants.MAX_BL_BITS);
         }
 
-        private StaticTree(short[] treeCodes, int[] extraBits, int extraBase, int elems, int maxLength)
+        StaticTree(short[] treeCodes, int[] extraBits, int extraBase, int elems, int maxLength)
         {
             this.treeCodes = treeCodes;
             this.extraBits = extraBits;
@@ -388,10 +388,10 @@ namespace UCS.Utilities.ZLib
     public sealed class Adler
     {
         // largest prime smaller than 65536
-        private static readonly uint BASE = 65521;
+        static readonly uint BASE = 65521;
 
         // NMAX is the largest n such that 255n(n+1)/2 + (n+1)(BASE-1) <= 2^32-1
-        private static readonly int NMAX = 5552;
+        static readonly int NMAX = 5552;
 
 #pragma warning disable 3001
 #pragma warning disable 3002

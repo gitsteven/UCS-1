@@ -17,14 +17,14 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
 {
     public class Decoder : ICoder, ISetDecoderProperties // ,System.IO.Stream
     {
-        private class LenDecoder
+        class LenDecoder
         {
-            private BitDecoder m_Choice = new BitDecoder();
-            private BitDecoder m_Choice2 = new BitDecoder();
-            private BitTreeDecoder[] m_LowCoder = new BitTreeDecoder[Base.kNumPosStatesMax];
-            private BitTreeDecoder[] m_MidCoder = new BitTreeDecoder[Base.kNumPosStatesMax];
-            private BitTreeDecoder m_HighCoder = new BitTreeDecoder(Base.kNumHighLenBits);
-            private uint m_NumPosStates = 0;
+            BitDecoder m_Choice = new BitDecoder();
+            BitDecoder m_Choice2 = new BitDecoder();
+            BitTreeDecoder[] m_LowCoder = new BitTreeDecoder[Base.kNumPosStatesMax];
+            BitTreeDecoder[] m_MidCoder = new BitTreeDecoder[Base.kNumPosStatesMax];
+            BitTreeDecoder m_HighCoder = new BitTreeDecoder(Base.kNumHighLenBits);
+            uint m_NumPosStates = 0;
 
             public void Create(uint numPosStates)
             {
@@ -67,11 +67,11 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             }
         }
 
-        private class LiteralDecoder
+        class LiteralDecoder
         {
-            private struct Decoder2
+            struct Decoder2
             {
-                private BitDecoder[] m_Decoders;
+                BitDecoder[] m_Decoders;
 
                 public void Create()
                 {
@@ -114,10 +114,10 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
                 }
             }
 
-            private Decoder2[] m_Coders;
-            private int m_NumPrevBits;
-            private int m_NumPosBits;
-            private uint m_PosMask;
+            Decoder2[] m_Coders;
+            int m_NumPrevBits;
+            int m_NumPosBits;
+            uint m_PosMask;
 
             public void Create(int numPosBits, int numPrevBits)
             {
@@ -140,7 +140,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
                     m_Coders[i].Init();
             }
 
-            private uint GetState(uint pos, byte prevByte)
+            uint GetState(uint pos, byte prevByte)
             { return ((pos & m_PosMask) << m_NumPrevBits) + (uint) (prevByte >> (8 - m_NumPrevBits)); }
 
             public byte DecodeNormal(RangeCoder.Decoder rangeDecoder, uint pos, byte prevByte)
@@ -150,30 +150,30 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             { return m_Coders[GetState(pos, prevByte)].DecodeWithMatchByte(rangeDecoder, matchByte); }
         };
 
-        private LZ.OutWindow m_OutWindow = new LZ.OutWindow();
-        private RangeCoder.Decoder m_RangeDecoder = new RangeCoder.Decoder();
+        LZ.OutWindow m_OutWindow = new LZ.OutWindow();
+        RangeCoder.Decoder m_RangeDecoder = new RangeCoder.Decoder();
 
-        private BitDecoder[] m_IsMatchDecoders = new BitDecoder[Base.kNumStates << Base.kNumPosStatesBitsMax];
-        private BitDecoder[] m_IsRepDecoders = new BitDecoder[Base.kNumStates];
-        private BitDecoder[] m_IsRepG0Decoders = new BitDecoder[Base.kNumStates];
-        private BitDecoder[] m_IsRepG1Decoders = new BitDecoder[Base.kNumStates];
-        private BitDecoder[] m_IsRepG2Decoders = new BitDecoder[Base.kNumStates];
-        private BitDecoder[] m_IsRep0LongDecoders = new BitDecoder[Base.kNumStates << Base.kNumPosStatesBitsMax];
+        BitDecoder[] m_IsMatchDecoders = new BitDecoder[Base.kNumStates << Base.kNumPosStatesBitsMax];
+        BitDecoder[] m_IsRepDecoders = new BitDecoder[Base.kNumStates];
+        BitDecoder[] m_IsRepG0Decoders = new BitDecoder[Base.kNumStates];
+        BitDecoder[] m_IsRepG1Decoders = new BitDecoder[Base.kNumStates];
+        BitDecoder[] m_IsRepG2Decoders = new BitDecoder[Base.kNumStates];
+        BitDecoder[] m_IsRep0LongDecoders = new BitDecoder[Base.kNumStates << Base.kNumPosStatesBitsMax];
 
-        private BitTreeDecoder[] m_PosSlotDecoder = new BitTreeDecoder[Base.kNumLenToPosStates];
-        private BitDecoder[] m_PosDecoders = new BitDecoder[Base.kNumFullDistances - Base.kEndPosModelIndex];
+        BitTreeDecoder[] m_PosSlotDecoder = new BitTreeDecoder[Base.kNumLenToPosStates];
+        BitDecoder[] m_PosDecoders = new BitDecoder[Base.kNumFullDistances - Base.kEndPosModelIndex];
 
-        private BitTreeDecoder m_PosAlignDecoder = new BitTreeDecoder(Base.kNumAlignBits);
+        BitTreeDecoder m_PosAlignDecoder = new BitTreeDecoder(Base.kNumAlignBits);
 
-        private LenDecoder m_LenDecoder = new LenDecoder();
-        private LenDecoder m_RepLenDecoder = new LenDecoder();
+        LenDecoder m_LenDecoder = new LenDecoder();
+        LenDecoder m_RepLenDecoder = new LenDecoder();
 
-        private LiteralDecoder m_LiteralDecoder = new LiteralDecoder();
+        LiteralDecoder m_LiteralDecoder = new LiteralDecoder();
 
-        private uint m_DictionarySize;
-        private uint m_DictionarySizeCheck;
+        uint m_DictionarySize;
+        uint m_DictionarySizeCheck;
 
-        private uint m_PosStateMask;
+        uint m_PosStateMask;
 
         public Decoder()
         {
@@ -182,7 +182,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
                 m_PosSlotDecoder[i] = new BitTreeDecoder(Base.kNumPosSlotBits);
         }
 
-        private void SetDictionarySize(uint dictionarySize)
+        void SetDictionarySize(uint dictionarySize)
         {
             if (m_DictionarySize != dictionarySize)
             {
@@ -193,7 +193,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             }
         }
 
-        private void SetLiteralProperties(int lp, int lc)
+        void SetLiteralProperties(int lp, int lc)
         {
             if (lp > 8)
                 throw new InvalidParamException();
@@ -202,7 +202,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             m_LiteralDecoder.Create(lp, lc);
         }
 
-        private void SetPosBitsProperties(int pb)
+        void SetPosBitsProperties(int pb)
         {
             if (pb > Base.kNumPosStatesBitsMax)
                 throw new InvalidParamException();
@@ -212,9 +212,9 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             m_PosStateMask = numPosStates - 1;
         }
 
-        private bool _solid = false;
+        bool _solid = false;
 
-        private void Init(System.IO.Stream inStream, System.IO.Stream outStream)
+        void Init(System.IO.Stream inStream, System.IO.Stream outStream)
         {
             m_RangeDecoder.Init(inStream);
             m_OutWindow.Init(outStream, _solid);

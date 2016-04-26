@@ -20,17 +20,11 @@ namespace UCS.Core.Network
 {
     internal class PacketManager : IDisposable
     {
-        #region Public Constructors
-
         public PacketManager()
         {
             m_vIncomingPackets = new ConcurrentQueue<Message>();
             m_vOutgoingPackets = new ConcurrentQueue<Message>();
         }
-
-        #endregion Public Constructors
-
-        #region Private Fields
 
         private static readonly EventWaitHandle m_vIncomingWaitHandle = new AutoResetEvent(false);
         private static readonly EventWaitHandle m_vOutgoingWaitHandle = new AutoResetEvent(false);
@@ -38,17 +32,9 @@ namespace UCS.Core.Network
         private static ConcurrentQueue<Message> m_vOutgoingPackets;
         private bool m_vIsRunning;
 
-        #endregion Private Fields
-
-        #region Private Delegates
-
         private delegate void IncomingProcessingDelegate();
 
         private delegate void OutgoingProcessingDelegate();
-
-        #endregion Private Delegates
-
-        #region Public Methods
 
         public static void ProcessIncomingPacket(Message p)
         {
@@ -87,17 +73,11 @@ namespace UCS.Core.Network
         {
             IncomingProcessingDelegate incomingProcessing = IncomingProcessing;
             incomingProcessing.BeginInvoke(null, null);
-
             OutgoingProcessingDelegate outgoingProcessing = OutgoingProcessing;
             outgoingProcessing.BeginInvoke(null, null);
-
             m_vIsRunning = true;
             Console.WriteLine("[UCS]    Packet Manager started successfully");
         }
-
-        #endregion Public Methods
-
-        #region Private Methods
 
         private void IncomingProcessing()
         {
@@ -147,7 +127,5 @@ namespace UCS.Core.Network
                 }
             }
         }
-
-        #endregion Private Methods
     }
 }

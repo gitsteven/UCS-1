@@ -25,7 +25,7 @@ namespace UCS.PacketProcessing.Messages.Client
     {
         #region Private Fields
 
-        private string m_vChatMessage;
+        string m_vChatMessage;
 
         #endregion Private Fields
 

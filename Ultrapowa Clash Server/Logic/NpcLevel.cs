@@ -15,7 +15,7 @@ namespace UCS.Logic
     {
         #region Private Fields
 
-        private const int m_vType = 0x01036640;
+        const int m_vType = 0x01036640;
 
         #endregion Private Fields
 

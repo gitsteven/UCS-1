@@ -15,7 +15,7 @@ namespace UCS.Core.Crypto.CustomNaCl
 {
     internal class KeyPair
     {
-        private byte[] sk = new byte[32], pk = new byte[32];
+        byte[] sk = new byte[32], pk = new byte[32];
 
         /// <summary>
         /// KeyPair constructor

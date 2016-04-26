@@ -19,7 +19,7 @@ namespace UCS.Logic
     {
         #region Private Fields
 
-        private int m_vUnknown1;
+        int m_vUnknown1;
 
         #endregion Private Fields
 

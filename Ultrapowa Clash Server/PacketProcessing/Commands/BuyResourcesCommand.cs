@@ -83,11 +83,11 @@ namespace UCS.PacketProcessing.Commands
 
         #region Private Fields
 
-        private readonly object m_vCommand;
-        private readonly bool m_vIsCommandEmbedded;
-        private readonly int m_vResourceCount;
-        private readonly int m_vResourceId;
-        private readonly int Unknown1;
+        readonly object m_vCommand;
+        readonly bool m_vIsCommandEmbedded;
+        readonly int m_vResourceCount;
+        readonly int m_vResourceId;
+        readonly int Unknown1;
 
         #endregion Private Fields
     }

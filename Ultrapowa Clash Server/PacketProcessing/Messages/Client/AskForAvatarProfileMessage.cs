@@ -31,8 +31,8 @@ namespace UCS.PacketProcessing.Messages.Client
 
         #region Private Fields
 
-        private long m_vAvatarId;
-        private long m_vCurrentHomeId;
+        long m_vAvatarId;
+        long m_vCurrentHomeId;
 
         #endregion Private Fields
 

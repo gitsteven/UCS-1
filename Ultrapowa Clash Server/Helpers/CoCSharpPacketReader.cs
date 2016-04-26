@@ -37,7 +37,7 @@ namespace UCS.Helpers
 
         #region Private Methods
 
-        private byte[] ReadBytesWithEndian(int count, bool switchEndian = true)
+        byte[] ReadBytesWithEndian(int count, bool switchEndian = true)
         {
             var buffer = new byte[count];
             BaseStream.Read(buffer, 0, count);

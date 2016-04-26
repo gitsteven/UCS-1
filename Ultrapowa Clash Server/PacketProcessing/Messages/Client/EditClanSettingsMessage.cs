@@ -34,13 +34,13 @@ namespace UCS.PacketProcessing.Messages.Client
 
         #region Private Fields
 
-        private int m_vAllianceBadgeData;
-        private string m_vAllianceDescription;
-        private int m_vAllianceOrigin;
-        private int m_vAllianceType;
-        private int m_vRequiredScore;
-        private int m_vWarFrequency;
-        private int Unknown;
+        int m_vAllianceBadgeData;
+        string m_vAllianceDescription;
+        int m_vAllianceOrigin;
+        int m_vAllianceType;
+        int m_vRequiredScore;
+        int m_vWarFrequency;
+        int Unknown;
 
         #endregion Private Fields
 

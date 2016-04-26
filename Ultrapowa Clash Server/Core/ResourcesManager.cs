@@ -13,7 +13,9 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Threading;
+using UCS.Core.Network;
 using UCS.Helpers;
 using UCS.Logic;
 using UCS.PacketProcessing;
@@ -44,13 +46,12 @@ namespace UCS.Core
 
         #region Private Fields
 
-        private static readonly object m_vOnlinePlayersLock = new object();
-        private static ConcurrentDictionary<long, Client> m_vClients;
-        private static DatabaseManager m_vDatabase;
-        private static ConcurrentDictionary<long, Level> m_vInMemoryLevels;
-        private static List<Level> m_vOnlinePlayers;
-        private readonly bool m_vTimerCanceled;
-        private readonly Timer TimerReference;
+        static ConcurrentDictionary<long, Client> m_vClients;
+        static DatabaseManager m_vDatabase;
+        static ConcurrentDictionary<long, Level> m_vInMemoryLevels;
+        static List<Level> m_vOnlinePlayers;
+        readonly bool m_vTimerCanceled;
+        readonly Timer TimerReference;
 
         #endregion Private Fields
 
@@ -75,11 +76,11 @@ namespace UCS.Core
         /// <param name="socketHandle">The (Int64) SocketHandle ID of the client.</param>
         public static void DropClient(long socketHandle)
         {
-            /* TEMPORARY AS CLIENTS CAN ISSUE A CRASH IF NOT DROPPED PROPERLY */
             try
             {
                 Client c;
                 m_vClients.TryRemove(socketHandle, out c);
+
                 if (c.GetLevel() != null)
                     LogPlayerOut(c.GetLevel());
             }
@@ -121,7 +122,7 @@ namespace UCS.Core
         public static List<Level> GetInMemoryLevels()
         {
             var levels = new List<Level>();
-            lock (m_vOnlinePlayersLock)
+            lock (m_vInMemoryLevels)
                 levels.AddRange(m_vInMemoryLevels.Values);
             return levels;
         }
@@ -134,7 +135,7 @@ namespace UCS.Core
         public static List<Level> GetOnlinePlayers()
         {
             var onlinePlayers = new List<Level>();
-            lock (m_vOnlinePlayersLock)
+            lock (m_vOnlinePlayers)
                 onlinePlayers = m_vOnlinePlayers.ToList();
             return onlinePlayers;
         }
@@ -194,7 +195,7 @@ namespace UCS.Core
             client.SetLevel(level);
             level.SetIPAddress(client.CIPAddress);
 
-            lock (m_vOnlinePlayersLock)
+            lock (m_vOnlinePlayers)
                 if (!m_vOnlinePlayers.Contains(level))
                 {
                     m_vOnlinePlayers.Add(level);
@@ -208,10 +209,11 @@ namespace UCS.Core
         /// <param name="level">The level of the player.</param>
         public static void LogPlayerOut(Level level)
         {
-            lock (m_vOnlinePlayersLock)
+            lock (m_vOnlinePlayers)
                 m_vOnlinePlayers.Remove(level);
             DatabaseManager.Singelton.Save(level);
-            m_vInMemoryLevels.TryRemove(level.GetPlayerAvatar().GetId());
+            lock (m_vInMemoryLevels)
+                m_vInMemoryLevels.TryRemove(level.GetPlayerAvatar().GetId());
         }
 
         /// <summary>
@@ -232,10 +234,10 @@ namespace UCS.Core
         /// </summary>
         /// <param name="id">The (Int64) ID of the player.</param>
         /// <returns>Return the level of the player.</returns>
-        private static Level GetInMemoryPlayer(long id)
+        static Level GetInMemoryPlayer(long id)
         {
             Level result = null;
-            lock (m_vOnlinePlayersLock)
+            lock (m_vInMemoryLevels)
                 if (m_vInMemoryLevels.ContainsKey(id))
                     result = m_vInMemoryLevels[id];
             return result;
@@ -245,7 +247,7 @@ namespace UCS.Core
         ///     This function is running at an interval, and check for dead clients.
         /// </summary>
         /// <param name="state">The state.</param>
-        private void ReleaseOrphans(object state)
+        void ReleaseOrphans(object state)
         {
             if (m_vTimerCanceled)
                 TimerReference.Dispose();

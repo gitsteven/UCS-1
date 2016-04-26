@@ -21,8 +21,8 @@ namespace UCS.PacketProcessing.Commands
     {
         #region Private Fields
 
-        private Alliance m_vAlliance;
-        private int m_vReason;
+        Alliance m_vAlliance;
+        int m_vReason;
 
         #endregion Private Fields
 

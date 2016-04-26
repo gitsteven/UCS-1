@@ -20,7 +20,7 @@ namespace UCS.PacketProcessing.Commands
     {
         #region Private Fields
 
-        private Alliance m_vAlliance;
+        Alliance m_vAlliance;
 
         #endregion Private Fields
 

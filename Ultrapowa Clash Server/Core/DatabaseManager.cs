@@ -47,8 +47,8 @@ namespace UCS.Core
 
         #region Private Fields
 
-        private static DatabaseManager singelton;
-        private readonly string m_vConnectionString;
+        static DatabaseManager singelton;
+        readonly string m_vConnectionString;
 
         #endregion Private Fields
 

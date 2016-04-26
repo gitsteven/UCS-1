@@ -17,18 +17,18 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZ
     public class InWindow
     {
         public Byte[] _bufferBase = null; // pointer to buffer with data
-        private System.IO.Stream _stream;
-        private UInt32 _posLimit; // offset (from _buffer) of first byte when new block reading must be done
-        private bool _streamEndWasReached; // if (true) then _streamPos shows real end of stream
+        System.IO.Stream _stream;
+        UInt32 _posLimit; // offset (from _buffer) of first byte when new block reading must be done
+        bool _streamEndWasReached; // if (true) then _streamPos shows real end of stream
 
-        private UInt32 _pointerToLastSafePosition;
+        UInt32 _pointerToLastSafePosition;
 
         public UInt32 _bufferOffset;
 
         public UInt32 _blockSize; // Size of Allocated memory block
         public UInt32 _pos; // offset (from _buffer) of curent byte
-        private UInt32 _keepSizeBefore; // how many BYTEs must be kept in buffer before _pos
-        private UInt32 _keepSizeAfter; // how many BYTEs must be kept buffer after _pos
+        UInt32 _keepSizeBefore; // how many BYTEs must be kept in buffer before _pos
+        UInt32 _keepSizeAfter; // how many BYTEs must be kept buffer after _pos
         public UInt32 _streamPos; // offset (from _buffer) of first not read byte from Stream
 
         public void MoveBlock()
@@ -72,7 +72,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZ
             }
         }
 
-        private void Free()
+        void Free()
         { _bufferBase = null; }
 
         public void Create(UInt32 keepSizeBefore, UInt32 keepSizeAfter, UInt32 keepSizeReserv)

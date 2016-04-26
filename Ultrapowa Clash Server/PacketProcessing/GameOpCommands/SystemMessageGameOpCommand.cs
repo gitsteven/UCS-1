@@ -23,7 +23,7 @@ namespace UCS.PacketProcessing.GameOpCommands
     {
         #region Private Fields
 
-        private readonly string[] m_vArgs;
+        readonly string[] m_vArgs;
 
         #endregion Private Fields
 

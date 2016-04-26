@@ -14,13 +14,13 @@ namespace UCS.Core.Crypto.LZMA.Common
 {
     public class InBuffer
     {
-        private byte[] m_Buffer;
-        private uint m_Pos;
-        private uint m_Limit;
-        private uint m_BufferSize;
-        private System.IO.Stream m_Stream;
-        private bool m_StreamWasExhausted;
-        private ulong m_ProcessedSize;
+        byte[] m_Buffer;
+        uint m_Pos;
+        uint m_Limit;
+        uint m_BufferSize;
+        System.IO.Stream m_Stream;
+        bool m_StreamWasExhausted;
+        ulong m_ProcessedSize;
 
         public InBuffer(uint bufferSize)
         {

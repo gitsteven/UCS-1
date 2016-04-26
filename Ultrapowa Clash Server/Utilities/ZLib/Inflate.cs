@@ -52,7 +52,7 @@ namespace UCS.Utilities.ZLib
 
         #region Private Enums
 
-        private enum InflateBlockMode
+        enum InflateBlockMode
         {
             TYPE = 0, // get type bits (3, including end bit)
             LENS = 1, // get lengths for stored
@@ -126,7 +126,7 @@ namespace UCS.Utilities.ZLib
 
         #region Private Fields
 
-        private const int MANY = 1440;
+        const int MANY = 1440;
         // bit buffer
 
         // check function
@@ -135,7 +135,7 @@ namespace UCS.Utilities.ZLib
 
         // if STORED, bytes left to copy
 
-        private InflateBlockMode mode;
+        InflateBlockMode mode;
 
         #endregion Private Fields
 
@@ -825,32 +825,32 @@ namespace UCS.Utilities.ZLib
 
         #region Private Fields
 
-        private const int BADCODE = 9;
+        const int BADCODE = 9;
 
-        private const int COPY = 5;
+        const int COPY = 5;
 
-        private const int DIST = 3;
+        const int DIST = 3;
 
         // i: get distance next
-        private const int DISTEXT = 4;
+        const int DISTEXT = 4;
 
-        private const int END = 8;
+        const int END = 8;
 
-        private const int LEN = 1;
+        const int LEN = 1;
 
         // i: get length/literal/eob next
-        private const int LENEXT = 2;
+        const int LENEXT = 2;
 
         // i: getting length extra (have base)
         // i: getting distance extra
         // o: copying bytes in window, waiting for space
-        private const int LIT = 6;
+        const int LIT = 6;
 
         // waiting for "i:"=input, "o:"=output, "x:"=nothing
-        private const int START = 0; // x: set up for LEN
+        const int START = 0; // x: set up for LEN
 
         // o: got literal, waiting for output space
-        private const int WASH = 7;
+        const int WASH = 7;
 
         #endregion Private Fields
 
@@ -1576,7 +1576,7 @@ namespace UCS.Utilities.ZLib
 
         #region Private Enums
 
-        private enum InflateManagerMode
+        enum InflateManagerMode
         {
             METHOD = 0, // waiting for method byte
             FLAG = 1, // waiting for flag byte
@@ -1621,11 +1621,11 @@ namespace UCS.Utilities.ZLib
         #region Private Fields
 
         // preset dictionary flag in zlib header
-        private const int PRESET_DICT = 0x20;
+        const int PRESET_DICT = 0x20;
 
-        private const int Z_DEFLATED = 8;
+        const int Z_DEFLATED = 8;
 
-        private static readonly byte[] mark = { 0, 0, 0xff, 0xff };
+        static readonly byte[] mark = { 0, 0, 0xff, 0xff };
         // pointer back to this zlib stream
 
         // mode independent information
@@ -1635,7 +1635,7 @@ namespace UCS.Utilities.ZLib
 
         // if FLAGS, method byte
 
-        private InflateManagerMode mode;
+        InflateManagerMode mode;
 
         #endregion Private Fields
 

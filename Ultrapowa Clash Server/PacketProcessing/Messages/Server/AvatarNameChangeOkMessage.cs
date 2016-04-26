@@ -31,8 +31,8 @@ namespace UCS.PacketProcessing.Messages.Server
 
         #region Private Fields
 
-        private readonly int m_vServerCommandType;
-        private string m_vAvatarName;
+        readonly int m_vServerCommandType;
+        string m_vAvatarName;
 
         #endregion Private Fields
 

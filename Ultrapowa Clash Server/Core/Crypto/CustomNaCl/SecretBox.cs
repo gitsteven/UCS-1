@@ -16,8 +16,8 @@ namespace UCS.Core.Crypto.CustomNaCl
 {
     public class SecretBox
     {
-        private const int SHAREDKEYLENGTH = 32;
-        private byte[] KnownSharedKey = new byte[SHAREDKEYLENGTH];
+        const int SHAREDKEYLENGTH = 32;
+        byte[] KnownSharedKey = new byte[SHAREDKEYLENGTH];
 
         public SecretBox(byte[] s)
         {

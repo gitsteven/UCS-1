@@ -43,10 +43,10 @@ namespace UCS.Logic
 
         #region Private Fields
 
-        private readonly List<int> m_vMaxResources;
-        private readonly ResourceData m_vProductionResourceData;
-        private readonly List<int> m_vResourcesPerHour;
-        private DateTime m_vTimeSinceLastClick;
+        readonly List<int> m_vMaxResources;
+        readonly ResourceData m_vProductionResourceData;
+        readonly List<int> m_vResourcesPerHour;
+        DateTime m_vTimeSinceLastClick;
 
         #endregion Private Fields
 

@@ -18,7 +18,7 @@ namespace UCS.Logic
     {
         #region Private Fields
 
-        private Level m_vLevel;
+        Level m_vLevel;
 
         #endregion Private Fields
 

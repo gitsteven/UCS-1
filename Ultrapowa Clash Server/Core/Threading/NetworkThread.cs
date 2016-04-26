@@ -22,7 +22,7 @@ namespace UCS.Core.Threading
     {
         #region Private Properties
 
-        private static Thread T { get; set; }
+        static Thread T { get; set; }
 
         #endregion Private Properties
 

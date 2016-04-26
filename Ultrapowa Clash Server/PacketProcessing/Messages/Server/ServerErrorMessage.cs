@@ -19,7 +19,7 @@ namespace UCS.PacketProcessing.Messages.Server
     {
         #region Private Fields
 
-        private string m_vErrorMessage;
+        string m_vErrorMessage;
 
         #endregion Private Fields
 

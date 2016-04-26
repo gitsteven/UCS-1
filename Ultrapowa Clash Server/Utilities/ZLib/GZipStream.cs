@@ -177,12 +177,12 @@ namespace UCS.Utilities.ZLib
         /// </remarks>
         public int Crc32 { get; private set; }
 
-        private int _headerByteCount;
+        int _headerByteCount;
         internal ZlibBaseStream _baseStream;
-        private bool _disposed;
-        private bool _firstReadDone;
-        private string _FileName;
-        private string _Comment;
+        bool _disposed;
+        bool _firstReadDone;
+        string _FileName;
+        string _Comment;
 
         /// <summary>
         ///     Create a <c>GZipStream</c> using the specified <c>CompressionMode</c>.
@@ -766,7 +766,7 @@ namespace UCS.Utilities.ZLib
         internal static readonly System.Text.Encoding iso8859dash1 = System.Text.Encoding.GetEncoding("iso-8859-1");
 #endif
 
-        private int EmitHeader()
+        int EmitHeader()
         {
             var commentBytes = Comment == null ? null : iso8859dash1.GetBytes(Comment);
             var filenameBytes = FileName == null ? null : iso8859dash1.GetBytes(FileName);

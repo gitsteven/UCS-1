@@ -44,7 +44,7 @@ namespace UCS.Core.Web
 
         #region Private Properties
 
-        private static Thread T { get; set; }
+        static Thread T { get; set; }
 
         #endregion Private Properties
 
@@ -71,9 +71,9 @@ namespace UCS.Core.Web
 
         #region Private Fields
 
-        private static readonly string APIKey = ConfigurationManager.AppSettings["UCSList - APIKey"];
-        private static readonly int Status = CheckStatus();
-        private static readonly string UCSPanel = "https://www.ultrapowa.xyz/api/";
+        static readonly string APIKey = ConfigurationManager.AppSettings["UCSList - APIKey"];
+        static readonly int Status = CheckStatus();
+        static readonly string UCSPanel = "https://www.ultrapowa.xyz/api/";
 
         #endregion Private Fields
 

@@ -12,7 +12,9 @@
 using System;
 using System.Configuration;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
+using System.Net.Sockets;
 using System.Windows.Forms;
 using UCS.Core;
 using UCS.Core.Network;
@@ -34,8 +36,6 @@ namespace UCS.Helpers
                     Console.WriteLine("[UCS][MENU]  -> /status      - Shows the actual UCS status.");
                     Console.WriteLine("[UCS][MENU]  -> /clear       - Clears the console screen.");
                     Console.WriteLine("[UCS][MENU]  -> /restart     - Restarts UCS instantly.");
-                    Console.WriteLine("[UCS][MENU]  -> /prepareshutdown    - Send Shutdown Message To Users.");
-                    Console.WriteLine("[UCS][MENU]  -> /shutdown    - Shuts UCS down instantly.");
                     break;
 
                 case "/status":
@@ -57,29 +57,14 @@ namespace UCS.Helpers
                     break;
 
                 case "/restart":
-                    DatabaseManager.Singelton.Save(ResourcesManager.GetInMemoryLevels());
-                    DatabaseManager.Singelton.Save(ObjectManager.GetInMemoryAlliances());
                     foreach (var onlinePlayer in ResourcesManager.GetOnlinePlayers())
                     {
                         var p = new ShutdownStartedMessage(onlinePlayer.GetClient());
                         p.SetCode(5);
                         PacketManager.ProcessOutgoingPacket(p);
                     }
-                    Console.WriteLine("Shutdown Message Initiated!");
-                    Process.Start(Application.ExecutablePath);
-                    Environment.Exit(0);
-                    break;
-
-                case "/shutdown":
-                    foreach (var onlinePlayer in ResourcesManager.GetOnlinePlayers())
-                    {
-                        var p = new ShutdownStartedMessage(onlinePlayer.GetClient());
-                        p.SetCode(5);
-                        PacketManager.ProcessOutgoingPacket(p);
-                    }
-                    Console.WriteLine("Shutdown Message Initiated!");
-                    DatabaseManager.Singelton.Save(ResourcesManager.GetInMemoryLevels());
-                    DatabaseManager.Singelton.Save(ObjectManager.GetInMemoryAlliances());
+                    Console.WriteLine("[UCS]    Shutdown Message Initiated!");
+                    Process.Start(Directory.GetCurrentDirectory() + @"\Tools\UCR.exe");
                     Environment.Exit(0);
                     break;
 

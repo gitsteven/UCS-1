@@ -26,8 +26,8 @@ namespace UCS.Files.CSV
 
         #region Private Fields
 
-        private readonly CSVTable m_vCSVTable;
-        private readonly int m_vRowStart;
+        readonly CSVTable m_vCSVTable;
+        readonly int m_vRowStart;
 
         #endregion Private Fields
 

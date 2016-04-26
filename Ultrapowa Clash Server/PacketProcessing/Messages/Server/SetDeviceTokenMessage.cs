@@ -18,7 +18,7 @@ namespace UCS.PacketProcessing.Messages.Server
     //Packet 20113
     internal class SetDeviceTokenMessage : Message
     {
-        private readonly Level level;
+        readonly Level level;
 
         #region Public Constructors
 

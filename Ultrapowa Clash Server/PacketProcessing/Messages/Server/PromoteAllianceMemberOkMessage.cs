@@ -45,8 +45,8 @@ namespace UCS.PacketProcessing.Messages.Server
 
         #region Private Fields
 
-        private readonly long m_vId;
-        private readonly int m_vRole;
+        readonly long m_vId;
+        readonly int m_vRole;
 
         #endregion Private Fields
     }

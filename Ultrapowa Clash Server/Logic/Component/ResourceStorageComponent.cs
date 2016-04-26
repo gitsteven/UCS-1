@@ -47,9 +47,9 @@ namespace UCS.Logic
 
         #region Private Fields
 
-        private readonly List<int> m_vCurrentResources;
-        private readonly List<int> m_vStolenResources;
-        private List<int> m_vMaxResources;
+        readonly List<int> m_vCurrentResources;
+        readonly List<int> m_vStolenResources;
+        List<int> m_vMaxResources;
 
         #endregion Private Fields
 

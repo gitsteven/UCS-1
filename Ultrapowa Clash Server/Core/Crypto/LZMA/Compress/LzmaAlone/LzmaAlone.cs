@@ -79,7 +79,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LzmaAlone
 
     internal class LzmaAlone
     {
-        private enum Key
+        enum Key
         {
             Help1 = 0,
             Help2,
@@ -96,7 +96,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LzmaAlone
             Train
         };
 
-        private static void PrintHelp()
+        static void PrintHelp()
         {
             System.Console.WriteLine("\nUsage:  LZMA <e|d> [<switches>...] inputFile outputFile\n" +
                 "  e: encode file\n" +
@@ -116,7 +116,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LzmaAlone
                 );
         }
 
-        private static bool GetNumber(string s, out Int32 v)
+        static bool GetNumber(string s, out Int32 v)
         {
             v = 0;
             for (int i = 0; i < s.Length; i++)
@@ -130,14 +130,14 @@ namespace UCS.Core.Crypto.LZMA.Compress.LzmaAlone
             return true;
         }
 
-        private static int IncorrectCommand()
+        static int IncorrectCommand()
         {
             throw (new Exception("Command line error"));
             // System.Console.WriteLine("\nCommand line error\n");
             // return 1;
         }
 
-        private static int Start(string[] args)
+        static int Start(string[] args)
         {
             System.Console.WriteLine("\nLZMA# 4.61  2008-11-23\n");
 

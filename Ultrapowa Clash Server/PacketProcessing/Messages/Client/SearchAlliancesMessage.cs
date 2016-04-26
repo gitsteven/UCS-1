@@ -33,15 +33,15 @@ namespace UCS.PacketProcessing.Messages.Client
 
         #region Private Fields
 
-        private const int m_vAllianceLimit = 60;
-        private int m_vAllianceOrigin;
-        private int m_vAllianceScore;
-        private int m_vMaximumAllianceMembers;
-        private int m_vMinimumAllianceLevel;
-        private int m_vMinimumAllianceMembers;
-        private string m_vSearchString;
-        private byte m_vShowOnlyJoinableAlliances;
-        private int m_vWarFrequency;
+        const int m_vAllianceLimit = 60;
+        int m_vAllianceOrigin;
+        int m_vAllianceScore;
+        int m_vMaximumAllianceMembers;
+        int m_vMinimumAllianceLevel;
+        int m_vMinimumAllianceMembers;
+        string m_vSearchString;
+        byte m_vShowOnlyJoinableAlliances;
+        int m_vWarFrequency;
 
         #endregion Private Fields
 

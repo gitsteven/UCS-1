@@ -40,27 +40,27 @@ namespace UCS.Logic
 
         #region Private Fields
 
-        private readonly int m_vDonatedTroops;
-        private readonly byte m_vIsNewMember;
-        private readonly int m_vReceivedTroops;
-        private readonly int[] m_vRoleTable = { 1, 1, 4, 2, 3 };
+        readonly int m_vDonatedTroops;
+        readonly byte m_vIsNewMember;
+        readonly int m_vReceivedTroops;
+        readonly int[] m_vRoleTable = { 1, 1, 4, 2, 3 };
 
-        private readonly int m_vWarCooldown;
+        readonly int m_vWarCooldown;
 
-        private readonly int m_vWarOptInStatus;
+        readonly int m_vWarOptInStatus;
 
         //private long m_vHomeId;
-        private long m_vAvatarId;
+        long m_vAvatarId;
 
         //mapping roles so comparison is easier
         //private int m_vExpLevel;
         //private int m_vScore;
-        private int m_vOrder;
+        int m_vOrder;
 
-        private int m_vPreviousOrder;
+        int m_vPreviousOrder;
 
         //private string m_vName;
-        private int m_vRole;
+        int m_vRole;
 
         #endregion Private Fields
 

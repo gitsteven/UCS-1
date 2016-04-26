@@ -33,9 +33,9 @@ namespace UCS.Logic
 
         #region Private Fields
 
-        private readonly List<Component> m_vComponents;
-        private readonly Data m_vData;
-        private readonly Level m_vLevel;
+        readonly List<Component> m_vComponents;
+        readonly Data m_vData;
+        readonly Level m_vLevel;
 
         #endregion Private Fields
 

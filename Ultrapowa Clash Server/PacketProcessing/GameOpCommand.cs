@@ -21,7 +21,7 @@ namespace UCS.PacketProcessing
     {
         #region Private Fields
 
-        private byte m_vRequiredAccountPrivileges;
+        byte m_vRequiredAccountPrivileges;
 
         #endregion Private Fields
 

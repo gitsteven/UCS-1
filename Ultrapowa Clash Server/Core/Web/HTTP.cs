@@ -36,12 +36,12 @@ namespace UCS.Core.Web
     {
         #region Private Fields
 
-        private HttpListener _listener;
-        private int _port;
-        private Thread _serverThread;
-        private string jsonapp;
-        private string apikey = ConfigurationManager.AppSettings["ApiKey"].ToString();
-        private string mime = "text/plain";
+        HttpListener _listener;
+        int _port;
+        Thread _serverThread;
+        string jsonapp;
+        string apikey = ConfigurationManager.AppSettings["ApiKey"].ToString();
+        string mime = "text/plain";
 
         #endregion Private Fields
 
@@ -110,14 +110,14 @@ namespace UCS.Core.Web
 
         #region Private Methods
 
-        private static byte[] GetBytes(string str)
+        static byte[] GetBytes(string str)
         {
             var bytes = new byte[str.Length * sizeof(char)];
             Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
             return bytes;
         }
 
-        private void Handler(string type)
+        void Handler(string type)
         {
             try
             {
@@ -162,7 +162,7 @@ namespace UCS.Core.Web
             }
         }
 
-        private void Initialize(int port)
+        void Initialize(int port)
         {
             _port = port;
             _serverThread = new Thread(Listen);
@@ -170,7 +170,7 @@ namespace UCS.Core.Web
             Console.WriteLine("[UCS]    API has been successfully started");
         }
 
-        private void Listen()
+        void Listen()
         {
             _listener = new HttpListener();
             _listener.Prefixes.Add(String.Concat("http://*:", _port, '/', apikey, '/'));
@@ -189,7 +189,7 @@ namespace UCS.Core.Web
             }
         }
 
-        private void Process(HttpListenerContext context)
+        void Process(HttpListenerContext context)
         {
             string[] Apis = { "inmemclans", "inmemplayers", "onlineplayers", "totalclients", "ram", "all", string.Empty };
             var type = context.Request.Url.AbsolutePath.Substring(apikey.Length + 2).ToLower();
@@ -214,7 +214,7 @@ namespace UCS.Core.Web
                         fstream.Close();
                     }
 
-                    context.Response.StatusCode = (int)HttpStatusCode.OK;
+                    context.Response.StatusCode = (int) HttpStatusCode.OK;
                     context.Response.OutputStream.Flush();
                 }
                 catch (Exception ex)
@@ -234,7 +234,7 @@ namespace UCS.Core.Web
                             context.Response.OutputStream.Write(buffer, 0, nbytes);
                         fstream.Close();
                     }
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
                     context.Response.OutputStream.Flush();
                 }
             }
@@ -255,7 +255,7 @@ namespace UCS.Core.Web
                         context.Response.OutputStream.Write(buffer, 0, nbytes);
                     fstream.Close();
                 }
-                context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                context.Response.StatusCode = (int) HttpStatusCode.NotFound;
                 context.Response.OutputStream.Flush();
             }
             context.Response.OutputStream.Close();

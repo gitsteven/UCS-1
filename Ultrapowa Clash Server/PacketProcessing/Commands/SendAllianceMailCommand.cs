@@ -25,7 +25,7 @@ namespace UCS.PacketProcessing.Commands
     {
         #region Private Fields
 
-        private readonly string m_vMailContent;
+        readonly string m_vMailContent;
 
         #endregion Private Fields
 

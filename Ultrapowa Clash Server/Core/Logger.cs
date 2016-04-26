@@ -34,9 +34,9 @@ namespace UCS.Core
 
         #region Private Fields
 
-        private static readonly object m_vSyncObject = new object();
-        private static readonly TextWriter m_vTextWriter;
-        private static int m_vLogLevel;
+        static readonly object m_vSyncObject = new object();
+        static readonly TextWriter m_vTextWriter;
+        static int m_vLogLevel;
 
         #endregion Private Fields
 

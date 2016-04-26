@@ -32,9 +32,9 @@ namespace UCS.Logic.Manager
 
         #region Private Fields
 
-        private readonly List<List<Component>> m_vComponents;
+        readonly List<List<Component>> m_vComponents;
 
-        private readonly Level m_vLevel;
+        readonly Level m_vLevel;
 
         #endregion Private Fields
 

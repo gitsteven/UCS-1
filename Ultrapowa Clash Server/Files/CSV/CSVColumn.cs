@@ -17,7 +17,7 @@ namespace UCS.Files.CSV
     {
         #region Private Fields
 
-        private readonly List<string> m_vValues;
+        readonly List<string> m_vValues;
 
         #endregion Private Fields
 

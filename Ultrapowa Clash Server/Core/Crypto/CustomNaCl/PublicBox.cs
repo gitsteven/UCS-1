@@ -16,13 +16,13 @@ namespace UCS.Core.Crypto.CustomNaCl
 {
     public class PublicBox
     {
-        private const int KEYBYTES = 32;
-        private const int NONCEBYTES = 24;
-        private const int ZEROBYTES = 32;
-        private const int BOXZEROBYTES = 16;
-        private const int BEFORENMBYTES = 32;
+        const int KEYBYTES = 32;
+        const int NONCEBYTES = 24;
+        const int ZEROBYTES = 32;
+        const int BOXZEROBYTES = 16;
+        const int BEFORENMBYTES = 32;
 
-        private byte[] PrecomputedSharedKey = new byte[BEFORENMBYTES];
+        byte[] PrecomputedSharedKey = new byte[BEFORENMBYTES];
 
         public PublicBox(byte[] privatekey, byte[] publickey)
         {

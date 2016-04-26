@@ -20,7 +20,7 @@ namespace UCS.Files.Logic
     {
         #region Private Fields
 
-        private readonly int m_vGlobalID;
+        readonly int m_vGlobalID;
 
         #endregion Private Fields
 

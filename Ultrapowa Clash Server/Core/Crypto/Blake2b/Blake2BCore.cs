@@ -38,31 +38,31 @@ namespace UCS.Core.Crypto.Blake2b
 {
     public sealed partial class Blake2BCore
     {
-        private bool _isInitialized = false;
+        bool _isInitialized = false;
 
-        private int _bufferFilled;
-        private byte[] _buf = new byte[128];
+        int _bufferFilled;
+        byte[] _buf = new byte[128];
 
-        private ulong[] _m = new ulong[16];
-        private ulong[] _h = new ulong[8];
-        private ulong _counter0;
-        private ulong _counter1;
-        private ulong _finalizationFlag0;
-        private ulong _finalizationFlag1;
+        ulong[] _m = new ulong[16];
+        ulong[] _h = new ulong[8];
+        ulong _counter0;
+        ulong _counter1;
+        ulong _finalizationFlag0;
+        ulong _finalizationFlag1;
 
-        private const int NumberOfRounds = 12;
-        private const int BlockSizeInBytes = 128;
+        const int NumberOfRounds = 12;
+        const int BlockSizeInBytes = 128;
 
-        private const ulong IV0 = 0x6A09E667F3BCC908UL;
-        private const ulong IV1 = 0xBB67AE8584CAA73BUL;
-        private const ulong IV2 = 0x3C6EF372FE94F82BUL;
-        private const ulong IV3 = 0xA54FF53A5F1D36F1UL;
-        private const ulong IV4 = 0x510E527FADE682D1UL;
-        private const ulong IV5 = 0x9B05688C2B3E6C1FUL;
-        private const ulong IV6 = 0x1F83D9ABFB41BD6BUL;
-        private const ulong IV7 = 0x5BE0CD19137E2179UL;
+        const ulong IV0 = 0x6A09E667F3BCC908UL;
+        const ulong IV1 = 0xBB67AE8584CAA73BUL;
+        const ulong IV2 = 0x3C6EF372FE94F82BUL;
+        const ulong IV3 = 0xA54FF53A5F1D36F1UL;
+        const ulong IV4 = 0x510E527FADE682D1UL;
+        const ulong IV5 = 0x9B05688C2B3E6C1FUL;
+        const ulong IV6 = 0x1F83D9ABFB41BD6BUL;
+        const ulong IV7 = 0x5BE0CD19137E2179UL;
 
-        private static readonly int[] Sigma = new int[NumberOfRounds * 16] {
+        static readonly int[] Sigma = new int[NumberOfRounds * 16] {
             0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
             14, 10, 4, 8, 9, 15, 13, 6, 1, 12, 0, 2, 11, 7, 5, 3,
             11, 8, 12, 0, 5, 2, 15, 13, 10, 14, 3, 6, 7, 1, 9, 4,
@@ -90,7 +90,7 @@ namespace UCS.Core.Crypto.Blake2b
                 ((ulong) buf[offset]));
         }
 
-        private static void UInt64ToBytes(ulong value, byte[] buf, int offset)
+        static void UInt64ToBytes(ulong value, byte[] buf, int offset)
         {
             buf[offset + 7] = (byte) (value >> 7 * 8);
             buf[offset + 6] = (byte) (value >> 6 * 8);

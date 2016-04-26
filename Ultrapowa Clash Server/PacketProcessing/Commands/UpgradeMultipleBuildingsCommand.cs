@@ -74,8 +74,8 @@ namespace UCS.PacketProcessing.Commands
 
         #region Private Fields
 
-        private readonly List<int> m_vBuildingIdList;
-        private readonly byte m_vIsAltResource;
+        readonly List<int> m_vBuildingIdList;
+        readonly byte m_vIsAltResource;
 
         #endregion Private Fields
     }

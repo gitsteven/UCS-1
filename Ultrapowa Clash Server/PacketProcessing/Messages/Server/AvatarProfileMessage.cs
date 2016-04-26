@@ -20,7 +20,7 @@ namespace UCS.PacketProcessing.Messages.Server
     {
         #region Private Fields
 
-        private Level m_vLevel;
+        Level m_vLevel;
 
         #endregion Private Fields
 

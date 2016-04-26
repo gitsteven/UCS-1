@@ -67,27 +67,27 @@ namespace UCS.Logic.Manager
 
         #region Private Fields
 
-        private static readonly List<ObstacleData> m_vGemBoxes = new List<ObstacleData>();
+        static readonly List<ObstacleData> m_vGemBoxes = new List<ObstacleData>();
 
-        private static readonly List<ObstacleData> m_vSpawnAbleObstacles = new List<ObstacleData>();
+        static readonly List<ObstacleData> m_vSpawnAbleObstacles = new List<ObstacleData>();
 
-        private static int m_vObstacleLimit = -1;
+        static int m_vObstacleLimit = -1;
 
-        private static int m_vObstacleRespawnSeconds = -1;
+        static int m_vObstacleRespawnSeconds = -1;
 
-        private static int SumWeights;
+        static int SumWeights;
 
-        private readonly Timer m_vGemBoxTimer;
+        readonly Timer m_vGemBoxTimer;
 
-        private readonly Level m_vLevel;
+        readonly Level m_vLevel;
 
-        private readonly Timer m_vNormalTimer;
+        readonly Timer m_vNormalTimer;
 
-        private readonly Timer m_vSpecialTimer;
+        readonly Timer m_vSpecialTimer;
 
-        private volatile int m_vObstacleClearCount;
+        volatile int m_vObstacleClearCount;
 
-        private int m_vRespawnSeed;
+        int m_vRespawnSeed;
 
         #endregion Private Fields
 
@@ -199,7 +199,7 @@ namespace UCS.Logic.Manager
 
         #region Private Methods
 
-        private int[] GetFreePlace(ObstacleData od)
+        int[] GetFreePlace(ObstacleData od)
         {
             try
             {
@@ -305,7 +305,7 @@ namespace UCS.Logic.Manager
             }
         }
 
-        private ObstacleData GetRandomObstacle()
+        ObstacleData GetRandomObstacle()
         {
             var randomValue = new Random().Next(0, SumWeights);
             foreach (var ob in m_vSpawnAbleObstacles)
@@ -317,7 +317,7 @@ namespace UCS.Logic.Manager
             return m_vSpawnAbleObstacles[0];
         }
 
-        private bool obstacleHasSpace(ObstacleData od, int x, int y, int[,] field)
+        bool obstacleHasSpace(ObstacleData od, int x, int y, int[,] field)
         {
             int w = od.Width, h = od.Height;
             for (var i = 0; i < w; i++)
@@ -332,7 +332,7 @@ namespace UCS.Logic.Manager
             return true;
         }
 
-        private void SpawnObstacle(int[] position, ObstacleData data)
+        void SpawnObstacle(int[] position, ObstacleData data)
         {
             var o = new Obstacle(data, m_vLevel);
             o.SetPositionXY(position[0], position[1]);

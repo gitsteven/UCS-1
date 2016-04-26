@@ -28,8 +28,8 @@ namespace UCS.PacketProcessing.Messages.Client
 
         #region Private Properties
 
-        private static long AllianceID { get; set; }
-        private static long WarID { get; set; }
+        static long AllianceID { get; set; }
+        static long WarID { get; set; }
 
         #endregion Private Properties
 

@@ -46,10 +46,10 @@ namespace UCS.Logic
 
         #region Private Fields
 
-        private readonly List<DataSlot> m_vUnits;
-        private bool m_vIsSpellForge;
-        private bool m_vIsWaitingForSpace;
-        private Timer m_vTimer;
+        readonly List<DataSlot> m_vUnits;
+        bool m_vIsSpellForge;
+        bool m_vIsWaitingForSpace;
+        Timer m_vTimer;
 
         #endregion Private Fields
 

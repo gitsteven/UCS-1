@@ -39,13 +39,13 @@ namespace UCS.PacketProcessing.Messages.Server
 
         #region Private Fields
 
-        private string m_vContentURL;
-        private int m_vErrorCode;
-        private string m_vReason;
-        private string m_vRedirectDomain;
-        private int m_vRemainingTime;
-        private string m_vResourceFingerprintData;
-        private string m_vUpdateURL;
+        string m_vContentURL;
+        int m_vErrorCode;
+        string m_vReason;
+        string m_vRedirectDomain;
+        int m_vRemainingTime;
+        string m_vResourceFingerprintData;
+        string m_vUpdateURL;
 
         #endregion Private Fields
 

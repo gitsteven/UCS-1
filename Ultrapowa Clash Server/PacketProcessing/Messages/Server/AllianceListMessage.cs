@@ -30,8 +30,8 @@ namespace UCS.PacketProcessing.Messages.Server
 
         #region Private Fields
 
-        private List<Alliance> m_vAlliances;
-        private string m_vSearchString;
+        List<Alliance> m_vAlliances;
+        string m_vSearchString;
 
         #endregion Private Fields
 

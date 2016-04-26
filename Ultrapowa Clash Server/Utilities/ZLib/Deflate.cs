@@ -30,14 +30,14 @@ namespace UCS.Utilities.ZLib
 
     internal sealed class DeflateManager
     {
-        private static readonly int MEM_LEVEL_MAX = 9;
-        private static readonly int MEM_LEVEL_DEFAULT = 8;
+        static readonly int MEM_LEVEL_MAX = 9;
+        static readonly int MEM_LEVEL_DEFAULT = 8;
 
         internal delegate BlockState CompressFunc(FlushType flush);
 
         internal class Config
         {
-            private static readonly Config[] Table;
+            static readonly Config[] Table;
 
             internal DeflateFlavor Flavor;
 
@@ -74,7 +74,7 @@ namespace UCS.Utilities.ZLib
                 };
             }
 
-            private Config(int goodLength, int maxLazy, int niceLength, int maxChainLength, DeflateFlavor flavor)
+            Config(int goodLength, int maxLazy, int niceLength, int maxChainLength, DeflateFlavor flavor)
             {
                 GoodLength = goodLength;
                 MaxLazy = maxLazy;
@@ -89,9 +89,9 @@ namespace UCS.Utilities.ZLib
             }
         }
 
-        private CompressFunc DeflateFunction;
+        CompressFunc DeflateFunction;
 
-        private static readonly string[] _ErrorMessage =
+        static readonly string[] _ErrorMessage =
         {
             "need dictionary",
             "stream end",
@@ -106,35 +106,35 @@ namespace UCS.Utilities.ZLib
         };
 
         // preset dictionary flag in zlib header
-        private static readonly int PRESET_DICT = 0x20;
+        static readonly int PRESET_DICT = 0x20;
 
-        private static readonly int INIT_STATE = 42;
-        private static readonly int BUSY_STATE = 113;
-        private static readonly int FINISH_STATE = 666;
+        static readonly int INIT_STATE = 42;
+        static readonly int BUSY_STATE = 113;
+        static readonly int FINISH_STATE = 666;
 
         // The deflate compression method
-        private static readonly int Z_DEFLATED = 8;
+        static readonly int Z_DEFLATED = 8;
 
-        private static readonly int STORED_BLOCK = 0;
-        private static readonly int STATIC_TREES = 1;
-        private static readonly int DYN_TREES = 2;
+        static readonly int STORED_BLOCK = 0;
+        static readonly int STATIC_TREES = 1;
+        static readonly int DYN_TREES = 2;
 
         // The three kinds of block type
-        private static readonly int Z_BINARY = 0;
+        static readonly int Z_BINARY = 0;
 
-        private static readonly int Z_ASCII = 1;
-        private static readonly int Z_UNKNOWN = 2;
+        static readonly int Z_ASCII = 1;
+        static readonly int Z_UNKNOWN = 2;
 
-        private static readonly int Buf_size = 8 * 2;
+        static readonly int Buf_size = 8 * 2;
 
-        private static readonly int MIN_MATCH = 3;
-        private static readonly int MAX_MATCH = 258;
+        static readonly int MIN_MATCH = 3;
+        static readonly int MAX_MATCH = 258;
 
-        private static readonly int MIN_LOOKAHEAD = MAX_MATCH + MIN_MATCH + 1;
+        static readonly int MIN_LOOKAHEAD = MAX_MATCH + MIN_MATCH + 1;
 
-        private static readonly int HEAP_SIZE = 2 * InternalConstants.L_CODES + 1;
+        static readonly int HEAP_SIZE = 2 * InternalConstants.L_CODES + 1;
 
-        private static readonly int END_BLOCK = 256;
+        static readonly int END_BLOCK = 256;
 
         internal ZlibCodec _codec; // the zlib encoder/decoder
         internal int status; // as the name implies
@@ -185,7 +185,7 @@ namespace UCS.Utilities.ZLib
 
         internal int block_start;
 
-        private Config config;
+        Config config;
         internal int match_length; // length of best match
         internal int prev_match; // previous match
         internal int match_available; // set if previous match exists
@@ -270,7 +270,7 @@ namespace UCS.Utilities.ZLib
         }
 
         // lm_init
-        private void _InitializeLazyMatch()
+        void _InitializeLazyMatch()
         {
             window_size = 2 * w_size;
 
@@ -290,7 +290,7 @@ namespace UCS.Utilities.ZLib
         }
 
         // Initialize the tree data structures for a new zlib stream.
-        private void _InitializeTreeData()
+        void _InitializeTreeData()
         {
             treeLiterals.dyn_tree = dyn_ltree;
             treeLiterals.staticTree = StaticTree.Literals;
@@ -543,7 +543,7 @@ namespace UCS.Utilities.ZLib
         }
 
         // Output a block of bytes on the stream. IN assertion: there is enough room in pending_buf.
-        private void put_bytes(byte[] p, int start, int len)
+        void put_bytes(byte[] p, int start, int len)
         {
             Array.Copy(p, start, pending, pendingCount, len);
             pendingCount += len;
@@ -971,7 +971,7 @@ namespace UCS.Utilities.ZLib
         // window_size-MIN_LOOKAHEAD At least one byte has been read, or avail_in == 0; reads are
         // performed for at least two bytes (required for the zip translate_eol option -- not
         // supported here).
-        private void _fillWindow()
+        void _fillWindow()
         {
             int n, m;
             int p;
@@ -1406,7 +1406,7 @@ namespace UCS.Utilities.ZLib
             return lookahead;
         }
 
-        private bool Rfc1950BytesEmitted;
+        bool Rfc1950BytesEmitted;
         internal bool WantRfc1950HeaderBytes { get; set; } = true;
 
         internal int Initialize(ZlibCodec codec, CompressionLevel level)
@@ -1509,7 +1509,7 @@ namespace UCS.Utilities.ZLib
             return status == BUSY_STATE ? ZlibConstants.Z_DATA_ERROR : ZlibConstants.Z_OK;
         }
 
-        private void SetDeflater()
+        void SetDeflater()
         {
             switch (config.Flavor)
             {

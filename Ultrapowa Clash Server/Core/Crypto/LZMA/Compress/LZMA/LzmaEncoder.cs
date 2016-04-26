@@ -17,15 +17,15 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
 {
     public class Encoder : ICoder, ISetCoderProperties, IWriteCoderProperties
     {
-        private enum EMatchFinderType
+        enum EMatchFinderType
         {
             BT2,
             BT4,
         };
 
-        private const UInt32 kIfinityPrice = 0xFFFFFFF;
+        const UInt32 kIfinityPrice = 0xFFFFFFF;
 
-        private static Byte[] g_FastPos = new Byte[1 << 11];
+        static Byte[] g_FastPos = new Byte[1 << 11];
 
         static Encoder()
         {
@@ -41,7 +41,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             }
         }
 
-        private static UInt32 GetPosSlot(UInt32 pos)
+        static UInt32 GetPosSlot(UInt32 pos)
         {
             if (pos < (1 << 11))
                 return g_FastPos[pos];
@@ -50,7 +50,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             return (UInt32) (g_FastPos[pos >> 20] + 40);
         }
 
-        private static UInt32 GetPosSlot2(UInt32 pos)
+        static UInt32 GetPosSlot2(UInt32 pos)
         {
             if (pos < (1 << 17))
                 return (UInt32) (g_FastPos[pos >> 6] + 12);
@@ -59,11 +59,11 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             return (UInt32) (g_FastPos[pos >> 26] + 52);
         }
 
-        private Base.State _state = new Base.State();
-        private Byte _previoubyte;
-        private UInt32[] _repDistances = new UInt32[Base.kNumRepDistances];
+        Base.State _state = new Base.State();
+        Byte _previoubyte;
+        UInt32[] _repDistances = new UInt32[Base.kNumRepDistances];
 
-        private void BaseInit()
+        void BaseInit()
         {
             _state.Init();
             _previoubyte = 0;
@@ -71,14 +71,14 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
                 _repDistances[i] = 0;
         }
 
-        private const int kDefaultDictionaryLogSize = 22;
-        private const UInt32 kNumFastBytesDefault = 0x20;
+        const int kDefaultDictionaryLogSize = 22;
+        const UInt32 kNumFastBytesDefault = 0x20;
 
-        private class LiteralEncoder
+        class LiteralEncoder
         {
             public struct Encoder2
             {
-                private BitEncoder[] m_Encoders;
+                BitEncoder[] m_Encoders;
 
                 public void Create()
                 {
@@ -151,10 +151,10 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
                 }
             }
 
-            private Encoder2[] m_Coders;
-            private int m_NumPrevBits;
-            private int m_NumPosBits;
-            private uint m_PosMask;
+            Encoder2[] m_Coders;
+            int m_NumPrevBits;
+            int m_NumPosBits;
+            uint m_PosMask;
 
             public void Create(int numPosBits, int numPrevBits)
             {
@@ -180,13 +180,13 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             { return m_Coders[((pos & m_PosMask) << m_NumPrevBits) + (uint) (prevByte >> (8 - m_NumPrevBits))]; }
         }
 
-        private class LenEncoder
+        class LenEncoder
         {
-            private RangeCoder.BitEncoder _choice = new RangeCoder.BitEncoder();
-            private RangeCoder.BitEncoder _choice2 = new RangeCoder.BitEncoder();
-            private RangeCoder.BitTreeEncoder[] _lowCoder = new RangeCoder.BitTreeEncoder[Base.kNumPosStatesEncodingMax];
-            private RangeCoder.BitTreeEncoder[] _midCoder = new RangeCoder.BitTreeEncoder[Base.kNumPosStatesEncodingMax];
-            private RangeCoder.BitTreeEncoder _highCoder = new RangeCoder.BitTreeEncoder(Base.kNumHighLenBits);
+            RangeCoder.BitEncoder _choice = new RangeCoder.BitEncoder();
+            RangeCoder.BitEncoder _choice2 = new RangeCoder.BitEncoder();
+            RangeCoder.BitTreeEncoder[] _lowCoder = new RangeCoder.BitTreeEncoder[Base.kNumPosStatesEncodingMax];
+            RangeCoder.BitTreeEncoder[] _midCoder = new RangeCoder.BitTreeEncoder[Base.kNumPosStatesEncodingMax];
+            RangeCoder.BitTreeEncoder _highCoder = new RangeCoder.BitTreeEncoder(Base.kNumHighLenBits);
 
             public LenEncoder()
             {
@@ -257,13 +257,13 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             }
         };
 
-        private const UInt32 kNumLenSpecSymbols = Base.kNumLowLenSymbols + Base.kNumMidLenSymbols;
+        const UInt32 kNumLenSpecSymbols = Base.kNumLowLenSymbols + Base.kNumMidLenSymbols;
 
-        private class LenPriceTableEncoder : LenEncoder
+        class LenPriceTableEncoder : LenEncoder
         {
-            private UInt32[] _prices = new UInt32[Base.kNumLenSymbols << Base.kNumPosStatesBitsEncodingMax];
-            private UInt32 _tableSize;
-            private UInt32[] _counters = new UInt32[Base.kNumPosStatesEncodingMax];
+            UInt32[] _prices = new UInt32[Base.kNumLenSymbols << Base.kNumPosStatesBitsEncodingMax];
+            UInt32 _tableSize;
+            UInt32[] _counters = new UInt32[Base.kNumPosStatesEncodingMax];
 
             public void SetTableSize(UInt32 tableSize)
             {
@@ -275,7 +275,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
                 return _prices[posState * Base.kNumLenSymbols + symbol];
             }
 
-            private void UpdateTable(UInt32 posState)
+            void UpdateTable(UInt32 posState)
             {
                 SetPrices(posState, _tableSize, _prices, posState * Base.kNumLenSymbols);
                 _counters[posState] = _tableSize;
@@ -295,9 +295,9 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             }
         }
 
-        private const UInt32 kNumOpts = 1 << 12;
+        const UInt32 kNumOpts = 1 << 12;
 
-        private class Optimal
+        class Optimal
         {
             public Base.State State;
 
@@ -335,66 +335,66 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             }
         };
 
-        private Optimal[] _optimum = new Optimal[kNumOpts];
-        private LZ.IMatchFinder _matchFinder = null;
-        private RangeCoder.Encoder _rangeEncoder = new RangeCoder.Encoder();
+        Optimal[] _optimum = new Optimal[kNumOpts];
+        LZ.IMatchFinder _matchFinder = null;
+        RangeCoder.Encoder _rangeEncoder = new RangeCoder.Encoder();
 
-        private RangeCoder.BitEncoder[] _isMatch = new RangeCoder.BitEncoder[Base.kNumStates << Base.kNumPosStatesBitsMax];
-        private RangeCoder.BitEncoder[] _isRep = new RangeCoder.BitEncoder[Base.kNumStates];
-        private RangeCoder.BitEncoder[] _isRepG0 = new RangeCoder.BitEncoder[Base.kNumStates];
-        private RangeCoder.BitEncoder[] _isRepG1 = new RangeCoder.BitEncoder[Base.kNumStates];
-        private RangeCoder.BitEncoder[] _isRepG2 = new RangeCoder.BitEncoder[Base.kNumStates];
-        private RangeCoder.BitEncoder[] _isRep0Long = new RangeCoder.BitEncoder[Base.kNumStates << Base.kNumPosStatesBitsMax];
+        RangeCoder.BitEncoder[] _isMatch = new RangeCoder.BitEncoder[Base.kNumStates << Base.kNumPosStatesBitsMax];
+        RangeCoder.BitEncoder[] _isRep = new RangeCoder.BitEncoder[Base.kNumStates];
+        RangeCoder.BitEncoder[] _isRepG0 = new RangeCoder.BitEncoder[Base.kNumStates];
+        RangeCoder.BitEncoder[] _isRepG1 = new RangeCoder.BitEncoder[Base.kNumStates];
+        RangeCoder.BitEncoder[] _isRepG2 = new RangeCoder.BitEncoder[Base.kNumStates];
+        RangeCoder.BitEncoder[] _isRep0Long = new RangeCoder.BitEncoder[Base.kNumStates << Base.kNumPosStatesBitsMax];
 
-        private RangeCoder.BitTreeEncoder[] _posSlotEncoder = new RangeCoder.BitTreeEncoder[Base.kNumLenToPosStates];
+        RangeCoder.BitTreeEncoder[] _posSlotEncoder = new RangeCoder.BitTreeEncoder[Base.kNumLenToPosStates];
 
-        private RangeCoder.BitEncoder[] _posEncoders = new RangeCoder.BitEncoder[Base.kNumFullDistances - Base.kEndPosModelIndex];
-        private RangeCoder.BitTreeEncoder _posAlignEncoder = new RangeCoder.BitTreeEncoder(Base.kNumAlignBits);
+        RangeCoder.BitEncoder[] _posEncoders = new RangeCoder.BitEncoder[Base.kNumFullDistances - Base.kEndPosModelIndex];
+        RangeCoder.BitTreeEncoder _posAlignEncoder = new RangeCoder.BitTreeEncoder(Base.kNumAlignBits);
 
-        private LenPriceTableEncoder _lenEncoder = new LenPriceTableEncoder();
-        private LenPriceTableEncoder _repMatchLenEncoder = new LenPriceTableEncoder();
+        LenPriceTableEncoder _lenEncoder = new LenPriceTableEncoder();
+        LenPriceTableEncoder _repMatchLenEncoder = new LenPriceTableEncoder();
 
-        private LiteralEncoder _literalEncoder = new LiteralEncoder();
+        LiteralEncoder _literalEncoder = new LiteralEncoder();
 
-        private UInt32[] _matchDistances = new UInt32[Base.kMatchMaxLen * 2 + 2];
+        UInt32[] _matchDistances = new UInt32[Base.kMatchMaxLen * 2 + 2];
 
-        private UInt32 _numFastBytes = kNumFastBytesDefault;
-        private UInt32 _longestMatchLength;
-        private UInt32 _numDistancePairs;
+        UInt32 _numFastBytes = kNumFastBytesDefault;
+        UInt32 _longestMatchLength;
+        UInt32 _numDistancePairs;
 
-        private UInt32 _additionalOffset;
+        UInt32 _additionalOffset;
 
-        private UInt32 _optimumEndIndex;
-        private UInt32 _optimumCurrentIndex;
+        UInt32 _optimumEndIndex;
+        UInt32 _optimumCurrentIndex;
 
-        private bool _longestMatchWasFound;
+        bool _longestMatchWasFound;
 
-        private UInt32[] _posSlotPrices = new UInt32[1 << (Base.kNumPosSlotBits + Base.kNumLenToPosStatesBits)];
-        private UInt32[] _distancesPrices = new UInt32[Base.kNumFullDistances << Base.kNumLenToPosStatesBits];
-        private UInt32[] _alignPrices = new UInt32[Base.kAlignTableSize];
-        private UInt32 _alignPriceCount;
+        UInt32[] _posSlotPrices = new UInt32[1 << (Base.kNumPosSlotBits + Base.kNumLenToPosStatesBits)];
+        UInt32[] _distancesPrices = new UInt32[Base.kNumFullDistances << Base.kNumLenToPosStatesBits];
+        UInt32[] _alignPrices = new UInt32[Base.kAlignTableSize];
+        UInt32 _alignPriceCount;
 
-        private UInt32 _distTableSize = (kDefaultDictionaryLogSize * 2);
+        UInt32 _distTableSize = (kDefaultDictionaryLogSize * 2);
 
-        private int _posStateBits = 2;
-        private UInt32 _posStateMask = (4 - 1);
-        private int _numLiteralPosStateBits = 0;
-        private int _numLiteralContextBits = 3;
+        int _posStateBits = 2;
+        UInt32 _posStateMask = (4 - 1);
+        int _numLiteralPosStateBits = 0;
+        int _numLiteralContextBits = 3;
 
-        private UInt32 _dictionarySize = (1 << kDefaultDictionaryLogSize);
-        private UInt32 _dictionarySizePrev = 0xFFFFFFFF;
-        private UInt32 _numFastBytesPrev = 0xFFFFFFFF;
+        UInt32 _dictionarySize = (1 << kDefaultDictionaryLogSize);
+        UInt32 _dictionarySizePrev = 0xFFFFFFFF;
+        UInt32 _numFastBytesPrev = 0xFFFFFFFF;
 
-        private Int64 nowPos64;
-        private bool _finished;
-        private System.IO.Stream _inStream;
+        Int64 nowPos64;
+        bool _finished;
+        System.IO.Stream _inStream;
 
-        private EMatchFinderType _matchFinderType = EMatchFinderType.BT4;
-        private bool _writeEndMark = false;
+        EMatchFinderType _matchFinderType = EMatchFinderType.BT4;
+        bool _writeEndMark = false;
 
-        private bool _needReleaseMFStream;
+        bool _needReleaseMFStream;
 
-        private void Create()
+        void Create()
         {
             if (_matchFinder == null)
             {
@@ -422,12 +422,12 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
                 _posSlotEncoder[i] = new RangeCoder.BitTreeEncoder(Base.kNumPosSlotBits);
         }
 
-        private void SetWriteEndMarkerMode(bool writeEndMarker)
+        void SetWriteEndMarkerMode(bool writeEndMarker)
         {
             _writeEndMark = writeEndMarker;
         }
 
-        private void Init()
+        void Init()
         {
             BaseInit();
             _rangeEncoder.Init();
@@ -463,7 +463,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             _additionalOffset = 0;
         }
 
-        private void ReadMatchDistances(out UInt32 lenRes, out UInt32 numDistancePairs)
+        void ReadMatchDistances(out UInt32 lenRes, out UInt32 numDistancePairs)
         {
             lenRes = 0;
             numDistancePairs = _matchFinder.GetMatches(_matchDistances);
@@ -477,7 +477,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             _additionalOffset++;
         }
 
-        private void MovePos(UInt32 num)
+        void MovePos(UInt32 num)
         {
             if (num > 0)
             {
@@ -486,13 +486,13 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             }
         }
 
-        private UInt32 GetRepLen1Price(Base.State state, UInt32 posState)
+        UInt32 GetRepLen1Price(Base.State state, UInt32 posState)
         {
             return _isRepG0[state.Index].GetPrice0() +
                     _isRep0Long[(state.Index << Base.kNumPosStatesBitsMax) + posState].GetPrice0();
         }
 
-        private UInt32 GetPureRepPrice(UInt32 repIndex, Base.State state, UInt32 posState)
+        UInt32 GetPureRepPrice(UInt32 repIndex, Base.State state, UInt32 posState)
         {
             UInt32 price;
             if (repIndex == 0)
@@ -514,13 +514,13 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             return price;
         }
 
-        private UInt32 GetRepPrice(UInt32 repIndex, UInt32 len, Base.State state, UInt32 posState)
+        UInt32 GetRepPrice(UInt32 repIndex, UInt32 len, Base.State state, UInt32 posState)
         {
             UInt32 price = _repMatchLenEncoder.GetPrice(len - Base.kMatchMinLen, posState);
             return price + GetPureRepPrice(repIndex, state, posState);
         }
 
-        private UInt32 GetPosLenPrice(UInt32 pos, UInt32 len, UInt32 posState)
+        UInt32 GetPosLenPrice(UInt32 pos, UInt32 len, UInt32 posState)
         {
             UInt32 price;
             UInt32 lenToPosState = Base.GetLenToPosState(len);
@@ -532,7 +532,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             return price + _lenEncoder.GetPrice(len - Base.kMatchMinLen, posState);
         }
 
-        private UInt32 Backward(out UInt32 backRes, UInt32 cur)
+        UInt32 Backward(out UInt32 backRes, UInt32 cur)
         {
             _optimumEndIndex = cur;
             UInt32 posMem = _optimum[cur].PosPrev;
@@ -566,10 +566,10 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             return _optimumCurrentIndex;
         }
 
-        private UInt32[] reps = new UInt32[Base.kNumRepDistances];
-        private UInt32[] repLens = new UInt32[Base.kNumRepDistances];
+        UInt32[] reps = new UInt32[Base.kNumRepDistances];
+        UInt32[] repLens = new UInt32[Base.kNumRepDistances];
 
-        private UInt32 GetOptimum(UInt32 position, out UInt32 backRes)
+        UInt32 GetOptimum(UInt32 position, out UInt32 backRes)
         {
             if (_optimumEndIndex != _optimumCurrentIndex)
             {
@@ -1061,13 +1061,13 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             }
         }
 
-        private bool ChangePair(UInt32 smallDist, UInt32 bigDist)
+        bool ChangePair(UInt32 smallDist, UInt32 bigDist)
         {
             const int kDif = 7;
             return (smallDist < ((UInt32) (1) << (32 - kDif)) && bigDist >= (smallDist << kDif));
         }
 
-        private void WriteEndMarker(UInt32 posState)
+        void WriteEndMarker(UInt32 posState)
         {
             if (!_writeEndMark)
                 return;
@@ -1086,7 +1086,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             _posAlignEncoder.ReverseEncode(_rangeEncoder, posReduced & Base.kAlignMask);
         }
 
-        private void Flush(UInt32 nowPos)
+        void Flush(UInt32 nowPos)
         {
             ReleaseMFStream();
             WriteEndMarker(nowPos & _posStateMask);
@@ -1261,7 +1261,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             }
         }
 
-        private void ReleaseMFStream()
+        void ReleaseMFStream()
         {
             if (_matchFinder != null && _needReleaseMFStream)
             {
@@ -1270,19 +1270,19 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             }
         }
 
-        private void SetOutStream(System.IO.Stream outStream)
+        void SetOutStream(System.IO.Stream outStream)
         { _rangeEncoder.SetStream(outStream); }
 
-        private void ReleaseOutStream()
+        void ReleaseOutStream()
         { _rangeEncoder.ReleaseStream(); }
 
-        private void ReleaseStreams()
+        void ReleaseStreams()
         {
             ReleaseMFStream();
             ReleaseOutStream();
         }
 
-        private void SetStreams(System.IO.Stream inStream, System.IO.Stream outStream,
+        void SetStreams(System.IO.Stream inStream, System.IO.Stream outStream,
                 Int64 inSize, Int64 outSize)
         {
             _inStream = inStream;
@@ -1332,8 +1332,8 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             }
         }
 
-        private const int kPropSize = 5;
-        private Byte[] properties = new Byte[kPropSize];
+        const int kPropSize = 5;
+        Byte[] properties = new Byte[kPropSize];
 
         public void WriteCoderProperties(System.IO.Stream outStream)
         {
@@ -1343,10 +1343,10 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             outStream.Write(properties, 0, kPropSize);
         }
 
-        private UInt32[] tempPrices = new UInt32[Base.kNumFullDistances];
-        private UInt32 _matchPriceCount;
+        UInt32[] tempPrices = new UInt32[Base.kNumFullDistances];
+        UInt32 _matchPriceCount;
 
-        private void FillDistancesPrices()
+        void FillDistancesPrices()
         {
             for (UInt32 i = Base.kStartPosModelIndex; i < Base.kNumFullDistances; i++)
             {
@@ -1378,20 +1378,20 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             _matchPriceCount = 0;
         }
 
-        private void FillAlignPrices()
+        void FillAlignPrices()
         {
             for (UInt32 i = 0; i < Base.kAlignTableSize; i++)
                 _alignPrices[i] = _posAlignEncoder.ReverseGetPrice(i);
             _alignPriceCount = 0;
         }
 
-        private static string[] kMatchFinderIDs =
+        static string[] kMatchFinderIDs =
         {
             "BT2",
             "BT4",
         };
 
-        private static int FindMatchFinder(string s)
+        static int FindMatchFinder(string s)
         {
             for (int m = 0; m < kMatchFinderIDs.Length; m++)
                 if (s == kMatchFinderIDs[m])
@@ -1506,7 +1506,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZMA
             }
         }
 
-        private uint _trainSize = 0;
+        uint _trainSize = 0;
 
         public void SetTrainSize(uint trainSize)
         {

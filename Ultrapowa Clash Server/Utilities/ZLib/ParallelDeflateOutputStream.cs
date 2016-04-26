@@ -73,35 +73,35 @@ namespace UCS.Utilities.ZLib
     /// <seealso cref="DeflateStream" />
     public class ParallelDeflateOutputStream : Stream
     {
-        private static readonly int IO_BUFFER_SIZE_DEFAULT = 64 * 1024; // 128k
-        private static readonly int BufferPairsPerCore = 4;
+        static readonly int IO_BUFFER_SIZE_DEFAULT = 64 * 1024; // 128k
+        static readonly int BufferPairsPerCore = 4;
 
-        private List<WorkItem> _pool;
-        private readonly bool _leaveOpen;
-        private bool emitting;
-        private Stream _outStream;
-        private int _maxBufferPairs;
-        private int _bufferSize = IO_BUFFER_SIZE_DEFAULT;
-        private AutoResetEvent _newlyCompressedBlob;
+        List<WorkItem> _pool;
+        readonly bool _leaveOpen;
+        bool emitting;
+        Stream _outStream;
+        int _maxBufferPairs;
+        int _bufferSize = IO_BUFFER_SIZE_DEFAULT;
+        AutoResetEvent _newlyCompressedBlob;
 
         //private ManualResetEvent            _writingDone;
         //private ManualResetEvent            _sessionReset;
-        private readonly object _outputLock = new object();
+        readonly object _outputLock = new object();
 
-        private bool _isClosed;
-        private bool _firstWriteDone;
-        private int _currentlyFilling;
-        private int _lastFilled;
-        private int _lastWritten;
-        private int _latestCompressed;
-        private CRC32 _runningCrc;
-        private readonly object _latestLock = new object();
-        private Queue<int> _toWrite;
-        private Queue<int> _toFill;
-        private readonly CompressionLevel _compressLevel;
-        private volatile Exception _pendingException;
-        private bool _handlingException;
-        private readonly object _eLock = new object(); // protects _pendingException
+        bool _isClosed;
+        bool _firstWriteDone;
+        int _currentlyFilling;
+        int _lastFilled;
+        int _lastWritten;
+        int _latestCompressed;
+        CRC32 _runningCrc;
+        readonly object _latestLock = new object();
+        Queue<int> _toWrite;
+        Queue<int> _toFill;
+        readonly CompressionLevel _compressLevel;
+        volatile Exception _pendingException;
+        bool _handlingException;
+        readonly object _eLock = new object(); // protects _pendingException
 
         // This bitfield is used only when Trace is defined.
         //private TraceBits _DesiredTrace = TraceBits.Write | TraceBits.WriteBegin |
@@ -110,7 +110,7 @@ namespace UCS.Utilities.ZLib
 
         //private TraceBits _DesiredTrace = TraceBits.WriteBegin | TraceBits.WriteDone | TraceBits.Synch | TraceBits.Lifecycle  | TraceBits.Session ;
 
-        private readonly TraceBits _DesiredTrace =
+        readonly TraceBits _DesiredTrace =
             TraceBits.Session |
             TraceBits.Compress |
             TraceBits.WriteTake |
@@ -401,7 +401,7 @@ namespace UCS.Utilities.ZLib
         /// <remarks>This value is meaningful only after a call to Close().</remarks>
         public long BytesProcessed { get; private set; }
 
-        private void _InitializePoolOfWorkItems()
+        void _InitializePoolOfWorkItems()
         {
             _toWrite = new Queue<int>();
             _toFill = new Queue<int>();
@@ -556,7 +556,7 @@ namespace UCS.Utilities.ZLib
             TraceOutput(TraceBits.WriteEnter, "Write    exit");
         }
 
-        private void _FlushFinish()
+        void _FlushFinish()
         {
             // After writing a series of compressed buffers, each one closed with Flush.Sync, we now
             // write the final one as Flush.Finish, and then stop.
@@ -591,7 +591,7 @@ namespace UCS.Utilities.ZLib
             Crc32 = _runningCrc.Crc32Result;
         }
 
-        private void _Flush(bool lastInput)
+        void _Flush(bool lastInput)
         {
             if (_isClosed)
                 throw new InvalidOperationException();
@@ -766,7 +766,7 @@ namespace UCS.Utilities.ZLib
             _outStream = stream;
         }
 
-        private void EmitPendingBuffers(bool doAll, bool mustWait)
+        void EmitPendingBuffers(bool doAll, bool mustWait)
         {
             // When combining parallel deflation with a ZipSegmentedStream, it's possible for the ZSS
             // to throw from within this method. In that case, Close/Dispose will be called on this
@@ -1034,7 +1034,7 @@ namespace UCS.Utilities.ZLib
         }
 #endif
 
-        private void _DeflateOne(object wi)
+        void _DeflateOne(object wi)
         {
             // compress one buffer
             var workitem = (WorkItem) wi;
@@ -1080,7 +1080,7 @@ namespace UCS.Utilities.ZLib
             }
         }
 
-        private bool DeflateOneSegment(WorkItem workitem)
+        bool DeflateOneSegment(WorkItem workitem)
         {
             var compressor = workitem.compressor;
             var rc = 0;
@@ -1106,7 +1106,7 @@ namespace UCS.Utilities.ZLib
         }
 
         [Conditional("Trace")]
-        private void TraceOutput(TraceBits bits, string format, params object[] varParams)
+        void TraceOutput(TraceBits bits, string format, params object[] varParams)
         {
             if ((bits & _DesiredTrace) != 0)
             {
@@ -1127,7 +1127,7 @@ namespace UCS.Utilities.ZLib
 
         // used only when Trace is defined
         [Flags]
-        private enum TraceBits : uint
+        enum TraceBits : uint
         {
             None = 0,
             NotUsed1 = 1,

@@ -19,7 +19,7 @@ namespace UCS.PacketProcessing.Messages.Server
     {
         #region Private Fields
 
-        private int m_vCode;
+        int m_vCode;
 
         #endregion Private Fields
 

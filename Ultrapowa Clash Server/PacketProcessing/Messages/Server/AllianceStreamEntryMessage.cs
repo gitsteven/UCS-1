@@ -19,7 +19,7 @@ namespace UCS.PacketProcessing.Messages.Server
     {
         #region Private Fields
 
-        private StreamEntry m_vStreamEntry;
+        StreamEntry m_vStreamEntry;
 
         #endregion Private Fields
 

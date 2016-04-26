@@ -40,7 +40,7 @@ namespace UCS.Utilities.ZLib
         protected internal CompressionStrategy Strategy = CompressionStrategy.Default;
 
         // workitem 7159
-        private readonly CRC32 crc;
+        readonly CRC32 crc;
 
         protected internal string _GzipFileName;
         protected internal string _GzipComment;
@@ -82,7 +82,7 @@ namespace UCS.Utilities.ZLib
             get { return _compressionMode == CompressionMode.Compress; }
         }
 
-        private ZlibCodec z
+        ZlibCodec z
         {
             get
             {
@@ -104,7 +104,7 @@ namespace UCS.Utilities.ZLib
             }
         }
 
-        private byte[] workingBuffer
+        byte[] workingBuffer
         {
             get
             {
@@ -156,7 +156,7 @@ namespace UCS.Utilities.ZLib
             while (!done);
         }
 
-        private void finish()
+        void finish()
         {
             if (_z == null)
                 return;
@@ -270,7 +270,7 @@ namespace UCS.Utilities.ZLib
             }
         }
 
-        private void end()
+        void end()
         {
             if (z == null)
                 return;
@@ -330,9 +330,9 @@ namespace UCS.Utilities.ZLib
         }
 #endif
 
-        private bool nomoreinput;
+        bool nomoreinput;
 
-        private string ReadZeroTerminatedString()
+        string ReadZeroTerminatedString()
         {
             var list = new List<byte>();
             var done = false;
@@ -352,7 +352,7 @@ namespace UCS.Utilities.ZLib
             return GZipStream.iso8859dash1.GetString(a, 0, a.Length);
         }
 
-        private int _ReadAndValidateGzipHeader()
+        int _ReadAndValidateGzipHeader()
         {
             var totalBytesRead = 0;
             // read the header on the first read

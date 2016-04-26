@@ -26,17 +26,17 @@ namespace UCS.PacketProcessing
     {
         #region Private Fields
 
-        private byte[] m_vData;
-        private int m_vLength;
-        private ushort m_vMessageVersion;
-        private ushort m_vType;
+        byte[] m_vData;
+        int m_vLength;
+        ushort m_vMessageVersion;
+        ushort m_vType;
         // Constants
-        private const int KeyLength = 32, NonceLength = 24, SessionLength = 24;
+        const int KeyLength = 32, NonceLength = 24, SessionLength = 24;
 
         // A custom keypair used for en/decryption 
-        private static KeyPair CustomKeyPair = new KeyPair();
+        static KeyPair CustomKeyPair = new KeyPair();
 
-        private static Hasher Blake = Blake2B.Create(new Blake2BConfig() { OutputSizeInBytes = 24 });
+        static Hasher Blake = Blake2B.Create(new Blake2BConfig() { OutputSizeInBytes = 24 });
 
         #endregion Private Fields
 

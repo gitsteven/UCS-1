@@ -139,17 +139,17 @@ namespace UCS.Utilities.ZLib
 
         #region Private Fields
 
-        private const int MANY = 1440;
+        const int MANY = 1440;
 
-        private const int Z_BUF_ERROR = -5;
-        private const int Z_DATA_ERROR = -3;
-        private const int Z_ERRNO = -1;
-        private const int Z_MEM_ERROR = -4;
-        private const int Z_NEED_DICT = 2;
-        private const int Z_OK = 0;
-        private const int Z_STREAM_END = 1;
-        private const int Z_STREAM_ERROR = -2;
-        private const int Z_VERSION_ERROR = -6;
+        const int Z_BUF_ERROR = -5;
+        const int Z_DATA_ERROR = -3;
+        const int Z_ERRNO = -1;
+        const int Z_MEM_ERROR = -4;
+        const int Z_NEED_DICT = 2;
+        const int Z_OK = 0;
+        const int Z_STREAM_END = 1;
+        const int Z_STREAM_ERROR = -2;
+        const int Z_VERSION_ERROR = -6;
 
         #endregion Private Fields
 
@@ -240,7 +240,7 @@ namespace UCS.Utilities.ZLib
 
         #region Private Methods
 
-        private int huft_build(int[] b, int bindex, int n, int s, int[] d, int[] e, int[] t, int[] m, int[] hp, int[] hn,
+        int huft_build(int[] b, int bindex, int n, int s, int[] d, int[] e, int[] t, int[] m, int[] hp, int[] hn,
             int[] v)
         {
             // Given a list of code lengths and a maximum table size, make a set of tables to decode
@@ -458,7 +458,7 @@ namespace UCS.Utilities.ZLib
             return y != 0 && g != 1 ? Z_BUF_ERROR : Z_OK;
         }
 
-        private void initWorkArea(int vsize)
+        void initWorkArea(int vsize)
         {
             if (hn == null)
             {

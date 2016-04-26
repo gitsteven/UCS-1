@@ -30,13 +30,13 @@ namespace UCS.Logic.AvatarStreamEntry
 
         #region Private Fields
 
-        private DateTime m_vCreationTime;
-        private int m_vId;
-        private byte m_vIsNew;
-        private long m_vSenderId;
-        private int m_vSenderLeagueId;
-        private int m_vSenderLevel;
-        private string m_vSenderName;
+        DateTime m_vCreationTime;
+        int m_vId;
+        byte m_vIsNew;
+        long m_vSenderId;
+        int m_vSenderLeagueId;
+        int m_vSenderLevel;
+        string m_vSenderName;
 
         #endregion Private Fields
 

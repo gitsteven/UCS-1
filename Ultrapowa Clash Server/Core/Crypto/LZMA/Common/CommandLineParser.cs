@@ -71,7 +71,7 @@ namespace UCS.Core.Crypto.LZMA.Common
     public class Parser
     {
         public ArrayList NonSwitchStrings = new ArrayList();
-        private SwitchResult[] _switches;
+        SwitchResult[] _switches;
 
         public Parser(int numSwitches)
         {
@@ -80,7 +80,7 @@ namespace UCS.Core.Crypto.LZMA.Common
                 _switches[i] = new SwitchResult();
         }
 
-        private bool ParseString(string srcString, SwitchForm[] switchForms)
+        bool ParseString(string srcString, SwitchForm[] switchForms)
         {
             int len = srcString.Length;
             if (len == 0)
@@ -225,7 +225,7 @@ namespace UCS.Core.Crypto.LZMA.Common
             return -1;
         }
 
-        private static bool ParseSubCharsCommand(int numForms, CommandSubCharsSet[] forms,
+        static bool ParseSubCharsCommand(int numForms, CommandSubCharsSet[] forms,
             string commandString, ArrayList indices)
         {
             indices.Clear();
@@ -256,13 +256,13 @@ namespace UCS.Core.Crypto.LZMA.Common
             return (numUsedChars == commandString.Length);
         }
 
-        private const char kSwitchID1 = '-';
-        private const char kSwitchID2 = '/';
+        const char kSwitchID1 = '-';
+        const char kSwitchID2 = '/';
 
-        private const char kSwitchMinus = '-';
-        private const string kStopSwitchParsing = "--";
+        const char kSwitchMinus = '-';
+        const string kStopSwitchParsing = "--";
 
-        private static bool IsItSwitchChar(char c)
+        static bool IsItSwitchChar(char c)
         {
             return (c == kSwitchID1 || c == kSwitchID2);
         }

@@ -18,11 +18,11 @@ namespace UCS.Logic.AvatarStreamEntry
     {
         #region Private Fields
 
-        private int m_vAllianceBadgeData;
-        private long m_vAllianceId;
-        private string m_vAllianceName;
-        private string m_vMessage;
-        private long m_vSenderId;
+        int m_vAllianceBadgeData;
+        long m_vAllianceId;
+        string m_vAllianceName;
+        string m_vMessage;
+        long m_vSenderId;
 
         #endregion Private Fields
 

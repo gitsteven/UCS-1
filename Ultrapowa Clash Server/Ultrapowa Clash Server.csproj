@@ -47,13 +47,13 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>none</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <ErrorReport>none</ErrorReport>
+    <ErrorReport>prompt</ErrorReport>
     <WarningLevel>0</WarningLevel>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
@@ -124,7 +124,7 @@
     <ManifestKeyFile>Ultrapowa Clash Server_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>Internet</TargetZone>
@@ -668,6 +668,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Tools\UCR.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="icone-ucs.ico" />
     <Content Include="Tools\database.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -948,7 +951,6 @@
     <Compile Include="PacketProcessing\Messages\Server\AllianceListMessage.cs" />
     <Compile Include="PacketProcessing\Messages\Server\LeaveAllianceOkMessage.cs" />
     <Compile Include="PacketProcessing\Message.cs" />
-    <Compile Include="Core\Network\SocketRead.cs" />
     <Compile Include="PacketProcessing\Messages\Server\NpcDataMessage.cs" />
     <Compile Include="PacketProcessing\Messages\Server\LoginOkMessage.cs" />
     <Compile Include="PacketProcessing\Messages\Server\AllianceStreamMessage.cs" />

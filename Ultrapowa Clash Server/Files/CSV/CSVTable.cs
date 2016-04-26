@@ -61,10 +61,10 @@ namespace UCS.Files.CSV
 
         #region Private Fields
 
-        private readonly List<string> m_vColumnHeaders;
-        private readonly List<string> m_vColumnTypes;
-        private readonly List<CSVColumn> m_vCSVColumns;
-        private readonly List<CSVRow> m_vCSVRows;
+        readonly List<string> m_vColumnHeaders;
+        readonly List<string> m_vColumnTypes;
+        readonly List<CSVColumn> m_vCSVColumns;
+        readonly List<CSVRow> m_vCSVRows;
 
         #endregion Private Fields
 

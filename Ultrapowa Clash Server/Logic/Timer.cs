@@ -27,8 +27,8 @@ namespace UCS.Logic
 
         #region Private Fields
 
-        private int m_vSeconds;
-        private DateTime m_vStartTime;
+        int m_vSeconds;
+        DateTime m_vStartTime;
 
         #endregion Private Fields
 

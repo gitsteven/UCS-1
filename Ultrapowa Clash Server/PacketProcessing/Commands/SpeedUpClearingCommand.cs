@@ -20,7 +20,7 @@ namespace UCS.PacketProcessing.Commands
     {
         #region Private Fields
 
-        private readonly int m_vObstacleId;
+        readonly int m_vObstacleId;
 
         #endregion Private Fields
 

@@ -23,7 +23,7 @@ namespace UCS.PacketProcessing.Messages.Client
     {
         #region Private Fields
 
-        private const int m_vAllianceLimit = 40;
+        const int m_vAllianceLimit = 40;
 
         #endregion Private Fields
 

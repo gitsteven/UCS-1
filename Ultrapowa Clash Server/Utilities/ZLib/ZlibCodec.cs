@@ -472,7 +472,7 @@ namespace UCS.Utilities.ZLib
             return _InternalInitializeDeflate(wantRfc1950Header);
         }
 
-        private int _InternalInitializeDeflate(bool wantRfc1950Header)
+        int _InternalInitializeDeflate(bool wantRfc1950Header)
         {
             if (istate != null)
                 throw new ZlibException("You may not call InitializeDeflate() after calling InitializeInflate().");

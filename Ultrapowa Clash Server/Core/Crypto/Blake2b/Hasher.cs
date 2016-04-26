@@ -43,7 +43,7 @@ namespace UCS.Core.Crypto.Blake2b
 
         internal class HashAlgorithmAdapter : HashAlgorithm
         {
-            private readonly Hasher _hasher;
+            readonly Hasher _hasher;
 
             protected override void HashCore(byte[] array, int ibStart, int cbSize)
             {

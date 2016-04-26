@@ -43,8 +43,8 @@ namespace UCS.Logic
 
         #region Private Fields
 
-        private CombatItemData m_vCurrentlyUpgradedUnit;
-        private Timer m_vTimer;
+        CombatItemData m_vCurrentlyUpgradedUnit;
+        Timer m_vTimer;
 
         #endregion Private Fields
 

@@ -29,16 +29,16 @@ namespace UCS.Logic.StreamEntry
 
         #region Private Fields
 
-        private long m_vHomeId;
-        private int m_vId;
-        private DateTime m_vMessageTime;
-        private int m_vRole;
-        private long m_vSenderId;
-        private int m_vSenderLeagueId;
-        private int m_vSenderLevel;
-        private string m_vSenderName;
-        private int m_vSenderRole;
-        private int m_vType = -1;
+        long m_vHomeId;
+        int m_vId;
+        DateTime m_vMessageTime;
+        int m_vRole;
+        long m_vSenderId;
+        int m_vSenderLeagueId;
+        int m_vSenderLevel;
+        string m_vSenderName;
+        int m_vSenderRole;
+        int m_vType = -1;
 
         #endregion Private Fields
 

@@ -113,8 +113,8 @@ namespace UCS.PacketProcessing.Commands
 
         #region Private Fields
 
-        private readonly long m_vAvatarId;
-        private readonly string m_vMessage;
+        readonly long m_vAvatarId;
+        readonly string m_vMessage;
 
         #endregion Private Fields
     }

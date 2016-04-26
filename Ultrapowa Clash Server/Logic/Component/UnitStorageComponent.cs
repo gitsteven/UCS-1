@@ -50,8 +50,8 @@ namespace UCS.Logic
 
         #region Private Fields
 
-        private readonly List<UnitSlot> m_vUnits;
-        private int m_vMaxCapacity;
+        readonly List<UnitSlot> m_vUnits;
+        int m_vMaxCapacity;
 
         #endregion Private Fields
 

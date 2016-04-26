@@ -19,9 +19,9 @@ namespace UCS.Logic.StreamEntry
     {
         #region Private Fields
 
-        private long m_vAvatarId;
-        private string m_vAvatarName;
-        private int m_vEventType;
+        long m_vAvatarId;
+        string m_vAvatarName;
+        int m_vEventType;
 
         #endregion Private Fields
 

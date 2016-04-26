@@ -17,30 +17,30 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZ
 {
     public class BinTree : InWindow, IMatchFinder
     {
-        private UInt32 _cyclicBufferPos;
-        private UInt32 _cyclicBufferSize = 0;
-        private UInt32 _matchMaxLen;
+        UInt32 _cyclicBufferPos;
+        UInt32 _cyclicBufferSize = 0;
+        UInt32 _matchMaxLen;
 
-        private UInt32[] _son;
-        private UInt32[] _hash;
+        UInt32[] _son;
+        UInt32[] _hash;
 
-        private UInt32 _cutValue = 0xFF;
-        private UInt32 _hashMask;
-        private UInt32 _hashSizeSum = 0;
+        UInt32 _cutValue = 0xFF;
+        UInt32 _hashMask;
+        UInt32 _hashSizeSum = 0;
 
-        private bool HASH_ARRAY = true;
+        bool HASH_ARRAY = true;
 
-        private const UInt32 kHash2Size = 1 << 10;
-        private const UInt32 kHash3Size = 1 << 16;
-        private const UInt32 kBT2HashSize = 1 << 16;
-        private const UInt32 kStartMaxLen = 1;
-        private const UInt32 kHash3Offset = kHash2Size;
-        private const UInt32 kEmptyHashValue = 0;
-        private const UInt32 kMaxValForNormalize = ((UInt32) 1 << 31) - 1;
+        const UInt32 kHash2Size = 1 << 10;
+        const UInt32 kHash3Size = 1 << 16;
+        const UInt32 kBT2HashSize = 1 << 16;
+        const UInt32 kStartMaxLen = 1;
+        const UInt32 kHash3Offset = kHash2Size;
+        const UInt32 kEmptyHashValue = 0;
+        const UInt32 kMaxValForNormalize = ((UInt32) 1 << 31) - 1;
 
-        private UInt32 kNumHashDirectBytes = 0;
-        private UInt32 kMinMatchCheck = 4;
-        private UInt32 kFixHashSize = kHash2Size + kHash3Size;
+        UInt32 kNumHashDirectBytes = 0;
+        UInt32 kMinMatchCheck = 4;
+        UInt32 kFixHashSize = kHash2Size + kHash3Size;
 
         public void SetType(int numHashBytes)
         {
@@ -365,7 +365,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZ
             while (--num != 0);
         }
 
-        private void NormalizeLinks(UInt32[] items, UInt32 numItems, UInt32 subValue)
+        void NormalizeLinks(UInt32[] items, UInt32 numItems, UInt32 subValue)
         {
             for (UInt32 i = 0; i < numItems; i++)
             {
@@ -378,7 +378,7 @@ namespace UCS.Core.Crypto.LZMA.Compress.LZ
             }
         }
 
-        private void Normalize()
+        void Normalize()
         {
             UInt32 subValue = _pos - _cyclicBufferSize;
             NormalizeLinks(_son, _cyclicBufferSize * 2, subValue);

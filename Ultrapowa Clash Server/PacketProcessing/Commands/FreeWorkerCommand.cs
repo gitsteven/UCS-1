@@ -67,8 +67,8 @@ namespace UCS.PacketProcessing.Commands
 
         #region Private Fields
 
-        private readonly object m_vCommand;
-        private readonly bool m_vIsCommandEmbedded;
+        readonly object m_vCommand;
+        readonly bool m_vIsCommandEmbedded;
 
         #endregion Private Fields
     }

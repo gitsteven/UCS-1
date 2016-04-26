@@ -21,7 +21,7 @@ namespace UCS.PacketProcessing.Messages.Server
     {
         #region Private Fields
 
-        private List<Alliance> m_vAlliances;
+        List<Alliance> m_vAlliances;
 
         #endregion Private Fields
 

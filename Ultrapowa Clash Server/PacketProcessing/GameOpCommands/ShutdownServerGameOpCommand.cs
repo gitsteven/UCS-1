@@ -20,7 +20,7 @@ namespace UCS.PacketProcessing.GameOpCommands
     {
         #region Private Fields
 
-        private string[] m_vArgs;
+        string[] m_vArgs;
 
         #endregion Private Fields
 

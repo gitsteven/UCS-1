@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using UCS.Core.Network;
 using UCS.Files;
 using UCS.Files.CSV;
 using UCS.Files.Logic;
@@ -55,6 +56,23 @@ namespace UCS.Core
             GetAllAlliancesFromDB();
         }
 
+        public static void Stop()
+        {
+            foreach (Level op in ResourcesManager.GetOnlinePlayers())
+            {
+                ResourcesManager.DropClient(op.GetClient().GetSocketHandle());
+            }
+                
+            m_vDatabase = new DatabaseManager();
+            NpcLevels = new Dictionary<int, string>();
+            DataTables = new DataTables();
+            m_vAlliances = new Dictionary<long, Alliance>();
+            m_vHomeDefault = "";
+            m_vAvatarSeed = 0;
+            m_vAllianceSeed = 0;
+            Console.WriteLine("[UCS]    Object Manager unloaded successfully");
+        }
+
         #endregion Public Constructors
 
         #region Private Methods
@@ -63,7 +81,7 @@ namespace UCS.Core
         ///     This function save someuser (Need to implement).
         /// </summary>
         /// <param name="state"></param>
-        private void Save(object state)
+        void Save(object state)
         {
             m_vDatabase.Save(ResourcesManager.GetInMemoryLevels());
             m_vDatabase.Save(m_vAlliances.Values.ToList());
@@ -82,14 +100,14 @@ namespace UCS.Core
 
         #region Private Fields
 
-        private static readonly object m_vDatabaseLock = new object();
-        private static Dictionary<long, Alliance> m_vAlliances;
-        private static long m_vAllianceSeed;
-        private static long m_vAvatarSeed;
-        private static string[] m_vBannedIPs;
-        private static DatabaseManager m_vDatabase;
-        private static string m_vHomeDefault;
-        private static Random m_vRandomSeed;
+        static readonly object m_vDatabaseLock = new object();
+        static Dictionary<long, Alliance> m_vAlliances;
+        static long m_vAllianceSeed;
+        static long m_vAvatarSeed;
+        static string[] m_vBannedIPs;
+        static DatabaseManager m_vDatabase;
+        static string m_vHomeDefault;
+        static Random m_vRandomSeed;
 
         #endregion Private Fields
 

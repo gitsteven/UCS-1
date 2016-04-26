@@ -22,7 +22,7 @@ namespace UCS.PacketProcessing.Messages.Client
     {
         #region Private Fields
 
-        private long m_vAllianceId;
+        long m_vAllianceId;
 
         #endregion Private Fields
 

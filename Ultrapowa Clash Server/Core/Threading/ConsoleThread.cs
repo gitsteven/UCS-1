@@ -22,13 +22,13 @@ namespace UCS.Core.Threading
     internal class ConsoleThread
     {
         #region Private Fields
-        private static string Command;
+        static string Command;
 
         #endregion Private Fields
 
         #region Private Properties
 
-        private static Thread T { get; set; }
+        static Thread T { get; set; }
 
         #endregion Private Properties
 

@@ -26,8 +26,8 @@ namespace UCS.Logic
 
         #region Private Fields
 
-        private readonly GameObject m_vParentGameObject;
-        private bool m_vIsEnabled;
+        readonly GameObject m_vParentGameObject;
+        bool m_vIsEnabled;
 
         #endregion Private Fields
 

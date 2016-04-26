@@ -34,9 +34,9 @@ namespace UCS.PacketProcessing
 
         #region Private Fields
 
-        private readonly long m_vSocketHandle;
+        readonly long m_vSocketHandle;
 
-        private Level m_vLevel;
+        Level m_vLevel;
 
         #endregion Private Fields
 

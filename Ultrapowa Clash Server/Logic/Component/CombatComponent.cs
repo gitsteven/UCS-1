@@ -41,9 +41,9 @@ namespace UCS.Logic
 
         #region Private Fields
 
-        private const int m_vType = 0x01AB3F00;
+        const int m_vType = 0x01AB3F00;
 
-        private int m_vAmmo;
+        int m_vAmmo;
 
         #endregion Private Fields
 

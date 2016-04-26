@@ -27,8 +27,8 @@ namespace UCS.Logic.Manager
 
         #region Private Fields
 
-        private readonly List<GameObject> m_vGameObjectReferences;
-        private int m_vWorkerCount;
+        readonly List<GameObject> m_vGameObjectReferences;
+        int m_vWorkerCount;
 
         #endregion Private Fields
 

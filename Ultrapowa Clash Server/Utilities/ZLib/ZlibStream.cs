@@ -64,7 +64,7 @@ namespace UCS.Utilities.ZLib
 
         #region Private Fields
 
-        private bool _disposed;
+        bool _disposed;
 
         #endregion Private Fields
 

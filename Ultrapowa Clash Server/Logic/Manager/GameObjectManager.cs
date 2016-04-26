@@ -39,12 +39,12 @@ namespace UCS.Logic.Manager
 
         #region Private Fields
 
-        private readonly ComponentManager m_vComponentManager;
-        private readonly List<GameObject> m_vGameObjectRemoveList;
-        private readonly List<List<GameObject>> m_vGameObjects;
-        private readonly List<int> m_vGameObjectsIndex;
-        private readonly Level m_vLevel;
-        private readonly ObstacleManager m_vObstacleManager;
+        readonly ComponentManager m_vComponentManager;
+        readonly List<GameObject> m_vGameObjectRemoveList;
+        readonly List<List<GameObject>> m_vGameObjects;
+        readonly List<int> m_vGameObjectsIndex;
+        readonly Level m_vLevel;
+        readonly ObstacleManager m_vObstacleManager;
 
         #endregion Private Fields
 
@@ -324,14 +324,14 @@ namespace UCS.Logic.Manager
 
         #region Private Methods
 
-        private int GenerateGameObjectGlobalId(GameObject go)
+        int GenerateGameObjectGlobalId(GameObject go)
         {
             var index = m_vGameObjectsIndex[go.ClassId];
             m_vGameObjectsIndex[go.ClassId]++;
             return GlobalID.CreateGlobalID(go.ClassId + 500, index);
         }
 
-        private void RemoveGameObjectTotally(GameObject go)
+        void RemoveGameObjectTotally(GameObject go)
         {
             m_vGameObjects[go.ClassId].Remove(go);
             if (go.ClassId == 0)

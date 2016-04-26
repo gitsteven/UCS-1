@@ -39,9 +39,9 @@ namespace UCS.Logic
 
         #region Private Fields
 
-        private readonly HeroData m_vHeroData;
-        private Timer m_vTimer;
-        private int m_vUpgradeLevelInProgress;
+        readonly HeroData m_vHeroData;
+        Timer m_vTimer;
+        int m_vUpgradeLevelInProgress;
 
         #endregion Private Fields
 
