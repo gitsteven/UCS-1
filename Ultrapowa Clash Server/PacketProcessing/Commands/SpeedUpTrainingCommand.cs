@@ -15,7 +15,7 @@ using UCS.Core;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x201
     internal class SpeedUpTrainingCommand : Command
@@ -59,8 +59,8 @@ namespace UCS.PacketProcessing
                         {
                             var multiplier =
                                 ObjectManager.DataTables.GetGlobals()
-                                    .GetGlobalData("SPELL_SPEED_UP_COST_MULTIPLIER")
-                                    .NumberValue;
+                                             .GetGlobalData("SPELL_SPEED_UP_COST_MULTIPLIER")
+                                             .NumberValue;
                             cost = (int) ((cost * (long) multiplier * 1374389535) >> 32);
                             cost = Math.Max((cost >> 5) + (cost >> 31), 1);
                         }

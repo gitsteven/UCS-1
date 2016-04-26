@@ -9,7 +9,7 @@
  * All Rights Reserved.
  */
 
-using UCS.GameFiles;
+using UCS.Files.Logic;
 
 namespace UCS.Logic
 {

@@ -12,19 +12,10 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace UCS.GameFiles
+namespace UCS.Files.CSV
 {
     internal class CSVTable
     {
-        #region Private Fields
-
-        private readonly List<string> m_vColumnHeaders;
-        private readonly List<string> m_vColumnTypes;
-        private readonly List<CSVColumn> m_vCSVColumns;
-        private readonly List<CSVRow> m_vCSVRows;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public CSVTable(string filePath)
@@ -67,6 +58,15 @@ namespace UCS.GameFiles
         }
 
         #endregion Public Constructors
+
+        #region Private Fields
+
+        private readonly List<string> m_vColumnHeaders;
+        private readonly List<string> m_vColumnTypes;
+        private readonly List<CSVColumn> m_vCSVColumns;
+        private readonly List<CSVRow> m_vCSVRows;
+
+        #endregion Private Fields
 
         #region Public Methods
 

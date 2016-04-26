@@ -10,21 +10,13 @@
  */
 
 using System.IO;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 using UCS.Helpers;
 
 namespace UCS.Logic
 {
     internal class UnitSlot
     {
-        #region Public Fields
-
-        public int Count;
-        public int Level;
-        public CombatItemData UnitData;
-
-        #endregion Public Fields
-
         //a1 + 4
         //a1 + 8
         //a1 + 12
@@ -50,5 +42,13 @@ namespace UCS.Logic
         }
 
         #endregion Public Methods
+
+        #region Public Fields
+
+        public int Count;
+        public int Level;
+        public CombatItemData UnitData;
+
+        #endregion Public Fields
     }
 }

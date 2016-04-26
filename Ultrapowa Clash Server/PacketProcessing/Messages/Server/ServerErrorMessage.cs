@@ -12,7 +12,7 @@
 using System.Collections.Generic;
 using UCS.Helpers;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24115
     internal class ServerErrorMessage : Message
@@ -25,7 +25,7 @@ namespace UCS.PacketProcessing
 
         #region Public Constructors
 
-        public ServerErrorMessage(Client client)
+        public ServerErrorMessage(PacketProcessing.Client client)
             : base(client)
         {
             SetMessageType(24115);

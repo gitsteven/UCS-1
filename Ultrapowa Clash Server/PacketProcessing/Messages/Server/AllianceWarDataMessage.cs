@@ -12,13 +12,13 @@
 using System.Collections.Generic;
 using UCS.Helpers;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     internal class AllianceWarDataMessage : Message
     {
         #region Public Constructors
 
-        public AllianceWarDataMessage(Client client) : base(client)
+        public AllianceWarDataMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24331);
         }

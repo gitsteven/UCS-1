@@ -15,13 +15,6 @@ namespace UCS.Logic
 {
     internal class Timer
     {
-        #region Private Fields
-
-        private int m_vSeconds;
-        private DateTime m_vStartTime;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public Timer()
@@ -31,6 +24,13 @@ namespace UCS.Logic
         }
 
         #endregion Public Constructors
+
+        #region Private Fields
+
+        private int m_vSeconds;
+        private DateTime m_vStartTime;
+
+        #endregion Private Fields
 
         #region Public Methods
 

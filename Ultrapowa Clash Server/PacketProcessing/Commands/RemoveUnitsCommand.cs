@@ -11,11 +11,11 @@
 
 using System.Collections.Generic;
 using System.IO;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x226
     internal class RemoveUnitsCommand : Command
@@ -40,18 +40,6 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Constructors
-
-        //00 00 17 D6 24 B8 F6 5B 00 00 00 01
-        //00 00 02 26 00 00 00 00 00 00 00 02 00 3D 09 00 00 00 00 03 00 00 00 01 00 3D 09 08 00 00 00 02 00 00 00 03 00 00 17 98
-
-        #region Public Properties
-
-        public List<UnitToRemove> UnitsToRemove { get; set; }
-        public int UnitTypesCount { get; set; }
-        public uint Unknown1 { get; set; }
-        public uint Unknown2 { get; set; }
-
-        #endregion Public Properties
 
         #region Public Methods
 
@@ -79,6 +67,18 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        //00 00 17 D6 24 B8 F6 5B 00 00 00 01
+        //00 00 02 26 00 00 00 00 00 00 00 02 00 3D 09 00 00 00 00 03 00 00 00 01 00 3D 09 08 00 00 00 02 00 00 00 03 00 00 17 98
+
+        #region Public Properties
+
+        public List<UnitToRemove> UnitsToRemove { get; set; }
+        public int UnitTypesCount { get; set; }
+        public uint Unknown1 { get; set; }
+        public uint Unknown2 { get; set; }
+
+        #endregion Public Properties
     }
 
     internal class UnitToRemove

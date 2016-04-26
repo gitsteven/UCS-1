@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Program : Ultrapowa Clash Server
  * Description : A C# Writted 'Clash of Clans' Server Emulator !
  *
@@ -14,7 +14,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using UCS.GameFiles;
+using UCS.Files;
+using UCS.Files.CSV;
+using UCS.Files.Logic;
 using UCS.Logic;
 using Timer = System.Threading.Timer;
 
@@ -23,30 +25,10 @@ namespace UCS.Core
 {
     internal class ObjectManager : IDisposable
     {
-        #region Public Fields
-
-        public bool m_vTimerCanceled;
-        public Timer TimerReference;
-
-        #endregion Public Fields
-
-        #region Private Fields
-
-        private static readonly object m_vDatabaseLock = new object();
-        private static Dictionary<long, Alliance> m_vAlliances;
-        private static long m_vAllianceSeed;
-        private static long m_vAvatarSeed;
-        private static string[] m_vBannedIPs;
-        private static DatabaseManager m_vDatabase;
-        private static string m_vHomeDefault;
-        private static Random m_vRandomSeed;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         /// <summary>
-        /// Loader of the ObjectManager class, which is neccessary for all UCS functionality.
+        ///     Loader of the ObjectManager class, which is neccessary for all UCS functionality.
         /// </summary>
         public ObjectManager()
         {
@@ -75,6 +57,42 @@ namespace UCS.Core
 
         #endregion Public Constructors
 
+        #region Private Methods
+
+        /// <summary>
+        ///     This function save someuser (Need to implement).
+        /// </summary>
+        /// <param name="state"></param>
+        private void Save(object state)
+        {
+            m_vDatabase.Save(ResourcesManager.GetInMemoryLevels());
+            m_vDatabase.Save(m_vAlliances.Values.ToList());
+            if (m_vTimerCanceled)
+                TimerReference.Dispose();
+        }
+
+        #endregion Private Methods
+
+        #region Public Fields
+
+        public bool m_vTimerCanceled;
+        public Timer TimerReference;
+
+        #endregion Public Fields
+
+        #region Private Fields
+
+        private static readonly object m_vDatabaseLock = new object();
+        private static Dictionary<long, Alliance> m_vAlliances;
+        private static long m_vAllianceSeed;
+        private static long m_vAvatarSeed;
+        private static string[] m_vBannedIPs;
+        private static DatabaseManager m_vDatabase;
+        private static string m_vHomeDefault;
+        private static Random m_vRandomSeed;
+
+        #endregion Private Fields
+
         #region Public Properties
 
         public static DataTables DataTables { get; set; }
@@ -86,11 +104,11 @@ namespace UCS.Core
         #region Public Methods
 
         /// <summary>
-        /// This function store a new alliance in the database.
+        ///     This function store a new alliance in the database.
         /// </summary>
         /// <param name="seed">The seed of the client.</param>
         /// <returns>The alliance data.</returns>
-        /// <seealso cref="Alliance"/>
+        /// <seealso cref="Alliance" />
         public static Alliance CreateAlliance(long seed)
         {
             Alliance alliance;
@@ -107,11 +125,11 @@ namespace UCS.Core
         }
 
         /// <summary>
-        /// This function create a new player in the database.
+        ///     This function create a new player in the database.
         /// </summary>
         /// <param name="seed">The seed of the client.</param>
         /// <returns>The level() of the player.</returns>
-        /// <seealso cref="Level"/>
+        /// <seealso cref="Level" />
         public static Level CreateAvatar(long seed, string token)
         {
             Level pl;
@@ -127,8 +145,10 @@ namespace UCS.Core
             return pl;
         }
 
-        /// <summary> This function store all alliances in the database, in a list<> variable, named
-        /// as m_vAlliances. </summary>
+        /// <summary>
+        ///     This function store all alliances in the database, in a list<> variable, named
+        ///     as m_vAlliances.
+        /// </summary>
         public static void GetAllAlliancesFromDB()
         {
             var alliances = m_vDatabase.GetAllAlliances();
@@ -140,7 +160,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        /// This function get the info of an alliance.
+        ///     This function get the info of an alliance.
         /// </summary>
         /// <param name="allianceId">The (Int64) ID of the alliance.</param>
         /// <returns>Return data about the alliance.</returns>
@@ -161,7 +181,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        /// This function return all in-memory alliances.
+        ///     This function return all in-memory alliances.
         /// </summary>
         /// <returns>All alliances in-memory</returns>
         public static List<Alliance> GetInMemoryAlliances()
@@ -172,7 +192,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        /// This function return the data of a random player, in memory.
+        ///     This function return the data of a random player, in memory.
         /// </summary>
         /// <returns>Random player data.</returns>
         public static Level GetRandomOnlinePlayer()
@@ -182,7 +202,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        /// This function return the data of a random player in database.
+        ///     This function return the data of a random player in database.
         /// </summary>
         /// <returns>Data of a random player.</returns>
         public static Level GetRandomPlayerFromAll()
@@ -192,16 +212,16 @@ namespace UCS.Core
         }
 
         /// <summary>
-        /// This function store the content of the fingerprint file in a variable.
+        ///     This function store the content of the fingerprint file in a variable.
         /// </summary>
         public static void LoadFingerPrint()
         {
-            if (Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["useCustomPatch"]))
+            if (Convert.ToBoolean(ConfigurationManager.AppSettings["useCustomPatch"]))
                 FingerPrint = new FingerPrint(@"Gamefiles/fingerprint.json");
         }
 
         /// <summary>
-        /// This function load all gamefiles in the csv/logic/ folder.
+        ///     This function load all gamefiles in the csv/logic/ folder.
         /// </summary>
         public static void LoadGameFiles()
         {
@@ -210,7 +230,8 @@ namespace UCS.Core
             gameFiles.Add(new Tuple<string, string, int>("Buildings", @"Gamefiles/logic/buildings.csv", 0));
             gameFiles.Add(new Tuple<string, string, int>("Characters", @"Gamefiles/logic/characters.csv", 3));
             gameFiles.Add(new Tuple<string, string, int>("Decos", @"Gamefiles/logic/decos.csv", 17));
-            gameFiles.Add(new Tuple<string, string, int>("Experience Levels", @"Gamefiles/logic/experience_levels.csv", 10));
+            gameFiles.Add(new Tuple<string, string, int>("Experience Levels", @"Gamefiles/logic/experience_levels.csv",
+                10));
             gameFiles.Add(new Tuple<string, string, int>("Globals", @"Gamefiles/logic/globals.csv", 13));
             gameFiles.Add(new Tuple<string, string, int>("Heroes", @"Gamefiles/logic/heroes.csv", 27));
             gameFiles.Add(new Tuple<string, string, int>("Leagues", @"Gamefiles/logic/leagues.csv", 12));
@@ -245,8 +266,10 @@ namespace UCS.Core
             }
         }
 
-        /// <summary> This function store all files content in the folder Gamefiles/pve/level* to a
-        /// list<> variable. </summary>
+        /// <summary>
+        ///     This function store all files content in the folder Gamefiles/pve/level* to a
+        ///     list<> variable.
+        /// </summary>
         public static void LoadNpcLevels()
         {
             Console.Write("\n[UCS]    Loading Npc levels... ");
@@ -257,7 +280,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        /// This function return all in-memory alliances.
+        ///     This function return all in-memory alliances.
         /// </summary>
         /// <returns>All alliances in-memory</returns>
         public static void RemoveInMemoryAlliance(long id)
@@ -266,7 +289,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        /// This function dispose the class.
+        ///     This function dispose the class.
         /// </summary>
         public void Dispose()
         {
@@ -278,21 +301,5 @@ namespace UCS.Core
         }
 
         #endregion Public Methods
-
-        #region Private Methods
-
-        /// <summary>
-        /// This function save someuser (Need to implement).
-        /// </summary>
-        /// <param name="state"></param>
-        private void Save(object state)
-        {
-            m_vDatabase.Save(ResourcesManager.GetInMemoryLevels());
-            m_vDatabase.Save(m_vAlliances.Values.ToList());
-            if (m_vTimerCanceled)
-                TimerReference.Dispose();
-        }
-
-        #endregion Private Methods
     }
 }

@@ -12,21 +12,14 @@
 using System.Collections.Generic;
 using UCS.Helpers;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24111
     internal class AvatarNameChangeOkMessage : Message
     {
-        #region Private Fields
-
-        private readonly int m_vServerCommandType;
-        private string m_vAvatarName;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
-        public AvatarNameChangeOkMessage(Client client) : base(client)
+        public AvatarNameChangeOkMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24111);
 
@@ -35,6 +28,13 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Constructors
+
+        #region Private Fields
+
+        private readonly int m_vServerCommandType;
+        private string m_vAvatarName;
+
+        #endregion Private Fields
 
         #region Public Methods
 

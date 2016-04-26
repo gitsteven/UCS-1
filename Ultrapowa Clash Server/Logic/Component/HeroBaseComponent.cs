@@ -12,21 +12,13 @@
 using System;
 using Newtonsoft.Json.Linq;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 using UCS.Helpers;
 
 namespace UCS.Logic
 {
     internal class HeroBaseComponent : Component
     {
-        #region Private Fields
-
-        private readonly HeroData m_vHeroData;
-        private Timer m_vTimer;
-        private int m_vUpgradeLevelInProgress;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public HeroBaseComponent(GameObject go, HeroData hd) : base(go)
@@ -44,6 +36,14 @@ namespace UCS.Logic
         }
 
         #endregion Public Properties
+
+        #region Private Fields
+
+        private readonly HeroData m_vHeroData;
+        private Timer m_vTimer;
+        private int m_vUpgradeLevelInProgress;
+
+        #endregion Private Fields
 
         #region Public Methods
 

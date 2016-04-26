@@ -9,23 +9,23 @@
  * All Rights Reserved.
  */
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UCS.Core;
+using UCS.Core.Network;
 using UCS.Helpers;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     //14715
     internal class SendGlobalChatLineMessage : Message
     {
         #region Public Constructors
 
-        public SendGlobalChatLineMessage(Client client, BinaryReader br) : base(client, br)
+        public SendGlobalChatLineMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
         {
         }
 

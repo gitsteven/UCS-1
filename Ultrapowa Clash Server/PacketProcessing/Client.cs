@@ -13,21 +13,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
-using Sodium;
+using UCS.Core.Crypto.Sodium;
 using UCS.Logic;
 
 namespace UCS.PacketProcessing
 {
     internal class Client
     {
-        #region Private Fields
-
-        private readonly long m_vSocketHandle;
-
-        private Level m_vLevel;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public Client(Socket so)
@@ -39,6 +31,14 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Constructors
+
+        #region Private Fields
+
+        private readonly long m_vSocketHandle;
+
+        private Level m_vLevel;
+
+        #endregion Private Fields
 
         #region Public Properties
 

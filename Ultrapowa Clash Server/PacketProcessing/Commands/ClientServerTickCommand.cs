@@ -12,7 +12,7 @@
 using System.IO;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     internal class ClientServerTickCommand : Command
     {
@@ -26,13 +26,6 @@ namespace UCS.PacketProcessing
 
         #endregion Public Constructors
 
-        #region Public Properties
-
-        public static int Tick { get; set; }
-        public static int Unknown1 { get; set; }
-
-        #endregion Public Properties
-
         #region Public Methods
 
         public override void Execute(Level level)
@@ -40,5 +33,12 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        #region Public Properties
+
+        public static int Tick { get; set; }
+        public static int Unknown1 { get; set; }
+
+        #endregion Public Properties
     }
 }

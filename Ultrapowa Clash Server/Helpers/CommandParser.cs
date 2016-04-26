@@ -15,8 +15,9 @@ using System.Diagnostics;
 using System.Net;
 using System.Windows.Forms;
 using UCS.Core;
-using UCS.Network;
+using UCS.Core.Network;
 using UCS.PacketProcessing;
+using UCS.PacketProcessing.Messages.Server;
 
 namespace UCS.Helpers
 {

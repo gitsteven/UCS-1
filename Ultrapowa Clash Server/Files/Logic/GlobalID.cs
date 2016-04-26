@@ -9,7 +9,7 @@
  * All Rights Reserved.
  */
 
-namespace UCS.Logic
+namespace UCS.Files.Logic
 {
     public static class GlobalID
     {

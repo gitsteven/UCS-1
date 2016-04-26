@@ -12,7 +12,7 @@
 using System.Collections.Generic;
 using UCS.Helpers;
 
-namespace UCS.Logic
+namespace UCS.Logic.AvatarStreamEntry
 {
     internal class AllianceKickOutStreamEntry : AvatarStreamEntry
     {

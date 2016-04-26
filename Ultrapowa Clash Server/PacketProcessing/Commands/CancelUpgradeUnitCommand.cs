@@ -11,7 +11,7 @@
 
 using System.IO;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x203
     internal class CancelUpgradeUnitCommand : Command

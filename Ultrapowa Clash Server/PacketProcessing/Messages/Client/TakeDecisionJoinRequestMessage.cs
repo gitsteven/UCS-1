@@ -12,13 +12,13 @@
 using System.IO;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     internal class TakeDecisionJoinRequestMessage : Message
     {
         #region Public Constructors
 
-        public TakeDecisionJoinRequestMessage(Client client, BinaryReader br) : base(client, br)
+        public TakeDecisionJoinRequestMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
         {
         }
 

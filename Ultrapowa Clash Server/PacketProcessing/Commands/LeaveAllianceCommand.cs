@@ -14,7 +14,7 @@ using System.IO;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x0002
     internal class LeaveAllianceCommand : Command

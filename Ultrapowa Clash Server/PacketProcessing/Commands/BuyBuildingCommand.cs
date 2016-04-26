@@ -11,11 +11,11 @@
 
 using System.IO;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x1F4
     internal class BuyBuildingCommand : Command
@@ -31,15 +31,6 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Constructors
-
-        #region Public Properties
-
-        public int BuildingId { get; set; }
-        public uint Unknown1 { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
-
-        #endregion Public Properties
 
         //00 00 2D 7F some client tick
 
@@ -67,5 +58,14 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        #region Public Properties
+
+        public int BuildingId { get; set; }
+        public uint Unknown1 { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+
+        #endregion Public Properties
     }
 }

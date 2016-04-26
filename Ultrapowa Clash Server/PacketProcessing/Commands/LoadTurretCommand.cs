@@ -9,13 +9,12 @@
  * All Rights Reserved.
  */
 
-using System;
 using System.IO;
 using UCS.Core;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x20D
     internal class LoadTurretCommand : Command
@@ -33,16 +32,6 @@ namespace UCS.PacketProcessing
 
         #endregion Public Constructors
 
-        #region Public Properties
-
-        public int m_vBuildingId { get; set; }
-
-        public uint m_vUnknown1 { get; set; }
-
-        public uint m_vUnknown2 { get; set; }
-
-        #endregion Public Properties
-
         #region Public Methods
 
         public override void Execute(Level level)
@@ -54,5 +43,15 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        #region Public Properties
+
+        public int m_vBuildingId { get; set; }
+
+        public uint m_vUnknown1 { get; set; }
+
+        public uint m_vUnknown2 { get; set; }
+
+        #endregion Public Properties
     }
 }

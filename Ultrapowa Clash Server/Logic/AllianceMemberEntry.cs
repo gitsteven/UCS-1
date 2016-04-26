@@ -19,6 +19,25 @@ namespace UCS.Logic
 {
     internal class AllianceMemberEntry
     {
+        //1 : member, 2 : chef, 3 : aîné, 4 : chef adjoint
+
+        #region Public Constructors
+
+        public AllianceMemberEntry(long avatarId)
+        {
+            m_vAvatarId = avatarId;
+            m_vIsNewMember = 0;
+            m_vOrder = 1;
+            m_vPreviousOrder = 1;
+            m_vRole = 1;
+            m_vDonatedTroops = 200;
+            m_vReceivedTroops = 100;
+            m_vWarCooldown = 0;
+            m_vWarOptInStatus = 1;
+        }
+
+        #endregion Public Constructors
+
         #region Private Fields
 
         private readonly int m_vDonatedTroops;
@@ -45,24 +64,10 @@ namespace UCS.Logic
 
         #endregion Private Fields
 
-        //1 : member, 2 : chef, 3 : aîné, 4 : chef adjoint
-
-        #region Public Constructors
-
-        public AllianceMemberEntry(long avatarId)
+        /*public void SetScore(int score)
         {
-            m_vAvatarId = avatarId;
-            m_vIsNewMember = 0;
-            m_vOrder = 1;
-            m_vPreviousOrder = 1;
-            m_vRole = 1;
-            m_vDonatedTroops = 200;
-            m_vReceivedTroops = 100;
-            m_vWarCooldown = 0;
-            m_vWarOptInStatus = 1;
-        }
-
-        #endregion Public Constructors
+            m_vScore = score;
+        } */
 
         #region Public Methods
 
@@ -224,10 +229,5 @@ namespace UCS.Logic
         }
 
         #endregion Public Methods
-
-        /*public void SetScore(int score)
-        {
-            m_vScore = score;
-        } */
     }
 }

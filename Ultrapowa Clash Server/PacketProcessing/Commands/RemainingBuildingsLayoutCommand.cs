@@ -11,7 +11,7 @@
 
 using System.IO;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     internal class RemainingBuildingsLayoutCommand : Command
     {

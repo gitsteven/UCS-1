@@ -13,10 +13,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UCS.Core;
+using UCS.Core.Network;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     internal class AskForJoinableAlliancesListMessage : Message
     {
@@ -28,7 +29,7 @@ namespace UCS.PacketProcessing
 
         #region Public Constructors
 
-        public AskForJoinableAlliancesListMessage(Client client, BinaryReader br)
+        public AskForJoinableAlliancesListMessage(PacketProcessing.Client client, BinaryReader br)
             : base(client, br)
         {
         }

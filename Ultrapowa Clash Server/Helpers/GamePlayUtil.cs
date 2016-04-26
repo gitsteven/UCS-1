@@ -11,7 +11,7 @@
 
 using System;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 
 namespace UCS.Helpers
 {

@@ -16,7 +16,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 using UCS.Helpers;
 
 namespace UCS.Logic
@@ -90,10 +90,12 @@ namespace UCS.Logic
             m_vAvatarLevel = 1;
             m_vAllianceId = 0;
             m_vExperience = 0;
-            EndShieldTime = (int) (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+            EndShieldTime = (int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
             m_vCurrentGems = Convert.ToInt32(ConfigurationManager.AppSettings["startingGems"]);
 
-            m_vScore = ConfigurationManager.AppSettings["startingTrophies"] == "random" ? rnd.Next(1500, 4800) : Convert.ToInt32(ConfigurationManager.AppSettings["startingTrophies"]);
+            m_vScore = ConfigurationManager.AppSettings["startingTrophies"] == "random"
+                ? rnd.Next(1500, 4800)
+                : Convert.ToInt32(ConfigurationManager.AppSettings["startingTrophies"]);
 
             TutorialStepsCount = 0x0A;
             m_vAvatarName = "NoNameYet";

@@ -11,29 +11,30 @@
 
 using System.IO;
 using UCS.Core;
+using UCS.Core.Network;
 using UCS.Helpers;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     internal class AskForAvatarProfileMessage : Message
     {
+        #region Public Constructors
+
+        public AskForAvatarProfileMessage(PacketProcessing.Client client, BinaryReader br)
+            : base(client, br)
+        {
+        }
+
+        #endregion Public Constructors
+
         #region Private Fields
 
         private long m_vAvatarId;
         private long m_vCurrentHomeId;
 
         #endregion Private Fields
-
-        #region Public Constructors
-
-        public AskForAvatarProfileMessage(Client client, BinaryReader br)
-            : base(client, br)
-        {
-        }
-
-        #endregion Public Constructors
 
         #region Public Methods
 

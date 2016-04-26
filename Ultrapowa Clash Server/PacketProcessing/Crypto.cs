@@ -10,12 +10,22 @@
  */
 
 using System;
-using Sodium;
+using UCS.Core.Crypto.Sodium;
 
 namespace UCS.PacketProcessing
 {
     public static class Key
     {
+        #region Public Properties
+
+        public static Crypto Crypto
+        {
+            // We return a keypair , public key + private key
+            get { return new Crypto((byte[]) _standardPublicKey.Clone(), (byte[]) _standardPrivateKey.Clone()); }
+        }
+
+        #endregion Public Properties
+
         #region Private Fields
 
         // We store the standard private key in a byte array
@@ -35,41 +45,11 @@ namespace UCS.PacketProcessing
         };
 
         #endregion Private Fields
-
-        #region Public Properties
-
-        public static Crypto Crypto
-        {
-            // We return a keypair , public key + private key
-            get { return new Crypto((byte[]) _standardPublicKey.Clone(), (byte[]) _standardPrivateKey.Clone()); }
-        }
-
-        #endregion Public Properties
     }
 
     // This class is disposable
     public class Crypto : IDisposable
     {
-        #region Public Fields
-
-        // This is the key length ( constant )
-        public const int KeyLength = 32;
-
-        // This is the nonce length ( constant )
-        public const int NonceLength = 24;
-
-        #endregion Public Fields
-
-        #region Private Fields
-
-        // Storing keypair
-        private readonly KeyPair _keyPair;
-
-        // Disposed or no, who know ?
-        private bool _disposed;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public Crypto(byte[] publicKey, byte[] privateKey)
@@ -93,6 +73,45 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Constructors
+
+        #region Public Methods
+
+        // Function for dispose the class
+        public void Dispose()
+        {
+            if (_disposed)
+                // If function already disposed, no need to do it again
+                return;
+
+            _keyPair.Dispose();
+            // We dispose the keypair ( We suppress it from memory )
+            _disposed = true;
+            // We set the boolean var to true
+            GC.SuppressFinalize(this);
+            // Garbage Collector is collecting all useless data dropped
+        }
+
+        #endregion Public Methods
+
+        #region Public Fields
+
+        // This is the key length ( constant )
+        public const int KeyLength = 32;
+
+        // This is the nonce length ( constant )
+        public const int NonceLength = 24;
+
+        #endregion Public Fields
+
+        #region Private Fields
+
+        // Storing keypair
+        private readonly KeyPair _keyPair;
+
+        // Disposed or no, who know ?
+        private bool _disposed;
+
+        #endregion Private Fields
 
         #region Public Properties
 
@@ -124,24 +143,5 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Properties
-
-        #region Public Methods
-
-        // Function for dispose the class
-        public void Dispose()
-        {
-            if (_disposed)
-                // If function already disposed, no need to do it again
-                return;
-
-            _keyPair.Dispose();
-            // We dispose the keypair ( We suppress it from memory )
-            _disposed = true;
-            // We set the boolean var to true
-            GC.SuppressFinalize(this);
-            // Garbage Collector is collecting all useless data dropped
-        }
-
-        #endregion Public Methods
     }
 }

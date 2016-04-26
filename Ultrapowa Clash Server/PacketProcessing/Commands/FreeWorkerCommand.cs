@@ -14,7 +14,7 @@ using System.IO;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x209
     internal class FreeWorkerCommand : Command
@@ -24,13 +24,6 @@ namespace UCS.PacketProcessing
         public int m_vTimeLeftSeconds;
 
         #endregion Public Fields
-
-        #region Private Fields
-
-        private readonly object m_vCommand;
-        private readonly bool m_vIsCommandEmbedded;
-
-        #endregion Private Fields
 
         #region Public Constructors
 
@@ -71,5 +64,12 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        #region Private Fields
+
+        private readonly object m_vCommand;
+        private readonly bool m_vIsCommandEmbedded;
+
+        #endregion Private Fields
     }
 }

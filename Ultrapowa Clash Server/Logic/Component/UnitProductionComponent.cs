@@ -12,21 +12,12 @@
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 
 namespace UCS.Logic
 {
     internal class UnitProductionComponent : Component
     {
-        #region Private Fields
-
-        private readonly List<DataSlot> m_vUnits;
-        private bool m_vIsSpellForge;
-        private bool m_vIsWaitingForSpace;
-        private Timer m_vTimer;
-
-        #endregion Private Fields
-
         //a1 + 12
         //a1 + 16
         //a1 + 20
@@ -52,6 +43,15 @@ namespace UCS.Logic
         }
 
         #endregion Public Properties
+
+        #region Private Fields
+
+        private readonly List<DataSlot> m_vUnits;
+        private bool m_vIsSpellForge;
+        private bool m_vIsWaitingForSpace;
+        private Timer m_vTimer;
+
+        #endregion Private Fields
 
         #region Public Methods
 

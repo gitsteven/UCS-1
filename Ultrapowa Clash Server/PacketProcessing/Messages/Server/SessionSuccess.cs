@@ -11,8 +11,9 @@
 
 using System.Collections.Generic;
 using UCS.Helpers;
+using UCS.PacketProcessing.Messages.Client;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 20100
     internal class SessionSuccess : Message
@@ -25,10 +26,10 @@ namespace UCS.PacketProcessing
 
         #region Public Constructors
 
-        public SessionSuccess(Client client, SessionRequest cka) : base(client)
+        public SessionSuccess(PacketProcessing.Client client, SessionRequest cka) : base(client)
         {
             SetMessageType(20100);
-            SessionKey = Client.GenerateSessionKey();
+            SessionKey = PacketProcessing.Client.GenerateSessionKey();
         }
 
         #endregion Public Constructors

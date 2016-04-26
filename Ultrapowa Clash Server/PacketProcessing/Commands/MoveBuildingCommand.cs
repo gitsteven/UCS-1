@@ -13,7 +13,7 @@ using System.IO;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x1F5
     internal class MoveBuildingCommand : Command
@@ -30,6 +30,18 @@ namespace UCS.PacketProcessing
 
         #endregion Public Constructors
 
+        //00 00 00 1F
+
+        #region Public Methods
+
+        public override void Execute(Level level)
+        {
+            var go = level.GameObjectManager.GetGameObjectByID(BuildingId);
+            go.SetPositionXY(X, Y);
+        }
+
+        #endregion Public Methods
+
         //30/08/2014 18:51;S;14102(0);32;00 00 2D BE 01 EB 32 0C 00 00 00 01 00 00 01 F5 00 00 00 13 00 00 00 1F 1D CD 65 06 00 00 2D 7F
 
         #region Public Properties
@@ -43,17 +55,5 @@ namespace UCS.PacketProcessing
         public int Y { get; set; }
 
         #endregion Public Properties
-
-        //00 00 00 1F
-
-        #region Public Methods
-
-        public override void Execute(Level level)
-        {
-            var go = level.GameObjectManager.GetGameObjectByID(BuildingId);
-            go.SetPositionXY(X, Y);
-        }
-
-        #endregion Public Methods
     }
 }

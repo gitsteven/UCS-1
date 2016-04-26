@@ -12,7 +12,7 @@
 using System.IO;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x21B
     internal class NewsSeenCommand : Command
@@ -34,15 +34,6 @@ namespace UCS.PacketProcessing
 
         #endregion Public Constructors
 
-        //00 00 00 02 00 00 02 1B 00 00 00 0C 00 00 00 00 00 00 02 1B 00 00 00 0D 00 00 00 00
-
-        #region Public Properties
-
-        public uint Unknown1 { get; set; } //00 00 00 0C
-        public uint Unknown2 { get; set; }
-
-        #endregion Public Properties
-
         //00 00 00 00
 
         #region Public Methods
@@ -52,5 +43,14 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        //00 00 00 02 00 00 02 1B 00 00 00 0C 00 00 00 00 00 00 02 1B 00 00 00 0D 00 00 00 00
+
+        #region Public Properties
+
+        public uint Unknown1 { get; set; } //00 00 00 0C
+        public uint Unknown2 { get; set; }
+
+        #endregion Public Properties
     }
 }

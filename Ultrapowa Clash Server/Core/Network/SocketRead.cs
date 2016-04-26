@@ -14,7 +14,7 @@ using System.Net.Sockets;
 
 //using System.Collections.Generic;
 
-namespace UCS.Network
+namespace UCS.Core.Network
 {
     public class SocketRead
     {
@@ -23,16 +23,6 @@ namespace UCS.Network
         public const int kBufferSize = 256;
 
         #endregion Public Fields
-
-        #region Private Fields
-
-        private readonly byte[] buffer = new byte[kBufferSize];
-
-        private readonly IncomingReadErrorHandler errorHandler;
-
-        private readonly IncomingReadHandler readHandler;
-
-        #endregion Private Fields
 
         #region Private Constructors
 
@@ -45,14 +35,6 @@ namespace UCS.Network
         }
 
         #endregion Private Constructors
-
-        #region Public Delegates
-
-        public delegate void IncomingReadErrorHandler(SocketRead read, Exception exception);
-
-        public delegate void IncomingReadHandler(SocketRead read, byte[] data);
-
-        #endregion Public Delegates
 
         #region Public Properties
 
@@ -69,6 +51,24 @@ namespace UCS.Network
         }
 
         #endregion Public Methods
+
+        #region Private Fields
+
+        private readonly byte[] buffer = new byte[kBufferSize];
+
+        private readonly IncomingReadErrorHandler errorHandler;
+
+        private readonly IncomingReadHandler readHandler;
+
+        #endregion Private Fields
+
+        #region Public Delegates
+
+        public delegate void IncomingReadErrorHandler(SocketRead read, Exception exception);
+
+        public delegate void IncomingReadHandler(SocketRead read, byte[] data);
+
+        #endregion Public Delegates
 
         #region Private Methods
 

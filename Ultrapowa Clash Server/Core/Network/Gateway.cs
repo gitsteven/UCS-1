@@ -13,10 +13,9 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using UCS.Core;
 using UCS.PacketProcessing;
 
-namespace UCS.Network
+namespace UCS.Core.Network
 {
     internal class Gateway
     {
@@ -55,7 +54,6 @@ namespace UCS.Network
         public bool Host(int port)
         {
             Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
             try
             {
                 Socket.Bind(new IPEndPoint(IPAddress.Any, port));
@@ -64,7 +62,7 @@ namespace UCS.Network
             }
             catch (Exception e)
             {
-                Console.WriteLine("[UCS] Exception when attempting to host (" + port + "): " + e);
+                Console.WriteLine("[UCS]    Exception when attempting to host (" + port + "): " + e);
                 Socket = null;
                 return false;
             }
@@ -83,12 +81,12 @@ namespace UCS.Network
 
         private static void Disconnect()
         {
-            if (Socket != null)
-                Socket.BeginDisconnect(false, OnEndHostComplete, Socket);
+            Socket?.BeginDisconnect(false, OnEndHostComplete, Socket);
         }
 
         private static void OnEndHostComplete(IAsyncResult result)
         {
+            Socket.Close(5);
             Socket = null;
         }
 
@@ -96,44 +94,51 @@ namespace UCS.Network
         {
             try
             {
-                var socketHandle = read.Socket.Handle.ToInt64();
-                var c = ResourcesManager.GetClient(socketHandle);
+                Client c = ResourcesManager.GetClient(read.Socket.Handle.ToInt64());
                 c.DataStream.AddRange(data);
-
                 Message p;
                 while (c.TryGetPacket(out p))
                     PacketManager.ProcessIncomingPacket(p);
             }
             catch (Exception ex)
             {
-                Debugger.WriteLine("[UCS]   Exception thrown when processing incoming packet : ", ex);
+                Debugger.WriteLine("[UCS]    Exception thrown when processing incoming packet : ", ex);
             }
         }
 
         private static void OnReceiveError(SocketRead read, Exception exception)
         {
+            Debugger.WriteLine(
+                "[UCS]    The client '" + ((IPEndPoint) read.Socket.RemoteEndPoint).Address + "' throw an exception",
+                exception);
         }
 
         private void OnClientConnect(IAsyncResult result)
         {
             try
             {
-                var clientSocket = Socket.EndAccept(result);
+                Socket clientSocket = Socket.EndAccept(result);
+                /* WebClient c = new WebClient();
+                c.DownloadStringCompleted +=
+                    (sender, e) =>
+                    {
+                        Console.WriteLine("[UCS]    Client connected (" +
+                                          ((IPEndPoint) clientSocket.RemoteEndPoint).Address + ", " + e.Result.Trim() +
+                                          ")");
+                    };
+                c.DownloadStringAsync(
+                    new Uri("http://ipinfo.io/" + ((IPEndPoint) clientSocket.RemoteEndPoint).Address + "/country"));
+
+                 */
                 Console.WriteLine("[UCS]    Client connected (" + ((IPEndPoint) clientSocket.RemoteEndPoint).Address + ")");
-                ResourcesManager.AddClient(new Client(clientSocket), ((IPEndPoint) clientSocket.RemoteEndPoint).Address.ToString());
+                ResourcesManager.AddClient(new Client(clientSocket),
+                    ((IPEndPoint) clientSocket.RemoteEndPoint).Address.ToString());
                 SocketRead.Begin(clientSocket, OnReceive, OnReceiveError);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("[UCS]    Exception when accepting incoming connection: " + e);
-            }
-            try
-            {
                 Socket.BeginAccept(OnClientConnect, Socket);
             }
             catch (Exception e)
             {
-                Console.WriteLine("[UCS]    Exception when starting new accept process: " + e);
+                Debugger.WriteLine("[UCS]    Exception when accepting incoming connection", e);
             }
         }
 

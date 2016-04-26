@@ -18,18 +18,10 @@ namespace UCS.Core
 {
     internal class MessageManager
     {
-        #region Private Fields
-
-        private static readonly EventWaitHandle m_vWaitHandle = new AutoResetEvent(false);
-        private static ConcurrentQueue<Message> m_vPackets;
-        private bool m_vIsRunning;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         /// <summary>
-        /// The loader of the MessageManager class.
+        ///     The loader of the MessageManager class.
         /// </summary>
         public MessageManager()
         {
@@ -39,41 +31,10 @@ namespace UCS.Core
 
         #endregion Public Constructors
 
-        #region Private Delegates
-
-        private delegate void PacketProcessingDelegate();
-
-        #endregion Private Delegates
-
-        #region Public Methods
-
-        /// <summary>
-        /// This function handle the packet by enqueue him.
-        /// </summary>
-        /// <param name="p">The message/packet.</param>
-        public static void ProcessPacket(Message p)
-        {
-            m_vPackets.Enqueue(p);
-            m_vWaitHandle.Set();
-        }
-
-        /// <summary>
-        /// This function start the MessageManager.
-        /// </summary>
-        public void Start()
-        {
-            PacketProcessingDelegate packetProcessing = PacketProcessing;
-            packetProcessing.BeginInvoke(null, null);
-            m_vIsRunning = true;
-            Console.WriteLine("[UCS]    Message manager has been successfully started !");
-        }
-
-        #endregion Public Methods
-
         #region Private Methods
 
         /// <summary>
-        /// This function process packets.
+        ///     This function process packets.
         /// </summary>
         private void PacketProcessing()
         {
@@ -87,7 +48,8 @@ namespace UCS.Core
                     var pl = p.Client.GetLevel();
                     var player = "";
                     if (pl != null)
-                        player += " (" + pl.GetPlayerAvatar().GetId() + ", " + pl.GetPlayerAvatar().GetAvatarName() + ")";
+                        player += " (" + pl.GetPlayerAvatar().GetId() + ", " + pl.GetPlayerAvatar().GetAvatarName() +
+                                  ")";
                     try
                     {
                         Debugger.WriteLine("[UCS]    Processing " + p.GetType().Name + player);
@@ -97,7 +59,9 @@ namespace UCS.Core
                     catch (Exception ex)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Debugger.WriteLine("[UCS]    An exception occured during processing of message " + p.GetType().Name + player, ex);
+                        Debugger.WriteLine(
+                            "[UCS]    An exception occured during processing of message " + p.GetType().Name + player,
+                            ex);
                         Console.ResetColor();
                     }
                 }
@@ -105,5 +69,44 @@ namespace UCS.Core
         }
 
         #endregion Private Methods
+
+        #region Private Delegates
+
+        private delegate void PacketProcessingDelegate();
+
+        #endregion Private Delegates
+
+        #region Private Fields
+
+        private static readonly EventWaitHandle m_vWaitHandle = new AutoResetEvent(false);
+        private static ConcurrentQueue<Message> m_vPackets;
+        private bool m_vIsRunning;
+
+        #endregion Private Fields
+
+        #region Public Methods
+
+        /// <summary>
+        ///     This function handle the packet by enqueue him.
+        /// </summary>
+        /// <param name="p">The message/packet.</param>
+        public static void ProcessPacket(Message p)
+        {
+            m_vPackets.Enqueue(p);
+            m_vWaitHandle.Set();
+        }
+
+        /// <summary>
+        ///     This function start the MessageManager.
+        /// </summary>
+        public void Start()
+        {
+            PacketProcessingDelegate packetProcessing = PacketProcessing;
+            packetProcessing.BeginInvoke(null, null);
+            m_vIsRunning = true;
+            Console.WriteLine("[UCS]    Message manager has been successfully started !");
+        }
+
+        #endregion Public Methods
     }
 }

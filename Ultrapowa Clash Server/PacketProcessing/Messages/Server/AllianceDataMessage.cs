@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24301
     internal class AllianceDataMessage : Message
@@ -26,7 +26,7 @@ namespace UCS.PacketProcessing
 
         #region Public Constructors
 
-        public AllianceDataMessage(Client client, Alliance alliance)
+        public AllianceDataMessage(PacketProcessing.Client client, Alliance alliance)
             : base(client)
         {
             SetMessageType(24301);

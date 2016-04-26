@@ -15,7 +15,7 @@ using UCS.Core;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     internal class LocalAlliancesMessage : Message
     {
@@ -27,7 +27,7 @@ namespace UCS.PacketProcessing
 
         #region Public Constructors
 
-        public LocalAlliancesMessage(Client client) : base(client)
+        public LocalAlliancesMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24402);
             m_vAlliances = new List<Alliance>();

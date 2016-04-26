@@ -15,26 +15,14 @@ using System.Configuration;
 using UCS.Helpers;
 using static UCS.Core.Debugger;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 20103
     internal class LoginFailedMessage : Message
     {
-        #region Private Fields
-
-        private string m_vContentURL;
-        private int m_vErrorCode;
-        private string m_vReason;
-        private string m_vRedirectDomain;
-        private int m_vRemainingTime;
-        private string m_vResourceFingerprintData;
-        private string m_vUpdateURL;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
-        public LoginFailedMessage(Client client) : base(client)
+        public LoginFailedMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(20103);
             SetUpdateURL(ConfigurationManager.AppSettings["UpdateUrl"]);
@@ -48,6 +36,18 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Constructors
+
+        #region Private Fields
+
+        private string m_vContentURL;
+        private int m_vErrorCode;
+        private string m_vReason;
+        private string m_vRedirectDomain;
+        private int m_vRemainingTime;
+        private string m_vResourceFingerprintData;
+        private string m_vUpdateURL;
+
+        #endregion Private Fields
 
         #region Public Methods
 

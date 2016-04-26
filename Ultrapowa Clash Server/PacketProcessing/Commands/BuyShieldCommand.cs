@@ -14,7 +14,7 @@ using System.IO;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x20A
     internal class BuyShieldCommand : Command
@@ -29,13 +29,6 @@ namespace UCS.PacketProcessing
 
         #endregion Public Constructors
 
-        #region Public Properties
-
-        public int ShieldId { get; set; }
-        public uint Unknown1 { get; set; }
-
-        #endregion Public Properties
-
         #region Public Methods
 
         public override void Execute(Level level)
@@ -45,5 +38,12 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        #region Public Properties
+
+        public int ShieldId { get; set; }
+        public uint Unknown1 { get; set; }
+
+        #endregion Public Properties
     }
 }

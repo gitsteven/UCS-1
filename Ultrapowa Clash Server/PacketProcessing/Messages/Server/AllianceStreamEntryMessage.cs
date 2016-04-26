@@ -10,9 +10,9 @@
  */
 
 using System.Collections.Generic;
-using UCS.Logic;
+using UCS.Logic.StreamEntry;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24312
     internal class AllianceStreamEntryMessage : Message
@@ -25,7 +25,7 @@ namespace UCS.PacketProcessing
 
         #region Public Constructors
 
-        public AllianceStreamEntryMessage(Client client) : base(client)
+        public AllianceStreamEntryMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24312);
         }

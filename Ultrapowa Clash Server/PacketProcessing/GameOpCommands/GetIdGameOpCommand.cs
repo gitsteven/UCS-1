@@ -10,10 +10,12 @@
  */
 
 using System;
+using UCS.Core.Network;
 using UCS.Logic;
-using UCS.Network;
+using UCS.Logic.AvatarStreamEntry;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.GameOpCommands
 {
     internal class GetIdGameopCommand : GameOpCommand
     {

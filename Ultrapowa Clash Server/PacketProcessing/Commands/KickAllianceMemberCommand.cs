@@ -12,22 +12,18 @@
 using System;
 using System.IO;
 using UCS.Core;
+using UCS.Core.Network;
 using UCS.Helpers;
 using UCS.Logic;
-using UCS.Network;
+using UCS.Logic.AvatarStreamEntry;
+using UCS.Logic.StreamEntry;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x21F
     internal class KickAllianceMemberCommand : Command
     {
-        #region Private Fields
-
-        private readonly long m_vAvatarId;
-        private readonly string m_vMessage;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public KickAllianceMemberCommand(BinaryReader br)
@@ -114,5 +110,12 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        #region Private Fields
+
+        private readonly long m_vAvatarId;
+        private readonly string m_vMessage;
+
+        #endregion Private Fields
     }
 }

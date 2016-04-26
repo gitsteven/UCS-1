@@ -15,21 +15,14 @@ using System.Linq;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24113
     internal class VisitedHomeDataMessage : Message
     {
-        #region Private Fields
-
-        private readonly Level m_vOwnerLevel;
-        private readonly Level m_vVisitorLevel;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
-        public VisitedHomeDataMessage(Client client, Level ownerLevel, Level visitorLevel) : base(client)
+        public VisitedHomeDataMessage(PacketProcessing.Client client, Level ownerLevel, Level visitorLevel) : base(client)
         {
             SetMessageType(24113);
             m_vOwnerLevel = ownerLevel;
@@ -65,5 +58,12 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        #region Private Fields
+
+        private readonly Level m_vOwnerLevel;
+        private readonly Level m_vVisitorLevel;
+
+        #endregion Private Fields
     }
 }

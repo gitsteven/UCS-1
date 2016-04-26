@@ -13,27 +13,27 @@ using System.Collections.Generic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24310
     internal class AllianceListMessage : Message
     {
-        #region Private Fields
-
-        private List<Alliance> m_vAlliances;
-        private string m_vSearchString;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
-        public AllianceListMessage(Client client) : base(client)
+        public AllianceListMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24310);
             m_vAlliances = new List<Alliance>();
         }
 
         #endregion Public Constructors
+
+        #region Private Fields
+
+        private List<Alliance> m_vAlliances;
+        private string m_vSearchString;
+
+        #endregion Private Fields
 
         #region Public Methods
 

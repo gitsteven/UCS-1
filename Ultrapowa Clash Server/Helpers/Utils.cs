@@ -19,7 +19,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 using UCS.Logic;
 
 namespace UCS.Helpers
@@ -29,24 +29,23 @@ namespace UCS.Helpers
         #region Public Properties
 
         /// <summary>
-        /// Returns Proxy-Version in the following format: v1.2.3
+        ///     Returns Proxy-Version in the following format: v1.2.3
         /// </summary>
         public static string AssemblyVersion
         {
-            get
-            {
-                return "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            }
+            get { return "v" + Assembly.GetExecutingAssembly().GetName().Version; }
         }
 
         /// <summary>
-        /// Returns opened instances
+        ///     Returns opened instances
         /// </summary>
         public static int OpenedInstances
         {
             get
             {
-                return Process.GetProcessesByName(Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location)).Length;
+                return
+                    Process.GetProcessesByName(Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location))
+                           .Length;
             }
         }
 
@@ -93,9 +92,9 @@ namespace UCS.Helpers
         public static byte[] HexaToBytes(string hex)
         {
             return Enumerable.Range(0, hex.Length)
-                .Where(x => x % 2 == 0)
-                .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
-                .ToArray();
+                             .Where(x => x % 2 == 0)
+                             .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
+                             .ToArray();
         }
 
         public static int ParseConfigInt(string str)

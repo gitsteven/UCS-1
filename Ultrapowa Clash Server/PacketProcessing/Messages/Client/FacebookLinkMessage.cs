@@ -15,13 +15,13 @@ using System.Text;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     internal class FacebookLinkMessage : Message
     {
         #region Public Constructors
 
-        public FacebookLinkMessage(Client client, BinaryReader br) : base(client, br)
+        public FacebookLinkMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
         {
         }
 

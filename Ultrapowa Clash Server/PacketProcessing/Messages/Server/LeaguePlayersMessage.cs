@@ -12,13 +12,13 @@
 using System.Collections.Generic;
 using UCS.Helpers;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     internal class LeaguePlayersMessage : Message
     {
         #region Public Constructors
 
-        public LeaguePlayersMessage(Client client) : base(client)
+        public LeaguePlayersMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24503);
         }

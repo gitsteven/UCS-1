@@ -11,17 +11,18 @@
 
 using System.IO;
 using UCS.Core;
+using UCS.Core.Network;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     //Packet 14101
     internal class GoHomeMessage : Message
     {
         #region Public Constructors
 
-        public GoHomeMessage(Client client, BinaryReader br) : base(client, br)
+        public GoHomeMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
         {
         }
 

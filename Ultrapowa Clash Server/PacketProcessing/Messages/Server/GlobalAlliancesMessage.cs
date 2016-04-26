@@ -16,7 +16,7 @@ using UCS.Core;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     internal class GlobalAlliancesMessage : Message
     {
@@ -28,7 +28,7 @@ namespace UCS.PacketProcessing
 
         #region Public Constructors
 
-        public GlobalAlliancesMessage(Client client) : base(client)
+        public GlobalAlliancesMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24401);
         }

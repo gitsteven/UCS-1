@@ -12,22 +12,16 @@
 using System.Collections.Generic;
 using UCS.Helpers;
 using UCS.Logic;
+using UCS.PacketProcessing.Messages.Client;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24340
     internal class PromoteAllianceMemberOkMessage : Message
     {
-        #region Private Fields
-
-        private readonly long m_vId;
-        private readonly int m_vRole;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
-        public PromoteAllianceMemberOkMessage(Client client, Level level, PromoteAllianceMemberMessage pam)
+        public PromoteAllianceMemberOkMessage(PacketProcessing.Client client, Level level, PromoteAllianceMemberMessage pam)
             : base(client)
         {
             SetMessageType(24306);
@@ -48,5 +42,12 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        #region Private Fields
+
+        private readonly long m_vId;
+        private readonly int m_vRole;
+
+        #endregion Private Fields
     }
 }

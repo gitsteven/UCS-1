@@ -10,8 +10,9 @@
  */
 
 using UCS.Core;
+using UCS.Files.CSV;
 
-namespace UCS.GameFiles
+namespace UCS.Files.Logic
 {
     internal class ObstacleData : Data
     {
@@ -24,6 +25,15 @@ namespace UCS.GameFiles
         }
 
         #endregion Public Constructors
+
+        #region Public Methods
+
+        public ResourceData GetClearingResource()
+        {
+            return ObjectManager.DataTables.GetResourceByName(ClearResource);
+        }
+
+        #endregion Public Methods
 
         #region Public Properties
 
@@ -72,14 +82,5 @@ namespace UCS.GameFiles
         public int Width { get; set; }
 
         #endregion Public Properties
-
-        #region Public Methods
-
-        public ResourceData GetClearingResource()
-        {
-            return ObjectManager.DataTables.GetResourceByName(ClearResource);
-        }
-
-        #endregion Public Methods
     }
 }

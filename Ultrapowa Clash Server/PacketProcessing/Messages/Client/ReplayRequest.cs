@@ -10,18 +10,18 @@
  */
 
 using System.IO;
-using UCS.Core;
+using UCS.Core.Network;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     //Packet 14114
     internal class ReplayRequestMessage : Message
     {
         #region Public Constructors
 
-        public ReplayRequestMessage(Client client, BinaryReader br) : base(client, br)
+        public ReplayRequestMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
         {
         }
 

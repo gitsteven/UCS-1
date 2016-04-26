@@ -8,64 +8,10 @@
  * Copyright (c) 2016  UltraPowa
  * All Rights Reserved.
  */
-// Inflate.cs ------------------------------------------------------------------
-//
-// Copyright (c) 2009 Dino Chiesa and Microsoft Corporation. All rights reserved.
-//
-// This code module is part of DotNetZip, a zipfile class library.
-//
-// ------------------------------------------------------------------
-//
-// This code is licensed under the Microsoft Public License. See the file License.txt for the license
-// details. More info on: http://dotnetzip.codeplex.com
-//
-// ------------------------------------------------------------------
-//
-// last saved (in emacs): Time-stamp: <2010-January-08 18:32:12>
-//
-// ------------------------------------------------------------------
-//
-// This module defines classes for decompression. This code is derived from the jzlib implementation
-// of zlib, but significantly modified. The object model is not the same, and many of the behaviors
-// are different. Nonetheless, in keeping with the license for jzlib, I am reproducing the copyright
-// to that code here.
-//
-// ------------------------------------------------------------------
-//
-// Copyright (c) 2000,2001,2002,2003 ymnk, JCraft,Inc. All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without modification, are permitted
-// provided that the following conditions are met:
-//
-// 1. Redistributions of source code must retain the above copyright notice, this list of conditions
-// and the following disclaimer.
-//
-// 2. Redistributions in binary form must reproduce the above copyright notice, this list of
-// conditions and the following disclaimer in the documentation and/or other materials provided with
-// the distribution.
-//
-// 3. The names of the authors may not be used to endorse or promote products derived from this
-// software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-// DISCLAIMED. IN NO EVENT SHALL JCRAFT, INC. OR ANY CONTRIBUTORS TO THIS SOFTWARE BE LIABLE FOR ANY
-// DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-// BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-// LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-// -----------------------------------------------------------------------
-//
-// This program is based on zlib-1.1.3; credit to authors Jean-loup Gailly(jloup@gzip.org) and Mark
-// Adler(madler@alumni.caltech.edu) and contributors of zlib.
-//
-// -----------------------------------------------------------------------
 
 using System;
 
-namespace Ionic.Zlib
+namespace UCS.Utilities.ZLib
 {
     internal static class InternalInflateConstants
     {
@@ -85,10 +31,47 @@ namespace Ionic.Zlib
 
     internal sealed class InflateBlocks
     {
+        // current inflate_block mode window read pointer
+
+        // window write pointer
+
+        #region Internal Constructors
+
+        internal InflateBlocks(ZlibCodec codec, object checkfn, int w)
+        {
+            _codec = codec;
+            hufts = new int[MANY * 3];
+            window = new byte[w];
+            end = w;
+            this.checkfn = checkfn;
+            mode = InflateBlockMode.TYPE;
+            Reset();
+        }
+
+        #endregion Internal Constructors
+
+        #region Private Enums
+
+        private enum InflateBlockMode
+        {
+            TYPE = 0, // get type bits (3, including end bit)
+            LENS = 1, // get lengths for stored
+            STORED = 2, // processing stored block
+            TABLE = 3, // get table lengths
+            BTREE = 4, // get bit lengths tree for a dynamic block
+            DTREE = 5, // get length, distance trees for a dynamic block
+            CODES = 6, // processing fixed or dynamic block
+            DRY = 7, // output remaining window bytes
+            DONE = 8, // finished last block, done
+            BAD = 9 // ot a data error--stuck here
+        }
+
+        #endregion Private Enums
+
         #region Internal Fields
 
         // Table for deflate from PKZIP's appnote.txt.
-        internal static readonly int[] border = { 16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15 };
+        internal static readonly int[] border = {16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15};
 
         internal ZlibCodec _codec;
 
@@ -155,43 +138,6 @@ namespace Ionic.Zlib
         private InflateBlockMode mode;
 
         #endregion Private Fields
-
-        // current inflate_block mode window read pointer
-
-        // window write pointer
-
-        #region Internal Constructors
-
-        internal InflateBlocks(ZlibCodec codec, object checkfn, int w)
-        {
-            _codec = codec;
-            hufts = new int[MANY * 3];
-            window = new byte[w];
-            end = w;
-            this.checkfn = checkfn;
-            mode = InflateBlockMode.TYPE;
-            Reset();
-        }
-
-        #endregion Internal Constructors
-
-        #region Private Enums
-
-        private enum InflateBlockMode
-        {
-            TYPE = 0, // get type bits (3, including end bit)
-            LENS = 1, // get lengths for stored
-            STORED = 2, // processing stored block
-            TABLE = 3, // get table lengths
-            BTREE = 4, // get bit lengths tree for a dynamic block
-            DTREE = 5, // get length, distance trees for a dynamic block
-            CODES = 6, // processing fixed or dynamic block
-            DRY = 7, // output remaining window bytes
-            DONE = 8, // finished last block, done
-            BAD = 9 // ot a data error--stuck here
-        }
-
-        #endregion Private Enums
 
         #region Internal Methods
 
@@ -682,7 +628,8 @@ namespace Ionic.Zlib
                                 do
                                 {
                                     blens[i++] = c;
-                                } while (--j != 0);
+                                }
+                                while (--j != 0);
                                 index = i;
                             }
                         }
@@ -916,7 +863,7 @@ namespace Ionic.Zlib
         #region Internal Methods
 
         internal int InflateFast(int bl, int bd, int[] tl, int tl_index, int[] td, int td_index, InflateBlocks s,
-                    ZlibCodec z)
+            ZlibCodec z)
         {
             int t; // temporary pointer
             int[] tp; // temporary pointer
@@ -1050,7 +997,8 @@ namespace Ionic.Zlib
                                     do
                                     {
                                         r += s.end; // force pointer in window
-                                    } while (r < 0); // covers invalid distances
+                                    }
+                                    while (r < 0); // covers invalid distances
                                     e = s.end - r;
                                     if (c > e)
                                     {
@@ -1061,7 +1009,8 @@ namespace Ionic.Zlib
                                             do
                                             {
                                                 s.window[q++] = s.window[r++];
-                                            } while (--e != 0);
+                                            }
+                                            while (--e != 0);
                                         }
                                         else
                                         {
@@ -1080,7 +1029,8 @@ namespace Ionic.Zlib
                                     do
                                     {
                                         s.window[q++] = s.window[r++];
-                                    } while (--c != 0);
+                                    }
+                                    while (--c != 0);
                                 }
                                 else
                                 {
@@ -1117,7 +1067,8 @@ namespace Ionic.Zlib
 
                                 return ZlibConstants.Z_DATA_ERROR;
                             }
-                        } while (true);
+                        }
+                        while (true);
                         break;
                     }
 
@@ -1171,8 +1122,10 @@ namespace Ionic.Zlib
 
                         return ZlibConstants.Z_DATA_ERROR;
                     }
-                } while (true);
-            } while (m >= 258 && n >= 10);
+                }
+                while (true);
+            }
+            while (m >= 258 && n >= 10);
 
             // not enough input or output--restore pointers and return
             c = z.AvailableBytesIn - n;
@@ -1615,6 +1568,34 @@ namespace Ionic.Zlib
 
     internal sealed class InflateManager
     {
+        #region Internal Properties
+
+        internal bool HandleRfc1950HeaderBytes { get; set; } = true;
+
+        #endregion Internal Properties
+
+        #region Private Enums
+
+        private enum InflateManagerMode
+        {
+            METHOD = 0, // waiting for method byte
+            FLAG = 1, // waiting for flag byte
+            DICT4 = 2, // four dictionary check bytes to go
+            DICT3 = 3, // three dictionary check bytes to go
+            DICT2 = 4, // two dictionary check bytes to go
+            DICT1 = 5, // one dictionary check byte to go
+            DICT0 = 6, // waiting for inflateSetDictionary
+            BLOCKS = 7, // decompressing blocks
+            CHECK4 = 8, // four check bytes to go
+            CHECK3 = 9, // three check bytes to go
+            CHECK2 = 10, // two check bytes to go
+            CHECK1 = 11, // one check byte to go
+            DONE = 12, // finished check, done
+            BAD = 13 // got an error--stay here
+        }
+
+        #endregion Private Enums
+
         #region Internal Fields
 
         internal ZlibCodec _codec;
@@ -1672,34 +1653,6 @@ namespace Ionic.Zlib
         }
 
         #endregion Public Constructors
-
-        #region Private Enums
-
-        private enum InflateManagerMode
-        {
-            METHOD = 0, // waiting for method byte
-            FLAG = 1, // waiting for flag byte
-            DICT4 = 2, // four dictionary check bytes to go
-            DICT3 = 3, // three dictionary check bytes to go
-            DICT2 = 4, // two dictionary check bytes to go
-            DICT1 = 5, // one dictionary check byte to go
-            DICT0 = 6, // waiting for inflateSetDictionary
-            BLOCKS = 7, // decompressing blocks
-            CHECK4 = 8, // four check bytes to go
-            CHECK3 = 9, // three check bytes to go
-            CHECK2 = 10, // two check bytes to go
-            CHECK1 = 11, // one check byte to go
-            DONE = 12, // finished check, done
-            BAD = 13 // got an error--stay here
-        }
-
-        #endregion Private Enums
-
-        #region Internal Properties
-
-        internal bool HandleRfc1950HeaderBytes { get; set; } = true;
-
-        #endregion Internal Properties
 
         #region Internal Methods
 

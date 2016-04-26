@@ -13,23 +13,15 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
-using System.Data.SqlClient;
+using System.Data.Entity.Core;
 using System.Linq;
 using UCS.Database;
 using UCS.Logic;
-using UCS.PacketProcessing;
 
 namespace UCS.Core
 {
     internal class DatabaseManager
     {
-        #region Private Fields
-
-        private static DatabaseManager singelton;
-        private readonly string m_vConnectionString;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public DatabaseManager()
@@ -53,10 +45,17 @@ namespace UCS.Core
 
         #endregion Public Properties
 
+        #region Private Fields
+
+        private static DatabaseManager singelton;
+        private readonly string m_vConnectionString;
+
+        #endregion Private Fields
+
         #region Public Methods
 
         /// <summary>
-        /// This function create a new player in the database, with default parameters.
+        ///     This function create a new player in the database, with default parameters.
         /// </summary>
         /// <param name="l">The level of the player.</param>
         public void CreateAccount(Level l)
@@ -87,7 +86,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        /// This function create a new alliance in the database, with default parameters.
+        ///     This function create a new alliance in the database, with default parameters.
         /// </summary>
         /// <param name="a">The alliance data.</param>
         public void CreateAlliance(Alliance a)
@@ -114,7 +113,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        /// This function get the player data.
+        ///     This function get the player data.
         /// </summary>
         /// <param name="playerId">The (int64) ID of the player.</param>
         /// <returns>The level of the player.</returns>
@@ -146,8 +145,12 @@ namespace UCS.Core
             return account;
         }
 
-        /// <summary> This function return all alliances in database, in a list<>. </summary>
-        /// <returns> Return a list<> containing all alliances. </returns>
+        /// <summary>
+        ///     This function return all alliances in database, in a list<>.
+        /// </summary>
+        /// <returns>
+        ///     Return a list<> containing all alliances.
+        /// </returns>
         public List<Alliance> GetAllAlliances()
         {
             var alliances = new List<Alliance>();
@@ -175,7 +178,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        /// This function get the alliance data.
+        ///     This function get the alliance data.
         /// </summary>
         /// <param name="allianceId">The (Int64) ID of the alliance.</param>
         /// <returns>The Alliance of the Clan.</returns>
@@ -202,7 +205,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        /// This function get all players id in a list.
+        ///     This function get all players id in a list.
         /// </summary>
         /// <returns>A list of all players id.</returns>
         public List<long> GetAllPlayerIds()
@@ -214,7 +217,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        /// This function return the highest alliance id stored in database.
+        ///     This function return the highest alliance id stored in database.
         /// </summary>
         /// <returns>An int64 (ID) .</returns>
         public long GetMaxAllianceId()
@@ -226,7 +229,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        /// The function return the highest player id stored in database.
+        ///     The function return the highest player id stored in database.
         /// </summary>
         /// <returns>An int64 long ID.</returns>
         public long GetMaxPlayerId()
@@ -238,7 +241,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        /// This function remove an alliance from database.
+        ///     This function remove an alliance from database.
         /// </summary>
         /// <param name="alliance">The Alliance of the alliance.</param>
         public void RemoveAlliance(Alliance alliance)
@@ -283,7 +286,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        /// This function save a specific player in the database.
+        ///     This function save a specific player in the database.
         /// </summary>
         /// <param name="avatar">The level of the player.</param>
         public void Save(Level avatar)
@@ -376,7 +379,7 @@ namespace UCS.Core
         }
 
         /// <summary>
-        /// This function save a specific alliance in the database.
+        ///     This function save a specific alliance in the database.
         /// </summary>
         /// <param name="alliances">The Alliance of the alliance.</param>
         public void Save(List<Alliance> alliances)
@@ -437,7 +440,7 @@ namespace UCS.Core
                     (from ep in db.player select (long?) ep.PlayerId ?? 0).DefaultIfEmpty().Max();
                 }
             }
-            catch (System.Data.Entity.Core.EntityException)
+            catch (EntityException)
             {
                 if (ConfigurationManager.AppSettings["databaseConnectionName"] == "ucsdbEntities")
                 {

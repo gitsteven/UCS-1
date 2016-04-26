@@ -13,13 +13,23 @@ using System;
 using System.Collections.Concurrent;
 using System.Net.Sockets;
 using System.Threading;
-using UCS.Core;
+using UCS.Logic;
 using UCS.PacketProcessing;
 
-namespace UCS.Network
+namespace UCS.Core.Network
 {
     internal class PacketManager : IDisposable
     {
+        #region Public Constructors
+
+        public PacketManager()
+        {
+            m_vIncomingPackets = new ConcurrentQueue<Message>();
+            m_vOutgoingPackets = new ConcurrentQueue<Message>();
+        }
+
+        #endregion Public Constructors
+
         #region Private Fields
 
         private static readonly EventWaitHandle m_vIncomingWaitHandle = new AutoResetEvent(false);
@@ -29,18 +39,6 @@ namespace UCS.Network
         private bool m_vIsRunning;
 
         #endregion Private Fields
-
-        #region Public Constructors
-
-        public PacketManager()
-        {
-            m_vIncomingPackets = new ConcurrentQueue<Message>();
-            m_vOutgoingPackets = new ConcurrentQueue<Message>();
-
-            m_vIsRunning = false;
-        }
-
-        #endregion Public Constructors
 
         #region Private Delegates
 
@@ -60,22 +58,21 @@ namespace UCS.Network
 
         public static void ProcessOutgoingPacket(Message p)
         {
-            p.Encode();
-            //p.Process(p.Client.GetLevel());
-
             try
             {
-                var pl = p.Client.GetLevel();
-                var player = string.Empty;
+                p.Encode();
+                p.Process(p.Client.GetLevel());
+                Level pl = p.Client.GetLevel();
+                string player = " (0, NoNameYet)";
                 if (pl != null)
                     player = " (" + pl.GetPlayerAvatar().GetId() + ", " + pl.GetPlayerAvatar().GetAvatarName() + ")";
                 Debugger.WriteLine("[UCS]    Processing " + p.GetType().Name + player);
                 m_vOutgoingPackets.Enqueue(p);
                 m_vOutgoingWaitHandle.Set();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Debugger.WriteLine("[UCS]    Exception when processing " + p.GetType().Name, ex);
             }
         }
 
@@ -144,7 +141,7 @@ namespace UCS.Network
                         }
                         catch (Exception ex)
                         {
-                            Debugger.WriteLine("[UCS]   Exception thrown when dropping client : ", ex);
+                            Debugger.WriteLine("[UCS]    Exception thrown when dropping client : ", ex);
                         }
                     }
                 }

@@ -11,10 +11,11 @@
 
 using System;
 using UCS.Core;
+using UCS.Core.Network;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.GameOpCommands
 {
     internal class BanIpGameOpCommand : GameOpCommand
     {

@@ -12,14 +12,14 @@
 using System.Collections.Generic;
 using UCS.Helpers;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24104
     internal class OutOfSyncMessage : Message
     {
         #region Public Constructors
 
-        public OutOfSyncMessage(Client client) : base(client)
+        public OutOfSyncMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24104);
         }

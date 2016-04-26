@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24334
     internal class AvatarProfileMessage : Message
@@ -26,7 +26,7 @@ namespace UCS.PacketProcessing
 
         #region Public Constructors
 
-        public AvatarProfileMessage(Client client)
+        public AvatarProfileMessage(PacketProcessing.Client client)
             : base(client)
         {
             SetMessageType(24334);

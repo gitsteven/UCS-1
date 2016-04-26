@@ -12,11 +12,13 @@
 using System;
 using System.IO;
 using UCS.Core;
+using UCS.Core.Network;
 using UCS.Helpers;
 using UCS.Logic;
-using UCS.Network;
+using UCS.Logic.StreamEntry;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     //14315
     internal class ChatToAllianceStreamMessage : Message
@@ -29,7 +31,7 @@ namespace UCS.PacketProcessing
 
         #region Public Constructors
 
-        public ChatToAllianceStreamMessage(Client client, BinaryReader br) : base(client, br)
+        public ChatToAllianceStreamMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
         {
         }
 

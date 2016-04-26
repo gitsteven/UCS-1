@@ -12,26 +12,26 @@
 using System.Collections.Generic;
 using UCS.Helpers;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24111
     internal class AvailableServerCommandMessage : Message
     {
+        #region Public Constructors
+
+        public AvailableServerCommandMessage(PacketProcessing.Client client) : base(client)
+        {
+            SetMessageType(24111);
+        }
+
+        #endregion Public Constructors
+
         #region Private Fields
 
         private Command m_vCommand;
         private int m_vServerCommandId;
 
         #endregion Private Fields
-
-        #region Public Constructors
-
-        public AvailableServerCommandMessage(Client client) : base(client)
-        {
-            SetMessageType(24111);
-        }
-
-        #endregion Public Constructors
 
         #region Public Methods
 

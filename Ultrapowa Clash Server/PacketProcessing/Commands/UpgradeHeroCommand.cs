@@ -14,7 +14,7 @@ using UCS.Core;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x020F
     internal class UpgradeHeroCommand : Command
@@ -28,15 +28,6 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Constructors
-
-        //00 00 02 0F 1D CD 65 09 00 01 03 63
-
-        #region Public Properties
-
-        public int BuildingId { get; set; }
-        public uint Unknown1 { get; set; }
-
-        #endregion Public Properties
 
         #region Public Methods
 
@@ -69,5 +60,14 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        //00 00 02 0F 1D CD 65 09 00 01 03 63
+
+        #region Public Properties
+
+        public int BuildingId { get; set; }
+        public uint Unknown1 { get; set; }
+
+        #endregion Public Properties
     }
 }

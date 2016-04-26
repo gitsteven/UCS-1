@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Sodium;
+using UCS.Core.Crypto.Sodium;
 using UCS.Helpers;
 using UCS.Logic;
 
@@ -91,7 +91,7 @@ namespace UCS.PacketProcessing
                 }
                 else if (m_vType != 10100)
                 {
-                    Client.CSNonce = Utilities.Increment(Utilities.Increment(Client.CSNonce));
+                    Client.CSNonce = Core.Crypto.Sodium.Utilities.Increment(Core.Crypto.Sodium.Utilities.Increment(Client.CSNonce));
                     SetData(SecretBox.Open(new byte[16].Concat(m_vData).ToArray(), Client.CSNonce, Client.CSharedKey));
                 }
             }
@@ -128,7 +128,7 @@ namespace UCS.PacketProcessing
                 }
                 else
                 {
-                    Client.CRNonce = Utilities.Increment(Utilities.Increment(Client.CRNonce));
+                    Client.CRNonce = Core.Crypto.Sodium.Utilities.Increment(Core.Crypto.Sodium.Utilities.Increment(Client.CRNonce));
                     SetData(SecretBox.Create(plainText, Client.CRNonce, Client.CSharedKey).Skip(16).ToArray());
                 }
             }

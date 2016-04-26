@@ -12,10 +12,12 @@
 using System;
 using System.Linq;
 using UCS.Core;
+using UCS.Core.Network;
 using UCS.Logic;
-using UCS.Network;
+using UCS.Logic.AvatarStreamEntry;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.GameOpCommands
 {
     internal class SystemMessageGameOpCommand : GameOpCommand
     {

@@ -14,13 +14,13 @@ using System.Collections.Generic;
 using UCS.Core;
 using UCS.Helpers;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     internal class PreviousGlobalPlayersMessage : Message
     {
         #region Public Constructors
 
-        public PreviousGlobalPlayersMessage(Client client) : base(client)
+        public PreviousGlobalPlayersMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24405);
         }

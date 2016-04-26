@@ -11,20 +11,13 @@
 
 using System.Collections.Generic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     internal class AnswerJoinRequestAllianceMessage : Message
     {
-        #region Private Fields
-
-        private readonly int m_vServerCommandType;
-        private string m_vAvatarName;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
-        public AnswerJoinRequestAllianceMessage(Client client) : base(client)
+        public AnswerJoinRequestAllianceMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24317);
         }
@@ -41,5 +34,12 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        #region Private Fields
+
+        private readonly int m_vServerCommandType;
+        private string m_vAvatarName;
+
+        #endregion Private Fields
     }
 }

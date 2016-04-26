@@ -15,11 +15,19 @@ using UCS.Core;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     //Packet 14102
     internal class ExecuteCommandsMessage : Message
     {
+        #region Public Constructors
+
+        public ExecuteCommandsMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
+        {
+        }
+
+        #endregion Public Constructors
+
         #region Public Fields
 
         public uint Checksum;
@@ -29,14 +37,6 @@ namespace UCS.PacketProcessing
         public uint Subtick;
 
         #endregion Public Fields
-
-        #region Public Constructors
-
-        public ExecuteCommandsMessage(Client client, BinaryReader br) : base(client, br)
-        {
-        }
-
-        #endregion Public Constructors
 
         #region Public Methods
 

@@ -14,14 +14,14 @@ using System.Collections.Generic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24101
     internal class OwnHomeDataMessage : Message
     {
         #region Public Constructors
 
-        public OwnHomeDataMessage(Client client, Level level) : base(client)
+        public OwnHomeDataMessage(PacketProcessing.Client client, Level level) : base(client)
         {
             SetMessageType(24101);
             Player = level;

@@ -12,25 +12,15 @@
 using System;
 using System.IO;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x206
     internal class BuyResourcesCommand : Command
     {
-        #region Private Fields
-
-        private readonly object m_vCommand;
-        private readonly bool m_vIsCommandEmbedded;
-        private readonly int m_vResourceCount;
-        private readonly int m_vResourceId;
-        private readonly int Unknown1;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public BuyResourcesCommand(BinaryReader br)
@@ -90,5 +80,15 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        #region Private Fields
+
+        private readonly object m_vCommand;
+        private readonly bool m_vIsCommandEmbedded;
+        private readonly int m_vResourceCount;
+        private readonly int m_vResourceId;
+        private readonly int Unknown1;
+
+        #endregion Private Fields
     }
 }

@@ -11,7 +11,7 @@
 
 using System.Collections.Generic;
 
-namespace UCS.GameFiles
+namespace UCS.Files.CSV
 {
     internal class CSVColumn
     {

@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24301
     internal class AllianceFullEntryupdateMessage : Message
@@ -26,7 +26,7 @@ namespace UCS.PacketProcessing
 
         #region Public Constructors
 
-        public AllianceFullEntryupdateMessage(Client client, Alliance alliance)
+        public AllianceFullEntryupdateMessage(PacketProcessing.Client client, Alliance alliance)
             : base(client)
         {
             SetMessageType(24324);

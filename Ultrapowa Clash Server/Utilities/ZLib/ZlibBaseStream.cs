@@ -8,34 +8,12 @@
  * Copyright (c) 2016  UltraPowa
  * All Rights Reserved.
  */
-// ZlibBaseStream.cs ------------------------------------------------------------------
-//
-// Copyright (c) 2009 Dino Chiesa and Microsoft Corporation. All rights reserved.
-//
-// This code module is part of DotNetZip, a zipfile class library.
-//
-// ------------------------------------------------------------------
-//
-// This code is licensed under the Microsoft Public License. See the file License.txt for the license
-// details. More info on: http://dotnetzip.codeplex.com
-//
-// ------------------------------------------------------------------
-//
-// last saved (in emacs): Time-stamp: <2011-August-06 21:22:38>
-//
-// ------------------------------------------------------------------
-//
-// This module defines the ZlibBaseStream class, which is an intnernal base class for DeflateStream,
-// ZlibStream and GZipStream.
-//
-// ------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Ionic.Crc;
 
-namespace Ionic.Zlib
+namespace UCS.Utilities.ZLib
 {
     internal enum ZlibStreamFlavor
     {
@@ -174,7 +152,8 @@ namespace Ionic.Zlib
                 // If GZIP and de-compress, we're done when 8 bytes remain.
                 if (_flavor == ZlibStreamFlavor.GZIP && !_wantCompress)
                     done = _z.AvailableBytesIn == 8 && _z.AvailableBytesOut != 0;
-            } while (!done);
+            }
+            while (!done);
         }
 
         private void finish()
@@ -211,7 +190,8 @@ namespace Ionic.Zlib
                     // If GZIP and de-compress, we're done when 8 bytes remain.
                     if (_flavor == ZlibStreamFlavor.GZIP && !_wantCompress)
                         done = _z.AvailableBytesIn == 8 && _z.AvailableBytesOut != 0;
-                } while (!done);
+                }
+                while (!done);
 
                 Flush();
 
@@ -366,7 +346,8 @@ namespace Ionic.Zlib
                     done = true;
                 else
                     list.Add(_buf1[0]);
-            } while (!done);
+            }
+            while (!done);
             var a = list.ToArray();
             return GZipStream.iso8859dash1.GetString(a, 0, a.Length);
         }

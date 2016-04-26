@@ -12,7 +12,7 @@
 using System.IO;
 using UCS.Helpers;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x04
     internal class DonateAllianceUnitCommand : Command
@@ -29,6 +29,8 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Constructors
+
+        //00 00 48 7A
 
         //00 00 00 04 00 00 00 00 49 79 1C DD 00 3D 09 00 00 00 00 08 00 00 48 7A
 
@@ -47,7 +49,5 @@ namespace UCS.PacketProcessing
         public uint Unknown3 { get; set; }
 
         #endregion Public Properties
-
-        //00 00 48 7A
     }
 }

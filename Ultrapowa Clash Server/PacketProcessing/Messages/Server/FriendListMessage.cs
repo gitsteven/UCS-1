@@ -13,14 +13,14 @@ using System.Collections.Generic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 20105
     internal class FriendListMessage : Message
     {
         #region Public Constructors
 
-        public FriendListMessage(Client client) : base(client)
+        public FriendListMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(20105);
         }

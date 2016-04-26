@@ -11,11 +11,13 @@
 
 using System.IO;
 using UCS.Core;
+using UCS.Core.Network;
 using UCS.Helpers;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Commands;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     //Packet 14305
     internal class JoinAllianceMessage : Message
@@ -28,7 +30,7 @@ namespace UCS.PacketProcessing
 
         #region Public Constructors
 
-        public JoinAllianceMessage(Client client, BinaryReader br) : base(client, br)
+        public JoinAllianceMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
         {
         }
 

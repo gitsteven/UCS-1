@@ -11,20 +11,20 @@
 
 using System;
 
-namespace Ionic.Encoding
+namespace UCS.Utilities.ZLib
 {
     /// <summary>
-    /// Provides a text encoder for the iso-8859-1 encoding, aka Latin1 encoding, for platforms that
-    /// do not support it, for example on Silverlight or some Compact Framework platforms.
+    ///     Provides a text encoder for the iso-8859-1 encoding, aka Latin1 encoding, for platforms that
+    ///     do not support it, for example on Silverlight or some Compact Framework platforms.
     /// </summary>
     public class Iso8859Dash1Encoding : System.Text.Encoding
     {
         #region Public Properties
 
         /// <summary>
-        /// Gets the number of characters that are supported by this encoding. This property returns
-        /// a maximum value of 256, as the encoding class only supports single byte encodings (1 byte
-        /// == 256 possible values).
+        ///     Gets the number of characters that are supported by this encoding. This property returns
+        ///     a maximum value of 256, as the encoding class only supports single byte encodings (1 byte
+        ///     == 256 possible values).
         /// </summary>
         public static int CharacterCount
         {
@@ -32,8 +32,8 @@ namespace Ionic.Encoding
         }
 
         /// <summary>
-        /// Gets the name registered with the Internet Assigned Numbers Authority (IANA) for the
-        /// current encoding.
+        ///     Gets the name registered with the Internet Assigned Numbers Authority (IANA) for the
+        ///     current encoding.
         /// </summary>
         /// <returns>Always returns "iso-8859-1".</returns>
         public override string WebName
@@ -46,12 +46,12 @@ namespace Ionic.Encoding
         #region Public Methods
 
         /// <summary>
-        /// Calculates the number of bytes produced by encoding a set of characters from the
-        /// specified character array.
+        ///     Calculates the number of bytes produced by encoding a set of characters from the
+        ///     specified character array.
         /// </summary>
         /// <returns>
-        /// The number of bytes produced by encoding the specified characters. This class alwas
-        /// returns the value of <paramref name="count"/>.
+        ///     The number of bytes produced by encoding the specified characters. This class alwas
+        ///     returns the value of <paramref name="count" />.
         /// </returns>
         public override int GetByteCount(char[] chars, int index, int count)
         {
@@ -59,15 +59,15 @@ namespace Ionic.Encoding
         }
 
         /// <summary>
-        /// Encodes a set of characters from a character array into a byte array.
+        ///     Encodes a set of characters from a character array into a byte array.
         /// </summary>
-        /// <returns>The actual number of bytes written into <paramref name="bytes"/>.</returns>
+        /// <returns>The actual number of bytes written into <paramref name="bytes" />.</returns>
         /// <param name="chars">The character array containing the set of characters to encode.</param>
         /// <param name="start">The index of the first character to encode.</param>
         /// <param name="count">The number of characters to encode.</param>
         /// <param name="bytes">The byte array to contain the resulting sequence of bytes.</param>
         /// <param name="byteIndex">
-        /// The index at which to start writing the resulting sequence of bytes.
+        ///     The index at which to start writing the resulting sequence of bytes.
         /// </param>
         public override int GetBytes(char[] chars, int start, int count, byte[] bytes, int byteIndex)
         {
@@ -105,12 +105,12 @@ namespace Ionic.Encoding
         }
 
         /// <summary>
-        /// Calculates the number of characters produced by decoding a sequence of bytes from the
-        /// specified byte array.
+        ///     Calculates the number of characters produced by decoding a sequence of bytes from the
+        ///     specified byte array.
         /// </summary>
         /// <returns>
-        /// The number of characters produced by decoding the specified sequence of bytes. This class
-        /// alwas returns the value of <paramref name="count"/>.
+        ///     The number of characters produced by decoding the specified sequence of bytes. This class
+        ///     alwas returns the value of <paramref name="count" />.
         /// </returns>
         public override int GetCharCount(byte[] bytes, int index, int count)
         {
@@ -118,15 +118,15 @@ namespace Ionic.Encoding
         }
 
         /// <summary>
-        /// Decodes a sequence of bytes from the specified byte array into the specified character array.
+        ///     Decodes a sequence of bytes from the specified byte array into the specified character array.
         /// </summary>
-        /// <returns>The actual number of characters written into <paramref name="chars"/>.</returns>
+        /// <returns>The actual number of characters written into <paramref name="chars" />.</returns>
         /// <param name="bytes">The byte array containing the sequence of bytes to decode.</param>
         /// <param name="start">The index of the first byte to decode.</param>
         /// <param name="count">The number of bytes to decode.</param>
         /// <param name="chars">The character array to contain the resulting set of characters.</param>
         /// <param name="charIndex">
-        /// The index at which to start writing the resulting set of characters.
+        ///     The index at which to start writing the resulting set of characters.
         /// </param>
         public override int GetChars(byte[] bytes, int start, int count, char[] chars, int charIndex)
         {
@@ -156,11 +156,11 @@ namespace Ionic.Encoding
         }
 
         /// <summary>
-        /// Calculates the maximum number of bytes produced by encoding the specified number of characters.
+        ///     Calculates the maximum number of bytes produced by encoding the specified number of characters.
         /// </summary>
         /// <returns>
-        /// The maximum number of bytes produced by encoding the specified number of characters. This
-        /// class alwas returns the value of <paramref name="charCount"/>.
+        ///     The maximum number of bytes produced by encoding the specified number of characters. This
+        ///     class alwas returns the value of <paramref name="charCount" />.
         /// </returns>
         /// <param name="charCount">The number of characters to encode.</param>
         public override int GetMaxByteCount(int charCount)
@@ -169,11 +169,11 @@ namespace Ionic.Encoding
         }
 
         /// <summary>
-        /// Calculates the maximum number of characters produced by decoding the specified number of bytes.
+        ///     Calculates the maximum number of characters produced by decoding the specified number of bytes.
         /// </summary>
         /// <returns>
-        /// The maximum number of characters produced by decoding the specified number of bytes. This
-        /// class alwas returns the value of <paramref name="byteCount"/>.
+        ///     The maximum number of characters produced by decoding the specified number of bytes. This
+        ///     class alwas returns the value of <paramref name="byteCount" />.
         /// </returns>
         /// <param name="byteCount">The number of bytes to decode.</param>
         public override int GetMaxCharCount(int byteCount)

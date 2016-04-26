@@ -14,17 +14,25 @@ using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
-using Microsoft.SqlServer.Server;
 using UCS.Core;
+using UCS.Core.Network;
 using UCS.Helpers;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     //Packet 10101
     internal class LoginMessage : Message
     {
+        #region Public Constructors
+
+        public LoginMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
+        {
+        }
+
+        #endregion Public Constructors
+
         #region Public Fields
 
         public string AdvertisingGUID;
@@ -56,15 +64,6 @@ namespace UCS.PacketProcessing
         public Level level;
 
         #endregion Public Fields
-
-        #region Public Constructors
-
-        public LoginMessage(Client client, BinaryReader br) : base(client, br)
-        {
-
-        }
-
-        #endregion Public Constructors
 
         #region Public Methods
 
@@ -133,38 +132,6 @@ namespace UCS.PacketProcessing
 
         private void LogUser()
         {
-            var cv = ClientVersion.Split('.');
-            if (cv[0] != "8" || cv[1] != "212")
-            {
-                var p = new LoginFailedMessage(Client);
-                p.SetErrorCode(8);
-                p.SetReason("I love berkan");
-                p.SetResourceFingerprintData(ObjectManager.FingerPrint.SaveToJson());
-                p.SetUpdateURL(Convert.ToString(ConfigurationManager.AppSettings["UpdateUrl"]));
-                PacketManager.ProcessOutgoingPacket(p);
-                return;
-            }
-
-            if (Convert.ToBoolean(ConfigurationManager.AppSettings["useCustomPatch"]) && MasterHash != ObjectManager.FingerPrint.sha)
-            {
-                var p = new LoginFailedMessage(Client);
-                p.SetErrorCode(7);
-                p.SetResourceFingerprintData(ObjectManager.FingerPrint.SaveToJson());
-                p.SetContentURL(ConfigurationManager.AppSettings["patchingServer"]);
-                p.SetUpdateURL(ConfigurationManager.AppSettings["UpdateUrl"]);
-                PacketManager.ProcessOutgoingPacket(p);
-                return;
-            }
-            int time = Convert.ToInt32(ConfigurationManager.AppSettings["maintenanceTimeleft"]);
-            if (time!= 0)
-            {
-                var p = new LoginFailedMessage(Client);
-                p.SetErrorCode(10);
-                p.RemainingTime(time);
-                PacketManager.ProcessOutgoingPacket(p);
-                return;
-            }
-
             ResourcesManager.LogPlayerIn(level, Client);
             level.Tick();
             var loginOk = new LoginOkMessage(Client);
@@ -176,7 +143,9 @@ namespace UCS.PacketProcessing
             loginOk.SetContentVersion(ContentVersion);
             loginOk.SetServerEnvironment("stage");
             loginOk.SetDaysSinceStartedPlaying(0);
-            loginOk.SetServerTime(Math.Round(level.GetTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds * 1000).ToString(CultureInfo.InvariantCulture));
+            loginOk.SetServerTime(
+                Math.Round(level.GetTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds * 1000)
+                    .ToString(CultureInfo.InvariantCulture));
             loginOk.SetAccountCreatedDate("1414003838000");
             loginOk.SetStartupCooldownSeconds(0);
             loginOk.SetCountryCode(Language);
@@ -191,6 +160,41 @@ namespace UCS.PacketProcessing
             PacketManager.ProcessOutgoingPacket(new BookmarkMessage(Client));
         }
 
+        private void CheckClient()
+        {
+            if (Convert.ToInt32(ConfigurationManager.AppSettings["maintenanceTimeleft"]) > 0 || Client.CState == 0)
+            {
+                var p = new LoginFailedMessage(Client);
+                p.SetErrorCode(10);
+                PacketManager.ProcessOutgoingPacket(p);
+                ResourcesManager.LogPlayerOut(level);
+                return;
+            }
+
+            var cv = ClientVersion.Split('.');
+            if (cv[0] != "8" || cv[1] != "212")
+            {
+                var p = new LoginFailedMessage(Client);
+                p.SetErrorCode(8);
+                p.SetUpdateURL(Convert.ToString(ConfigurationManager.AppSettings["UpdateUrl"]));
+                PacketManager.ProcessOutgoingPacket(p);
+                ResourcesManager.LogPlayerOut(level);
+                return;
+            }
+
+            if (Convert.ToBoolean(ConfigurationManager.AppSettings["useCustomPatch"]) &&
+                MasterHash != ObjectManager.FingerPrint.sha)
+            {
+                var p = new LoginFailedMessage(Client);
+                p.SetErrorCode(7);
+                p.SetResourceFingerprintData(ObjectManager.FingerPrint.SaveToJson());
+                p.SetContentURL(ConfigurationManager.AppSettings["patchingServer"]);
+                p.SetUpdateURL(ConfigurationManager.AppSettings["UpdateUrl"]);
+                PacketManager.ProcessOutgoingPacket(p);
+                ResourcesManager.LogPlayerOut(level);
+            }
+        }
+
         private void NewUser()
         {
             level = ObjectManager.CreateAvatar(0, null);
@@ -199,12 +203,13 @@ namespace UCS.PacketProcessing
                 var tokenSeed = new byte[20];
                 new Random().NextBytes(tokenSeed);
                 using (SHA1 sha = new SHA1CryptoServiceProvider())
-                UserToken = BitConverter.ToString(sha.ComputeHash(tokenSeed)).Replace("-", string.Empty);
+                    UserToken = BitConverter.ToString(sha.ComputeHash(tokenSeed)).Replace("-", string.Empty);
             }
             level.GetPlayerAvatar().SetToken(UserToken);
             DatabaseManager.Singelton.Save(level);
             LogUser();
         }
+
         #endregion Public Methods
     }
 }
