@@ -132,6 +132,7 @@ namespace UCS.PacketProcessing.Messages.Client
 
         private void LogUser()
         {
+            CheckClient();
             ResourcesManager.LogPlayerIn(level, Client);
             level.Tick();
             var loginOk = new LoginOkMessage(Client);
@@ -162,12 +163,14 @@ namespace UCS.PacketProcessing.Messages.Client
 
         private void CheckClient()
         {
-            if (Convert.ToInt32(ConfigurationManager.AppSettings["maintenanceTimeleft"]) > 0 || Client.CState == 0)
+            int time = Convert.ToInt32(ConfigurationManager.AppSettings["maintenanceTimeleft"]);
+            if (time != 0 || Client.CState == 0)
             {
                 var p = new LoginFailedMessage(Client);
                 p.SetErrorCode(10);
+                p.RemainingTime(time);
+                p.SetResourceFingerprintData(ObjectManager.FingerPrint.SaveToJson());
                 PacketManager.ProcessOutgoingPacket(p);
-                ResourcesManager.LogPlayerOut(level);
                 return;
             }
 
@@ -176,9 +179,9 @@ namespace UCS.PacketProcessing.Messages.Client
             {
                 var p = new LoginFailedMessage(Client);
                 p.SetErrorCode(8);
+                p.SetResourceFingerprintData(ObjectManager.FingerPrint.SaveToJson());
                 p.SetUpdateURL(Convert.ToString(ConfigurationManager.AppSettings["UpdateUrl"]));
                 PacketManager.ProcessOutgoingPacket(p);
-                ResourcesManager.LogPlayerOut(level);
                 return;
             }
 
@@ -191,7 +194,7 @@ namespace UCS.PacketProcessing.Messages.Client
                 p.SetContentURL(ConfigurationManager.AppSettings["patchingServer"]);
                 p.SetUpdateURL(ConfigurationManager.AppSettings["UpdateUrl"]);
                 PacketManager.ProcessOutgoingPacket(p);
-                ResourcesManager.LogPlayerOut(level);
+                return;
             }
         }
 
