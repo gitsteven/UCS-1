@@ -10,8 +10,9 @@
  */
 
 using System.Collections.Generic;
+using UCS.Files.CSV;
 
-namespace UCS.GameFiles
+namespace UCS.Files.Logic
 {
     internal class LeagueData : Data
     {

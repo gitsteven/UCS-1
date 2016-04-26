@@ -8,69 +8,10 @@
  * Copyright (c) 2016  UltraPowa
  * All Rights Reserved.
  */
-// Deflate.cs ------------------------------------------------------------------
-//
-// Copyright (c) 2009 Dino Chiesa and Microsoft Corporation. All rights reserved.
-//
-// This code module is part of DotNetZip, a zipfile class library.
-//
-// ------------------------------------------------------------------
-//
-// This code is licensed under the Microsoft Public License. See the file License.txt for the license
-// details. More info on: http://dotnetzip.codeplex.com
-//
-// ------------------------------------------------------------------
-//
-// last saved (in emacs): Time-stamp: <2011-August-03 19:52:15>
-//
-// ------------------------------------------------------------------
-//
-// This module defines logic for handling the Deflate or compression.
-//
-// This code is based on multiple sources:
-// - the original zlib v1.2.3 source, which is Copyright (C) 1995-2005 Jean-loup Gailly.
-// - the original jzlib, which is Copyright (c) 2000-2003 ymnk, JCraft,Inc.
-//
-// However, this code is significantly different from both. The object model is not the same, and
-// many of the behaviors are different.
-//
-// In keeping with the license for these other works, the copyrights for jzlib and zlib are here.
-//
-// ----------------------------------------------------------------------- Copyright (c)
-// 2000,2001,2002,2003 ymnk, JCraft,Inc. All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without modification, are permitted
-// provided that the following conditions are met:
-//
-// 1. Redistributions of source code must retain the above copyright notice, this list of conditions
-// and the following disclaimer.
-//
-// 2. Redistributions in binary form must reproduce the above copyright notice, this list of
-// conditions and the following disclaimer in the documentation and/or other materials provided with
-// the distribution.
-//
-// 3. The names of the authors may not be used to endorse or promote products derived from this
-// software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-// DISCLAIMED. IN NO EVENT SHALL JCRAFT, INC. OR ANY CONTRIBUTORS TO THIS SOFTWARE BE LIABLE FOR ANY
-// DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-// BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-// LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-// -----------------------------------------------------------------------
-//
-// This program is based on zlib-1.1.3; credit to authors Jean-loup Gailly(jloup@gzip.org) and Mark
-// Adler(madler@alumni.caltech.edu) and contributors of zlib.
-//
-// -----------------------------------------------------------------------
 
 using System;
 
-namespace Ionic.Zlib
+namespace UCS.Utilities.ZLib
 {
     internal enum BlockState
     {
@@ -275,7 +216,7 @@ namespace Ionic.Zlib
         internal short[] bl_count = new short[InternalConstants.MAX_BITS + 1];
 
         // heap used to build the Huffman trees
-        internal int[] heap = new int[2 * InternalConstants.L_CODES + 1];
+        internal int[] heap = new int[2*InternalConstants.L_CODES + 1];
 
         internal int heap_len; // number of elements in the heap
         internal int heap_max; // element of largest frequency
@@ -284,7 +225,7 @@ namespace Ionic.Zlib
         // array is used to build all trees.
 
         // Depth of each subtree used as tie breaker for trees of equal frequency
-        internal sbyte[] depth = new sbyte[2 * InternalConstants.L_CODES + 1];
+        internal sbyte[] depth = new sbyte[2*InternalConstants.L_CODES + 1];
 
         internal int _lengthOffset; // index for literals or lengths
 
@@ -558,7 +499,8 @@ namespace Ionic.Zlib
                     do
                     {
                         send_code(curlen, bl_tree);
-                    } while (--count != 0);
+                    }
+                    while (--count != 0);
                 }
                 else if (curlen != 0)
                 {
@@ -785,7 +727,8 @@ namespace Ionic.Zlib
                     }
 
                     // Check that the overlay between pending and d_buf+l_buf is ok:
-                } while (lx < last_lit);
+                }
+                while (lx < last_lit);
             }
 
             send_code(END_BLOCK, ltree);
@@ -1070,7 +1013,8 @@ namespace Ionic.Zlib
                     {
                         m = head[--p] & 0xffff;
                         head[p] = (short) (m >= w_size ? m - w_size : 0);
-                    } while (--n != 0);
+                    }
+                    while (--n != 0);
 
                     n = w_size;
                     p = n;
@@ -1080,7 +1024,8 @@ namespace Ionic.Zlib
                         prev[p] = (short) (m >= w_size ? m - w_size : 0);
                         // If n is not on any hash chain, prev[n] is garbage but its value will never
                         // be used.
-                    } while (--n != 0);
+                    }
+                    while (--n != 0);
                     more += w_size;
                 }
 
@@ -1106,7 +1051,8 @@ namespace Ionic.Zlib
                 }
                 // If the whole input has less than MIN_MATCH bytes, ins_h is garbage, but this is
                 // not important since only literal bytes will be emitted.
-            } while (lookahead < MIN_LOOKAHEAD && _codec.AvailableBytesIn != 0);
+            }
+            while (lookahead < MIN_LOOKAHEAD && _codec.AvailableBytesIn != 0);
         }
 
         // Compress as much as possible from the input stream, return the current block state. This
@@ -1186,7 +1132,8 @@ namespace Ionic.Zlib
 
                             // strstart never exceeds WSIZE-MAX_MATCH, so there are always MIN_MATCH
                             // bytes ahead.
-                        } while (--match_length != 0);
+                        }
+                        while (--match_length != 0);
                         strstart++;
                     }
                     else
@@ -1316,7 +1263,8 @@ namespace Ionic.Zlib
                             prev[strstart & w_mask] = head[ins_h];
                             head[ins_h] = unchecked((short) strstart);
                         }
-                    } while (--prev_length != 0);
+                    }
+                    while (--prev_length != 0);
                     match_available = 0;
                     match_length = MIN_MATCH - 1;
                     strstart++;
@@ -1428,14 +1376,15 @@ namespace Ionic.Zlib
                 // will be made at strstart+258.
                 do
                 {
-                } while (window[++scan] == window[++match] &&
-                         window[++scan] == window[++match] &&
-                         window[++scan] == window[++match] &&
-                         window[++scan] == window[++match] &&
-                         window[++scan] == window[++match] &&
-                         window[++scan] == window[++match] &&
-                         window[++scan] == window[++match] &&
-                         window[++scan] == window[++match] && scan < strend);
+                }
+                while (window[++scan] == window[++match] &&
+                       window[++scan] == window[++match] &&
+                       window[++scan] == window[++match] &&
+                       window[++scan] == window[++match] &&
+                       window[++scan] == window[++match] &&
+                       window[++scan] == window[++match] &&
+                       window[++scan] == window[++match] &&
+                       window[++scan] == window[++match] && scan < strend);
 
                 len = MAX_MATCH - (strend - scan);
                 scan = strend - MAX_MATCH;
@@ -1449,7 +1398,8 @@ namespace Ionic.Zlib
                     scan_end1 = window[scan + best_len - 1];
                     scan_end = window[scan + best_len];
                 }
-            } while ((cur_match = prev[cur_match & wmask] & 0xffff) > limit && --chain_length != 0);
+            }
+            while ((cur_match = prev[cur_match & wmask] & 0xffff) > limit && --chain_length != 0);
 
             if (best_len <= lookahead)
                 return best_len;

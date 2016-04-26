@@ -11,17 +11,10 @@
 
 using System.Collections.Generic;
 
-namespace UCS.Logic
+namespace UCS.Logic.Manager
 {
     internal class WorkerManager
     {
-        #region Private Fields
-
-        private readonly List<GameObject> m_vGameObjectReferences;
-        private int m_vWorkerCount;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public WorkerManager()
@@ -31,6 +24,13 @@ namespace UCS.Logic
         }
 
         #endregion Public Constructors
+
+        #region Private Fields
+
+        private readonly List<GameObject> m_vGameObjectReferences;
+        private int m_vWorkerCount;
+
+        #endregion Private Fields
 
         #region Public Methods
 

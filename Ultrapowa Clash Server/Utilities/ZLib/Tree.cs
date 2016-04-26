@@ -8,62 +8,10 @@
  * Copyright (c) 2016  UltraPowa
  * All Rights Reserved.
  */
-// Tree.cs ------------------------------------------------------------------
-//
-// Copyright (c) 2009 Dino Chiesa and Microsoft Corporation. All rights reserved.
-//
-// This code module is part of DotNetZip, a zipfile class library.
-//
-// ------------------------------------------------------------------
-//
-// This code is licensed under the Microsoft Public License. See the file License.txt for the license
-// details. More info on: http://dotnetzip.codeplex.com
-//
-// ------------------------------------------------------------------
-//
-// last saved (in emacs): Time-stamp: <2009-October-28 13:29:50>
-//
-// ------------------------------------------------------------------
-//
-// This module defines classes for zlib compression and decompression. This code is derived from the
-// jzlib implementation of zlib. In keeping with the license for jzlib, the copyright to that code is below.
-//
-// ------------------------------------------------------------------
-//
-// Copyright (c) 2000,2001,2002,2003 ymnk, JCraft,Inc. All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without modification, are permitted
-// provided that the following conditions are met:
-//
-// 1. Redistributions of source code must retain the above copyright notice, this list of conditions
-// and the following disclaimer.
-//
-// 2. Redistributions in binary form must reproduce the above copyright notice, this list of
-// conditions and the following disclaimer in the documentation and/or other materials provided with
-// the distribution.
-//
-// 3. The names of the authors may not be used to endorse or promote products derived from this
-// software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-// DISCLAIMED. IN NO EVENT SHALL JCRAFT, INC. OR ANY CONTRIBUTORS TO THIS SOFTWARE BE LIABLE FOR ANY
-// DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-// BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-// LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-// -----------------------------------------------------------------------
-//
-// This program is based on zlib-1.1.3; credit to authors Jean-loup Gailly(jloup@gzip.org) and Mark
-// Adler(madler@alumni.caltech.edu) and contributors of zlib.
-//
-// -----------------------------------------------------------------------
 
 using System;
 
-namespace Ionic.Zlib
+namespace UCS.Utilities.ZLib
 {
     internal sealed class Tree
     {
@@ -72,8 +20,8 @@ namespace Ionic.Zlib
 
         #region Internal Fields
 
-        internal const int Buf_size = 8 * 2;
-        internal static readonly sbyte[] bl_order = { 16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15 };
+        internal const int Buf_size = 8*2;
+        internal static readonly sbyte[] bl_order = {16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15};
 
         internal static readonly int[] DistanceBase =
         {
@@ -82,7 +30,7 @@ namespace Ionic.Zlib
         };
 
         // extra bits for each bit length code
-        internal static readonly int[] extra_blbits = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 7 };
+        internal static readonly int[] extra_blbits = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 7};
 
         // extra bits for each distance code
         internal static readonly int[] ExtraDistanceBits =
@@ -192,12 +140,13 @@ namespace Ionic.Zlib
                 res |= code & 1;
                 code >>= 1; //SharedUtils.URShift(code, 1);
                 res <<= 1;
-            } while (--len > 0);
+            }
+            while (--len > 0);
             return res >> 1;
         }
 
         /// <summary>
-        /// Map from a distance to a distance code.
+        ///     Map from a distance to a distance code.
         /// </summary>
         /// <remarks>No side effects. _dist_code[256] and _dist_code[257] are never used.</remarks>
         internal static int DistanceCode(int dist)
@@ -316,7 +265,8 @@ namespace Ionic.Zlib
                 // and insert the new node in the heap
                 s.heap[1] = node++;
                 s.pqdownheap(tree, 1);
-            } while (s.heap_len >= 2);
+            }
+            while (s.heap_len >= 2);
 
             s.heap[--s.heap_max] = s.heap[1];
 
@@ -393,7 +343,8 @@ namespace Ionic.Zlib
                 s.bl_count[max_length]--;
                 // The brother of the overflow item also moves one step up, but this does not affect bl_count[max_length]
                 overflow -= 2;
-            } while (overflow > 0);
+            }
+            while (overflow > 0);
 
             for (bits = max_length; bits != 0; bits--)
             {

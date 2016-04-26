@@ -13,84 +13,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using Newtonsoft.Json.Linq;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 
-namespace UCS.Logic
+namespace UCS.Logic.Manager
 {
-    public static class ThreadSafeRandom
-    {
-        #region Private Fields
-
-        [ThreadStatic]
-        private static Random Local;
-
-        #endregion Private Fields
-
-        #region Public Properties
-
-        public static Random ThisThreadsRandom
-        {
-            get
-            {
-                return Local ??
-                       (Local = new Random(unchecked(Environment.TickCount * 31 + Thread.CurrentThread.ManagedThreadId)));
-            }
-        }
-
-        #endregion Public Properties
-    }
-
-    internal static class MyExtensions
-    {
-        #region Public Methods
-
-        public static void Shuffle<T>(this IList<T> list)
-        {
-            var n = list.Count;
-            while (n > 1)
-            {
-                n--;
-                var k = ThreadSafeRandom.ThisThreadsRandom.Next(n + 1);
-                var value = list[k];
-                list[k] = list[n];
-                list[n] = value;
-            }
-        }
-
-        #endregion Public Methods
-    }
-
     internal class ObstacleManager
     {
-        #region Private Fields
-
-        private static readonly List<ObstacleData> m_vGemBoxes = new List<ObstacleData>();
-
-        private static readonly List<ObstacleData> m_vSpawnAbleObstacles = new List<ObstacleData>();
-
-        private static int m_vObstacleLimit = -1;
-
-        private static int m_vObstacleRespawnSeconds = -1;
-
-        private static int SumWeights;
-
-        private readonly Timer m_vGemBoxTimer;
-
-        private readonly Level m_vLevel;
-
-        private readonly Timer m_vNormalTimer;
-
-        private readonly Timer m_vSpecialTimer;
-
-        private volatile int m_vObstacleClearCount;
-
-        private int m_vRespawnSeed;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public ObstacleManager(Level level)
@@ -102,7 +32,7 @@ namespace UCS.Logic
                 m_vObstacleRespawnSeconds =
                     ObjectManager.DataTables.GetGlobals().GetGlobalData("OBSTACLE_RESPAWN_SECONDS").NumberValue;
             }
-            if (m_vSpawnAbleObstacles.Count() == 0)
+            if (!m_vSpawnAbleObstacles.Any())
             {
                 var dt = ObjectManager.DataTables.GetTable(7);
                 for (var i = 0; i < dt.GetItemCount(); i++)
@@ -134,6 +64,32 @@ namespace UCS.Logic
         }
 
         #endregion Public Constructors
+
+        #region Private Fields
+
+        private static readonly List<ObstacleData> m_vGemBoxes = new List<ObstacleData>();
+
+        private static readonly List<ObstacleData> m_vSpawnAbleObstacles = new List<ObstacleData>();
+
+        private static int m_vObstacleLimit = -1;
+
+        private static int m_vObstacleRespawnSeconds = -1;
+
+        private static int SumWeights;
+
+        private readonly Timer m_vGemBoxTimer;
+
+        private readonly Level m_vLevel;
+
+        private readonly Timer m_vNormalTimer;
+
+        private readonly Timer m_vSpecialTimer;
+
+        private volatile int m_vObstacleClearCount;
+
+        private int m_vRespawnSeed;
+
+        #endregion Private Fields
 
         #region Public Methods
 
@@ -307,7 +263,7 @@ namespace UCS.Logic
                 if (freePositions.Count < od.Height * od.Width)
                     return null;
 
-                freePositions.Shuffle();
+                freePositions.OrderBy(t => new Random().Next());
                 var z = 0;
                 pos = null;
                 while (z < freePositions.Count && pos == null)

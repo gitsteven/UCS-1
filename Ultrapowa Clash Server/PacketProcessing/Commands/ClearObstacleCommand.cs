@@ -13,7 +13,7 @@ using System.IO;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x1FB 507
     internal class ClearObstacleCommand : Command
@@ -27,16 +27,6 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Constructors
-
-        #region Public Properties
-
-        public int ObstacleId { get; set; }
-
-        //00 00 E1 83
-        //1D FB 2B C1
-        public uint Unknown1 { get; set; }
-
-        #endregion Public Properties
 
         #region Public Methods
 
@@ -59,5 +49,15 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        #region Public Properties
+
+        public int ObstacleId { get; set; }
+
+        //00 00 E1 83
+        //1D FB 2B C1
+        public uint Unknown1 { get; set; }
+
+        #endregion Public Properties
     }
 }

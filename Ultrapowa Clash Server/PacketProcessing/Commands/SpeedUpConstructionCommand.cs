@@ -13,7 +13,7 @@ using System.IO;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x1F8
     internal class SpeedUpConstructionCommand : Command

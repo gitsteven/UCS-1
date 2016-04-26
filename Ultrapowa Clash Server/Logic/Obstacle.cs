@@ -12,20 +12,13 @@
 using System;
 using Newtonsoft.Json.Linq;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 using UCS.Helpers;
 
 namespace UCS.Logic
 {
     internal class Obstacle : GameObject
     {
-        #region Private Fields
-
-        private readonly Level m_vLevel;
-        private Timer m_vTimer;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public Obstacle(Data data, Level l) : base(data, l)
@@ -43,6 +36,13 @@ namespace UCS.Logic
         }
 
         #endregion Public Properties
+
+        #region Private Fields
+
+        private readonly Level m_vLevel;
+        private Timer m_vTimer;
+
+        #endregion Private Fields
 
         #region Public Methods
 

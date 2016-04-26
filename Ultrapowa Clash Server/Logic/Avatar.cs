@@ -12,12 +12,33 @@
 using System;
 using System.Collections.Generic;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 
 namespace UCS.Logic
 {
     internal class Avatar
     {
+        //a1 + 88
+        //a1 + 40
+        //a1 + 44
+
+        #region Public Constructors
+
+        public Avatar()
+        {
+            m_vResources = new List<DataSlot>();
+            m_vResourceCaps = new List<DataSlot>();
+            m_vUnitCount = new List<DataSlot>();
+            m_vUnitUpgradeLevel = new List<DataSlot>();
+            m_vHeroHealth = new List<DataSlot>();
+            m_vHeroUpgradeLevel = new List<DataSlot>();
+            m_vHeroState = new List<DataSlot>();
+            m_vSpellCount = new List<DataSlot>();
+            m_vSpellUpgradeLevel = new List<DataSlot>();
+        }
+
+        #endregion Public Constructors
+
         #region Protected Fields
 
         protected List<DataSlot> m_vHeroHealth;
@@ -57,27 +78,6 @@ namespace UCS.Logic
         private int m_vTownHallLevel;
 
         #endregion Private Fields
-
-        //a1 + 88
-        //a1 + 40
-        //a1 + 44
-
-        #region Public Constructors
-
-        public Avatar()
-        {
-            m_vResources = new List<DataSlot>();
-            m_vResourceCaps = new List<DataSlot>();
-            m_vUnitCount = new List<DataSlot>();
-            m_vUnitUpgradeLevel = new List<DataSlot>();
-            m_vHeroHealth = new List<DataSlot>();
-            m_vHeroUpgradeLevel = new List<DataSlot>();
-            m_vHeroState = new List<DataSlot>();
-            m_vSpellCount = new List<DataSlot>();
-            m_vSpellUpgradeLevel = new List<DataSlot>();
-        }
-
-        #endregion Public Constructors
 
         #region Public Methods
 

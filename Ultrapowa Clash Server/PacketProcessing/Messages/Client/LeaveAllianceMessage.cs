@@ -13,10 +13,12 @@ using System;
 using System.IO;
 using System.Linq;
 using UCS.Core;
+using UCS.Core.Network;
 using UCS.Logic;
-using UCS.Network;
+using UCS.Logic.StreamEntry;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     //Packet 14308
     internal class LeaveAllianceMessage : Message
@@ -29,7 +31,7 @@ namespace UCS.PacketProcessing
 
         #region Public Constructors
 
-        public LeaveAllianceMessage(Client client, BinaryReader br) : base(client, br)
+        public LeaveAllianceMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
         {
         }
 
@@ -39,7 +41,6 @@ namespace UCS.PacketProcessing
 
         public override void Decode()
         {
-
         }
 
         public override void Process(Level level)

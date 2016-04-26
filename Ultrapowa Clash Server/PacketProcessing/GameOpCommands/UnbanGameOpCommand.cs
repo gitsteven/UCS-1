@@ -13,7 +13,7 @@ using System;
 using UCS.Core;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.GameOpCommands
 {
     internal class UnbanGameOpCommand : GameOpCommand
     {

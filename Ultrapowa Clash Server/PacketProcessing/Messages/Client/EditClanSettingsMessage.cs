@@ -12,16 +12,26 @@
 using System;
 using System.IO;
 using UCS.Core;
+using UCS.Core.Network;
 using UCS.Helpers;
 using UCS.Logic;
-using UCS.Network;
+using UCS.Logic.StreamEntry;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     //Packet 14316
 
     internal class EditClanSettingsMessage : Message
     {
+        #region Public Constructors
+
+        public EditClanSettingsMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
+        {
+        }
+
+        #endregion Public Constructors
+
         #region Private Fields
 
         private int m_vAllianceBadgeData;
@@ -33,14 +43,6 @@ namespace UCS.PacketProcessing
         private int Unknown;
 
         #endregion Private Fields
-
-        #region Public Constructors
-
-        public EditClanSettingsMessage(Client client, BinaryReader br) : base(client, br)
-        {
-        }
-
-        #endregion Public Constructors
 
         #region Public Methods
 

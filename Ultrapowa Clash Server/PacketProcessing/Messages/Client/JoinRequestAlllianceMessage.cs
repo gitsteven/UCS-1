@@ -10,17 +10,18 @@
  */
 
 using System.IO;
+using UCS.Core.Network;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     internal class JoinRequestAllianceMessage : Message
     {
         #region Public Constructors
 
         // 14317
-        public JoinRequestAllianceMessage(Client client, BinaryReader br) : base(client, br)
+        public JoinRequestAllianceMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
         {
         }
 

@@ -11,13 +11,13 @@
 
 using System.Collections.Generic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     internal class BookmarkRemoveAllianceMessage : Message
     {
         #region Public Constructors
 
-        public BookmarkRemoveAllianceMessage(Client client) : base(client)
+        public BookmarkRemoveAllianceMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24344);
         }

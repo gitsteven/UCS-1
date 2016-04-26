@@ -12,7 +12,7 @@
 using System.Collections.Generic;
 using UCS.Helpers;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 20161
     internal class ShutdownStartedMessage : Message
@@ -25,7 +25,7 @@ namespace UCS.PacketProcessing
 
         #region Public Constructors
 
-        public ShutdownStartedMessage(Client client)
+        public ShutdownStartedMessage(PacketProcessing.Client client)
             : base(client)
         {
             SetMessageType(20161);

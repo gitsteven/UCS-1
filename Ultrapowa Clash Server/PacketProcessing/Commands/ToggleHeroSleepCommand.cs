@@ -12,7 +12,7 @@
 using System.IO;
 using UCS.Helpers;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x0211
     internal class ToggleHeroSleepCommand : Command

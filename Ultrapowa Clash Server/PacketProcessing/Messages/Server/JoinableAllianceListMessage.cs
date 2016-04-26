@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24304
     internal class JoinableAllianceListMessage : Message
@@ -26,7 +26,7 @@ namespace UCS.PacketProcessing
 
         #region Public Constructors
 
-        public JoinableAllianceListMessage(Client client) : base(client)
+        public JoinableAllianceListMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24304);
             m_vAlliances = new List<Alliance>();

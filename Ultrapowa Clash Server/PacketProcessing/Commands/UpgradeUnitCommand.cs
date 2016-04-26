@@ -10,11 +10,11 @@
  */
 
 using System.IO;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x204
     internal class UpgradeUnitCommand : Command
@@ -30,19 +30,6 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Constructors
-
-        //00 00 02 04 1D CD 65 13 00 00 00 00 00 3D 09 00 00 00 51 E9
-
-        #region Public Properties
-
-        public int BuildingId { get; set; }
-        public CombatItemData UnitData { get; set; }
-        public uint Unknown1 { get; set; } //00 00 00 00
-
-        //00 3D 09 00
-        public uint Unknown2 { get; set; }
-
-        #endregion Public Properties
 
         #region Public Methods
 
@@ -66,5 +53,18 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        //00 00 02 04 1D CD 65 13 00 00 00 00 00 3D 09 00 00 00 51 E9
+
+        #region Public Properties
+
+        public int BuildingId { get; set; }
+        public CombatItemData UnitData { get; set; }
+        public uint Unknown1 { get; set; } //00 00 00 00
+
+        //00 3D 09 00
+        public uint Unknown2 { get; set; }
+
+        #endregion Public Properties
     }
 }

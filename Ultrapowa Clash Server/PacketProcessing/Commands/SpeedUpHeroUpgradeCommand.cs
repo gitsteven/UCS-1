@@ -13,17 +13,10 @@ using System.IO;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     internal class SpeedUpHeroUpgradeCommand : Command
     {
-        #region Private Fields
-
-        private readonly int m_vBuildingId;
-        private int m_vUnknown1;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public SpeedUpHeroUpgradeCommand(BinaryReader br)
@@ -51,5 +44,12 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        #region Private Fields
+
+        private readonly int m_vBuildingId;
+        private int m_vUnknown1;
+
+        #endregion Private Fields
     }
 }

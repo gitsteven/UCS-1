@@ -14,15 +14,16 @@ using System.Text;
 using UCS.Core;
 using UCS.Helpers;
 using UCS.Logic;
+using UCS.PacketProcessing.Messages.Client;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24133
     internal class NpcDataMessage : Message
     {
         #region Public Constructors
 
-        public NpcDataMessage(Client client, Level level, AttackNpcMessage cnam) : base(client)
+        public NpcDataMessage(PacketProcessing.Client client, Level level, AttackNpcMessage cnam) : base(client)
         {
             SetMessageType(24133);
             Player = level;
@@ -31,16 +32,6 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Constructors
-
-        #region Public Properties
-
-        public string JsonBase { get; set; }
-
-        public int LevelId { get; set; }
-
-        public Level Player { get; set; }
-
-        #endregion Public Properties
 
         #region Public Methods
 
@@ -59,5 +50,15 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        #region Public Properties
+
+        public string JsonBase { get; set; }
+
+        public int LevelId { get; set; }
+
+        public Level Player { get; set; }
+
+        #endregion Public Properties
     }
 }

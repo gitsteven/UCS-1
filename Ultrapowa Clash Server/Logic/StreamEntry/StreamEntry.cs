@@ -14,10 +14,19 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using UCS.Helpers;
 
-namespace UCS.Logic
+namespace UCS.Logic.StreamEntry
 {
     internal class StreamEntry
     {
+        #region Public Constructors
+
+        public StreamEntry()
+        {
+            m_vMessageTime = DateTime.UtcNow;
+        }
+
+        #endregion Public Constructors
+
         #region Private Fields
 
         private long m_vHomeId;
@@ -32,15 +41,6 @@ namespace UCS.Logic
         private int m_vType = -1;
 
         #endregion Private Fields
-
-        #region Public Constructors
-
-        public StreamEntry()
-        {
-            m_vMessageTime = DateTime.UtcNow;
-        }
-
-        #endregion Public Constructors
 
         #region Public Methods
 

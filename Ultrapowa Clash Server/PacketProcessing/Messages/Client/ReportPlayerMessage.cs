@@ -12,13 +12,13 @@
 using System.IO;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     internal class ReportPlayerMessage : Message
     {
         #region Public Constructors
 
-        public ReportPlayerMessage(Client client, BinaryReader br) : base(client, br)
+        public ReportPlayerMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
         {
         }
 

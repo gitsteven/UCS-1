@@ -12,9 +12,9 @@
 using System.Collections.Generic;
 using UCS.Core;
 using UCS.Helpers;
-using UCS.Logic;
+using UCS.Logic.AvatarStreamEntry;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24411
     internal class AvatarStreamMessage : Message
@@ -27,7 +27,7 @@ namespace UCS.PacketProcessing
 
         #region Public Constructors
 
-        public AvatarStreamMessage(Client client) : base(client)
+        public AvatarStreamMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24411);
         }

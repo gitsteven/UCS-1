@@ -11,15 +11,26 @@
 
 using System.IO;
 using UCS.Core;
+using UCS.Core.Network;
 using UCS.Helpers;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Commands;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     //Packet 14301
     internal class CreateAllianceMessage : Message
     {
+        #region Public Constructors
+
+        public CreateAllianceMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
+        {
+            Decrypt();
+        }
+
+        #endregion Public Constructors
+
         #region Private Fields
 
         private int m_vAllianceBadgeData;
@@ -31,15 +42,6 @@ namespace UCS.PacketProcessing
         private int m_vWarFrequency;
 
         #endregion Private Fields
-
-        #region Public Constructors
-
-        public CreateAllianceMessage(Client client, BinaryReader br) : base(client, br)
-        {
-            Decrypt();
-        }
-
-        #endregion Public Constructors
 
         #region Public Methods
 

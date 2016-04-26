@@ -10,11 +10,11 @@
  */
 
 using System.IO;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 600
     internal class PlaceAttackerCommand : Command
@@ -30,20 +30,6 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Constructors
-
-        //00 00 00 03
-        //00 00 02 58 00 00 42 B9 00 00 57 01 00 3D 09 00 00 00 01 55
-        //00 00 02 58 00 00 45 E8 00 00 56 1C 00 3D 09 00 00 00 01 5C
-        //00 00 02 58 00 00 47 01 00 00 54 EB 00 3D 09 00 00 00 01 63
-
-        #region Public Properties
-
-        public CharacterData Unit { get; set; }
-        public uint Unknown1 { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
-
-        #endregion Public Properties
 
         #region Public Methods
 
@@ -66,5 +52,19 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        //00 00 00 03
+        //00 00 02 58 00 00 42 B9 00 00 57 01 00 3D 09 00 00 00 01 55
+        //00 00 02 58 00 00 45 E8 00 00 56 1C 00 3D 09 00 00 00 01 5C
+        //00 00 02 58 00 00 47 01 00 00 54 EB 00 3D 09 00 00 00 01 63
+
+        #region Public Properties
+
+        public CharacterData Unit { get; set; }
+        public uint Unknown1 { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+
+        #endregion Public Properties
     }
 }

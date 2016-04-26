@@ -12,13 +12,13 @@
 using System.Collections.Generic;
 using UCS.Helpers;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     internal class BookmarkMessage : Message
     {
         #region Public Constructors
 
-        public BookmarkMessage(Client client) : base(client)
+        public BookmarkMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24340);
         }

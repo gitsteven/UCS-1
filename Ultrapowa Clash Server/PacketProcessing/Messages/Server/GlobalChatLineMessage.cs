@@ -13,11 +13,27 @@ using System.Collections.Generic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24715
     internal class GlobalChatLineMessage : Message
     {
+        #region Public Constructors
+
+        public GlobalChatLineMessage(PacketProcessing.Client client) : base(client)
+        {
+            SetMessageType(24715);
+
+            m_vMessage = "default";
+            m_vPlayerName = "default";
+            m_vHomeId = 1;
+            m_vCurrentHomeId = 1;
+            m_vPlayerLevel = 1;
+            m_vHasAlliance = false;
+        }
+
+        #endregion Public Constructors
+
         #region Private Fields
 
         private readonly int m_vPlayerLevel;
@@ -32,22 +48,6 @@ namespace UCS.PacketProcessing
         private string m_vPlayerName;
 
         #endregion Private Fields
-
-        #region Public Constructors
-
-        public GlobalChatLineMessage(Client client) : base(client)
-        {
-            SetMessageType(24715);
-
-            m_vMessage = "default";
-            m_vPlayerName = "default";
-            m_vHomeId = 1;
-            m_vCurrentHomeId = 1;
-            m_vPlayerLevel = 1;
-            m_vHasAlliance = false;
-        }
-
-        #endregion Public Constructors
 
         #region Public Methods
 

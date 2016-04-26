@@ -14,17 +14,25 @@ using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
-using Microsoft.SqlServer.Server;
 using UCS.Core;
+using UCS.Core.Network;
 using UCS.Helpers;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     //Packet 10101
     internal class LoginMessage : Message
     {
+        #region Public Constructors
+
+        public LoginMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
+        {
+        }
+
+        #endregion Public Constructors
+
         #region Public Fields
 
         public string AdvertisingGUID;
@@ -56,15 +64,6 @@ namespace UCS.PacketProcessing
         public Level level;
 
         #endregion Public Fields
-
-        #region Public Constructors
-
-        public LoginMessage(Client client, BinaryReader br) : base(client, br)
-        {
-
-        }
-
-        #endregion Public Constructors
 
         #region Public Methods
 
@@ -144,7 +143,9 @@ namespace UCS.PacketProcessing
             loginOk.SetContentVersion(ContentVersion);
             loginOk.SetServerEnvironment("stage");
             loginOk.SetDaysSinceStartedPlaying(0);
-            loginOk.SetServerTime(Math.Round(level.GetTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds * 1000).ToString(CultureInfo.InvariantCulture));
+            loginOk.SetServerTime(
+                Math.Round(level.GetTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds * 1000)
+                    .ToString(CultureInfo.InvariantCulture));
             loginOk.SetAccountCreatedDate("1414003838000");
             loginOk.SetStartupCooldownSeconds(0);
             loginOk.SetCountryCode(Language);
@@ -181,7 +182,8 @@ namespace UCS.PacketProcessing
                 return;
             }
 
-            if (Convert.ToBoolean(ConfigurationManager.AppSettings["useCustomPatch"]) && MasterHash != ObjectManager.FingerPrint.sha)
+            if (Convert.ToBoolean(ConfigurationManager.AppSettings["useCustomPatch"]) &&
+                MasterHash != ObjectManager.FingerPrint.sha)
             {
                 var p = new LoginFailedMessage(Client);
                 p.SetErrorCode(7);
@@ -201,12 +203,13 @@ namespace UCS.PacketProcessing
                 var tokenSeed = new byte[20];
                 new Random().NextBytes(tokenSeed);
                 using (SHA1 sha = new SHA1CryptoServiceProvider())
-                UserToken = BitConverter.ToString(sha.ComputeHash(tokenSeed)).Replace("-", string.Empty);
+                    UserToken = BitConverter.ToString(sha.ComputeHash(tokenSeed)).Replace("-", string.Empty);
             }
             level.GetPlayerAvatar().SetToken(UserToken);
             DatabaseManager.Singelton.Save(level);
             LogUser();
         }
+
         #endregion Public Methods
     }
 }

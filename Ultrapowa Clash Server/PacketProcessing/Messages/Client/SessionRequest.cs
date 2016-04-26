@@ -10,14 +10,23 @@
  */
 
 using System.IO;
+using UCS.Core.Network;
 using UCS.Helpers;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     internal class SessionRequest : Message
     {
+        #region Public Constructors
+
+        public SessionRequest(PacketProcessing.Client client, BinaryReader br) : base(client, br)
+        {
+        }
+
+        #endregion Public Constructors
+
         #region Public Fields
 
         public string Hash;
@@ -32,14 +41,6 @@ namespace UCS.PacketProcessing
         public int Unknown7;
 
         #endregion Public Fields
-
-        #region Public Constructors
-
-        public SessionRequest(Client client, BinaryReader br) : base(client, br)
-        {
-        }
-
-        #endregion Public Constructors
 
         #region Public Methods
 

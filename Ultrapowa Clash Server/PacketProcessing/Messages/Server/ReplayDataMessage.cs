@@ -11,17 +11,15 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using UCS.Core;
-using UCS.Helpers;
+using UCS.Utilities.ZLib;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     internal class ReplayData : Message
     {
         #region Public Constructors
 
-        public ReplayData(Client client) : base(client)
+        public ReplayData(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24114);
         }
@@ -33,8 +31,8 @@ namespace UCS.PacketProcessing
         public override void Encode()
         {
             var data = new List<byte>();
-            string text = System.IO.File.ReadAllText("replay-json.txt");
-            data.AddRange(Ionic.Zlib.ZlibStream.CompressString(text));
+            string text = File.ReadAllText("replay-json.txt");
+            data.AddRange(ZlibStream.CompressString(text));
             Encrypt(data.ToArray());
         }
 

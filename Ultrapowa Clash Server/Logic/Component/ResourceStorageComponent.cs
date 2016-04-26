@@ -16,14 +16,6 @@ namespace UCS.Logic
 {
     internal class ResourceStorageComponent : Component
     {
-        #region Private Fields
-
-        private readonly List<int> m_vCurrentResources;
-        private readonly List<int> m_vStolenResources;
-        private List<int> m_vMaxResources;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public ResourceStorageComponent(GameObject go) : base(go)
@@ -52,6 +44,14 @@ namespace UCS.Logic
         }
 
         #endregion Public Properties
+
+        #region Private Fields
+
+        private readonly List<int> m_vCurrentResources;
+        private readonly List<int> m_vStolenResources;
+        private List<int> m_vMaxResources;
+
+        #endregion Private Fields
 
         #region Public Methods
 

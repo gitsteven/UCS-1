@@ -12,7 +12,7 @@
 using System.IO;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     internal class TogglePlayerWarStateCommand : Command
     {

@@ -10,17 +10,18 @@
  */
 
 using System.IO;
+using UCS.Core.Network;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     // 14331
     internal class AskForAllianceWarDataMessage : Message
     {
         #region Public Constructors
 
-        public AskForAllianceWarDataMessage(Client client, BinaryReader br) : base(client, br)
+        public AskForAllianceWarDataMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
         {
         }
 

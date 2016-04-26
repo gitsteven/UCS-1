@@ -12,6 +12,7 @@
 using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using UCS.Logic.Manager;
 using UCS.PacketProcessing;
 
 namespace UCS.Logic

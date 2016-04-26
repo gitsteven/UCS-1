@@ -15,6 +15,15 @@ namespace UCS.Logic
 {
     internal class Component
     {
+        #region Public Properties
+
+        public virtual int Type
+        {
+            get { return -1; }
+        }
+
+        #endregion Public Properties
+
         #region Private Fields
 
         private readonly GameObject m_vParentGameObject;
@@ -38,15 +47,6 @@ namespace UCS.Logic
         }
 
         #endregion Public Constructors
-
-        #region Public Properties
-
-        public virtual int Type
-        {
-            get { return -1; }
-        }
-
-        #endregion Public Properties
 
         #region Public Methods
 

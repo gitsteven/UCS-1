@@ -13,22 +13,22 @@ using System.Collections.Generic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 20113
     internal class SetDeviceTokenMessage : Message
     {
+        private readonly Level level;
+
         #region Public Constructors
 
-        public SetDeviceTokenMessage(Client client) : base(client)
+        public SetDeviceTokenMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(20113);
             level = client.GetLevel();
         }
 
         #endregion Public Constructors
-
-        private readonly Level level;
 
         #region Public Methods
 

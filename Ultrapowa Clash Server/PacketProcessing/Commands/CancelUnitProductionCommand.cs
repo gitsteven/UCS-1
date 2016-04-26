@@ -11,11 +11,11 @@
 
 using System.IO;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x1FD
     internal class CancelUnitProductionCommand : Command
@@ -33,21 +33,6 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Constructors
-
-        #region Public Properties
-
-        public int BuildingId { get; set; }
-        public int Count { get; set; }
-        public int UnitType { get; set; }
-        public uint Unknown1 { get; set; } //00 00 00 00
-
-        //00 3D 09 00
-        //00 00 00 01
-        public uint Unknown3 { get; set; } //00 00 00 00
-
-        public uint Unknown4 { get; set; }
-
-        #endregion Public Properties
 
         //00 00 34 E4
 
@@ -68,10 +53,26 @@ namespace UCS.PacketProcessing
                     //Ajouter gestion remboursement ressources
                     c.RemoveUnit(cd);
                     Count--;
-                } while (Count > 0);
+                }
+                while (Count > 0);
             }
         }
 
         #endregion Public Methods
+
+        #region Public Properties
+
+        public int BuildingId { get; set; }
+        public int Count { get; set; }
+        public int UnitType { get; set; }
+        public uint Unknown1 { get; set; } //00 00 00 00
+
+        //00 3D 09 00
+        //00 00 00 01
+        public uint Unknown3 { get; set; } //00 00 00 00
+
+        public uint Unknown4 { get; set; }
+
+        #endregion Public Properties
     }
 }

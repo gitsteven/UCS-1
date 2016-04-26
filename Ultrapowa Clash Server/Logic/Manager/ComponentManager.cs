@@ -12,20 +12,12 @@
 using System.Collections.Generic;
 using System.Windows;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 
-namespace UCS.Logic
+namespace UCS.Logic.Manager
 {
     internal class ComponentManager
     {
-        #region Private Fields
-
-        private readonly List<List<Component>> m_vComponents;
-
-        private readonly Level m_vLevel;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public ComponentManager(Level l)
@@ -37,6 +29,14 @@ namespace UCS.Logic
         }
 
         #endregion Public Constructors
+
+        #region Private Fields
+
+        private readonly List<List<Component>> m_vComponents;
+
+        private readonly Level m_vLevel;
+
+        #endregion Private Fields
 
         #region Public Methods
 

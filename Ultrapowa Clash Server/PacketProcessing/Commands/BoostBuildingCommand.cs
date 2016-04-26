@@ -11,11 +11,11 @@
 
 using System.Collections.Generic;
 using System.IO;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x20E
     internal class BoostBuildingCommand : Command
@@ -33,15 +33,6 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Constructors
-
-        //00 00 02 0E 1D CD 65 05 00 00 8C 52
-
-        #region Public Properties
-
-        public int BoostedBuildingsCount { get; set; }
-        public List<int> BuildingIds { get; set; }
-
-        #endregion Public Properties
 
         #region Public Methods
 
@@ -63,5 +54,14 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        //00 00 02 0E 1D CD 65 05 00 00 8C 52
+
+        #region Public Properties
+
+        public int BoostedBuildingsCount { get; set; }
+        public List<int> BuildingIds { get; set; }
+
+        #endregion Public Properties
     }
 }

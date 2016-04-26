@@ -24,14 +24,6 @@ namespace UCS.Database
 
         #endregion Public Constructors
 
-        #region Public Properties
-
-        public virtual DbSet<clan> clan { get; set; }
-
-        public virtual DbSet<player> player { get; set; }
-
-        #endregion Public Properties
-
         #region Protected Methods
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -40,5 +32,13 @@ namespace UCS.Database
         }
 
         #endregion Protected Methods
+
+        #region Public Properties
+
+        public virtual DbSet<clan> clan { get; set; }
+
+        public virtual DbSet<player> player { get; set; }
+
+        #endregion Public Properties
     }
 }

@@ -9,14 +9,14 @@
  * All Rights Reserved.
  */
 
-using System;
 using System.IO;
 using UCS.Core;
+using UCS.Core.Network;
 using UCS.Helpers;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     internal class AskForAllianceDataMessage : Message
     {
@@ -28,7 +28,7 @@ namespace UCS.PacketProcessing
 
         #region Public Constructors
 
-        public AskForAllianceDataMessage(Client client, BinaryReader br)
+        public AskForAllianceDataMessage(PacketProcessing.Client client, BinaryReader br)
             : base(client, br)
         {
         }

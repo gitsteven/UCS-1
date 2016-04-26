@@ -10,20 +10,14 @@
  */
 
 using UCS.Core;
+using UCS.Core.Network;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Messages.Server;
 
 namespace UCS.PacketProcessing.GameOpCommands
 {
     internal class SaveAllGameOpCommand : GameOpCommand
     {
-        #region Private Fields
-
-        private static DatabaseManager m_vDatabase;
-        private readonly string[] m_vArgs;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public SaveAllGameOpCommand(string[] args)
@@ -85,5 +79,12 @@ namespace UCS.PacketProcessing.GameOpCommands
         }
 
         #endregion Public Methods
+
+        #region Private Fields
+
+        private static DatabaseManager m_vDatabase;
+        private readonly string[] m_vArgs;
+
+        #endregion Private Fields
     }
 }

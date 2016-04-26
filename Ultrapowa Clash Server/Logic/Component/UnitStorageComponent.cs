@@ -12,7 +12,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 
 namespace UCS.Logic
 {
@@ -23,13 +23,6 @@ namespace UCS.Logic
         public bool IsSpellForge;
 
         #endregion Public Fields
-
-        #region Private Fields
-
-        private readonly List<UnitSlot> m_vUnits;
-        private int m_vMaxCapacity;
-
-        #endregion Private Fields
 
         //a1 + 12;
         //a1 + 16
@@ -54,6 +47,13 @@ namespace UCS.Logic
         }
 
         #endregion Public Properties
+
+        #region Private Fields
+
+        private readonly List<UnitSlot> m_vUnits;
+        private int m_vMaxCapacity;
+
+        #endregion Private Fields
 
         #region Public Methods
 

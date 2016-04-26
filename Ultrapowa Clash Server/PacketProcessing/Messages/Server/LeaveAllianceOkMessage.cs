@@ -13,21 +13,14 @@ using System.Collections.Generic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24111
     internal class LeaveAllianceOkMessage : Message
     {
-        #region Private Fields
-
-        private readonly Alliance m_vAlliance;
-        private readonly int m_vServerCommandType;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
-        public LeaveAllianceOkMessage(Client client, Alliance alliance)
+        public LeaveAllianceOkMessage(PacketProcessing.Client client, Alliance alliance)
             : base(client)
         {
             SetMessageType(24111);
@@ -52,5 +45,12 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        #region Private Fields
+
+        private readonly Alliance m_vAlliance;
+        private readonly int m_vServerCommandType;
+
+        #endregion Private Fields
     }
 }

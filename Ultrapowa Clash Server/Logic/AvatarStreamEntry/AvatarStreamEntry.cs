@@ -13,10 +13,21 @@ using System;
 using System.Collections.Generic;
 using UCS.Helpers;
 
-namespace UCS.Logic
+namespace UCS.Logic.AvatarStreamEntry
 {
     internal class AvatarStreamEntry
     {
+        //private byte m_vIsRemoved;
+
+        #region Public Constructors
+
+        public AvatarStreamEntry()
+        {
+            m_vCreationTime = DateTime.UtcNow;
+        }
+
+        #endregion Public Constructors
+
         #region Private Fields
 
         private DateTime m_vCreationTime;
@@ -29,23 +40,12 @@ namespace UCS.Logic
 
         #endregion Private Fields
 
-        //private byte m_vIsRemoved;
-
-        #region Public Constructors
-
-        public AvatarStreamEntry()
-        {
-            m_vCreationTime = DateTime.UtcNow;
-        }
-
-        #endregion Public Constructors
-
         #region Public Methods
 
         public virtual byte[] Encode()
         {
             var data = new List<byte>();
-            data.AddInt32(GetStreamEntryType());//alliancemailstreamentry
+            data.AddInt32(GetStreamEntryType()); //alliancemailstreamentry
             data.AddInt64(m_vId);
             data.Add(1);
             data.AddInt64(m_vSenderId);

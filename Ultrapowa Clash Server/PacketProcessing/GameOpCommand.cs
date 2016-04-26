@@ -9,8 +9,9 @@
  * All Rights Reserved.
  */
 
+using UCS.Core.Network;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Messages.Server;
 
 namespace UCS.PacketProcessing
 {

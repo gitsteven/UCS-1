@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using UCS.Helpers;
 
-namespace UCS.Logic
+namespace UCS.Logic.StreamEntry
 {
     internal class ShareStreamEntry : StreamEntry
     {

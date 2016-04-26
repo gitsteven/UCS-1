@@ -12,19 +12,12 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using UCS.Logic;
+using UCS.Files.CSV;
 
-namespace UCS.GameFiles
+namespace UCS.Files.Logic
 {
     internal class Data
     {
-        #region Protected Fields
-
-        protected CSVRow m_vCSVRow;
-        protected DataTable m_vDataTable;
-
-        #endregion Protected Fields
-
         #region Private Fields
 
         private readonly int m_vGlobalID;
@@ -41,6 +34,13 @@ namespace UCS.GameFiles
         }
 
         #endregion Public Constructors
+
+        #region Protected Fields
+
+        protected CSVRow m_vCSVRow;
+        protected DataTable m_vDataTable;
+
+        #endregion Protected Fields
 
         #region Public Methods
 

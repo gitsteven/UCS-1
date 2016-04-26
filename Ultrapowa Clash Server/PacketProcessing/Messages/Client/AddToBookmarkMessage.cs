@@ -9,18 +9,18 @@
  * All Rights Reserved.
  */
 
-using System;
 using System.IO;
+using UCS.Core.Network;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     internal class AddToBookmarkMessage : Message
     {
         #region Public Constructors
 
-        public AddToBookmarkMessage(Client client, BinaryReader br) : base(client, br)
+        public AddToBookmarkMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
         {
         }
 
@@ -30,7 +30,6 @@ namespace UCS.PacketProcessing
 
         public override void Decode()
         {
-
         }
 
         public override void Process(Level level)

@@ -11,13 +11,13 @@
 
 using System.Collections.Generic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     internal class BookmarkAddAllianceMessage : Message
     {
         #region Public Constructors
 
-        public BookmarkAddAllianceMessage(Client client) : base(client)
+        public BookmarkAddAllianceMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24343);
         }

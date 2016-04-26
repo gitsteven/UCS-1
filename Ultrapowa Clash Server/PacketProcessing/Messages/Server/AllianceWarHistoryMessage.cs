@@ -13,13 +13,13 @@ using System;
 using System.Collections.Generic;
 using UCS.Helpers;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     internal class AllianceWarHistoryMessage : Message
     {
         #region Public Constructors
 
-        public AllianceWarHistoryMessage(Client client) : base(client)
+        public AllianceWarHistoryMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24338);
         }

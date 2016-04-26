@@ -13,21 +13,14 @@ using System.Collections.Generic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24107
     internal class EnemyHomeDataMessage : Message
     {
-        #region Private Fields
-
-        private readonly Level m_vOwnerLevel;
-        private readonly Level m_vVisitorLevel;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
-        public EnemyHomeDataMessage(Client client, Level ownerLevel, Level visitorLevel) : base(client)
+        public EnemyHomeDataMessage(PacketProcessing.Client client, Level ownerLevel, Level visitorLevel) : base(client)
         {
             SetMessageType(24107);
             m_vOwnerLevel = ownerLevel;
@@ -63,5 +56,12 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        #region Private Fields
+
+        private readonly Level m_vOwnerLevel;
+        private readonly Level m_vVisitorLevel;
+
+        #endregion Private Fields
     }
 }

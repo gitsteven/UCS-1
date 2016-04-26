@@ -16,6 +16,29 @@ namespace UCS.Core
 {
     public static class PerformanceInfo
     {
+        #region Public Structs
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct PerformanceInformation
+        {
+            public int Size;
+            public IntPtr CommitTotal;
+            public IntPtr CommitLimit;
+            public IntPtr CommitPeak;
+            public IntPtr PhysicalTotal;
+            public IntPtr PhysicalAvailable;
+            public IntPtr SystemCache;
+            public IntPtr KernelTotal;
+            public IntPtr KernelPaged;
+            public IntPtr KernelNonPaged;
+            public IntPtr PageSize;
+            public int HandlesCount;
+            public int ProcessCount;
+            public int ThreadCount;
+        }
+
+        #endregion Public Structs
+
         #region Public Methods
 
         [DllImport("psapi.dll", SetLastError = true)]
@@ -40,29 +63,6 @@ namespace UCS.Core
         }
 
         #endregion Public Methods
-
-        #region Public Structs
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct PerformanceInformation
-        {
-            public int Size;
-            public IntPtr CommitTotal;
-            public IntPtr CommitLimit;
-            public IntPtr CommitPeak;
-            public IntPtr PhysicalTotal;
-            public IntPtr PhysicalAvailable;
-            public IntPtr SystemCache;
-            public IntPtr KernelTotal;
-            public IntPtr KernelPaged;
-            public IntPtr KernelNonPaged;
-            public IntPtr PageSize;
-            public int HandlesCount;
-            public int ProcessCount;
-            public int ThreadCount;
-        }
-
-        #endregion Public Structs
     }
 
     internal class Performances

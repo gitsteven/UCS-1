@@ -11,20 +11,13 @@
 
 using Newtonsoft.Json.Linq;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 using UCS.Helpers;
 
 namespace UCS.Logic
 {
     internal class UnitUpgradeComponent : Component
     {
-        #region Private Fields
-
-        private CombatItemData m_vCurrentlyUpgradedUnit;
-        private Timer m_vTimer;
-
-        #endregion Private Fields
-
         //a1 + 12
         //a1 + 16
         //a1 + 20 -- Listener?
@@ -47,6 +40,13 @@ namespace UCS.Logic
         }
 
         #endregion Public Properties
+
+        #region Private Fields
+
+        private CombatItemData m_vCurrentlyUpgradedUnit;
+        private Timer m_vTimer;
+
+        #endregion Private Fields
 
         #region Public Methods
 

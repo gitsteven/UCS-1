@@ -12,30 +12,32 @@
 using System;
 using System.IO;
 using UCS.Core;
+using UCS.Core.Network;
 using UCS.Helpers;
 using UCS.Logic;
-using UCS.Network;
+using UCS.Logic.StreamEntry;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     //Packet 14306
 
     internal class PromoteAllianceMemberMessage : Message
     {
+        #region Public Constructors
+
+        public PromoteAllianceMemberMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
+        {
+        }
+
+        #endregion Public Constructors
+
         #region Public Fields
 
         public long m_vId;
         public int m_vRole;
 
         #endregion Public Fields
-
-        #region Public Constructors
-
-        public PromoteAllianceMemberMessage(Client client, BinaryReader br) : base(client, br)
-        {
-        }
-
-        #endregion Public Constructors
 
         #region Public Methods
 
@@ -68,7 +70,8 @@ namespace UCS.PacketProcessing
                         eventStreamEntry.SetAvatarName(target.GetPlayerAvatar().GetAvatarName());
                         alliance.AddChatMessage(eventStreamEntry);
                         foreach (var onlinePlayer in ResourcesManager.GetOnlinePlayers())
-                            if (onlinePlayer.GetPlayerAvatar().GetAllianceId() == target.GetPlayerAvatar().GetAllianceId())
+                            if (onlinePlayer.GetPlayerAvatar().GetAllianceId() ==
+                                target.GetPlayerAvatar().GetAllianceId())
                             {
                                 var p = new AllianceStreamEntryMessage(onlinePlayer.GetClient());
                                 p.SetStreamEntry(eventStreamEntry);

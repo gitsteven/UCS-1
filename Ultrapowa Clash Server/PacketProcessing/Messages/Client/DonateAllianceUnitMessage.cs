@@ -9,7 +9,7 @@
  * All Rights Reserved.
  */
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     internal class DonateAllianceUnitMessage : Message
     {

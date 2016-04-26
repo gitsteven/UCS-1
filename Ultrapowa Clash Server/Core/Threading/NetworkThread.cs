@@ -10,9 +10,8 @@
  */
 
 using System;
-using System.Configuration;
 using System.Threading;
-using UCS.Network;
+using UCS.Core.Network;
 
 namespace UCS.Core.Threading
 {

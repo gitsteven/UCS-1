@@ -11,11 +11,11 @@
 
 using System.IO;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x200
     internal class BuyDecoCommand : Command
@@ -31,20 +31,6 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Constructors
-
-        //00 00 02 00 00 00 00 22 00 00 00 1C 01 12 A8 81 00 00 0C 4F
-
-        #region Public Properties
-
-        public int DecoId { get; set; }
-
-        //01 12 A8 81
-        public uint Unknown1 { get; set; }
-
-        public int X { get; set; }
-        public int Y { get; set; }
-
-        #endregion Public Properties
 
         #region Public Methods
 
@@ -66,5 +52,19 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        //00 00 02 00 00 00 00 22 00 00 00 1C 01 12 A8 81 00 00 0C 4F
+
+        #region Public Properties
+
+        public int DecoId { get; set; }
+
+        //01 12 A8 81
+        public uint Unknown1 { get; set; }
+
+        public int X { get; set; }
+        public int Y { get; set; }
+
+        #endregion Public Properties
     }
 }

@@ -10,11 +10,11 @@
  */
 
 using System.IO;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 604 = 0x25C
     internal class CastSpellCommand : Command
@@ -30,15 +30,6 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Constructors
-
-        #region Public Properties
-
-        public SpellData Spell { get; set; }
-        public uint Unknown1 { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
-
-        #endregion Public Properties
 
         #region Public Methods
 
@@ -61,5 +52,14 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        #region Public Properties
+
+        public SpellData Spell { get; set; }
+        public uint Unknown1 { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+
+        #endregion Public Properties
     }
 }

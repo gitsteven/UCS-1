@@ -13,21 +13,12 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 
 namespace UCS.Logic
 {
     internal class ResourceProductionComponent : Component
     {
-        #region Private Fields
-
-        private readonly List<int> m_vMaxResources;
-        private readonly ResourceData m_vProductionResourceData;
-        private readonly List<int> m_vResourcesPerHour;
-        private DateTime m_vTimeSinceLastClick;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public ResourceProductionComponent(ConstructionItem ci, Level level) : base(ci)
@@ -49,6 +40,15 @@ namespace UCS.Logic
         }
 
         #endregion Public Properties
+
+        #region Private Fields
+
+        private readonly List<int> m_vMaxResources;
+        private readonly ResourceData m_vProductionResourceData;
+        private readonly List<int> m_vResourcesPerHour;
+        private DateTime m_vTimeSinceLastClick;
+
+        #endregion Private Fields
 
         #region Public Methods
 
@@ -95,10 +95,10 @@ namespace UCS.Logic
                                                   ca.GetResourceCount(m_vProductionResourceData);
                         m_vTimeSinceLastClick =
                             ci.GetLevel()
-                                .GetTime()
-                                .AddSeconds(
-                                    -((currentResources - newCurrentResources) /
-                                      (m_vResourcesPerHour[ci.UpgradeLevel] / (60f * 60f))));
+                              .GetTime()
+                              .AddSeconds(
+                                  -((currentResources - newCurrentResources) /
+                                    (m_vResourcesPerHour[ci.UpgradeLevel] / (60f * 60f))));
                         currentResources = newCurrentResources;
                     }
                     else

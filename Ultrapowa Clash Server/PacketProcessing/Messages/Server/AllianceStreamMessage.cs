@@ -14,7 +14,7 @@ using System.Linq;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24311
     internal class AllianceStreamMessage : Message
@@ -27,7 +27,7 @@ namespace UCS.PacketProcessing
 
         #region Public Constructors
 
-        public AllianceStreamMessage(Client client, Alliance alliance) : base(client)
+        public AllianceStreamMessage(PacketProcessing.Client client, Alliance alliance) : base(client)
         {
             SetMessageType(24311);
             m_vAlliance = alliance;

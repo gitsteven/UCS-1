@@ -23,11 +23,20 @@ namespace UCS.Core.Threading
         #region Private Properties
 
         /// <summary>
-        /// Variable holding the thread itself
+        ///     Variable holding the thread itself
         /// </summary>
         private static Thread T { get; set; }
 
         #endregion Private Properties
+
+        #region Private Methods
+
+        [DllImport("kernel32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool SetProcessWorkingSetSize(IntPtr process, UIntPtr minimumWorkingSetSize,
+            UIntPtr maximumWorkingSetSize);
+
+        #endregion Private Methods
 
         #region Public Methods
 
@@ -56,19 +65,33 @@ namespace UCS.Core.Threading
         }
 
         #endregion Public Methods
-
-        #region Private Methods
-
-        [DllImport("kernel32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool SetProcessWorkingSetSize(IntPtr process, UIntPtr minimumWorkingSetSize,
-            UIntPtr maximumWorkingSetSize);
-
-        #endregion Private Methods
     }
 
     internal class PerformanceInfo
     {
+        #region Public Structs
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct PerformanceInformation
+        {
+            public int Size;
+            public IntPtr CommitTotal;
+            public IntPtr CommitLimit;
+            public IntPtr CommitPeak;
+            public IntPtr PhysicalTotal;
+            public IntPtr PhysicalAvailable;
+            public IntPtr SystemCache;
+            public IntPtr KernelTotal;
+            public IntPtr KernelPaged;
+            public IntPtr KernelNonPaged;
+            public IntPtr PageSize;
+            public int HandlesCount;
+            public int ProcessCount;
+            public int ThreadCount;
+        }
+
+        #endregion Public Structs
+
         #region Public Methods
 
         [DllImport("psapi.dll", SetLastError = true)]
@@ -92,28 +115,5 @@ namespace UCS.Core.Threading
         }
 
         #endregion Public Methods
-
-        #region Public Structs
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct PerformanceInformation
-        {
-            public int Size;
-            public IntPtr CommitTotal;
-            public IntPtr CommitLimit;
-            public IntPtr CommitPeak;
-            public IntPtr PhysicalTotal;
-            public IntPtr PhysicalAvailable;
-            public IntPtr SystemCache;
-            public IntPtr KernelTotal;
-            public IntPtr KernelPaged;
-            public IntPtr KernelNonPaged;
-            public IntPtr PageSize;
-            public int HandlesCount;
-            public int ProcessCount;
-            public int ThreadCount;
-        }
-
-        #endregion Public Structs
     }
 }

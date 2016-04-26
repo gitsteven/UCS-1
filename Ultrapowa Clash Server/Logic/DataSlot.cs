@@ -13,20 +13,13 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 using UCS.Helpers;
 
 namespace UCS.Logic
 {
     internal class DataSlot
     {
-        #region Public Fields
-
-        public Data Data;
-        public int Value;
-
-        #endregion Public Fields
-
         #region Public Constructors
 
         public DataSlot(Data d, int value)
@@ -36,6 +29,13 @@ namespace UCS.Logic
         }
 
         #endregion Public Constructors
+
+        #region Public Fields
+
+        public Data Data;
+        public int Value;
+
+        #endregion Public Fields
 
         #region Public Methods
 

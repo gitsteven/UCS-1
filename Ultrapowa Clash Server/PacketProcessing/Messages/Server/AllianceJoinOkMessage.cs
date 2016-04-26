@@ -11,14 +11,14 @@
 
 using System.Collections.Generic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24303
     internal class AllianceJoinOkMessage : Message
     {
         #region Public Constructors
 
-        public AllianceJoinOkMessage(Client client) : base(client)
+        public AllianceJoinOkMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24303);
         }

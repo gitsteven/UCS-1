@@ -10,7 +10,7 @@
  */
 
 using Newtonsoft.Json.Linq;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 
 namespace UCS.Logic
 {

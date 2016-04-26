@@ -11,17 +11,18 @@
 
 using System.IO;
 using UCS.Core;
+using UCS.Core.Network;
 using UCS.Helpers;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     internal class RequestAvatarNameChange : Message
     {
         #region Public Constructors
 
-        public RequestAvatarNameChange(Client client, BinaryReader br) : base(client, br)
+        public RequestAvatarNameChange(PacketProcessing.Client client, BinaryReader br) : base(client, br)
         {
         }
 

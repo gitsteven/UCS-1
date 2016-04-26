@@ -10,9 +10,9 @@
  */
 
 using System.Collections.Generic;
-using UCS.Logic;
+using UCS.Files.CSV;
 
-namespace UCS.GameFiles
+namespace UCS.Files.Logic
 {
     internal class DataTable
     {

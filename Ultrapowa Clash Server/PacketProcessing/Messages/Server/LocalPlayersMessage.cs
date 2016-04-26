@@ -14,13 +14,13 @@ using System.Linq;
 using UCS.Core;
 using UCS.Helpers;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     internal class LocalPlayersMessage : Message
     {
         #region Public Constructors
 
-        public LocalPlayersMessage(Client client) : base(client)
+        public LocalPlayersMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24404);
         }

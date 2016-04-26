@@ -9,7 +9,9 @@
  * All Rights Reserved.
  */
 
-namespace UCS.GameFiles
+using UCS.Files.CSV;
+
+namespace UCS.Files.Logic
 {
     internal class ShieldData : Data
     {

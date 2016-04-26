@@ -12,23 +12,12 @@
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 
-namespace UCS.Logic
+namespace UCS.Logic.Manager
 {
     internal class GameObjectManager
     {
-        #region Private Fields
-
-        private readonly ComponentManager m_vComponentManager;
-        private readonly List<GameObject> m_vGameObjectRemoveList;
-        private readonly List<List<GameObject>> m_vGameObjects;
-        private readonly List<int> m_vGameObjectsIndex;
-        private readonly Level m_vLevel;
-        private readonly ObstacleManager m_vObstacleManager;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public GameObjectManager(Level l)
@@ -47,6 +36,17 @@ namespace UCS.Logic
         }
 
         #endregion Public Constructors
+
+        #region Private Fields
+
+        private readonly ComponentManager m_vComponentManager;
+        private readonly List<GameObject> m_vGameObjectRemoveList;
+        private readonly List<List<GameObject>> m_vGameObjects;
+        private readonly List<int> m_vGameObjectsIndex;
+        private readonly Level m_vLevel;
+        private readonly ObstacleManager m_vObstacleManager;
+
+        #endregion Private Fields
 
         #region Public Methods
 

@@ -9,23 +9,14 @@
  * All Rights Reserved.
  */
 
-using System;
 using Newtonsoft.Json.Linq;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 
 namespace UCS.Logic
 {
     internal class CombatComponent : Component
     {
-        #region Private Fields
-
-        private const int m_vType = 0x01AB3F00;
-
-        private int m_vAmmo;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public CombatComponent(ConstructionItem ci, Level level) : base(ci)
@@ -47,6 +38,14 @@ namespace UCS.Logic
         }
 
         #endregion Public Properties
+
+        #region Private Fields
+
+        private const int m_vType = 0x01AB3F00;
+
+        private int m_vAmmo;
+
+        #endregion Private Fields
 
         #region Public Methods
 

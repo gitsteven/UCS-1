@@ -12,11 +12,20 @@
 using System.Collections.Generic;
 using UCS.Helpers;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 20104
     internal class LoginOkMessage : Message
     {
+        #region Public Constructors
+
+        public LoginOkMessage(PacketProcessing.Client client) : base(client)
+        {
+            SetMessageType(20104);
+        }
+
+        #endregion Public Constructors
+
         #region Private Fields
 
         private readonly string m_vFacebookAppID = "297484437009394";
@@ -39,15 +48,6 @@ namespace UCS.PacketProcessing
         private int m_vStartupCooldownSeconds;
 
         #endregion Private Fields
-
-        #region Public Constructors
-
-        public LoginOkMessage(Client client) : base(client)
-        {
-            SetMessageType(20104);
-        }
-
-        #endregion Public Constructors
 
         #region Public Properties
 

@@ -14,13 +14,13 @@ using System.IO;
 using System.Text;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     internal class AttackResultMessage : Message
     {
         #region Public Constructors
 
-        public AttackResultMessage(Client client, BinaryReader br)
+        public AttackResultMessage(PacketProcessing.Client client, BinaryReader br)
             : base(client, br)
         {
         }

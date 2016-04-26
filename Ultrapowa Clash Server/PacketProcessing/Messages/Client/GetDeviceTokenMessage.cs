@@ -9,22 +9,19 @@
  * All Rights Reserved.
  */
 
-using System;
 using System.IO;
-using System.Text;
-using UCS.Core;
+using UCS.Core.Network;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     internal class GetDeviceTokenMessage : Message
     {
         #region Public Constructors
 
-        public GetDeviceTokenMessage(Client client, BinaryReader br) : base(client, br)
+        public GetDeviceTokenMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
         {
-
         }
 
         #endregion Public Constructors
@@ -33,7 +30,6 @@ namespace UCS.PacketProcessing
 
         public override void Decode()
         {
-
         }
 
         public override void Process(Level level)

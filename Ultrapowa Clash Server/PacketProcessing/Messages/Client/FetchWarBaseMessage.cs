@@ -12,7 +12,7 @@
 using System.IO;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     //Packet 15000
 
@@ -20,7 +20,7 @@ namespace UCS.PacketProcessing
     {
         #region Public Constructors
 
-        public FetchWarBaseMessage(Client client, BinaryReader br) : base(client, br)
+        public FetchWarBaseMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
         {
         }
 

@@ -10,8 +10,9 @@
  */
 
 using UCS.Core;
+using UCS.Files.CSV;
 
-namespace UCS.GameFiles
+namespace UCS.Files.Logic
 {
     internal class DecoData : Data
     {

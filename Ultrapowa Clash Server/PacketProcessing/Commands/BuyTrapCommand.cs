@@ -11,11 +11,11 @@
 
 using System.IO;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x1FE
     internal class BuyTrapCommand : Command
@@ -31,17 +31,6 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Constructors
-
-        //00 00 01 FE 00 00 00 02 00 00 00 28 00 B7 1B 02 00 00 06 56
-
-        #region Public Properties
-
-        public int TrapId { get; set; }
-        public uint Unknown1 { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
-
-        #endregion Public Properties
 
         #region Public Methods
 
@@ -66,5 +55,16 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        //00 00 01 FE 00 00 00 02 00 00 00 28 00 B7 1B 02 00 00 06 56
+
+        #region Public Properties
+
+        public int TrapId { get; set; }
+        public uint Unknown1 { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+
+        #endregion Public Properties
     }
 }

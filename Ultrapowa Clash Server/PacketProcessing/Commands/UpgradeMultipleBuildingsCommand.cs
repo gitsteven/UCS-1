@@ -11,22 +11,15 @@
 
 using System.Collections.Generic;
 using System.IO;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     //Commande 0x225
     internal class UpgradeMultipleBuildingsCommand : Command
     {
-        #region Private Fields
-
-        private readonly List<int> m_vBuildingIdList;
-        private readonly byte m_vIsAltResource;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public UpgradeMultipleBuildingsCommand(BinaryReader br)
@@ -78,5 +71,12 @@ namespace UCS.PacketProcessing
         }
 
         #endregion Public Methods
+
+        #region Private Fields
+
+        private readonly List<int> m_vBuildingIdList;
+        private readonly byte m_vIsAltResource;
+
+        #endregion Private Fields
     }
 }

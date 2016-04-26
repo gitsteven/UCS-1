@@ -14,7 +14,7 @@ using System.IO;
 using UCS.Helpers;
 using UCS.Logic;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Commands
 {
     internal class BuildingToMove
     {

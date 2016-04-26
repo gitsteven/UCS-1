@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UCS.Core;
 using UCS.Helpers;
+using UCS.Logic.StreamEntry;
 
 namespace UCS.Logic
 {
@@ -26,7 +27,7 @@ namespace UCS.Logic
         private const int m_vMaxAllianceMembers = 50;
         private const int m_vMaxChatMessagesNumber = 30;
         private readonly Dictionary<long, AllianceMemberEntry> m_vAllianceMembers;
-        private readonly List<StreamEntry> m_vChatMessages;
+        private readonly List<StreamEntry.StreamEntry> m_vChatMessages;
         private int m_vAllianceBadgeData;
         private string m_vAllianceDescription;
         private int m_vAllianceExperience;
@@ -48,7 +49,7 @@ namespace UCS.Logic
 
         public Alliance()
         {
-            m_vChatMessages = new List<StreamEntry>();
+            m_vChatMessages = new List<StreamEntry.StreamEntry>();
             m_vAllianceMembers = new Dictionary<long, AllianceMemberEntry>();
         }
 
@@ -69,7 +70,7 @@ namespace UCS.Logic
             m_vWonWars = r.Next(0, 300);
             m_vLostWars = r.Next(0, 300);
             m_vDrawWars = r.Next(0, 300);
-            m_vChatMessages = new List<StreamEntry>();
+            m_vChatMessages = new List<StreamEntry.StreamEntry>();
             m_vAllianceMembers = new Dictionary<long, AllianceMemberEntry>();
         }
 
@@ -88,7 +89,7 @@ namespace UCS.Logic
             m_vAllianceMembers.Add(entry.GetAvatarId(), entry);
         }
 
-        public void AddChatMessage(StreamEntry message)
+        public void AddChatMessage(StreamEntry.StreamEntry message)
         {
             while (m_vChatMessages.Count >= m_vMaxChatMessagesNumber)
                 m_vChatMessages.RemoveAt(0);
@@ -193,7 +194,7 @@ namespace UCS.Logic
             return m_vAllianceType;
         }
 
-        public List<StreamEntry> GetChatMessages()
+        public List<StreamEntry.StreamEntry> GetChatMessages()
         {
             return m_vChatMessages;
         }
@@ -253,14 +254,14 @@ namespace UCS.Logic
                 m_vAllianceMembers.Add(id, member);
             }
 
-            m_vScore = (m_vScore / 2);
+            m_vScore = m_vScore / 2;
 
             var jsonMessages = (JArray) jsonObject["chatMessages"];
             if (jsonMessages != null)
             {
                 foreach (JObject jsonMessage in jsonMessages)
                 {
-                    var se = new StreamEntry();
+                    var se = new StreamEntry.StreamEntry();
                     switch (jsonMessage["type"].ToObject<int>())
                     {
                         case 1:

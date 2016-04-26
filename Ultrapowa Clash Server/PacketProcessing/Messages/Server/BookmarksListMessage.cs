@@ -14,13 +14,13 @@ using System.Linq;
 using UCS.Core;
 using UCS.Helpers;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Server
 {
     internal class BookmarkListMessage : Message
     {
         #region Public Constructors
 
-        public BookmarkListMessage(Client client) : base(client)
+        public BookmarkListMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24341);
         }

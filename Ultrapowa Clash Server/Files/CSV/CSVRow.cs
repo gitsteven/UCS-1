@@ -9,17 +9,10 @@
  * All Rights Reserved.
  */
 
-namespace UCS.GameFiles
+namespace UCS.Files.CSV
 {
     internal class CSVRow
     {
-        #region Private Fields
-
-        private readonly CSVTable m_vCSVTable;
-        private readonly int m_vRowStart;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public CSVRow(CSVTable table)
@@ -30,6 +23,13 @@ namespace UCS.GameFiles
         }
 
         #endregion Public Constructors
+
+        #region Private Fields
+
+        private readonly CSVTable m_vCSVTable;
+        private readonly int m_vRowStart;
+
+        #endregion Private Fields
 
         #region Public Methods
 

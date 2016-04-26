@@ -12,23 +12,13 @@
 using System;
 using Newtonsoft.Json.Linq;
 using UCS.Core;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 using UCS.Helpers;
 
 namespace UCS.Logic
 {
     internal class ConstructionItem : GameObject
     {
-        #region Protected Fields
-
-        protected bool Locked;
-        protected DateTime m_vBoostEndTime;
-        protected bool m_vIsConstructing;
-        protected Level m_vLevel;
-        protected Timer m_vTimer;
-
-        #endregion Protected Fields
-
         #region Public Constructors
 
         public ConstructionItem(Data data, Level level) : base(data, level)
@@ -41,6 +31,16 @@ namespace UCS.Logic
         }
 
         #endregion Public Constructors
+
+        #region Protected Fields
+
+        protected bool Locked;
+        protected DateTime m_vBoostEndTime;
+        protected bool m_vIsConstructing;
+        protected Level m_vLevel;
+        protected Timer m_vTimer;
+
+        #endregion Protected Fields
 
         #region Public Properties
 
@@ -165,8 +165,8 @@ namespace UCS.Logic
             {
                 return
                     ObjectManager.DataTables.GetGlobals()
-                        .GetGlobalData("RESOURCE_PRODUCTION_BOOST_MULTIPLIER")
-                        .NumberValue;
+                                 .GetGlobalData("RESOURCE_PRODUCTION_BOOST_MULTIPLIER")
+                                 .NumberValue;
             }
             if (GetUnitProductionComponent() != null)
             {
@@ -174,8 +174,8 @@ namespace UCS.Logic
                 {
                     return
                         ObjectManager.DataTables.GetGlobals()
-                            .GetGlobalData("SPELL_FACTORY_BOOST_MULTIPLIER")
-                            .NumberValue;
+                                     .GetGlobalData("SPELL_FACTORY_BOOST_MULTIPLIER")
+                                     .NumberValue;
                 }
                 return ObjectManager.DataTables.GetGlobals().GetGlobalData("BARRACKS_BOOST_MULTIPLIER").NumberValue;
             }

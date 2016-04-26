@@ -12,20 +12,12 @@
 using System.Collections.Generic;
 using System.Windows;
 using Newtonsoft.Json.Linq;
-using UCS.GameFiles;
+using UCS.Files.Logic;
 
 namespace UCS.Logic
 {
     internal class GameObject
     {
-        #region Private Fields
-
-        private readonly List<Component> m_vComponents;
-        private readonly Data m_vData;
-        private readonly Level m_vLevel;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public GameObject(Data data, Level level)
@@ -38,6 +30,14 @@ namespace UCS.Logic
         }
 
         #endregion Public Constructors
+
+        #region Private Fields
+
+        private readonly List<Component> m_vComponents;
+        private readonly Data m_vData;
+        private readonly Level m_vLevel;
+
+        #endregion Private Fields
 
         #region Public Properties
 

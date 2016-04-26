@@ -11,8 +11,6 @@
 
 using System;
 using System.Configuration;
-using System.IO;
-using System.Reflection;
 using System.Threading;
 using UCS.Helpers;
 
@@ -22,7 +20,9 @@ namespace UCS.Core.Threading
     {
         #region Private Fields
 
-        private static string Title, Tmp, Command;
+        private static string Title;
+        private static string Tmp;
+        private static string Command;
 
         #endregion Private Fields
 
@@ -60,8 +60,10 @@ namespace UCS.Core.Threading
                     Environment.Exit(0);
                 }
                 Console.WriteLine("[UCS]    -> This program is by the Ultrapowa Network development team.");
-                Console.WriteLine("[UCS]    -> You can find the source at www.ultrapowa.com and https://github.com/UltraPowaDev/UCS/");
-                Console.WriteLine("[UCS]    -> Don't forget to visit www.ultrapowa.com daily for the latest news and updates!");
+                Console.WriteLine(
+                    "[UCS]    -> You can find the source at www.ultrapowa.com and https://github.com/UltraPowaDev/UCS/");
+                Console.WriteLine(
+                    "[UCS]    -> Don't forget to visit www.ultrapowa.com daily for the latest news and updates!");
                 Console.WriteLine("[UCS]    -> UCS is now starting...");
                 Console.WriteLine("");
                 Debugger.SetLogLevel(int.Parse(ConfigurationManager.AppSettings["loggingLevel"]));

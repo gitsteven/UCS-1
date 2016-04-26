@@ -13,15 +13,24 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UCS.Core;
+using UCS.Core.Network;
 using UCS.Helpers;
 using UCS.Logic;
-using UCS.Network;
+using UCS.PacketProcessing.Messages.Server;
 
-namespace UCS.PacketProcessing
+namespace UCS.PacketProcessing.Messages.Client
 {
     //Packet 14324
     internal class SearchAlliancesMessage : Message
     {
+        #region Public Constructors
+
+        public SearchAlliancesMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
+        {
+        }
+
+        #endregion Public Constructors
+
         #region Private Fields
 
         private const int m_vAllianceLimit = 60;
@@ -35,14 +44,6 @@ namespace UCS.PacketProcessing
         private int m_vWarFrequency;
 
         #endregion Private Fields
-
-        #region Public Constructors
-
-        public SearchAlliancesMessage(Client client, BinaryReader br) : base(client, br)
-        {
-        }
-
-        #endregion Public Constructors
 
         //00 00 00 03
         //61 61 61
