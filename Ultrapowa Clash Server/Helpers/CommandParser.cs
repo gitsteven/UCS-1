@@ -57,15 +57,7 @@ namespace UCS.Helpers
                     break;
 
                 case "/restart":
-                    foreach (var onlinePlayer in ResourcesManager.GetOnlinePlayers())
-                    {
-                        var p = new ShutdownStartedMessage(onlinePlayer.GetClient());
-                        p.SetCode(5);
-                        PacketManager.ProcessOutgoingPacket(p);
-                    }
-                    Console.WriteLine("[UCS]    Shutdown Message Initiated!");
-                    Process.Start(Directory.GetCurrentDirectory() + @"\Tools\UCR.exe");
-                    Environment.Exit(0);
+                    ObjectManager.Restart();
                     break;
 
                 default:

@@ -62,7 +62,7 @@ namespace UCS.Core
         {
             try
             {
-                using (var db = new ucsdbEntities(m_vConnectionString))
+                using (ucsdbEntities db = new ucsdbEntities(m_vConnectionString))
                 {
                     db.player.Add(
                         new player
@@ -93,7 +93,7 @@ namespace UCS.Core
         {
             try
             {
-                using (var db = new ucsdbEntities(m_vConnectionString))
+                using (ucsdbEntities db = new ucsdbEntities(m_vConnectionString))
                 {
                     db.clan.Add(
                         new clan
@@ -122,9 +122,9 @@ namespace UCS.Core
             Level account = null;
             try
             {
-                using (var db = new ucsdbEntities(m_vConnectionString))
+                using (ucsdbEntities db = new ucsdbEntities(m_vConnectionString))
                 {
-                    var p = db.player.Find(playerId);
+                    player p = db.player.Find(playerId);
 
                     if (p != null)
                     {
@@ -153,21 +153,22 @@ namespace UCS.Core
         /// </returns>
         public List<Alliance> GetAllAlliances()
         {
-            var alliances = new List<Alliance>();
+            List<Alliance> alliances = new List<Alliance>();
             try
             {
-                using (var db = new ucsdbEntities(m_vConnectionString))
+                using (ucsdbEntities db = new ucsdbEntities(m_vConnectionString))
                 {
-                    var a = db.clan;
-                    var count = 0;
-                    foreach (var c in a)
+                    DbSet<clan> a = db.clan;
+                    int count = 0;
+                    foreach (clan c in a)
                     {
-                        var alliance = new Alliance();
+                        Alliance alliance = new Alliance();
                         alliance.LoadFromJSON(c.Data);
                         alliances.Add(alliance);
                         if (count++ >= 200)
                             break;
                     }
+                    Debugger.WriteLine("[UCS]    The server loaded " + count + " alliances");
                 }
             }
             catch (Exception ex)
@@ -187,9 +188,9 @@ namespace UCS.Core
             Alliance alliance = null;
             try
             {
-                using (var db = new ucsdbEntities(m_vConnectionString))
+                using (ucsdbEntities db = new ucsdbEntities(m_vConnectionString))
                 {
-                    var p = db.clan.Find(allianceId);
+                    clan p = db.clan.Find(allianceId);
                     if (p != null)
                     {
                         alliance = new Alliance();
@@ -210,8 +211,8 @@ namespace UCS.Core
         /// <returns>A list of all players id.</returns>
         public List<long> GetAllPlayerIds()
         {
-            var ids = new List<long>();
-            using (var db = new ucsdbEntities(m_vConnectionString))
+            List<long> ids = new List<long>();
+            using (ucsdbEntities db = new ucsdbEntities(m_vConnectionString))
                 ids.AddRange(db.player.Select(p => p.PlayerId));
             return ids;
         }
@@ -223,7 +224,7 @@ namespace UCS.Core
         public long GetMaxAllianceId()
         {
             long max = 0;
-            using (var db = new ucsdbEntities(m_vConnectionString))
+            using (ucsdbEntities db = new ucsdbEntities(m_vConnectionString))
                 max = (from alliance in db.clan select (long?) alliance.ClanId ?? 0).DefaultIfEmpty().Max();
             return max;
         }
@@ -235,7 +236,7 @@ namespace UCS.Core
         public long GetMaxPlayerId()
         {
             long max = 0;
-            using (var db = new ucsdbEntities(m_vConnectionString))
+            using (ucsdbEntities db = new ucsdbEntities(m_vConnectionString))
                 max = (from ep in db.player select (long?) ep.PlayerId ?? 0).DefaultIfEmpty().Max();
             return max;
         }
@@ -247,7 +248,7 @@ namespace UCS.Core
         public void RemoveAlliance(Alliance alliance)
         {
             long id = alliance.GetAllianceId();
-            using (var db = new ucsdbEntities(m_vConnectionString))
+            using (ucsdbEntities db = new ucsdbEntities(m_vConnectionString))
             {
                 db.clan.Remove(db.clan.Find((int) id));
                 db.SaveChanges();
@@ -258,11 +259,11 @@ namespace UCS.Core
         public void Save(Alliance alliance)
         {
             Debugger.WriteLine("Starting saving clan " + alliance.GetAllianceName() + " from memory to database at " + DateTime.Now);
-            using (var context = new ucsdbEntities(m_vConnectionString))
+            using (ucsdbEntities context = new ucsdbEntities(m_vConnectionString))
             {
                 context.Configuration.AutoDetectChangesEnabled = false;
                 context.Configuration.ValidateOnSaveEnabled = false;
-                var c = context.clan.Find((int) alliance.GetAllianceId());
+                clan c = context.clan.Find((int) alliance.GetAllianceId());
                 if (c != null)
                 {
                     c.LastUpdateTime = DateTime.Now;
@@ -292,10 +293,10 @@ namespace UCS.Core
         public void Save(Level avatar)
         {
             Debugger.WriteLine("Starting saving player " + avatar.GetPlayerAvatar().GetAvatarName() + " from memory to database at " + DateTime.Now, null, 4);
-            var context = new ucsdbEntities(m_vConnectionString);
+            ucsdbEntities context = new ucsdbEntities(m_vConnectionString);
             context.Configuration.AutoDetectChangesEnabled = false;
             context.Configuration.ValidateOnSaveEnabled = false;
-            var p = context.player.Find(avatar.GetPlayerAvatar().GetId());
+            player p = context.player.Find(avatar.GetPlayerAvatar().GetId());
             if (p != null)
             {
                 p.LastUpdateTime = avatar.GetTime();
@@ -329,15 +330,15 @@ namespace UCS.Core
         {
             try
             {
-                using (var context = new ucsdbEntities(m_vConnectionString))
+                using (ucsdbEntities context = new ucsdbEntities(m_vConnectionString))
                 {
                     context.Configuration.AutoDetectChangesEnabled = false;
                     context.Configuration.ValidateOnSaveEnabled = false;
-                    var transactionCount = 0;
-                    foreach (var pl in avatars)
+                    int transactionCount = 0;
+                    foreach (Level pl in avatars)
                         lock (pl)
                         {
-                            var p = context.player.Find(pl.GetPlayerAvatar().GetId());
+                            player p = context.player.Find(pl.GetPlayerAvatar().GetId());
                             if (p != null)
                             {
                                 p.LastUpdateTime = pl.GetTime();
@@ -386,15 +387,15 @@ namespace UCS.Core
         {
             try
             {
-                using (var context = new ucsdbEntities(m_vConnectionString))
+                using (ucsdbEntities context = new ucsdbEntities(m_vConnectionString))
                 {
                     context.Configuration.AutoDetectChangesEnabled = false;
                     context.Configuration.ValidateOnSaveEnabled = false;
-                    var transactionCount = 0;
-                    foreach (var alliance in alliances)
+                    int transactionCount = 0;
+                    foreach (Alliance alliance in alliances)
                         lock (alliance)
                         {
-                            var c = context.clan.Find((int) alliance.GetAllianceId());
+                            clan c = context.clan.Find((int) alliance.GetAllianceId());
                             if (c != null)
                             {
                                 c.LastUpdateTime = DateTime.Now;
@@ -435,7 +436,7 @@ namespace UCS.Core
         {
             try
             {
-                using (var db = new ucsdbEntities(m_vConnectionString))
+                using (ucsdbEntities db = new ucsdbEntities(m_vConnectionString))
                 {
                     (from ep in db.player select (long?) ep.PlayerId ?? 0).DefaultIfEmpty().Max();
                 }

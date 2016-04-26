@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using UCS.Core.Network;
@@ -19,6 +20,7 @@ using UCS.Files;
 using UCS.Files.CSV;
 using UCS.Files.Logic;
 using UCS.Logic;
+using UCS.PacketProcessing.Messages.Server;
 using Timer = System.Threading.Timer;
 
 namespace UCS.Core
@@ -46,14 +48,18 @@ namespace UCS.Core
             m_vDatabase.CheckConnection();
             m_vAvatarSeed = m_vDatabase.GetMaxPlayerId() + 1;
             m_vAllianceSeed = m_vDatabase.GetMaxAllianceId() + 1;
+            Debugger.WriteLine("[UCS]    Loading and saving all database to memory");
+            GetAllAlliancesFromDB();
             LoadGameFiles();
             LoadNpcLevels();
-
+            
             var TimerItem = new Timer(Save, null, 30000, 15000);
+            new Timer(Restart, null, 10800000, 0);
             TimerReference = TimerItem;
+
             Console.WriteLine("[UCS]    Database Sync started successfully");
             m_vRandomSeed = new Random();
-            GetAllAlliancesFromDB();
+            
         }
 
         public static void Stop()
@@ -89,6 +95,23 @@ namespace UCS.Core
                 TimerReference.Dispose();
         }
 
+        void Restart(object state)
+        {
+            Restart();
+        }
+
+        public static void Restart()
+        {
+            foreach (var onlinePlayer in ResourcesManager.GetOnlinePlayers())
+            {
+                var p = new ShutdownStartedMessage(onlinePlayer.GetClient());
+                p.SetCode(5);
+                PacketManager.ProcessOutgoingPacket(p);
+            }
+            Console.WriteLine("[UCS]    Shutdown Message Initiated!");
+            Process.Start(Directory.GetCurrentDirectory() + @"\Tools\UCR.exe");
+            Environment.Exit(0);
+        }
         #endregion Private Methods
 
         #region Public Fields
