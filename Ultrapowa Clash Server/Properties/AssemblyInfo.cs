@@ -49,12 +49,12 @@ using System.Windows;
                                               // nell'applicazione o nei dizionari delle risorse specifiche del tema)
     )]
 
-// Le informazioni sulla versione di un assembly sono costituite dai seguenti quattro valori:
+// Version information for an assembly consists of the following four values:
 //
-// Versione principale Versione secondaria Numero di build Revisione
+// Major Version Minor Version Build number Revision
 //
-// È possibile specificare tutti i valori oppure impostare valori predefiniti per i numeri relativi
-// alla revisione e alla build usando l'asterisco '*' come illustrato di seguito: [assembly: AssemblyVersion("1.0.*")]
+// You can specify all the values or you can default to their numbers
+// Revision and build using the asterisk '*' as shown below: [assembly: AssemblyVersion ("1.0. *")]
 
 [assembly: AssemblyVersion("0.7.0.0")]
 [assembly: AssemblyFileVersion("0.7.0.0")]

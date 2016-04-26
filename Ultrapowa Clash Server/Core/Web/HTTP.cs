@@ -40,6 +40,7 @@ namespace UCS.Core.Web
         private int _port;
         private Thread _serverThread;
         private string jsonapp;
+        private string apikey = ConfigurationManager.AppSettings["ApiKey"].ToString();
         private string mime = "text/plain";
 
         #endregion Private Fields
@@ -172,7 +173,7 @@ namespace UCS.Core.Web
         private void Listen()
         {
             _listener = new HttpListener();
-            _listener.Prefixes.Add("http://+:" + _port + "/" + ConfigurationManager.AppSettings["ApiKey"] + "/");
+            _listener.Prefixes.Add(String.Concat("http://*:", _port, '/', apikey, '/'));
             _listener.Start();
             while (true)
             {
@@ -190,9 +191,8 @@ namespace UCS.Core.Web
 
         private void Process(HttpListenerContext context)
         {
-            string[] Apis = { "inmemclans", "inmemplayers", "onlineplayers", "totalclients", "ram", "" };
-            var type = context.Request.Url.AbsolutePath.Substring(7).ToLower();
-
+            string[] Apis = { "inmemclans", "inmemplayers", "onlineplayers", "totalclients", "ram", "all", string.Empty };
+            var type = context.Request.Url.AbsolutePath.Substring(apikey.Length + 2).ToLower();
             if (Apis.Contains(type))
             {
                 Handler(type);
@@ -214,17 +214,49 @@ namespace UCS.Core.Web
                         fstream.Close();
                     }
 
-                    context.Response.StatusCode = (int) HttpStatusCode.OK;
+                    context.Response.StatusCode = (int)HttpStatusCode.OK;
                     context.Response.OutputStream.Flush();
                 }
                 catch (Exception ex)
                 {
-                    context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+                    context.Response.ContentType = mime;
+                    context.Response.ContentEncoding = Encoding.UTF8;
+                    context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
+                    context.Response.AddHeader("Last-Modified", DateTime.UtcNow.ToString("r"));
+                    context.Response.AddHeader("APIVersion", "1.0a");
+
+                    var buffer = new byte[1024 * 16];
+                    int nbytes;
+
+                    using (var fstream = GenerateStreamFromString("HTTP 500 - Internal Server Error"))
+                    {
+                        while ((nbytes = fstream.Read(buffer, 0, buffer.Length)) > 0)
+                            context.Response.OutputStream.Write(buffer, 0, nbytes);
+                        fstream.Close();
+                    }
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    context.Response.OutputStream.Flush();
                 }
             }
             else
             {
-                context.Response.StatusCode = (int) HttpStatusCode.NotFound;
+                context.Response.ContentType = mime;
+                context.Response.ContentEncoding = Encoding.UTF8;
+                context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
+                context.Response.AddHeader("Last-Modified", DateTime.UtcNow.ToString("r"));
+                context.Response.AddHeader("APIVersion", "1.0a");
+
+                var buffer = new byte[1024 * 16];
+                int nbytes;
+
+                using (var fstream = GenerateStreamFromString("HTTP 404 Not Found Error"))
+                {
+                    while ((nbytes = fstream.Read(buffer, 0, buffer.Length)) > 0)
+                        context.Response.OutputStream.Write(buffer, 0, nbytes);
+                    fstream.Close();
+                }
+                context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                context.Response.OutputStream.Flush();
             }
             context.Response.OutputStream.Close();
         }

@@ -11,6 +11,6 @@
   <add key="maintenanceTimeleft" value="0" /><!-- Please set the time in seconds like 1200 seconds for 20 minutes -->
   <add key="databaseConnectionName" value="ucsdbEntities" /><!-- Choose ucsdbEntities for MySQL and edit ucsdbEntities connection string in ucs.exe.config. If you want to use sqLite choose sqliteEntities -->
   <add key="loggingLevel" value="5" /><!-- Enable logging for debugging, set value to 1 for (almost) no log -->
-  <add key="proDebugPort" value="8888" /><!-- Choose the port for Pro API Manager, by default set value to 1173 -->
-  <add key="ApiKey" value="UCSGL" /><!-- Your API Key -->
+  <add key="DebugPort" value="9332" /><!-- Choose the port for Pro API Manager, by default set value to 1173 -->
+  <add key="ApiKey" value="ucs" /><!-- Your API Key -->
 </appSettings>
