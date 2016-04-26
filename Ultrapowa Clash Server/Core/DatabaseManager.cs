@@ -258,7 +258,6 @@ namespace UCS.Core
 
         public void Save(Alliance alliance)
         {
-            Debugger.WriteLine("Starting saving clan " + alliance.GetAllianceName() + " from memory to database at " + DateTime.Now);
             using (ucsdbEntities context = new ucsdbEntities(m_vConnectionString))
             {
                 context.Configuration.AutoDetectChangesEnabled = false;
@@ -283,7 +282,6 @@ namespace UCS.Core
                 }
                 context.SaveChanges();
             }
-            Debugger.WriteLine("Finished saving clan " + alliance.GetAllianceName() + " from memory to database at " + DateTime.Now);
         }
 
         /// <summary>
@@ -292,7 +290,6 @@ namespace UCS.Core
         /// <param name="avatar">The level of the player.</param>
         public void Save(Level avatar)
         {
-            Debugger.WriteLine("Starting saving player " + avatar.GetPlayerAvatar().GetAvatarName() + " from memory to database at " + DateTime.Now, null, 4);
             ucsdbEntities context = new ucsdbEntities(m_vConnectionString);
             context.Configuration.AutoDetectChangesEnabled = false;
             context.Configuration.ValidateOnSaveEnabled = false;
@@ -323,7 +320,6 @@ namespace UCS.Core
                     );
             }
             context.SaveChanges();
-            Debugger.WriteLine("Finished saving player " + avatar.GetPlayerAvatar().GetAvatarName() + " from memory to database at " + DateTime.Now, null, 4);
         }
 
         public void Save(List<Level> avatars)

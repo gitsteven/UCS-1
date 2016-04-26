@@ -22,11 +22,12 @@ namespace UCS.PacketProcessing.Commands
 
         public MyLeagueCommand(BinaryReader br)
         {
+
         }
 
         public override void Execute(Level level)
         {
-            PacketManager.ProcessOutgoingPacket(new LeaguePlayersMessage(level.GetClient()));
+            //PacketManager.ProcessOutgoingPacket(new LeaguePlayersMessage(level.GetClient()));
         }
 
         #endregion Public Constructors

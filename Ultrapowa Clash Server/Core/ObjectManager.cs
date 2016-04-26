@@ -53,7 +53,7 @@ namespace UCS.Core
             LoadGameFiles();
             LoadNpcLevels();
             
-            var TimerItem = new Timer(Save, null, 30000, 15000);
+            var TimerItem = new Timer(Save, null, 30000, 30000);
             new Timer(Restart, null, 10800000, 0);
             TimerReference = TimerItem;
 

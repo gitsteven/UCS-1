@@ -71,68 +71,80 @@ namespace UCS.PacketProcessing.Messages.Client
         {
             if (Client.CState == 1)
             {
-                using (var reader = new CoCSharpPacketReader(new MemoryStream(GetData())))
+                try
                 {
-                    UserID = reader.ReadInt64();
-                    UserToken = reader.ReadString();
-                    MajorVersion = reader.ReadInt32();
-                    ContentVersion = reader.ReadInt32();
-                    MinorVersion = reader.ReadInt32();
-                    MasterHash = reader.ReadString();
-                    Unknown1 = reader.ReadString();
-                    OpenUDID = reader.ReadString();
-                    MacAddress = reader.ReadString();
-                    DeviceModel = reader.ReadString();
-                    LocaleKey = reader.ReadInt32();
-                    Language = reader.ReadString();
-                    AdvertisingGUID = reader.ReadString();
-                    OSVersion = reader.ReadString();
-                    Unknown2 = reader.ReadByte();
-                    Unknown3 = reader.ReadString();
-                    AndroidDeviceID = reader.ReadString();
-                    FacebookDistributionID = reader.ReadString();
-                    IsAdvertisingTrackingEnabled = reader.ReadBoolean();
-                    VendorGUID = reader.ReadString();
-                    Seed = reader.ReadInt32();
-                    Unknown4 = reader.ReadByte();
-                    Unknown5 = reader.ReadString();
-                    Unknown6 = reader.ReadString();
-                    ClientVersion = reader.ReadString();
+                    using (var reader = new CoCSharpPacketReader(new MemoryStream(GetData())))
+                    {
+                        UserID = reader.ReadInt64();
+                        UserToken = reader.ReadString();
+                        MajorVersion = reader.ReadInt32();
+                        ContentVersion = reader.ReadInt32();
+                        MinorVersion = reader.ReadInt32();
+                        MasterHash = reader.ReadString();
+                        Unknown1 = reader.ReadString();
+                        OpenUDID = reader.ReadString();
+                        MacAddress = reader.ReadString();
+                        DeviceModel = reader.ReadString();
+                        LocaleKey = reader.ReadInt32();
+                        Language = reader.ReadString();
+                        AdvertisingGUID = reader.ReadString();
+                        OSVersion = reader.ReadString();
+                        Unknown2 = reader.ReadByte();
+                        Unknown3 = reader.ReadString();
+                        AndroidDeviceID = reader.ReadString();
+                        FacebookDistributionID = reader.ReadString();
+                        IsAdvertisingTrackingEnabled = reader.ReadBoolean();
+                        VendorGUID = reader.ReadString();
+                        Seed = reader.ReadInt32();
+                        Unknown4 = reader.ReadByte();
+                        Unknown5 = reader.ReadString();
+                        Unknown6 = reader.ReadString();
+                        ClientVersion = reader.ReadString();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debugger.WriteLine("[UCS]    Exception occured when reading packet", e);
+                    Client.CState = 0;
                 }
             }
         }
 
         public override void Process(Level a)
         {
-            // IF THE USER IS TOTALLY NEW, WITH ID 0 AND NO TOKEN
-            if (UserID == 0 || string.IsNullOrEmpty(UserToken))
+            if (Client.CState == 1)
             {
-                NewUser();
-                return;
-            }
-
-            level = ResourcesManager.GetPlayer(UserID); // THE USER HAVE AN ID, WE CHECK IF IT'S IN DATABASE
-            if (level != null)
-            {
-                if (level.Banned()) // IF THE USER IS FOUND BUT BANNED
+                CheckClient();
+                // IF THE USER IS TOTALLY NEW, WITH ID 0 AND NO TOKEN
+                if (UserID == 0 || string.IsNullOrEmpty(UserToken))
                 {
-                    var p = new LoginFailedMessage(Client);
-                    p.SetErrorCode(11);
-                    PacketManager.ProcessOutgoingPacket(p);
+                    NewUser();
                     return;
                 }
-                if (level.GetPlayerAvatar().GetUserToken() == UserToken) // IF THE USER TOKEN MATCH THE CLIENT TOKEN
-                    LogUser();
-                else // ELSE, HE IS TRYING TO STEAL AN ACCOUNT
+
+                level = ResourcesManager.GetPlayer(UserID); // THE USER HAVE AN ID, WE CHECK IF IT'S IN DATABASE
+                if (level != null)
+                {
+                    if (level.Banned()) // IF THE USER IS FOUND BUT BANNED
+                    {
+                        var p = new LoginFailedMessage(Client);
+                        p.SetErrorCode(11);
+                        PacketManager.ProcessOutgoingPacket(p);
+                        return;
+                    }
+                    if (level.GetPlayerAvatar().GetUserToken() == UserToken) // IF THE USER TOKEN MATCH THE CLIENT TOKEN
+                        LogUser();
+                    else // ELSE, HE IS TRYING TO STEAL AN ACCOUNT
+                        NewUser();
+                }
+                else // IF NOTHING IS FOUND IN DATABASE WITH THIS ID, WE CREATE A NEW
                     NewUser();
             }
-            else // IF NOTHING IS FOUND IN DATABASE WITH THIS ID, WE CREATE A NEW
-                NewUser();
         }
 
         void LogUser()
         {
-            CheckClient();
+            
             ResourcesManager.LogPlayerIn(level, Client);
             level.Tick();
             var loginOk = new LoginOkMessage(Client);
@@ -142,7 +154,7 @@ namespace UCS.PacketProcessing.Messages.Client
             loginOk.SetServerMajorVersion(MajorVersion);
             loginOk.SetServerBuild(MinorVersion);
             loginOk.SetContentVersion(ContentVersion);
-            loginOk.SetServerEnvironment("stage");
+            loginOk.SetServerEnvironment("prod");
             loginOk.SetDaysSinceStartedPlaying(0);
             loginOk.SetServerTime(
                 Math.Round(level.GetTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds * 1000)
@@ -152,6 +164,7 @@ namespace UCS.PacketProcessing.Messages.Client
             loginOk.SetCountryCode(Language);
             PacketManager.ProcessOutgoingPacket(loginOk);
             var alliance = ObjectManager.GetAlliance(level.GetPlayerAvatar().GetAllianceId());
+            level.GetPlayerAvatar().SetLeagueId(new Random(Seed).Next(15, 20));
             PacketManager.ProcessOutgoingPacket(new OwnHomeDataMessage(Client, level));
 
             if (alliance == null)
