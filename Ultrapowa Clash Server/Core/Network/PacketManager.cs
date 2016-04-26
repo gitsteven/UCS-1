@@ -66,7 +66,7 @@ namespace UCS.Network
             try
             {
                 var pl = p.Client.GetLevel();
-                var player = " (0, NoNameYet)";
+                var player = string.Empty;
                 if (pl != null)
                     player = " (" + pl.GetPlayerAvatar().GetId() + ", " + pl.GetPlayerAvatar().GetAvatarName() + ")";
                 Debugger.WriteLine("[UCS]    Processing " + p.GetType().Name + player);

@@ -133,6 +133,38 @@ namespace UCS.PacketProcessing
 
         private void LogUser()
         {
+            var cv = ClientVersion.Split('.');
+            if (cv[0] != "8" || cv[1] != "212")
+            {
+                var p = new LoginFailedMessage(Client);
+                p.SetErrorCode(8);
+                p.SetReason("I love berkan");
+                p.SetResourceFingerprintData(ObjectManager.FingerPrint.SaveToJson());
+                p.SetUpdateURL(Convert.ToString(ConfigurationManager.AppSettings["UpdateUrl"]));
+                PacketManager.ProcessOutgoingPacket(p);
+                return;
+            }
+
+            if (Convert.ToBoolean(ConfigurationManager.AppSettings["useCustomPatch"]) && MasterHash != ObjectManager.FingerPrint.sha)
+            {
+                var p = new LoginFailedMessage(Client);
+                p.SetErrorCode(7);
+                p.SetResourceFingerprintData(ObjectManager.FingerPrint.SaveToJson());
+                p.SetContentURL(ConfigurationManager.AppSettings["patchingServer"]);
+                p.SetUpdateURL(ConfigurationManager.AppSettings["UpdateUrl"]);
+                PacketManager.ProcessOutgoingPacket(p);
+                return;
+            }
+            int time = Convert.ToInt32(ConfigurationManager.AppSettings["maintenanceTimeleft"]);
+            if (time!= 0)
+            {
+                var p = new LoginFailedMessage(Client);
+                p.SetErrorCode(10);
+                p.RemainingTime(time);
+                PacketManager.ProcessOutgoingPacket(p);
+                return;
+            }
+
             ResourcesManager.LogPlayerIn(level, Client);
             level.Tick();
             var loginOk = new LoginOkMessage(Client);
@@ -157,40 +189,6 @@ namespace UCS.PacketProcessing
             else
                 PacketManager.ProcessOutgoingPacket(new AllianceFullEntryupdateMessage(Client, alliance));
             PacketManager.ProcessOutgoingPacket(new BookmarkMessage(Client));
-        }
-
-        private void CheckClient()
-        {
-            if (Convert.ToInt32(ConfigurationManager.AppSettings["maintenanceTimeleft"]) > 0 || Client.CState == 0)
-            {
-                var p = new LoginFailedMessage(Client);
-                p.SetErrorCode(10);
-                PacketManager.ProcessOutgoingPacket(p);
-                ResourcesManager.LogPlayerOut(level);
-                return;
-            }
-
-            var cv = ClientVersion.Split('.');
-            if (cv[0] != "8" || cv[1] != "212")
-            {
-                var p = new LoginFailedMessage(Client);
-                p.SetErrorCode(8);
-                p.SetUpdateURL(Convert.ToString(ConfigurationManager.AppSettings["UpdateUrl"]));
-                PacketManager.ProcessOutgoingPacket(p);
-                ResourcesManager.LogPlayerOut(level);
-                return;
-            }
-
-            if (Convert.ToBoolean(ConfigurationManager.AppSettings["useCustomPatch"]) && MasterHash != ObjectManager.FingerPrint.sha)
-            {
-                var p = new LoginFailedMessage(Client);
-                p.SetErrorCode(7);
-                p.SetResourceFingerprintData(ObjectManager.FingerPrint.SaveToJson());
-                p.SetContentURL(ConfigurationManager.AppSettings["patchingServer"]);
-                p.SetUpdateURL(ConfigurationManager.AppSettings["UpdateUrl"]);
-                PacketManager.ProcessOutgoingPacket(p);
-                ResourcesManager.LogPlayerOut(level);
-            }
         }
 
         private void NewUser()

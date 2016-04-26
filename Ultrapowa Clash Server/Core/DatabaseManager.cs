@@ -254,6 +254,7 @@ namespace UCS.Core
 
         public void Save(Alliance alliance)
         {
+            Debugger.WriteLine("Starting saving clan " + alliance.GetAllianceName() + " from memory to database at " + DateTime.Now);
             using (var context = new ucsdbEntities(m_vConnectionString))
             {
                 context.Configuration.AutoDetectChangesEnabled = false;
@@ -278,6 +279,7 @@ namespace UCS.Core
                 }
                 context.SaveChanges();
             }
+            Debugger.WriteLine("Finished saving clan " + alliance.GetAllianceName() + " from memory to database at " + DateTime.Now);
         }
 
         /// <summary>
@@ -286,6 +288,7 @@ namespace UCS.Core
         /// <param name="avatar">The level of the player.</param>
         public void Save(Level avatar)
         {
+            Debugger.WriteLine("Starting saving player " + avatar.GetPlayerAvatar().GetAvatarName() + " from memory to database at " + DateTime.Now, null, 4);
             var context = new ucsdbEntities(m_vConnectionString);
             context.Configuration.AutoDetectChangesEnabled = false;
             context.Configuration.ValidateOnSaveEnabled = false;
@@ -316,6 +319,7 @@ namespace UCS.Core
                     );
             }
             context.SaveChanges();
+            Debugger.WriteLine("Finished saving player " + avatar.GetPlayerAvatar().GetAvatarName() + " from memory to database at " + DateTime.Now, null, 4);
         }
 
         public void Save(List<Level> avatars)
@@ -361,8 +365,9 @@ namespace UCS.Core
                         context.SaveChanges();
                         transactionCount = 0;
                     }
-                    context.SaveChanges();
+                     context.SaveChanges();
                 }
+                Debugger.WriteLine("[UCS]    All players in memory has been saved to database at " + DateTime.Now);
             }
             catch (Exception ex)
             {
@@ -409,10 +414,13 @@ namespace UCS.Core
                     if (transactionCount >= 500)
                     {
                         context.SaveChanges();
+                        context.SaveChanges();
+                        context.SaveChanges();
                         transactionCount = 0;
                     }
                     context.SaveChanges();
                 }
+                Debugger.WriteLine("[UCS]    All alliances in memory has been saved to database at " + DateTime.Now);
             }
             catch (Exception ex)
             {

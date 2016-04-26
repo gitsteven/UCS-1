@@ -119,12 +119,7 @@ namespace UCS.Network
             try
             {
                 var clientSocket = Socket.EndAccept(result);
-                WebClient c = new WebClient();
-                c.DownloadStringCompleted += (sender, e) =>
-                {
-                    Console.WriteLine("[UCS]    Client connected (" + ((IPEndPoint) clientSocket.RemoteEndPoint).Address + ", " + e.Result.Trim() + ")");
-                };
-                c.DownloadStringAsync(new Uri("http://ipinfo.io/" + ((IPEndPoint) clientSocket.RemoteEndPoint).Address + "/country"));
+                Console.WriteLine("[UCS]    Client connected (" + ((IPEndPoint) clientSocket.RemoteEndPoint).Address + ")");
                 ResourcesManager.AddClient(new Client(clientSocket), ((IPEndPoint) clientSocket.RemoteEndPoint).Address.ToString());
                 SocketRead.Begin(clientSocket, OnReceive, OnReceiveError);
             }

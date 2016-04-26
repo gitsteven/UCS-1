@@ -9,9 +9,11 @@
  * All Rights Reserved.
  */
 
+using Ionic.Zlib;
 using System.Collections.Generic;
 using System.Configuration;
 using UCS.Helpers;
+using static UCS.Core.Debugger;
 
 namespace UCS.PacketProcessing
 {
@@ -36,6 +38,7 @@ namespace UCS.PacketProcessing
         {
             SetMessageType(20103);
             SetUpdateURL(ConfigurationManager.AppSettings["UpdateUrl"]);
+            SetMessageVersion(2);
             //SetReason("UCS Developement Team");
             // 8  : new game version available (removeupdateurl)
             // 10 : maintenance
@@ -72,15 +75,13 @@ namespace UCS.PacketProcessing
                 pack.AddString(m_vUpdateURL);
                 pack.AddString(m_vReason);
                 pack.AddInt32(m_vRemainingTime);
-                pack.AddInt32(-1);
                 pack.Add(0);
-                pack.AddString("");
-                pack.AddInt32(-1);
+                pack.AddRange(ZlibStream.CompressString(m_vResourceFingerprintData));
+                pack.AddString("")
                 pack.AddInt32(2);
                 Encrypt(pack.ToArray());
             }
         }
-
         public void RemainingTime(int code)
         {
             m_vRemainingTime = code;
