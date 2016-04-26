@@ -156,8 +156,8 @@ namespace UCS.Logic.Manager
         public JObject Save()
         {
             var jsonData = new JObject();
-            jsonData.Add("android_client", true);
             jsonData.Add("exp_ver", 1);
+            jsonData.Add("android_client", true);
             jsonData.Add("active_layout", 0);
             jsonData.Add("layout_state", new JArray { 0, 0, 0, 0, 0, 0 });
 

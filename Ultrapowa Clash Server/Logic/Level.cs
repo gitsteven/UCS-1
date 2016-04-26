@@ -79,7 +79,7 @@ namespace UCS.Logic
 
         public bool Banned()
         {
-            if (m_vAccountPrivileges > 0)
+            if (m_vAccountStatus == 99)
                 return true;
             return false;
         }

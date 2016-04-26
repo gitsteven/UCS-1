@@ -51,7 +51,7 @@ namespace UCS.PacketProcessing
 
         public static object Parse(string command)
         {
-            var commandArgs = command.Split(' ');
+            var commandArgs = command.ToLower().Split(' ');
             object result = null;
             if (commandArgs.Length > 0)
             {
