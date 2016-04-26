@@ -11,6 +11,7 @@
 
 using System;
 using Sodium;
+
 namespace UCS.PacketProcessing
 {
     public static class Key
