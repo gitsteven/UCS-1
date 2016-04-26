@@ -35,9 +35,7 @@ namespace UCS.PacketProcessing.Messages.Server
             var data = new List<byte>();
 
             var i = 1;
-            foreach (
-                var player in ResourcesManager.GetOnlinePlayers().OrderByDescending(t => t.GetPlayerAvatar().GetScore())
-                )
+            foreach (var player in ResourcesManager.GetInMemoryLevels().OrderByDescending(t => t.GetPlayerAvatar().GetScore()))
             {
                 var pl = player.GetPlayerAvatar();
                 var id = pl.GetAllianceId();

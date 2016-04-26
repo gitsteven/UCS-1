@@ -48,7 +48,7 @@ namespace UCS.Core
             m_vDatabase.CheckConnection();
             m_vAvatarSeed = m_vDatabase.GetMaxPlayerId() + 1;
             m_vAllianceSeed = m_vDatabase.GetMaxAllianceId() + 1;
-            Debugger.WriteLine("[UCS]    Loading and saving all database to memory");
+            Debugger.WriteLine("[UCS]    Loading and saving all alliances to memory");
             GetAllAlliancesFromDB();
             LoadGameFiles();
             LoadNpcLevels();
@@ -153,7 +153,7 @@ namespace UCS.Core
         public static Alliance CreateAlliance(long seed)
         {
             Alliance alliance;
-            lock (m_vDatabaseLock)
+            lock (m_vDatabase)
             {
                 if (seed == 0)
                     seed = m_vAllianceSeed;
@@ -174,7 +174,7 @@ namespace UCS.Core
         public static Level CreateAvatar(long seed, string token)
         {
             Level pl;
-            lock (m_vDatabaseLock)
+            lock (m_vDatabase)
             {
                 if (seed == 0)
                     seed = m_vAvatarSeed;
@@ -199,6 +199,8 @@ namespace UCS.Core
                     m_vAlliances.Add(t.GetAllianceId(), t);
             }
         }
+
+        
 
         /// <summary>
         ///     This function get the info of an alliance.

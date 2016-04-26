@@ -44,6 +44,7 @@ namespace UCS.PacketProcessing
 
         public Message()
         {
+
         }
 
         public Message(Client c)
@@ -79,6 +80,7 @@ namespace UCS.PacketProcessing
 
         public virtual void Decode()
         {
+
         }
 
         public void Decrypt()
@@ -114,6 +116,7 @@ namespace UCS.PacketProcessing
 
         public virtual void Encode()
         {
+
         }
 
         public void Encrypt(byte[] plainText)
@@ -130,7 +133,7 @@ namespace UCS.PacketProcessing
                     plainText = Client.CRNonce.Concat(Client.CSharedKey).Concat(plainText).ToArray();
                     SetData(CustomNaCl.CreatePublicBox(plainText, tmpNonce, Key.Crypto.PrivateKey, Client.CPublicKey));
                     if (GetMessageType() == 20104)
-                    Client.CState = 2;
+                        Client.CState = 2;
                 }
                 else
                 {
@@ -176,6 +179,7 @@ namespace UCS.PacketProcessing
 
         public virtual void Process(Level level)
         {
+
         }
 
         public void SetData(byte[] data)

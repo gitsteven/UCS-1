@@ -37,9 +37,7 @@ namespace UCS.PacketProcessing.Messages.Server
 
             var i = 1;
 
-            foreach (
-                var player in ResourcesManager.GetOnlinePlayers().OrderByDescending(t => t.GetPlayerAvatar().GetScore())
-                )
+            foreach (var player in ResourcesManager.GetInMemoryLevels().OrderByDescending(t => t.GetPlayerAvatar().GetScore()))
             {
                 var pl = player.GetPlayerAvatar();
                 packet1.AddInt64(pl.GetId()); // The ID of the player

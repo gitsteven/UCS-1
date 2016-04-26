@@ -114,6 +114,16 @@ namespace UCS.Core
             return clients;
         }
 
+        public static void GetAllPlayersFromDB()
+        {
+            var players = m_vDatabase.GetAllPlayers();
+            foreach (var t in players)
+            {
+                if (!m_vInMemoryLevels.ContainsKey(t.Key))
+                    m_vInMemoryLevels.TryAdd(t.Key, t.Value);
+            }
+        }
+
         /// <summary> This function return all in-memory player. </summary>
         /// <returns>
         ///     A List<> of

@@ -10,6 +10,7 @@
  */
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
@@ -176,6 +177,32 @@ namespace UCS.Core
                 Debugger.WriteLine("[UCS]    An exception occured during GetAlliance processing:", ex);
             }
             return alliances;
+        }
+
+        public ConcurrentDictionary<long, Level> GetAllPlayers()
+        {
+            ConcurrentDictionary<long, Level> players = new ConcurrentDictionary<long, Level>();
+            try
+            {
+                using (ucsdbEntities db = new ucsdbEntities(m_vConnectionString))
+                {
+                    DbSet<player> a = db.player;
+                    int count = 0;
+                    foreach (player c in a)
+                    {
+                        Level pl = new Level();
+                        players.TryAdd(pl.GetPlayerAvatar().GetId(), pl);
+                        if (count++ >= 200)
+                            break;
+                    }
+                    Debugger.WriteLine("[UCS]    The server loaded " + count + " players");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debugger.WriteLine("[UCS]    An exception occured during GetPlayers processing:", ex);
+            }
+            return players;
         }
 
         /// <summary>

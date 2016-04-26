@@ -29,6 +29,7 @@ namespace UCS.PacketProcessing.Messages.Client
 
         public LoginMessage(PacketProcessing.Client client, BinaryReader br) : base(client, br)
         {
+
         }
 
         #endregion Public Constructors
@@ -112,7 +113,7 @@ namespace UCS.PacketProcessing.Messages.Client
 
         public override void Process(Level a)
         {
-            if (Client.CState == 1)
+            if (Client.CState >= 1)
             {
                 CheckClient();
                 // IF THE USER IS TOTALLY NEW, WITH ID 0 AND NO TOKEN
@@ -132,8 +133,10 @@ namespace UCS.PacketProcessing.Messages.Client
                         PacketManager.ProcessOutgoingPacket(p);
                         return;
                     }
-                    if (level.GetPlayerAvatar().GetUserToken() == UserToken) // IF THE USER TOKEN MATCH THE CLIENT TOKEN
+                    if (String.Equals(level.GetPlayerAvatar().GetUserToken(), UserToken, StringComparison.Ordinal)) // IF THE USER TOKEN MATCH THE CLIENT TOKEN
+                    {
                         LogUser();
+                    }
                     else // ELSE, HE IS TRYING TO STEAL AN ACCOUNT
                         NewUser();
                 }
@@ -156,9 +159,7 @@ namespace UCS.PacketProcessing.Messages.Client
             loginOk.SetContentVersion(ContentVersion);
             loginOk.SetServerEnvironment("prod");
             loginOk.SetDaysSinceStartedPlaying(0);
-            loginOk.SetServerTime(
-                Math.Round(level.GetTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds * 1000)
-                    .ToString(CultureInfo.InvariantCulture));
+            loginOk.SetServerTime(Math.Round(level.GetTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds * 1000).ToString(CultureInfo.InvariantCulture));
             loginOk.SetAccountCreatedDate("1414003838000");
             loginOk.SetStartupCooldownSeconds(0);
             loginOk.SetCountryCode(Language);

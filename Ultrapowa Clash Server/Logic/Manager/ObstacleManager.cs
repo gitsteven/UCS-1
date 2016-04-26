@@ -29,8 +29,7 @@ namespace UCS.Logic.Manager
             if (m_vObstacleLimit == -1)
             {
                 m_vObstacleLimit = ObjectManager.DataTables.GetGlobals().GetGlobalData("OBSTACLE_COUNT_MAX").NumberValue;
-                m_vObstacleRespawnSeconds =
-                    ObjectManager.DataTables.GetGlobals().GetGlobalData("OBSTACLE_RESPAWN_SECONDS").NumberValue;
+                m_vObstacleRespawnSeconds = ObjectManager.DataTables.GetGlobals().GetGlobalData("OBSTACLE_RESPAWN_SECONDS").NumberValue;
             }
             if (!m_vSpawnAbleObstacles.Any())
             {

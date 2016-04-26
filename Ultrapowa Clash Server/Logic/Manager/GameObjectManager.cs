@@ -32,7 +32,7 @@ namespace UCS.Logic.Manager
                 m_vGameObjectsIndex.Add(0);
             }
             m_vComponentManager = new ComponentManager(m_vLevel);
-            m_vObstacleManager = new ObstacleManager(m_vLevel);
+            //m_vObstacleManager = new ObstacleManager(m_vLevel);
         }
 
         #endregion Public Constructors
