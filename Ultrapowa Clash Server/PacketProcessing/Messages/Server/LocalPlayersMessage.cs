@@ -42,7 +42,7 @@ namespace UCS.PacketProcessing.Messages.Server
                 var pl = player.GetPlayerAvatar();
                 var id = pl.GetAllianceId();
                 data.AddInt64(pl.GetId()); // The ID of the player
-                data.AddString(pl.GetAvatarName()); // THe Name of the Player
+                data.AddString(pl.GetAvatarName()); // The Name of the Player
                 data.AddInt32(i); // Rank of the player
                 data.AddInt32(pl.GetScore()); // Number of Trophies of the player
                 data.AddInt32(i); // Up/Down from previous rank -> (int - 1)

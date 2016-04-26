@@ -64,7 +64,8 @@ namespace UCS.PacketProcessing.Messages.Client
                     availableServerCommandMessage.SetCommandId(1);
                     availableServerCommandMessage.SetCommand(joinAllianceCommand);
                     PacketManager.ProcessOutgoingPacket(availableServerCommandMessage);
-                    PacketManager.ProcessOutgoingPacket(new AllianceFullEntryupdateMessage(Client, alliance));
+                    PacketManager.ProcessOutgoingPacket(new AllianceStreamMessage(Client, alliance));
+                    PacketManager.ProcessOutgoingPacket(new AllianceFullEntryMessage(Client, alliance));
                 }
             }
         }

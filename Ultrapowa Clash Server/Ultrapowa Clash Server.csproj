@@ -920,7 +920,7 @@
     <Compile Include="PacketProcessing\Commands\UpgradeBuildingCommand.cs" />
     <Compile Include="PacketProcessing\Commands\BuyBuildingCommand.cs" />
     <Compile Include="PacketProcessing\Commands\MoveBuildingCommand.cs" />
-    <Compile Include="PacketProcessing\Messages\Server\AllianceFullEntryUpdateMessage.cs" />
+    <Compile Include="PacketProcessing\Messages\Server\AllianceFullEntryMessage.cs" />
     <Compile Include="PacketProcessing\Messages\Server\AllianceMemberMessage.cs" />
     <Compile Include="PacketProcessing\Messages\Server\AllianceMemberRemovedMessage.cs" />
     <Compile Include="PacketProcessing\Messages\Server\AllianceStreamEntryRemovedMessage.cs" />

@@ -157,7 +157,7 @@ namespace UCS.PacketProcessing.Messages.Client
             if (alliance == null)
                 level.GetPlayerAvatar().SetAllianceId(0);
             else
-                PacketManager.ProcessOutgoingPacket(new AllianceFullEntryupdateMessage(Client, alliance));
+                PacketManager.ProcessOutgoingPacket(new AllianceFullEntryMessage(Client, alliance));
             PacketManager.ProcessOutgoingPacket(new BookmarkMessage(Client));
         }
 

@@ -87,6 +87,7 @@ namespace UCS.PacketProcessing.Messages.Client
             availableServerCommandMessage.SetCommand(joinAllianceCommand);
             PacketManager.ProcessOutgoingPacket(availableServerCommandMessage);
             PacketManager.ProcessOutgoingPacket(new AllianceStreamMessage(Client, alliance));
+            PacketManager.ProcessOutgoingPacket(new AllianceFullEntryMessage(Client, alliance));
             //PacketManager.ProcessOutgoingPacket(new OutOfSyncMessage(level.GetClient()));
             // Necessary to display the "Customize" Button.
         }

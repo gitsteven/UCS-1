@@ -16,7 +16,7 @@ using UCS.Logic;
 namespace UCS.PacketProcessing.Messages.Server
 {
     //Packet 24301
-    internal class AllianceFullEntryupdateMessage : Message
+    internal class AllianceFullEntryMessage : Message
     {
         #region Private Fields
 
@@ -26,7 +26,7 @@ namespace UCS.PacketProcessing.Messages.Server
 
         #region Public Constructors
 
-        public AllianceFullEntryupdateMessage(PacketProcessing.Client client, Alliance alliance)
+        public AllianceFullEntryMessage(PacketProcessing.Client client, Alliance alliance)
             : base(client)
         {
             SetMessageType(24324);
