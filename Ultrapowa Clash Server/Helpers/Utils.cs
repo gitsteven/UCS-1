@@ -97,6 +97,33 @@ namespace UCS.Helpers
                              .ToArray();
         }
 
+        public static void Increment(this byte[] nonce, int timesToIncrease = 2)
+        {
+            /*
+            int __cdecl sodium_increment(unsigned char nonce, unsigned int nonceLength)
+            {
+                __int64 v2 = 1i64; // rax@1
+                do
+                {
+                     LODWORD(v2) = *(_BYTE *)(HIDWORD(v2) + a1) + (_DWORD)v2;
+                     *(_BYTE *)(HIDWORD(v2)++ + a1) = v2;
+                     LODWORD(v2) = (unsigned int)v2 >> 8;
+                }
+                while ( HIDWORD(v2) < a2 );
+             return v2;
+            }
+            */
+            for (int j = 0; j < timesToIncrease; j++)
+            {
+                ushort c = 1;
+                for (UInt32 i = 0; i < nonce.Length; i++)
+                {
+                    c += (ushort)nonce[i];
+                    nonce[i] = (byte)c;
+                    c >>= 8;
+                }
+            }
+        }
         public static int ParseConfigInt(string str)
         {
             return int.Parse(ConfigurationManager.AppSettings[str]);

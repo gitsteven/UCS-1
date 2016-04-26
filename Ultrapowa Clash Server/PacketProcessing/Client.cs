@@ -9,11 +9,11 @@
  * All Rights Reserved.
  */
 
+using Sodium;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
-using UCS.Core.Crypto.Sodium;
 using UCS.Logic;
 
 namespace UCS.PacketProcessing
@@ -63,6 +63,7 @@ namespace UCS.PacketProcessing
             var keyPair = PublicKeyBox.GenerateKeyPair();
             return new Crypto(keyPair.PublicKey, keyPair.PrivateKey);
         }
+        
 
         public static byte[] GenerateSessionKey()
         {

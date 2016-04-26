@@ -10,8 +10,7 @@
  */
 
 using System;
-using UCS.Core.Crypto.Sodium;
-
+using Sodium;
 namespace UCS.PacketProcessing
 {
     public static class Key

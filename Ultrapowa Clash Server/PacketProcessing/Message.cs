@@ -14,9 +14,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using UCS.Core.Crypto.Sodium;
 using UCS.Helpers;
 using UCS.Logic;
+using UCS.Core.Crypto.CustomNaCl;
+using UCS.Core.Crypto.Blake2b;
 
 namespace UCS.PacketProcessing
 {
@@ -28,6 +29,13 @@ namespace UCS.PacketProcessing
         private int m_vLength;
         private ushort m_vMessageVersion;
         private ushort m_vType;
+        // Constants
+        private const int KeyLength = 32, NonceLength = 24, SessionLength = 24;
+
+        // A custom keypair used for en/decryption 
+        private static KeyPair CustomKeyPair = new KeyPair();
+
+        private static Hasher Blake = Blake2B.Create(new Blake2BConfig() { OutputSizeInBytes = 24 });
 
         #endregion Private Fields
 
@@ -80,19 +88,21 @@ namespace UCS.PacketProcessing
                 {
                     var cipherText = m_vData;
                     Client.CPublicKey = cipherText.Take(32).ToArray();
-                    Client.CSharedKey = Client.CPublicKey;
+                    Blake.Init();
+                    Blake.Update(Client.CPublicKey);
+                    Blake.Update(Key.Crypto.PublicKey);
+                    var tmpNonce = Blake.Finish();
                     Client.CRNonce = Client.GenerateSessionKey();
-                    var nonce = GenericHash.Hash(Client.CPublicKey.Concat(Key.Crypto.PublicKey).ToArray(), null, 24);
-                    cipherText = cipherText.Skip(32).ToArray();
-                    var PlainText = PublicKeyBox.Open(cipherText, nonce, Key.Crypto.PrivateKey, Client.CPublicKey);
+                    var PlainText = CustomNaCl.OpenPublicBox(cipherText.Skip(32).ToArray(), tmpNonce, Key.Crypto.PrivateKey, Client.CPublicKey);
+                    Client.CSharedKey = Client.CPublicKey;
                     Client.CSessionKey = PlainText.Take(24).ToArray();
                     Client.CSNonce = PlainText.Skip(24).Take(24).ToArray();
-                    SetData(PlainText.Skip(24).Skip(24).ToArray());
+                    SetData(PlainText.Skip(48).ToArray());
                 }
                 else if (m_vType != 10100)
                 {
-                    Client.CSNonce = Core.Crypto.Sodium.Utilities.Increment(Core.Crypto.Sodium.Utilities.Increment(Client.CSNonce));
-                    SetData(SecretBox.Open(new byte[16].Concat(m_vData).ToArray(), Client.CSNonce, Client.CSharedKey));
+                    Client.CSNonce.Increment();
+                    SetData(CustomNaCl.OpenSecretBox(new byte[16].Concat(m_vData).ToArray(), Client.CSNonce, Client.CSharedKey));
                 }
             }
             catch (Exception ex)
@@ -109,27 +119,22 @@ namespace UCS.PacketProcessing
         {
             try
             {
-                if (GetMessageType() == 20103)
+                 if (GetMessageType() == 20104 || GetMessageType() == 20103)
                 {
-                    var nonce =
-                        GenericHash.Hash(
-                            Client.CSNonce.Concat(Client.CPublicKey).Concat(Key.Crypto.PublicKey).ToArray(), null, 24);
+                    Blake.Init();
+                    Blake.Update(Client.CSNonce);
+                    Blake.Update(Client.CPublicKey);
+                    Blake.Update(Key.Crypto.PublicKey);
+                    var tmpNonce = Blake.Finish();
                     plainText = Client.CRNonce.Concat(Client.CSharedKey).Concat(plainText).ToArray();
-                    SetData(PublicKeyBox.Create(plainText, nonce, Key.Crypto.PrivateKey, Client.CPublicKey));
-                }
-                else if (GetMessageType() == 20104)
-                {
-                    var nonce =
-                        GenericHash.Hash(
-                            Client.CSNonce.Concat(Client.CPublicKey).Concat(Key.Crypto.PublicKey).ToArray(), null, 24);
-                    plainText = Client.CRNonce.Concat(Client.CSharedKey).Concat(plainText).ToArray();
-                    SetData(PublicKeyBox.Create(plainText, nonce, Key.Crypto.PrivateKey, Client.CPublicKey));
+                    SetData(CustomNaCl.CreatePublicBox(plainText, tmpNonce, Key.Crypto.PrivateKey, Client.CPublicKey));
+                    if (GetMessageType() == 20104)
                     Client.CState = 2;
                 }
                 else
                 {
-                    Client.CRNonce = Core.Crypto.Sodium.Utilities.Increment(Core.Crypto.Sodium.Utilities.Increment(Client.CRNonce));
-                    SetData(SecretBox.Create(plainText, Client.CRNonce, Client.CSharedKey).Skip(16).ToArray());
+                    Client.CRNonce.Increment();
+                    SetData(CustomNaCl.CreateSecretBox(plainText, Client.CRNonce, Client.CSharedKey).Skip(16).ToArray());
                 }
             }
             catch (Exception ex)

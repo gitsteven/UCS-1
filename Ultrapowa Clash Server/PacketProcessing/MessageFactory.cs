@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using UCS.Helpers;
 using UCS.PacketProcessing.Messages.Client;
 
 namespace UCS.PacketProcessing
@@ -79,8 +80,8 @@ namespace UCS.PacketProcessing
             if (m_vMessages.ContainsKey(packetType))
                 return Activator.CreateInstance(m_vMessages[packetType], c, br);
 
-            c.CRNonce = Core.Crypto.Sodium.Utilities.Increment(Core.Crypto.Sodium.Utilities.Increment(c.CRNonce));
-            c.CSNonce = Core.Crypto.Sodium.Utilities.Increment(Core.Crypto.Sodium.Utilities.Increment(c.CSNonce));
+            c.CRNonce.Increment();
+            c.CSNonce.Increment();
 
             Console.WriteLine("[UCS]    The message '" + packetType + "' is unhandled");
             return null;
