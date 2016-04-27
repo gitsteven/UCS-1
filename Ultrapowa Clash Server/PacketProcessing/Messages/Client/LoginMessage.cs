@@ -43,7 +43,7 @@ namespace UCS.PacketProcessing.Messages.Client
         public string DeviceModel;
         public string FacebookDistributionID;
         public bool IsAdvertisingTrackingEnabled;
-        public string Language;
+        public string Region;
         public int LocaleKey;
         public string MacAddress;
         public int MajorVersion;
@@ -87,7 +87,7 @@ namespace UCS.PacketProcessing.Messages.Client
                         MacAddress = reader.ReadString();
                         DeviceModel = reader.ReadString();
                         LocaleKey = reader.ReadInt32();
-                        Language = reader.ReadString();
+                        Region = reader.ReadString();
                         AdvertisingGUID = reader.ReadString();
                         OSVersion = reader.ReadString();
                         Unknown2 = reader.ReadByte();
@@ -138,7 +138,13 @@ namespace UCS.PacketProcessing.Messages.Client
                         LogUser();
                     }
                     else // ELSE, HE IS TRYING TO STEAL AN ACCOUNT
-                        NewUser();
+                    {
+                        var p = new LoginFailedMessage(Client);
+                        p.SetErrorCode(11);
+                        p.SetReason("We have detected unrecognized token sended from your devices. Please contact server owner for more information");
+                        PacketManager.ProcessOutgoingPacket(p);
+                        return;
+                    }
                 }
                 else // IF NOTHING IS FOUND IN DATABASE WITH THIS ID, WE CREATE A NEW
                     NewUser();
@@ -162,7 +168,7 @@ namespace UCS.PacketProcessing.Messages.Client
             loginOk.SetServerTime(Math.Round(level.GetTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds * 1000).ToString(CultureInfo.InvariantCulture));
             loginOk.SetAccountCreatedDate("1414003838000");
             loginOk.SetStartupCooldownSeconds(0);
-            loginOk.SetCountryCode(Language);
+            loginOk.SetCountryCode(avatar.GetUserRegion());
             PacketManager.ProcessOutgoingPacket(loginOk);
             var alliance = ObjectManager.GetAlliance(level.GetPlayerAvatar().GetAllianceId());
             level.GetPlayerAvatar().SetLeagueId(new Random(Seed).Next(15, 20));
@@ -221,8 +227,9 @@ namespace UCS.PacketProcessing.Messages.Client
                 var tokenSeed = new byte[20];
                 new Random().NextBytes(tokenSeed);
                 using (SHA1 sha = new SHA1CryptoServiceProvider())
-                    UserToken = BitConverter.ToString(sha.ComputeHash(tokenSeed)).Replace("-", string.Empty);
+                UserToken = BitConverter.ToString(sha.ComputeHash(tokenSeed)).Replace("-", string.Empty);
             }
+            level.GetPlayerAvatar().SetRegion(Region);
             level.GetPlayerAvatar().SetToken(UserToken);
             DatabaseManager.Singelton.Save(level);
             LogUser();

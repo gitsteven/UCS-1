@@ -31,8 +31,7 @@ namespace UCS.PacketProcessing.Messages.Server
         public override void Encode()
         {
             var data = new List<byte>();
-            var packet = data.ToArray();
-            Encrypt(packet);
+            Encrypt(data.ToArray());
         }
 
         #endregion Public Methods

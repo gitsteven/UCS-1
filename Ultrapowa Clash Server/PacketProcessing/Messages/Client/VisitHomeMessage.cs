@@ -50,10 +50,10 @@ namespace UCS.PacketProcessing.Messages.Client
         {
             var targetLevel = ResourcesManager.GetPlayer(AvatarId);
             targetLevel.Tick();
-            //Clan clan;
+            var clan = ObjectManager.GetAlliance(level.GetPlayerAvatar().GetAllianceId());
             PacketManager.ProcessOutgoingPacket(new VisitedHomeDataMessage(Client, targetLevel, level));
-            //if (clan != null)*/
-            //    PacketHandler.ProcessOutgoingPacket(new ServerAllianceChatHistory(this.Client, clan));
+            if (clan != null)
+                PacketManager.ProcessOutgoingPacket(new AllianceStreamMessage(Client, clan));
         }
 
         #endregion Public Methods

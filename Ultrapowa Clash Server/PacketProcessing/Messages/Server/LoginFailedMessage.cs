@@ -76,7 +76,6 @@ namespace UCS.PacketProcessing.Messages.Server
                 pack.AddString(m_vReason);
                 pack.AddInt32(m_vRemainingTime);
                 pack.Add(0);
-                pack.AddString("");
                 pack.AddInt32(2);
                 Encrypt(pack.ToArray());
             }

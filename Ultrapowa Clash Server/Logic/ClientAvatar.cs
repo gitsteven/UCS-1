@@ -61,6 +61,7 @@ namespace UCS.Logic
         byte m_vnameChosenByUser;
         int m_vScore;
         string m_vToken;
+        string m_vRegion;
 
         #endregion Private Fields
 
@@ -332,6 +333,7 @@ namespace UCS.Logic
 
         public int GetScore()
         {
+            updateLeague();
             return m_vScore;
         }
 
@@ -344,6 +346,11 @@ namespace UCS.Logic
         {
             return m_vToken;
         }
+        public string GetUserRegion()
+        {
+            return m_vRegion;
+        }
+
 
         public bool HasEnoughDiamonds(int diamondCount)
         {
@@ -361,6 +368,7 @@ namespace UCS.Logic
 
             m_vId = jsonObject["avatar_id"].ToObject<long>();
             m_vToken = jsonObject["token"].ToObject<string>();
+            m_vRegion = jsonObject["region"].ToObject<string>();
             m_vCurrentHomeId = jsonObject["current_home_id"].ToObject<long>();
             m_vAllianceId = jsonObject["alliance_id"].ToObject<long>();
             SetAllianceCastleLevel(jsonObject["alliance_castle_level"].ToObject<int>());
@@ -505,6 +513,7 @@ namespace UCS.Logic
 
             jsonData.Add("avatar_id", m_vId);
             jsonData.Add("token", m_vToken);
+            jsonData.Add("region", m_vRegion);
             jsonData.Add("current_home_id", m_vCurrentHomeId);
             jsonData.Add("alliance_id", m_vAllianceId);
             jsonData.Add("alliance_castle_level", GetAllianceCastleLevel());
@@ -515,7 +524,7 @@ namespace UCS.Logic
             jsonData.Add("avatar_level", m_vAvatarLevel);
             jsonData.Add("experience", m_vExperience);
             jsonData.Add("current_gems", m_vCurrentGems);
-            jsonData.Add("score", m_vScore);
+            jsonData.Add("score", GetScore());
             jsonData.Add("nameChangesLeft", m_vNameChangingLeft);
             jsonData.Add("nameChosenByUser", (ushort) m_vnameChosenByUser);
 
@@ -657,6 +666,11 @@ namespace UCS.Logic
         public void SetToken(string token)
         {
             m_vToken = token;
+        }
+
+        public void SetRegion(string region)
+        {
+            m_vRegion = region;
         }
 
         public void UseDiamonds(int diamondCount)
