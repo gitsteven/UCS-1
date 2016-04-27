@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UCS.Core;
 using UCS.Helpers;
+using UCS.Logic;
 
 namespace UCS.PacketProcessing.Messages.Server
 {
@@ -23,7 +24,10 @@ namespace UCS.PacketProcessing.Messages.Server
         public LeaguePlayersMessage(PacketProcessing.Client client) : base(client)
         {
             SetMessageType(24503);
+            Player = client.GetLevel();
         }
+
+        public static Level Player { get; set; }
 
         #endregion Public Constructors
 
@@ -36,7 +40,9 @@ namespace UCS.PacketProcessing.Messages.Server
 
             var i = 1;
 
-            foreach (var player in ResourcesManager.GetOnlinePlayers().OrderByDescending(t => t.GetPlayerAvatar().GetScore()))
+            foreach (var player in ResourcesManager.GetOnlinePlayers()
+                //.Where(t => t.GetPlayerAvatar().GetLeagueId() == Player.GetPlayerAvatar().GetLeagueId())
+                .OrderByDescending(t => t.GetPlayerAvatar().GetScore()))
             {
                 var pl = player.GetPlayerAvatar();
                 packet1.AddInt64(pl.GetId()); // The ID of the player
@@ -49,8 +55,9 @@ namespace UCS.PacketProcessing.Messages.Server
                 packet1.AddInt32(i); // The number of failed attack
                 packet1.AddInt32(100); // Number of successed defenses
                 packet1.AddInt32(1); // Activation of successed attacks
-                packet1.AddInt64(i); // Clan ID
-                packet1.AddInt64(i); // Clan ID
+                packet1.AddInt64(pl.GetAllianceId()); // Clan ID
+                packet1.AddInt32(1);
+                packet1.AddInt32(1);
                 if (pl.GetAllianceId() > 0)
                 {
                     packet1.Add(1); // 1 = Have an alliance | 0 = No alliance

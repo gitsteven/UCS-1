@@ -40,7 +40,6 @@ namespace UCS.Core
             TimerCallback TimerDelegate = ReleaseOrphans;
             var TimerItem = new Timer(TimerDelegate, null, 40000, 30000);
             TimerReference = TimerItem;
-            GetAllPlayersFromDB();
         }
 
         #endregion Public Constructors

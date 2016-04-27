@@ -45,13 +45,13 @@ namespace UCS.PacketProcessing.Messages.Server
                 packet1.AddInt32(i); // Rank of the player
                 packet1.AddInt32(pl.GetScore()); // Number of Trophies of the player
                 packet1.AddInt32(i); // Up/Down from previous rank -> (int - 1)
-                packet1.AddInt32(pl.GetAvatarLevel()); // The score of the player
+                packet1.AddInt32(pl.GetAvatarLevel()); // The Level of the player
                 packet1.AddInt32(100); // The number of successed attack
                 packet1.AddInt32(i); // The number of failed attack
                 packet1.AddInt32(100); // Number of successed defenses
                 packet1.AddInt32(1); // Activation of successed attacks
                 packet1.AddInt32(pl.GetLeagueId()); // League of the player
-                packet1.AddString(pl.GetUserRegion()); // Locales
+                packet1.AddString(pl.GetUserRegion().ToUpper()); // Locales
                 packet1.AddInt64(pl.GetId()); // Clan ID
                 packet1.AddInt32(1); // Unknown2
                 packet1.AddInt32(1); // Unknown3
@@ -73,7 +73,7 @@ namespace UCS.PacketProcessing.Messages.Server
             data.AddInt32(i - 1);
             data.AddRange(packet1);
 
-            data.AddInt32((int) TimeSpan.FromDays(1).TotalSeconds);
+            data.AddInt32((int) TimeSpan.FromDays(7).TotalSeconds);
             data.AddInt32(DateTime.Now.Year);
             data.AddInt32(DateTime.Now.Month);
             data.AddInt32(DateTime.Now.Year);

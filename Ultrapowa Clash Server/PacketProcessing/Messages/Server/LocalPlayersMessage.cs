@@ -50,7 +50,7 @@ namespace UCS.PacketProcessing.Messages.Server
                 data.AddInt32(100); // Number of successed defenses
                 data.AddInt32(1); // Activation of successed attacks
                 data.AddInt32(pl.GetLeagueId()); // League of the player
-                data.AddString(pl.GetUserRegion()); // Locales
+                data.AddString(pl.GetUserRegion().ToUpper()); // Locales
                 data.AddInt64(pl.GetAllianceId()); // Clan ID
                 data.AddInt32(1); // Unknown2
                 data.AddInt32(1); // Unknown3
