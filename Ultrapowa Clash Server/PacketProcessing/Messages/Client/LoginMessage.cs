@@ -168,10 +168,9 @@ namespace UCS.PacketProcessing.Messages.Client
             loginOk.SetServerTime(Math.Round(level.GetTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds * 1000).ToString(CultureInfo.InvariantCulture));
             loginOk.SetAccountCreatedDate("1414003838000");
             loginOk.SetStartupCooldownSeconds(0);
-            loginOk.SetCountryCode(avatar.GetUserRegion());
+            loginOk.SetCountryCode(avatar.GetUserRegion().ToUpper());
             PacketManager.ProcessOutgoingPacket(loginOk);
             var alliance = ObjectManager.GetAlliance(level.GetPlayerAvatar().GetAllianceId());
-            level.GetPlayerAvatar().SetLeagueId(new Random(Seed).Next(15, 20));
             PacketManager.ProcessOutgoingPacket(new OwnHomeDataMessage(Client, level));
 
             if (alliance == null)
@@ -182,6 +181,7 @@ namespace UCS.PacketProcessing.Messages.Client
                 PacketManager.ProcessOutgoingPacket(new AllianceStreamMessage(Client, alliance));
             }
             PacketManager.ProcessOutgoingPacket(new BookmarkMessage(Client));
+            PacketManager.ProcessOutgoingPacket(new LeaguePlayersMessage(Client));
         }
 
         void CheckClient()
@@ -229,7 +229,7 @@ namespace UCS.PacketProcessing.Messages.Client
                 using (SHA1 sha = new SHA1CryptoServiceProvider())
                 UserToken = BitConverter.ToString(sha.ComputeHash(tokenSeed)).Replace("-", string.Empty);
             }
-            level.GetPlayerAvatar().SetRegion(Region);
+            level.GetPlayerAvatar().SetRegion(Region.ToUpper());
             level.GetPlayerAvatar().SetToken(UserToken);
             DatabaseManager.Singelton.Save(level);
             LogUser();

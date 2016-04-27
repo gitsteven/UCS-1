@@ -29,7 +29,7 @@ namespace UCS.Logic
         {
             var table = ObjectManager.DataTables.GetTable(12);
             var i = 0;
-            var found = false;
+            bool found = false;
             while (!found)
             {
                 var league = (LeagueData) table.GetItemAt(i);
@@ -40,7 +40,6 @@ namespace UCS.Logic
                     found = true;
                     SetLeagueId(i);
                 }
-
                 i++;
             }
         }

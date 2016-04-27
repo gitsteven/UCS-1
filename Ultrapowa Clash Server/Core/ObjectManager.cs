@@ -48,17 +48,16 @@ namespace UCS.Core
             m_vDatabase.CheckConnection();
             m_vAvatarSeed = m_vDatabase.GetMaxPlayerId() + 1;
             m_vAllianceSeed = m_vDatabase.GetMaxAllianceId() + 1;
-            Debugger.WriteLine("[UCS]    Loading and saving all alliances to memory");
-            GetAllAlliancesFromDB();
             LoadGameFiles();
             LoadNpcLevels();
+            Debugger.WriteLine("[UCS]    Loading and saving all alliances to memory");
+            GetAllAlliancesFromDB(); //Prevent UpdateLeague error due to UpdateLeague using CSV
             
             var TimerItem = new Timer(Save, null, 30000, 30000);
             new Timer(Restart, null, 10800000, 0);
             TimerReference = TimerItem;
-
-            Console.WriteLine("[UCS]    Database Sync started successfully");
             m_vRandomSeed = new Random();
+            Console.WriteLine("[UCS]    Database Sync started successfully");
             
         }
 
