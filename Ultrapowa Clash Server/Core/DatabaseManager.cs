@@ -166,7 +166,7 @@ namespace UCS.Core
                         Alliance alliance = new Alliance();
                         alliance.LoadFromJSON(c.Data);
                         alliances.Add(alliance);
-                        if (count++ >= 200)
+                        if (count++ >= 500)
                             break;
                     }
                     Debugger.WriteLine("[UCS]    The server loaded " + count + " alliances");
@@ -192,7 +192,7 @@ namespace UCS.Core
                     {
                         Level pl = new Level();
                         players.TryAdd(pl.GetPlayerAvatar().GetId(), pl);
-                        if (count++ >= 200)
+                        if (count++ >= 500)
                             break;
                     }
                     Debugger.WriteLine("[UCS]    The server loaded " + count + " players");

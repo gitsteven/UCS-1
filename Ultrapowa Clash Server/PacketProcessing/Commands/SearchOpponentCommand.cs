@@ -42,8 +42,7 @@ namespace UCS.PacketProcessing.Commands
             if (l != null)
             {
                 l.Tick();
-                var p = new EnemyHomeDataMessage(level.GetClient(), l, level);
-                PacketManager.ProcessOutgoingPacket(p);
+                PacketManager.ProcessOutgoingPacket(new EnemyHomeDataMessage(level.GetClient(), l, level));
             }
         }
 

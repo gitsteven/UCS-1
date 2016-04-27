@@ -102,6 +102,8 @@ namespace UCS.Core
 
         public static void Restart()
         {
+            DatabaseManager.Singelton.Save(ResourcesManager.GetInMemoryLevels());
+            DatabaseManager.Singelton.Save(ObjectManager.GetInMemoryAlliances());
             foreach (var onlinePlayer in ResourcesManager.GetOnlinePlayers())
             {
                 var p = new ShutdownStartedMessage(onlinePlayer.GetClient());

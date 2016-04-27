@@ -10,8 +10,8 @@
  */
 
 using System;
-using System.Configuration;
 using System.Threading;
+using static System.Configuration.ConfigurationManager;
 using static UCS.Helpers.Utils;
 using static UCS.Helpers.CommandParser;
 using static System.Console;
@@ -34,7 +34,7 @@ namespace UCS.Core.Threading
 
         #region Public Methods
 
-        public static void Start()
+        internal static void Start()
         {
             T = new Thread(() =>
             {
@@ -64,7 +64,7 @@ namespace UCS.Core.Threading
                 WriteLine("[UCS]    -> Don't forget to visit www.ultrapowa.com daily for the latest news and updates!");
                 WriteLine("[UCS]    -> UCS is now starting...");
                 WriteLine("");
-                Debugger.SetLogLevel(int.Parse(ConfigurationManager.AppSettings["loggingLevel"]));
+                Debugger.SetLogLevel(int.Parse(AppSettings["loggingLevel"]));
                 MemoryThread.Start();
                 NetworkThread.Start();
                 while ((Command = ReadLine()) != null)
