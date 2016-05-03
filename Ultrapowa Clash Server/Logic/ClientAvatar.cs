@@ -61,7 +61,7 @@ namespace UCS.Logic
         {
             Achievements = new List<DataSlot>();
             AchievementsUnlocked = new List<DataSlot>();
-            AllianceUnits = new List<DataSlot>();
+            AllianceUnits = new List<TroopDataSlot>();
             NpcStars = new List<DataSlot>();
             NpcLootedGold = new List<DataSlot>();
             NpcLootedElixir = new List<DataSlot>();
@@ -102,7 +102,7 @@ namespace UCS.Logic
 
         public List<DataSlot> Achievements { get; set; }
         public List<DataSlot> AchievementsUnlocked { get; set; }
-        public List<DataSlot> AllianceUnits { get; set; }
+        public List<TroopDataSlot> AllianceUnits { get; set; }
         public int EndShieldTime { get; set; }
         public int LastUpdate { get; set; }
         public string Login { get; set; }
@@ -166,14 +166,14 @@ namespace UCS.Logic
             //7.156
             data.AddInt32(1); //1
             data.AddInt32(2); //2
-            data.AddInt32(3); //3
+            data.AddInt32(DateTime.Now.Month); //3
             data.AddInt32(4); //4
             data.AddInt32(5); //5
             data.AddInt32(6); //6
             data.AddInt32(7); //7
             data.AddInt32(8); //8
             data.AddInt32(9); //9
-            data.AddInt32(10); //10
+            data.AddInt32(1); //10
             data.AddInt32(11); //11
 
             data.AddInt32(m_vLeagueId);
@@ -450,7 +450,7 @@ namespace UCS.Logic
             var jsonAllianceUnits = (JArray) jsonObject["alliance_units"];
             foreach (JObject data in jsonAllianceUnits)
             {
-                var ds = new DataSlot(null, 0);
+                var ds = new TroopDataSlot(null, 0, 0);
                 ds.Load(data);
                 AllianceUnits.Add(ds);
             }

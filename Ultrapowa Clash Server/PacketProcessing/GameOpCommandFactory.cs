@@ -17,13 +17,8 @@ namespace UCS.PacketProcessing
 {
     internal static class GameOpCommandFactory
     {
-        #region Private Fields
 
         static readonly Dictionary<string, Type> m_vCommands;
-
-        #endregion Private Fields
-
-        #region Public Constructors
 
         static GameOpCommandFactory()
         {
@@ -45,10 +40,6 @@ namespace UCS.PacketProcessing
             m_vCommands.Add("/becomeleader", typeof(BecomeLeaderGameOpCommand));
         }
 
-        #endregion Public Constructors
-
-        #region Public Methods
-
         public static object Parse(string command)
         {
             var commandArgs = command.ToLower().Split(' ');
@@ -65,6 +56,5 @@ namespace UCS.PacketProcessing
             return result;
         }
 
-        #endregion Public Methods
     }
 }

@@ -28,12 +28,13 @@ namespace UCS.Core.Network
 
         public void Start()
         {
-            using (Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)) ;
+            Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             {
                 try
                 {
                     Socket.Bind(new IPEndPoint(IPAddress.Any, 9339));
-                    Socket.Listen(100);
+                    Socket.Listen(1000);
+                    Console.WriteLine("[UCS]    Gateway started on port 9339");
                     while (true)
                     {
                         // Set the event to nonsignaled state.
@@ -43,7 +44,6 @@ namespace UCS.Core.Network
                         // Wait until a connection is made before continuing.
                         allDone.WaitOne();
                     }
-                    Console.WriteLine("[UCS]    Gateway started on port 9339");
                 }
                 catch (Exception e)
                 {
@@ -74,11 +74,13 @@ namespace UCS.Core.Network
             Debugger.WriteLine("[UCS]    The client '" + ((IPEndPoint) read.Socket.RemoteEndPoint).Address + "' throw an exception", exception);
         }
 
-        void OnClientConnect(IAsyncResult result)
+        void OnClientConnect(IAsyncResult ar)
         {
+            allDone.Set();
             try
             {
-                Socket clientSocket = Socket.EndAccept(result);
+                Socket listener = (Socket)ar.AsyncState;
+                Socket clientSocket = listener.EndAccept(ar);
                 Console.WriteLine("[UCS]    Client connected (" + ((IPEndPoint) clientSocket.RemoteEndPoint).Address + ")");
                 ResourcesManager.AddClient(new Client(clientSocket), ((IPEndPoint) clientSocket.RemoteEndPoint).Address.ToString());
                 SocketRead.Begin(clientSocket, OnReceive, OnReceiveError);

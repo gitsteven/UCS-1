@@ -24,7 +24,6 @@ namespace UCS.PacketProcessing
 {
     internal class Message
     {
-        #region Private Fields
 
         byte[] m_vData;
         int m_vLength;
@@ -37,10 +36,6 @@ namespace UCS.PacketProcessing
         static KeyPair CustomKeyPair = new KeyPair();
 
         static Hasher Blake = Blake2B.Create(new Blake2BConfig() { OutputSizeInBytes = 24 });
-
-        #endregion Private Fields
-
-        #region Public Constructors
 
         public Message()
         {
@@ -66,17 +61,9 @@ namespace UCS.PacketProcessing
             m_vData = br.ReadBytes(m_vLength);
         }
 
-        #endregion Public Constructors
-
-        #region Public Properties
-
         public int Broadcasting { get; set; }
 
         public Client Client { get; set; }
-
-        #endregion Public Properties
-
-        #region Public Methods
 
         public virtual void Decode()
         {
@@ -209,6 +196,5 @@ namespace UCS.PacketProcessing
             return Encoding.UTF8.GetString(m_vData, 0, m_vLength);
         }
 
-        #endregion Public Methods
     }
 }
