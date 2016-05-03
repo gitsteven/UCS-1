@@ -53,7 +53,7 @@ namespace UCS.PacketProcessing.Commands
                     var mail = new AllianceMailStreamEntry();
                     mail.SetId((int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
                     mail.SetAvatar(avatar);
-                    mail.SetIsNew(0);
+                    mail.SetIsNew(2);
                     mail.SetSenderId(avatar.GetId());
                     mail.SetAllianceId(allianceId);
                     mail.SetAllianceBadgeData(alliance.GetAllianceBadgeData());

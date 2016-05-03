@@ -13,6 +13,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using UCS.PacketProcessing;
 
 namespace UCS.Core.Network
@@ -23,26 +24,32 @@ namespace UCS.Core.Network
 
         public static Socket Socket { get; set; }
 
-        public IPAddress IP => IPAddress ?? (IPAddress = (
-            from entry in Dns.GetHostEntry(Dns.GetHostName()).AddressList
-            where entry.AddressFamily == AddressFamily.InterNetwork
-            select entry
-            ).FirstOrDefault());
+        public static ManualResetEvent allDone = new ManualResetEvent(false);
 
         public void Start()
         {
-            Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            try
+            using (Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)) ;
             {
-                Socket.Bind(new IPEndPoint(IPAddress.Any, 9339));
-                Socket.Listen(100);
-                Socket.BeginAccept(OnClientConnect, Socket);
-                Console.WriteLine("[UCS]    Gateway started on port 9339");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("[UCS]    Exception when attempting to host the server : " + e);
-                Socket = null;
+                try
+                {
+                    Socket.Bind(new IPEndPoint(IPAddress.Any, 9339));
+                    Socket.Listen(100);
+                    while (true)
+                    {
+                        // Set the event to nonsignaled state.
+                        allDone.Reset();
+                        // Start an asynchronous socket to listen for connections.
+                        Socket.BeginAccept(new AsyncCallback(OnClientConnect), Socket);
+                        // Wait until a connection is made before continuing.
+                        allDone.WaitOne();
+                    }
+                    Console.WriteLine("[UCS]    Gateway started on port 9339");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("[UCS]    Exception when attempting to host the server : " + e);
+                    Socket = null;
+                }
             }
         }
 
@@ -75,7 +82,6 @@ namespace UCS.Core.Network
                 Console.WriteLine("[UCS]    Client connected (" + ((IPEndPoint) clientSocket.RemoteEndPoint).Address + ")");
                 ResourcesManager.AddClient(new Client(clientSocket), ((IPEndPoint) clientSocket.RemoteEndPoint).Address.ToString());
                 SocketRead.Begin(clientSocket, OnReceive, OnReceiveError);
-                Socket.BeginAccept(OnClientConnect, Socket);
             }
             catch (Exception e)
             {

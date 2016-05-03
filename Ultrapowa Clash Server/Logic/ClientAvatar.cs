@@ -23,7 +23,6 @@ namespace UCS.Logic
 {
     internal class ClientAvatar : Avatar
     {
-        #region Private Methods
 
         void updateLeague()
         {
@@ -44,10 +43,6 @@ namespace UCS.Logic
             }
         }
 
-        #endregion Private Methods
-
-        #region Private Fields
-
         long m_vAllianceId;
         int m_vAvatarLevel;
         string m_vAvatarName;
@@ -61,10 +56,6 @@ namespace UCS.Logic
         int m_vScore;
         string m_vToken;
         string m_vRegion;
-
-        #endregion Private Fields
-
-        #region Public Constructors
 
         public ClientAvatar()
         {
@@ -109,10 +100,6 @@ namespace UCS.Logic
                 Convert.ToInt32(ConfigurationManager.AppSettings["startingGems"]));
         }
 
-        #endregion Public Constructors
-
-        #region Public Properties
-
         public List<DataSlot> Achievements { get; set; }
         public List<DataSlot> AchievementsUnlocked { get; set; }
         public List<DataSlot> AllianceUnits { get; set; }
@@ -136,10 +123,6 @@ namespace UCS.Logic
 
         public uint TutorialStepsCount { get; set; }
         public Village Village { get; set; }
-
-        #endregion Public Properties
-
-        #region Public Methods
 
         public void AddDiamonds(int diamondCount)
         {
@@ -181,17 +164,17 @@ namespace UCS.Logic
             }
             data.Add(0);
             //7.156
-            data.AddInt32(0); //1
-            data.AddInt32(0); //2
-            data.AddInt32(0); //3
-            data.AddInt32(0); //4
-            data.AddInt32(0); //5
-            data.AddInt32(0); //6
-            data.AddInt32(0); //7
-            data.AddInt32(0); //8
-            data.AddInt32(0); //9
-            data.AddInt32(0); //10
-            data.AddInt32(1); //11
+            data.AddInt32(1); //1
+            data.AddInt32(2); //2
+            data.AddInt32(3); //3
+            data.AddInt32(4); //4
+            data.AddInt32(5); //5
+            data.AddInt32(6); //6
+            data.AddInt32(7); //7
+            data.AddInt32(8); //8
+            data.AddInt32(9); //9
+            data.AddInt32(10); //10
+            data.AddInt32(11); //11
 
             data.AddInt32(m_vLeagueId);
 
@@ -267,7 +250,17 @@ namespace UCS.Logic
                 data.AddRange(BitConverter.GetBytes(0).Reverse()); //A CHANGER
             }
 
-            data.AddDataSlots(NpcStars);
+            //NPC Star
+            data.AddRange(BitConverter.GetBytes(ObjectManager.NpcLevels.Count).Reverse());
+            {
+                for (var i = 17000000; i < 17000050; i++)
+                {
+                    var rnd = new Random();
+                    data.AddRange(BitConverter.GetBytes(i).Reverse());
+                    data.AddRange(BitConverter.GetBytes(rnd.Next(0, 3)).Reverse()); //Star
+                }
+            }
+
             data.AddDataSlots(NpcLootedGold);
             data.AddDataSlots(NpcLootedElixir);
 
@@ -677,6 +670,5 @@ namespace UCS.Logic
             m_vCurrentGems -= diamondCount;
         }
 
-        #endregion Public Methods
     }
 }
