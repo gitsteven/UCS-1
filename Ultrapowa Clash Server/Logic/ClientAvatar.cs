@@ -147,6 +147,7 @@ namespace UCS.Logic
 
         public byte[] Encode()
         {
+            var rnd = new Random();
             var data = new List<byte>();
 
             data.AddInt32(0);
@@ -164,17 +165,44 @@ namespace UCS.Logic
             }
             data.Add(0);
             //7.156
-            data.AddInt32(1); //1
-            data.AddInt32(2); //2
-            data.AddInt32(DateTime.Now.Month); //3
-            data.AddInt32(4); //4
-            data.AddInt32(5); //5
-            data.AddInt32(6); //6
-            data.AddInt32(7); //7
-            data.AddInt32(8); //8
-            data.AddInt32(9); //9
-            data.AddInt32(1); //10
-            data.AddInt32(11); //11
+            if (m_vLeagueId == 22)
+            {
+                data.AddInt32(m_vScore / 12); //Legend Trophies
+                data.AddInt32(1); //bestSeasonEnabled
+                var month = DateTime.Now.Month;
+                data.AddInt32(month); //bestSeasonMonth
+                data.AddInt32(DateTime.Now.Year); ///bestSeasonYear
+                data.AddInt32(rnd.Next(1, 10)); ///bestSeasonRank
+                data.AddInt32(m_vScore); ///bestSeasonTrophies
+                data.AddInt32(1); //lastSeasonEnabled
+                if (month == 1)
+                {
+                    data.AddInt32(12); //lastSeasonMonth
+                    data.AddInt32(DateTime.Now.Year - 1); //9
+                }
+                else
+                {
+                    int pmonth = month - 1;
+                    data.AddInt32(pmonth); //lastSeasonMonth
+                    data.AddInt32(DateTime.Now.Year); //lastSeasonYear
+                }
+                data.AddInt32(rnd.Next(1,10)); //lastSeasonRank
+                data.AddInt32(m_vScore / 2); //lastSeasonTrophies
+            }
+            else
+            {
+                data.AddInt32(0); //1
+                data.AddInt32(0); //2
+                data.AddInt32(0); //3
+                data.AddInt32(0); //4
+                data.AddInt32(0); //5
+                data.AddInt32(0); //6
+                data.AddInt32(0); //7
+                data.AddInt32(0); //8
+                data.AddInt32(0); //9
+                data.AddInt32(0); //10
+                data.AddInt32(0); //11
+            }
 
             data.AddInt32(m_vLeagueId);
 
@@ -255,7 +283,6 @@ namespace UCS.Logic
             {
                 for (var i = 17000000; i < 17000050; i++)
                 {
-                    var rnd = new Random();
                     data.AddRange(BitConverter.GetBytes(i).Reverse());
                     data.AddRange(BitConverter.GetBytes(rnd.Next(0, 3)).Reverse()); //Star
                 }
